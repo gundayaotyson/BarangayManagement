@@ -27,6 +27,7 @@ class BarangayProject extends Model
         'challenges',
         'feedback',
         'maintenance_plan',
+        'completed_date'
     ];
 
     // Automatically set sitio based on purok

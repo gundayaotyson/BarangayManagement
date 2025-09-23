@@ -696,6 +696,7 @@ body {
                             <th>Category</th>
                             <th>Start Date</th>
                             <th>Target Date</th>
+ <th>Completed Date</th>
                             <th>Progress</th>
                             <th>Budget</th>
                             <th>Status</th>
@@ -710,6 +711,7 @@ body {
                             <td>{{ $project->category }}</td>
                             <td>{{ date('M d, Y', strtotime($project->start_date)) }}</td>
                             <td>{{ date('M d, Y', strtotime($project->target_completion_date)) }}</td>
+ <td>{{ $project->completed_date ? date('M d, Y', strtotime($project->completed_date)) : 'N/A' }}</td>
                             <td>
                                 <div class="d-flex align-items-center">
                                     <div class="progress flex-grow-1" style="height: 8px;">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\BarangayProject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class BarangayProjectController extends Controller
 {
@@ -93,6 +94,10 @@ class BarangayProjectController extends Controller
 
         ]);
 
+        if ($validated['status'] == 'Completed') {
+            $validated['completed_date'] = Carbon::now();
+        }
+
         BarangayProject::create($validated);
 
         return redirect()->route('barangayprojects.index')
@@ -129,6 +134,10 @@ class BarangayProjectController extends Controller
             'project_lead' => 'required|string|max:255',
 
         ]);
+
+        if ($validated['status'] == 'Completed' && $project->status != 'Completed') {
+            $validated['completed_date'] = Carbon::now();
+        }
 
         $project->update($validated);
 

@@ -10,6 +10,6 @@ class BarangayComplaint extends Model
     use HasFactory;
 
     protected $fillable = [
-        'fullname', 'complaint', 'respondent', 'victim', 'date', 'location', 'details', 'status'
+        'fullname', 'complaint', 'respondent', 'victim', 'date', 'location', 'details', 'status', 'settled_date'
     ];
 }

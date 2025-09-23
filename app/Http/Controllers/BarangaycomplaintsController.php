@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\BarangayComplaint;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class BarangaycomplaintsController extends Controller
 {
@@ -77,6 +78,10 @@ class BarangaycomplaintsController extends Controller
             'details' => 'required|string',
             'status' => 'required|in:Active Case,Settled Case,Scheduled Case',
         ]);
+
+        if ($validatedData['status'] == 'Settled Case' && $complaint->status != 'Settled Case') {
+            $validatedData['settled_date'] = Carbon::now();
+        }
 
         $complaint->update($validatedData);
 
