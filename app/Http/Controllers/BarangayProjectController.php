@@ -53,7 +53,7 @@ class BarangayProjectController extends Controller
                 ->get();
         }
 
-        return view('admin.barangayprojects', compact(
+        return view('barangay_official.barangayprojects', compact(
             'projects',
             'totalProjects',
             'ongoingProjects',
@@ -71,7 +71,7 @@ class BarangayProjectController extends Controller
     // Show create form
     public function create()
     {
-        return view('admin.barangayprojects.create');
+        return view('barangay_official.barangayprojects.create');
     }
 
     // Store new project

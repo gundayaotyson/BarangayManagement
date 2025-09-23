@@ -1,4 +1,4 @@
-@extends('admin.dashboard')
+@extends('barangay_official.dashboard')
 
 @section('content')
 <style>

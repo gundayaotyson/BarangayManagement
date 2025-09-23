@@ -374,8 +374,6 @@
         </li>
         <!-- <li><a href="{{ route('reports.index') }}" class="{{ request()->routeIs('reports.*') ? 'active' : '' }}"><i class="fas fa-folder-open"></i> <span>Reports</span></a></li> -->
         <li><a href="{{ route('requesteddocument') }}" class="{{ request()->routeIs('requesteddocument') ? 'active' : '' }}"><i class="fas fa-clipboard-list"></i> <span>Request Documents</span></a></li>
-        <li><a href="{{ route('brgycomplaint.index') }}" class="{{ request()->routeIs('brgycomplaint.*') ? 'active' : '' }}"><i class="fas fa-balance-scale"></i> <span>Barangay Complaint</span></a></li>
-        <li><a href="{{ route('barangayprojects.index') }}" class="{{ request()->routeIs('barangayprojects.*') ? 'active' : '' }}"><i class="fas fa-building"></i>  <span>Barangay Projects</span></a></li>
         <li><a href="{{ route('requestedclearance') }}" class="{{ request()->routeIs('requestedclearance') ? 'active' : '' }}"><i class="fas fa-certificate"></i> <span>Barangay Clearance</span></a></li>
         <li><a href="{{ route('requestedindigency') }}" class="{{ request()->routeIs('requestedindigency') ? 'active' : '' }}"><i class="fas fa-certificate"></i> <span>Barangay Indigency</span></a></li>
 
