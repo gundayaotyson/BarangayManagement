@@ -1,0 +1,35 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('sk_services', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('resident_id')->constrained('residents');
+            $table->string('firstname');
+            $table->string('lastname');
+            $table->string('school');
+            $table->string('school_year');
+            $table->string('type_of_service');
+            $table->string('status');
+            $table->string('attachment')->nullable();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('sk_services');
+    }
+};
