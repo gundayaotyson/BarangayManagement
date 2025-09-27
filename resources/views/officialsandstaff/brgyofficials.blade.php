@@ -30,7 +30,6 @@
             box-shadow: var(--box-shadow);
             overflow: hidden;
             transition: var(--transition);
-            padding: 1.25rem 1.5rem;
         }
 
         .card:hover {
@@ -70,13 +69,13 @@
         }
 
         .btn-success {
-            background-color: var(--success-color);
-            border-color: var(--success-color);
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
         }
 
         .btn-success:hover {
-            background-color: #219653;
-            border-color: #219653;
+            background-color: var(--primary-color);
+            border-color:var(--primary-color);
             transform: translateY(-2px);
         }
 
@@ -505,7 +504,7 @@
                                         @endif
                                     </td>
                                     <td class="action-column">
-                                        <button class="btn btn-primary btn-sm editOfficialBtn" data-bs-toggle="modal"
+                                        <button class="btn btn-warning btn-sm editOfficialBtn" data-bs-toggle="modal"
                                             data-bs-target="#editOfficialModal" data-id="{{ $official->id }}"
                                             data-fullname="{{ $official->fullname }}" data-position="{{ $official->position }}"
                                             data-term_start="{{ $official->term_start }}"

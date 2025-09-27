@@ -222,7 +222,7 @@
                 </div>
                   <!-- Back Button -->
     <div class="text-center">
-        <a href="{{ route('skuser.dashboard') }}" class="btn btn-back">
+        <a href="{{ route('bhw.dashboard') }}" class="btn btn-back">
             <i class="fas fa-arrow-left"></i> Back to Dashboard
         </a>
     </div>

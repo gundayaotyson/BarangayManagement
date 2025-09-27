@@ -68,13 +68,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/sk-dashboard/services', [SKdashboardController::class, 'services'])->name('sk.services');
     Route::get('/sk-dashboard/projects/{id}/view', [SKProjectController::class, 'getProject'])->name('sk.projects.view');
     Route::get('/sk-profile', [ProfileController::class, 'editskProfile'])->name('skuser.profile');
+    Route::post('/sk-services', [SKServiceController::class, 'store'])->name('sk-services.store');
+    Route::put('/sk-services/{id}', [SKServiceController::class, 'update'])->name('skuser.services.update');
+    Route::delete('/sk-services/{id}', [SKServiceController::class, 'destroy'])->name('skuser.services.destroy');
 
-    Route::resource('/brgycomplaint', BarangaycomplaintsController::class);
-    Route::get('/brgycomplaint', [BarangaycomplaintsController::class, 'index'])->name('brgycomplaint.index');
-    Route::post('/brgycomplaint', [BarangaycomplaintsController::class, 'store'])->name('brgycomplaint.store');
-    // Route::get('/brgycomplaint/{brgycomplaint}/edit', [BarangayComplaintController::class, 'edit'])->name('brgycomplaint.edit');
-    Route::put('/brgycomplaint/{id}', [BarangaycomplaintsController::class, 'update'])->name('brgycomplaint.update');
-    Route::delete('/brgycomplaint/{id}', [BarangaycomplaintsController::class, 'destroy'])->name('brgycomplaint.destroy');
+
 
     // officials and staff
     Route::resource('barangayofficials', BarangayOfficialsController::class);
@@ -84,23 +82,39 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/barangayofficials/{id}', [BarangayOfficialsController::class, 'destroy'])->name('barangayofficials.destroy');
     Route::put('/barangayofficials/{id}', [BarangayOfficialsController::class, 'update'])->name('barangayofficials.update');
     Route::get('/resident-info/{id}', [BarangayofficialsController::class, 'getResidentInfo']);
-
+     Route::resource('/brgycomplaint', BarangaycomplaintsController::class);
+    Route::get('/brgycomplaint', [BarangaycomplaintsController::class, 'index'])->name('brgycomplaint.index');
+    Route::post('/brgycomplaint', [BarangaycomplaintsController::class, 'store'])->name('brgycomplaint.store');
+    // Route::get('/brgycomplaint/{brgycomplaint}/edit', [BarangayComplaintController::class, 'edit'])->name('brgycomplaint.edit');
+    Route::put('/brgycomplaint/{id}', [BarangaycomplaintsController::class, 'update'])->name('brgycomplaint.update');
+    Route::delete('/brgycomplaint/{id}', [BarangaycomplaintsController::class, 'destroy'])->name('brgycomplaint.destroy');
 
 
     Route::get('/autocomplete-residents', [BarangayOfficialsController::class, 'autocompleteResidents'])->name('autocomplete.residents');
 
+    //  BHW Routes
     Route::get('/bhw/dashboard', [BHWController::class, 'dashboard'])->name('bhw.dashboard');
+    Route::get('/bhwprofile', [ProfileController::class, 'editbhwProfile'])->name('bhw.profile');
+
+
+    // Senior Routes
     Route::get('/senior/dashboard', [SeniorController::class, 'dashboard'])->name('senior.dashboard');
+    Route::get('/senior-profile', [ProfileController::class, 'editseniorProfile'])->name('senior.profile');
+
+    // Fourps Routes
     Route::get('/4ps/dashboard', [FourpsController::class, 'dashboard'])->name('4ps.dashboard');
+    Route::get('/4psprofile', [ProfileController::class, 'edit4psProfile'])->name('4ps.profile');
+
+
+
     Route::get('/resident/dashboard', [ResidentController::class, 'dashboard'])->name('resident.dashboard');
+     Route::get('/resident-profile', [ProfileController::class, 'residentProfile'])->name('resident.profile');
     Route::get('/resident/services', [ResidentController::class, 'services'])->name('resident.services');
     Route::get('/resident/complaints', [ResidentController::class, 'complaints'])->name('resident.complaints');
     Route::get('/resident/requests', [ResidentController::class, 'requests'])->name('resident.requests');
-    Route::post('/sk-services', [SKServiceController::class, 'store'])->name('sk-services.store');
-    Route::put('/sk-services/{id}', [SKServiceController::class, 'update'])->name('skuser.services.update');
-    Route::delete('/sk-services/{id}', [SKServiceController::class, 'destroy'])->name('skuser.services.destroy');
+
     Route::get('/barangay-official/dashboard', [BarangayofficialsController::class, 'dashboard'])->name('barangay_official.dashboard');
-        Route::get('/officials-profile', [ProfileController::class, 'editofficialsProfile'])->name('barangayofficials.profile');
+    Route::get('/officials-profile', [ProfileController::class, 'editofficialsProfile'])->name('barangayofficials.profile');
 
 });
 
@@ -146,6 +160,8 @@ Route::middleware(['auth'])->group(function () {
 // Route::delete('/barangay-projects/{id}', [BarangayProjectController::class, 'destroy'])->name('barangayprojects.destroy');
 // Route::get('/barangayprojects/{id}/edit', [BarangayProjectController::class, 'edit']);
 // Barangay Projects Routes
+
+
     Route::get('/barangayprojects', [BarangayProjectController::class, 'index'])->name('barangayprojects.index');
     Route::get('/barangayprojects/create', [BarangayProjectController::class, 'create'])->name('barangayprojects.create');
     Route::post('/barangayprojects', [BarangayProjectController::class, 'store'])->name('barangayprojects.store');

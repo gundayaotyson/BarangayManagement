@@ -61,4 +61,24 @@ class ProfileController extends Controller
         $user = Auth::user(); // Get the authenticated user
         return view('barangay_official.profile', compact('user'));
     }
+        public function residentProfile()
+        {
+            $user = Auth::user(); // Get the authenticated user
+            return view('resident.profile', compact('user'));
+        }
+        public function editseniorProfile()
+        {
+            $user = Auth::user(); // Get the authenticated user
+            return view('senior.profile', compact('user'));
+        }
+        public function edit4psProfile()
+        {
+            $user = Auth::user(); // Get the authenticated user
+            return view('4ps.profile', compact('user'));
+        }
+        public function editbhwProfile()
+        {
+            $user = Auth::user(); // Get the authenticated user
+            return view('bhw.profile', compact('user'));
+        }
 }
