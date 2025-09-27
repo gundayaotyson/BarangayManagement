@@ -23,10 +23,10 @@
         align-items: center;
         margin-bottom: 2rem;
         padding: 1.5rem;
-        background: linear-gradient(135deg, var(--primary-color) 0%, #1a2530 100%);
+        background:white;
         border-radius: var(--border-radius);
-        color: white;
-        box-shadow: var(--box-shadow);
+        color: var(--primary-color);
+
     }
 
     .dashboard-header h1 {
@@ -99,16 +99,15 @@
     .card-header {
         background-color: white;
         border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        padding: 1.25rem 1.5rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
 
     .card-header h2 {
-        margin: 0;
-        font-size: 1.4rem;
-        font-weight: 600;
+        margin-right: 300px;
+        font-size: 30px;
+        /* font-weight: 600; */
         color: var(--primary-color);
     }
 
@@ -126,14 +125,14 @@
     }
 
     .btn-success {
-        background-color: var(--success-color);
+        background-color: var(--primary-color);
         color: white;
     }
 
     .btn-success:hover {
-        background-color: #219653;
+        background-color: var(--primary-color);
         transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(39, 174, 96, 0.3);
+
     }
 
     .btn-primary {
@@ -173,7 +172,6 @@
 
     /* Table Styling */
     .table-responsive {
-        border-radius: var(--border-radius);
         overflow: hidden;
     }
 
@@ -316,13 +314,15 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 1.5rem;
+        /* margin-bottom: 1.5rem; */
+        padding: 1.5rem;
         flex-wrap: wrap;
         gap: 1rem;
     }
 
     .search-box {
-        position: relative;
+        position:absolute;
+        margin-right: 100px;
         flex-grow: 1;
         max-width: 300px;
     }
@@ -490,15 +490,14 @@
 <div class="card">
     <div class="card-header">
         <h2 class="mb-0">Complaints Record</h2>
-               <div class="table-controls">
-            <div class="search-box">
-                <i class="fas fa-search search-icon"></i>
-                <input type="text" class="form-control" placeholder="Search complaints..." id="searchInput">
+            <div class="table-controls">
+                <div class="search-box">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="form-control" placeholder="Search complaints..." id="searchInput">
+                </div>
+
             </div>
-
-        </div>
         <div class="table-controls">
-
             <select class="form-select filter-select" id="statusFilter">
                 <option value="">All Statuses</option>
                 <option value="Active Case">Active</option>

@@ -35,6 +35,7 @@ class LegaldocumentsController extends Controller
                 'gender' => 'required|in:male,female',
                 'purpose' => 'required|string',
                 'pickup_date' => 'required|date',
+                'service_type' => 'required|string',
               ]);
 
                 // Find matching resident by full name (with improved handling for not found)
@@ -63,6 +64,7 @@ class LegaldocumentsController extends Controller
                 'pickup_date' => $request->pickup_date,
                 'tracking_code' => $trackingCode,
                 'status' => 'pending', // Default status
+                'service_type' => $request->service_type,
 
             ]);
 

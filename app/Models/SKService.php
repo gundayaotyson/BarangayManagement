@@ -22,6 +22,10 @@ class SKService extends Model
         'attachment',
     ];
 
+    protected $casts = [
+        'released_date' => 'datetime',
+    ];
+
     public function resident()
     {
         return $this->belongsTo(Resident::class);

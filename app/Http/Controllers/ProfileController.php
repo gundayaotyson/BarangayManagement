@@ -50,4 +50,15 @@ class ProfileController extends Controller
 
         return back()->with('success', 'Profile updated successfully!');
     }
+     public function editskProfile()
+    {
+        $user = Auth::user(); // Get the authenticated user
+        return view('skuser.profile', compact('user'));
+    }
+
+     public function editofficialsProfile()
+    {
+        $user = Auth::user(); // Get the authenticated user
+        return view('barangay_official.profile', compact('user'));
+    }
 }

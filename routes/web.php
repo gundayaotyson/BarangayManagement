@@ -67,6 +67,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/sk-dashboard/projects/{sKProject}', [SKProjectController::class, 'destroy'])->name('sk.projects.destroy');
     Route::get('/sk-dashboard/services', [SKdashboardController::class, 'services'])->name('sk.services');
     Route::get('/sk-dashboard/projects/{id}/view', [SKProjectController::class, 'getProject'])->name('sk.projects.view');
+    Route::get('/sk-profile', [ProfileController::class, 'editskProfile'])->name('skuser.profile');
 
     Route::resource('/brgycomplaint', BarangaycomplaintsController::class);
     Route::get('/brgycomplaint', [BarangaycomplaintsController::class, 'index'])->name('brgycomplaint.index');
@@ -96,7 +97,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/resident/complaints', [ResidentController::class, 'complaints'])->name('resident.complaints');
     Route::get('/resident/requests', [ResidentController::class, 'requests'])->name('resident.requests');
     Route::post('/sk-services', [SKServiceController::class, 'store'])->name('sk-services.store');
+    Route::put('/sk-services/{id}', [SKServiceController::class, 'update'])->name('skuser.services.update');
+    Route::delete('/sk-services/{id}', [SKServiceController::class, 'destroy'])->name('skuser.services.destroy');
     Route::get('/barangay-official/dashboard', [BarangayofficialsController::class, 'dashboard'])->name('barangay_official.dashboard');
+        Route::get('/officials-profile', [ProfileController::class, 'editofficialsProfile'])->name('barangayofficials.profile');
+
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -107,6 +112,7 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/BarangayCobolServices', [BarangayServicesController::class, 'webgenerallayout'])->name('webgenerallayout');
 Route::get('/BarangayCobolServices/Clearance', [LegaldocumentsController::class, 'BrgyClearance'])->name('brgyclearance');
 Route::post('/BarangayCobolServices/Clearance/submit', [LegaldocumentsController::class, 'storeClearance'])->name('clearance.store');
+Route::post('/legal-documents/store-clearance', [LegaldocumentsController::class, 'storeClearance'])->name('legal-documents.store-clearance');
 
 Route::get('/clearance/view/{id}', [LegaldocumentsController::class, 'showClearance'])
     ->name('clearance.view');

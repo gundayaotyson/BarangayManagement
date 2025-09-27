@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('school_year');
             $table->string('type_of_service');
             $table->string('status');
+            $table->timestamp('released_date')->nullable();
             $table->string('attachment')->nullable();
             $table->timestamps();
         });

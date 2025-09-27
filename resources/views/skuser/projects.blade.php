@@ -162,6 +162,7 @@
                 <form id="editProjectForm" method="POST">
                     @csrf
                     @method('PUT')
+                    <input type="hidden" id="edit-project-id" name="id">
                     <div class="mb-3">
                         <label for="edit-project-name" class="form-label">Project Name</label>
                         <input type="text" class="form-control" id="edit-project-name" name="project_name" required>
@@ -232,55 +233,53 @@
     </div>
 </div>
 
-@endsection
-
-@push('scripts')
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // View Modal
-        const viewProjectModal = document.getElementById('viewProjectModal');
-        viewProjectModal.addEventListener('show.bs.modal', function(event) {
-            const button = event.relatedTarget;
-            const project = JSON.parse(button.getAttribute('data-project'));
+document.addEventListener('DOMContentLoaded', function () {
+    // View project modal
+    var viewProjectModal = document.getElementById('viewProjectModal');
+    viewProjectModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget;
+        var project = JSON.parse(button.getAttribute('data-project'));
 
-            document.getElementById('view-project-name').textContent = project.project_name;
-            document.getElementById('view-purok').textContent = project.purok;
-            document.getElementById('view-category').textContent = project.category;
-            document.getElementById('view-start-date').textContent = project.start_date;
-            document.getElementById('view-target-date').textContent = project.target_date;
-            document.getElementById('view-progress').textContent = project.progress;
-            document.getElementById('view-budget').textContent = project.budget;
-            document.getElementById('view-status').textContent = project.status;
-        });
-
-        // Edit Modal
-        const editProjectModal = document.getElementById('editProjectModal');
-        editProjectModal.addEventListener('show.bs.modal', function(event) {
-            const button = event.relatedTarget;
-            const project = JSON.parse(button.getAttribute('data-project'));
-
-            document.getElementById('edit-project-name').value = project.project_name;
-            document.getElementById('edit-purok').value = project.purok;
-            document.getElementById('edit-category').value = project.category;
-            document.getElementById('edit-start-date').value = project.start_date;
-            document.getElementById('edit-target-date').value = project.target_date;
-            document.getElementById('edit-progress').value = project.progress;
-            document.getElementById('edit-budget').value = project.budget;
-            document.getElementById('edit-status').value = project.status;
-
-            const form = document.getElementById('editProjectForm');
-            form.action = `/sk-dashboard/projects/${project.id}`;
-        });
-
-        // Delete Modal
-        const deleteProjectModal = document.getElementById('deleteProjectModal');
-        deleteProjectModal.addEventListener('show.bs.modal', function(event) {
-            const button = event.relatedTarget;
-            const projectId = button.getAttribute('data-project-id');
-
-            const form = document.getElementById('deleteProjectForm');
-            form.action = `/sk-dashboard/projects/${projectId}`;
-        });
+        document.getElementById('view-project-name').textContent = project.project_name;
+        document.getElementById('view-purok').textContent = project.purok;
+        document.getElementById('view-category').textContent = project.category;
+        document.getElementById('view-start-date').textContent = project.start_date;
+        document.getElementById('view-target-date').textContent = project.target_date;
+        document.getElementById('view-progress').textContent = project.progress;
+        document.getElementById('view-budget').textContent = project.budget;
+        document.getElementById('view-status').textContent = project.status;
     });
+
+    // Edit project modal
+    var editProjectModal = document.getElementById('editProjectModal');
+    editProjectModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget;
+        var project = JSON.parse(button.getAttribute('data-project'));
+
+        document.getElementById('edit-project-id').value = project.id;
+        document.getElementById('edit-project-name').value = project.project_name;
+        document.getElementById('edit-purok').value = project.purok;
+        document.getElementById('edit-category').value = project.category;
+        document.getElementById('edit-start-date').value = project.start_date;
+        document.getElementById('edit-target-date').value = project.target_date;
+        document.getElementById('edit-progress').value = project.progress;
+        document.getElementById('edit-budget').value = project.budget;
+        document.getElementById('edit-status').value = project.status;
+
+        var form = document.getElementById('editProjectForm');
+                form.action = '/sk-dashboard/projects/' + project.id;  // Update form action
+    });
+
+    // Delete project modal
+    var deleteProjectModal = document.getElementById('deleteProjectModal');
+    deleteProjectModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget;
+        var projectId = button.getAttribute('data-project-id');
+        var form = document.getElementById('deleteProjectForm');
+       form.action = '/sk-dashboard/projects/' + projectId;
+    });
+});
 </script>
-@endpush
+
+@endsection

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\SkService;
 
 class SKdashboardController extends Controller
 {
@@ -19,6 +20,7 @@ class SKdashboardController extends Controller
     }
 
     public function services(){
-        return view('skuser.services');
+        $skServices = SkService::all();
+        return view('skuser.services', compact('skServices'));
     }
 }

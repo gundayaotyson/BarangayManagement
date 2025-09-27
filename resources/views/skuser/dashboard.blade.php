@@ -92,6 +92,7 @@
 
 <!-- Sidebar -->
 <div class="sidebar">
+
     <h2>Dashboard</h2>
     <ul>
         <li>
@@ -122,6 +123,7 @@
                 </button>
             </form>
         </li>
+
     </ul>
 </div>
 

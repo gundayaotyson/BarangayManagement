@@ -36,4 +36,30 @@ class SKServiceController extends Controller
 
         return redirect()->back()->with('success', 'SK Service request submitted successfully.');
     }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|string|in:Pending,Approved,Released,Declined',
+        ]);
+
+        $service = SKService::findOrFail($id);
+        $service->status = $request->status;
+
+        if ($request->status == 'Released') {
+            $service->released_date = now();
+        }
+
+        $service->save();
+
+        return redirect()->back()->with('success', 'SK Service status updated successfully.');
+    }
+
+    public function destroy($id)
+    {
+        $service = SKService::findOrFail($id);
+        $service->delete();
+
+        return redirect()->back()->with('success', 'SK Service request deleted successfully.');
+    }
 }
