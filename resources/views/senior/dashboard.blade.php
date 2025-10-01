@@ -301,8 +301,8 @@
     </div>
 
     <ul>
-        <li><a href="#" class="active"><i class="fas fa-home"></i> <span>Home</span></a></li>
-        <li><a href="#"><i class="fas fa-user"></i> <span>Profile</span></a></li>
+        <li><a href="dashboard" class="active"><i class="fas fa-home"></i> <span>Home</span></a></li>
+            <li><a href="{{ route('senior.list') }}"><i class="fas fa-list"></i> <span>Senior List</span></a></li>
     </ul>
 </nav>
 

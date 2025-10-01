@@ -1,13 +1,36 @@
 @extends('resident.resident-layout')
 
+<!-- Font Awesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+{{-- Scripts --}}
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 @section('content')
 <style>
+    :root {
+        --primary-color: #3498db;
+        --primary-dark: #2980b9;
+        --secondary-color: #2ecc71;
+        --success-color: #27ae60;
+        --danger-color: #e74c3c;
+        --warning-color: #f39c12;
+        --dark-color: #2c3e50;
+        --light-color: #ecf0f1;
+        --text-color: #333;
+        --text-muted: #6c757d;
+        --primary-light: #e3f2fd;
+        --border-color: #ddd;
+        --shadow-color: rgba(0, 0, 0, 0.1);
+    }
+
     .hero-section {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 3rem 0;
+        background:var(--dark-color);
+        color: var(--light-color);
         margin-bottom: 3rem;
-        border-radius: 0 0 2rem 2rem;
+        border-radius:1rem;
+        padding: 2rem 0;
         position: relative;
         overflow: hidden;
     }
@@ -31,7 +54,7 @@
     .service-card {
         border: none;
         border-radius: 1rem;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 10px 30px var(--shadow-color);
         transition: all 0.3s ease;
         height: 100%;
         position: relative;
@@ -45,7 +68,7 @@
         left: 0;
         right: 0;
         height: 4px;
-        background: linear-gradient(90deg, #667eea, #764ba2);
+        background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
     }
 
     .service-card:hover {
@@ -61,18 +84,18 @@
     .service-icon {
         width: 60px;
         height: 60px;
-        background: linear-gradient(135deg, #667eea, #764ba2);
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         margin: 0 auto 1.5rem;
-        color: white;
+        color: var(--light-color);
         font-size: 24px;
     }
 
     .btn-apply {
-        background: linear-gradient(135deg, #667eea, #764ba2);
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
         border: none;
         border-radius: 50px;
         padding: 0.75rem 2rem;
@@ -86,18 +109,18 @@
     .btn-apply:hover {
         transform: translateY(-2px);
         box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
-        background: linear-gradient(135deg, #5a6fd8, #6a42a0);
+        background: linear-gradient(135deg, var(--primary-dark), var(--primary-dark));
     }
 
     .requests-section {
-        background: #f8f9fa;
+        background: var(--light-color);
         border-radius: 1rem;
         padding: 2rem;
         margin-top: 3rem;
     }
 
     .requests-title {
-        color: #2c3e50;
+        color: var(--dark-color);
         font-weight: 700;
         margin-bottom: 1.5rem;
         position: relative;
@@ -111,36 +134,34 @@
         left: 0;
         width: 60px;
         height: 3px;
-        background: linear-gradient(90deg, #667eea, #764ba2);
+        background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
         border-radius: 3px;
     }
 
     .table-container {
-        background: white;
-        border-radius: 1rem;
+        background: var(--light-color);
         overflow: hidden;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 5px 20px var(--shadow-color);
     }
 
     .table thead th {
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        color: white;
+        background: var(--dark-color);
+        color: var(--light-color);
         border: none;
         font-weight: 600;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
         font-size: 0.875rem;
         padding: 1rem;
     }
 
     .table tbody td {
         padding: 1rem;
-        border-color: #e9ecef;
+        border-color: var(--border-color);
         vertical-align: middle;
     }
 
     .table tbody tr:hover {
-        background-color: #f8f9fa;
+        background-color: var(--light-color);
     }
 
     .status-badge {
@@ -152,18 +173,18 @@
     }
 
     .status-pending {
-        background-color: #fff3cd;
-        color: #856404;
+        background-color: var(--warning-color);
+        color: var(--dark-color);
     }
 
     .status-approved {
-        background-color: #d4edda;
-        color: #155724;
+        background-color: var(--success-color);
+        color: var(--light-color);
     }
 
     .status-rejected {
-        background-color: #f8d7da;
-        color: #721c24;
+        background-color: var(--danger-color);
+        color: var(--light-color);
     }
 
     .modal-content {
@@ -173,8 +194,8 @@
     }
 
     .modal-header {
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        color: white;
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        color: var(--light-color);
         border: none;
         border-radius: 1rem 1rem 0 0;
         padding: 1.5rem 2rem;
@@ -191,24 +212,24 @@
 
     .form-group label {
         font-weight: 600;
-        color: #2c3e50;
+        color: var(--dark-color);
         margin-bottom: 0.5rem;
     }
 
     .form-control {
-        border: 2px solid #e9ecef;
+        border: 2px solid var(--border-color);
         border-radius: 0.5rem;
         padding: 0.75rem;
         transition: all 0.3s ease;
     }
 
     .form-control:focus {
-        border-color: #667eea;
-        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
     }
 
     .btn-submit {
-        background: linear-gradient(135deg, #667eea, #764ba2);
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
         border: none;
         border-radius: 0.5rem;
         padding: 0.75rem 2rem;
@@ -218,18 +239,18 @@
     }
 
     .btn-submit:hover {
-        background: linear-gradient(135deg, #5a6fd8, #6a42a0);
+        background: linear-gradient(135deg, var(--primary-dark), var(--primary-dark));
         transform: translateY(-1px);
     }
 
     .close {
-        color: white;
+        color: var(--light-color);
         opacity: 0.8;
         font-size: 1.5rem;
     }
 
     .close:hover {
-        color: white;
+        color: var(--light-color);
         opacity: 1;
     }
 
@@ -295,7 +316,7 @@
     </div>
 
     <div class="requests-section">
-        <h3 class="requests-title">My SK Service Requests</h3>
+        <h3 class="requests-title"> SK Service Requests</h3>
         <div class="table-container">
             <div class="table-responsive">
                 <table class="table table-hover mb-0">
@@ -540,13 +561,6 @@
     </div>
 </div>
 
-<!-- Font Awesome Icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
-{{-- Scripts --}}
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <script>
     // Set minimum date for pickup date to tomorrow

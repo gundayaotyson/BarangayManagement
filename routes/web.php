@@ -99,6 +99,11 @@ Route::middleware(['auth'])->group(function () {
 
     // Senior Routes
     Route::get('/senior/dashboard', [SeniorController::class, 'dashboard'])->name('senior.dashboard');
+    Route::get('/senior/list', [SeniorController::class, 'list'])->name('senior.list');
+    Route::post('/senior/store', [SeniorController::class, 'store'])->name('senior.store');
+    Route::get('seniors/{senior}/json', [SeniorController::class, 'getSeniorJson'])->name('senior.json');
+    Route::put('seniors/{senior}', [SeniorController::class, 'update'])->name('senior.update');
+    Route::delete('seniors/{senior}', [SeniorController::class, 'destroy'])->name('senior.destroy');
     Route::get('/senior-profile', [ProfileController::class, 'editseniorProfile'])->name('senior.profile');
 
     // Fourps Routes

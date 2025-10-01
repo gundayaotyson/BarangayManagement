@@ -1,9 +1,9 @@
 @extends('skuser.dashboard')
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 @section('content')
 <style>
     :root {
-        --primary-color: #4361ee;
+        --primary-color: #2c3e50;
         --primary-dark: #3a53c4;
         --secondary-color: #f7b801;
         --text-color: #333;
@@ -77,8 +77,8 @@
     }
 
     .table-modern thead th {
-        background-color: #f1f3f5;
-        color: var(--text-color);
+        background-color: #2c3e50;
+        color: var(--bg-color);
         /* font-weight: 600; */
         text-align: center;
         /* padding: 1rem 1.5rem; */
@@ -279,7 +279,7 @@
     <div class="card-header">
         <h5 class="card-title mb-0">Service Requests</h5>
         <div class="search-form">
-            <input type="text" id="searchInput" class="form-control" placeholder="Search services...">
+            <input type="text" id="searchInput" class="form-control" placeholder="Search Name...">
         </div>
     </div>
     <div class="table-responsive">
@@ -426,10 +426,6 @@
         </div>
     </div>
 @endforeach
-
-@endsection
-
-@push('scripts')
 <script>
     $(document).ready(function(){
         // Search functionality
@@ -447,5 +443,10 @@
     });
     });
 </script>
+
+@endsection
+
+@push('scripts')
+
 
 @endpush
