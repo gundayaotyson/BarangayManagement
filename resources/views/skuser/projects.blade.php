@@ -1,8 +1,275 @@
 @extends('skuser.dashboard')
 
 @section('content')
-<div class="container">
-    <h1>SK Projects</h1>
+
+<style>
+    :root {
+        --primary-color: #2c3e50;
+        --primary-dark: #3a53c4;
+        --secondary-color: #f7b801;
+        --text-color: #333;
+        --text-muted: #888;
+        --bg-color: #f8f9fa;
+        --card-bg: #fff;
+        --border-color: #dee2e6;
+        --border-radius: 0.5rem;
+        --transition: all 0.3s ease;
+        --box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    }
+
+    .page-header {
+        margin-bottom: 2rem;
+        padding: 0 1rem;
+    }
+
+    .page-header h1 {
+        font-size: 2rem;
+        font-weight: 600;
+        color: var(--text-color);
+        margin: 0 0 0.5rem 0;
+        padding-left: 0.5rem;
+    }
+
+    .page-header .breadcrumb {
+        background: transparent;
+        padding: 0;
+        margin-bottom: 0;
+        padding-left: 0.5rem;
+    }
+
+    .card {
+        background-color: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        overflow: hidden;
+        margin: 0 1rem;
+    }
+
+    .card-header {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 1.5rem;
+        background-color: transparent;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .card-header .card-title {
+        margin-bottom: 0.5rem;
+        padding-left: 0.5rem;
+    }
+
+    .card-header .search-form {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+        width: 100%;
+    }
+
+    .table-modern {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0;
+    }
+
+    .table-modern thead th {
+        background-color: #2c3e50;
+        color: var(--bg-color);
+        text-align: center;
+        border-bottom: 2px solid var(--border-color);
+        padding: 1rem 1.5rem;
+    }
+
+    .table-modern tbody tr {
+        transition: var(--transition);
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .table-modern tbody tr:last-child {
+        border-bottom: none;
+    }
+
+    .table-modern tbody tr:hover {
+        background-color: #f8f9fa;
+    }
+
+    .table-modern tbody td {
+        vertical-align: middle;
+        text-align: center;
+        white-space: nowrap;
+        padding: 1rem 1.5rem;
+    }
+
+    .table-modern tbody td:first-child {
+        color: var(--text-color);
+        font-weight: 500;
+    }
+
+    .status-badge {
+        display: inline-block;
+        padding: 0.35em 0.65em;
+        font-size: .75em;
+        font-weight: 700;
+        line-height: 1;
+        color: #fff;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: 50rem;
+    }
+
+    .status-pending { background-color: #ffc107; }
+    .status-approved { background-color:  #17a2b8; }
+    .status-released { background-color: #28a745; }
+    .status-declined { background-color: #dc3545; }
+
+    .actions-group {
+        display: flex;
+        justify-content: center;
+    }
+
+    .actions-group .btn {
+        margin-right: 0.5rem;
+        transition: var(--transition);
+        position: relative;
+    }
+
+    .actions-group .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .modal-header {
+        border-bottom: 1px solid var(--border-color);
+        background-color: #f8f9fa;
+    }
+
+    .modal-title {
+        font-weight: 600;
+    }
+
+    .modal-body p {
+        margin-bottom: 0.75rem;
+    }
+
+    .modal-body p strong {
+        color: var(--text-color);
+    }
+
+    /* Tooltip Customization */
+    .tooltip {
+        font-size: 0.875rem;
+    }
+
+    .tooltip-inner {
+        background-color: var(--text-color);
+        color: white;
+        border-radius: 0.25rem;
+        padding: 0.5rem 0.75rem;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    .tooltip.bs-tooltip-top .tooltip-arrow::before {
+        border-top-color: var(--text-color);
+    }
+
+    .tooltip.bs-tooltip-bottom .tooltip-arrow::before {
+        border-bottom-color: var(--text-color);
+    }
+
+    .tooltip.bs-tooltip-start .tooltip-arrow::before {
+        border-left-color: var(--text-color);
+    }
+
+    .tooltip.bs-tooltip-end .tooltip-arrow::before {
+        border-right-color: var(--text-color);
+    }
+
+    @media (max-width: 768px) {
+        .content-container {
+            padding: 1rem;
+        }
+
+        .page-header {
+            padding: 0 0.5rem;
+        }
+
+        .page-header h1 {
+            font-size: 1.5rem;
+            padding-left: 0.25rem;
+        }
+
+        .page-header .breadcrumb {
+            padding-left: 0.25rem;
+        }
+
+        .card {
+            margin: 0 0.5rem;
+        }
+
+        .card-header {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 1rem;
+        }
+
+        .card-header .card-title {
+            padding-left: 0;
+            margin-bottom: 1rem;
+        }
+
+        .card-header .search-form {
+            width: 100%;
+            margin-top: 0.5rem;
+            max-width: 100%;
+        }
+
+        .table-modern thead th,
+        .table-modern tbody td {
+            padding: 0.8rem 1rem;
+        }
+
+        .table-modern tbody td:first-child {
+            padding-left: 1rem;
+        }
+
+        .actions-group {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 0.3rem;
+        }
+
+        .actions-group .btn {
+            width: 100%;
+            margin-right: 0;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        /* Adjust tooltip positioning for mobile */
+        .tooltip {
+            font-size: 0.8rem;
+        }
+    }
+
+    @media (min-width: 1400px) {
+        .content-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+    }
+</style>
+
+<div class="content-container">
+    <div class="page-header">
+        <h1>SK Projects</h1>
+
+    </div>
 
     @if (session('success'))
         <div class="alert alert-success">
@@ -11,15 +278,15 @@
     @endif
 
     <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="card-title mb-0">Projects List</h5>
+        <div class="card-header">
+            <h5 class="card-title">Projects List</h5>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProjectModal">
                 <i class="fas fa-plus"></i> Add Project
             </button>
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-hover" id="projectsTable">
+                <table class="table table-modern" id="projectsTable">
                     <thead>
                         <tr>
                             <th>Project Name</th>
@@ -52,17 +319,38 @@
                                 </div>
                             </td>
                             <td>{{ $project->budget }}</td>
-                            <td>{{ $project->status }}</td>
                             <td>
-                                <button type="button" class="btn btn-sm btn-info view-project-btn" data-bs-toggle="modal" data-bs-target="#viewProjectModal" data-project='@json($project)'>
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                                <button type="button" class="btn btn-sm btn-warning edit-project-btn" data-bs-toggle="modal" data-bs-target="#editProjectModal" data-project='@json($project)'>
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button type="button" class="btn btn-sm btn-danger delete-project-btn" data-bs-toggle="modal" data-bs-target="#deleteProjectModal" data-project-id="{{ $project->id }}">
-                                    <i class="fas fa-trash"></i>
-                                </button>
+                                @php
+                                    $statusClass = '';
+                                    switch($project->status) {
+                                        case 'Not Started':
+                                            $statusClass = 'status-pending';
+                                            break;
+                                        case 'In Progress':
+                                            $statusClass = 'status-approved';
+                                            break;
+                                        case 'Completed':
+                                            $statusClass = 'status-released';
+                                            break;
+                                        case 'On Hold':
+                                            $statusClass = 'status-declined';
+                                            break;
+                                    }
+                                @endphp
+                                <span class="status-badge {{ $statusClass }}">{{ $project->status }}</span>
+                            </td>
+                            <td>
+                                <div class="actions-group">
+                                    <button type="button" class="btn btn-sm btn-info view-project-btn" data-bs-toggle="modal" data-bs-target="#viewProjectModal" data-project='@json($project)' title="View Project">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-warning edit-project-btn" data-bs-toggle="modal" data-bs-target="#editProjectModal" data-project='@json($project)' title="Edit Project">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-danger delete-project-btn" data-bs-toggle="modal" data-bs-target="#deleteProjectModal" data-project-id="{{ $project->id }}" title="Delete Project">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                         @endforeach
@@ -268,7 +556,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('edit-status').value = project.status;
 
         var form = document.getElementById('editProjectForm');
-                form.action = '/sk-dashboard/projects/' + project.id;  // Update form action
+        form.action = '/sk-dashboard/projects/' + project.id;  // Update form action
     });
 
     // Delete project modal
@@ -277,9 +565,8 @@ document.addEventListener('DOMContentLoaded', function () {
         var button = event.relatedTarget;
         var projectId = button.getAttribute('data-project-id');
         var form = document.getElementById('deleteProjectForm');
-       form.action = '/sk-dashboard/projects/' + projectId;
+        form.action = '/sk-dashboard/projects/' + projectId;
     });
 });
 </script>
-
 @endsection

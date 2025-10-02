@@ -44,4 +44,5 @@ class ResidentController extends Controller
 
         return view('resident.requests', compact('resident', 'requests'));
     }
+
 }

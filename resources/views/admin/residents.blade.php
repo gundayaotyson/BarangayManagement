@@ -1,6 +1,4 @@
-Here's the complete code with fixes for both the image display in the edit view and the progress indicator animation, based on your original code:
 
-```php
 @extends('admin.dashboard')
 
 @section('title', 'Residents')

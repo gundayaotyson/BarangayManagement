@@ -1137,7 +1137,7 @@
                 <i class='bx bx-file'></i>
                 <h3>Barangay Clearance</h3>
                 <p>Request your official Barangay Clearance for various transactions</p>
-                <a href="{{ route('resident.register') }}" class="btn">Proceed</a>
+                <a href="{{ route('login') }}" class="btn">Proceed</a>
             </div>
 
             <div class="products-box1">
