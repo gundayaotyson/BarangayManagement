@@ -17,14 +17,25 @@ class ResidentController extends Controller
         return view('resident.dashboard', compact('resident'));
     }
 
-    public function services()
-    {
-        $user = Auth::user();
-        $resident = Resident::where('email', $user->email)->first();
-        $skServices = SKService::where('resident_id', $resident->id)->latest()->get();
+   public function services()
+{
+    $user = Auth::user();
 
-        return view('resident.services', compact('skServices'));
+    // Prefer a relation if you later add user_id & relation
+    // $resident = $user->resident ?? Resident::where('email', $user->email)->first();
+
+    // For now: find by email (backwards-compatible with your current code)
+    $resident = Resident::where('email', $user->email)->first();
+
+    // If no resident found, return empty collection for $skServices (avoid null errors)
+    if ($resident) {
+        $skServices = SKService::where('resident_id', $resident->id)->latest()->get();
+    } else {
+        $skServices = collect(); // empty collection
     }
+
+    return view('resident.services', compact('resident', 'skServices'));
+}
 
     public function complaints()
     {

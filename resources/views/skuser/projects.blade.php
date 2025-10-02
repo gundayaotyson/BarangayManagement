@@ -290,8 +290,10 @@
                     <thead>
                         <tr>
                             <th>Project Name</th>
-                            <th>Purok</th>
+                            <th>Target</th>
                             <th>Category</th>
+                            <th>Possible Action</th>
+                            <th>Commitee</th>
                             <th>Start Date</th>
                             <th>Target Date</th>
                             <th>Progress</th>
@@ -309,8 +311,10 @@
                         @foreach($projects as $project)
                         <tr>
                             <td>{{ $project->project_name }}</td>
-                            <td>{{ $project->purok }}</td>
+                            <td>{{ $project->target }}</td>
                             <td>{{ $project->category }}</td>
+                            <td>{{ $project->possible_action }}</td>
+                            <td>{{ $project->committee }}</td>
                             <td>{{ $project->start_date }}</td>
                             <td>{{ $project->target_date }}</td>
                             <td>
@@ -378,12 +382,20 @@
                         <input type="text" class="form-control" id="project_name" name="project_name" required>
                     </div>
                     <div class="mb-3">
-                        <label for="purok" class="form-label">Purok</label>
-                        <input type="text" class="form-control" id="purok" name="purok" required>
+                        <label for="target" class="form-label">Target</label>
+                        <input type="text" class="form-control" id="target" name="target" required>
                     </div>
                     <div class="mb-3">
                         <label for="category" class="form-label">Category</label>
                         <input type="text" class="form-control" id="category" name="category" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="possible_action" class="form-label">Possible Action</label>
+                        <input type="text" class="form-control" id="possible_action" name="possible_action" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="commitee" class="form-label">Commitee</label>
+                        <input type="text" class="form-control" id="commitee" name="commitee" required>
                     </div>
                     <div class="mb-3">
                         <label for="start_date" class="form-label">Start Date</label>
@@ -426,8 +438,10 @@
             </div>
             <div class="modal-body">
                 <p><strong>Project Name:</strong> <span id="view-project-name"></span></p>
-                <p><strong>Purok:</strong> <span id="view-purok"></span></p>
+                <p><strong>Target:</strong> <span id="view-target"></span></p>
                 <p><strong>Category:</strong> <span id="view-category"></span></p>
+                <p><strong>Possible Action:</strong> <span id="view-possible_action"></span></p>
+                <p><strong>Commitee:</strong> <span id="view-commitee"></span></p>
                 <p><strong>Start Date:</strong> <span id="view-start-date"></span></p>
                 <p><strong>Target Date:</strong> <span id="view-target-date"></span></p>
                 <p><strong>Progress:</strong> <span id="view-progress"></span>%</p>
@@ -456,12 +470,20 @@
                         <input type="text" class="form-control" id="edit-project-name" name="project_name" required>
                     </div>
                     <div class="mb-3">
-                        <label for="edit-purok" class="form-label">Purok</label>
-                        <input type="text" class="form-control" id="edit-purok" name="purok" required>
+                        <label for="edit-target" class="form-label">Target</label>
+                        <input type="text" class="form-control" id="edit-target" name="target" required>
                     </div>
                     <div class="mb-3">
                         <label for="edit-category" class="form-label">Category</label>
                         <input type="text" class="form-control" id="edit-category" name="category" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="possible_action" class="form-label">Possible Action</label>
+                        <input type="text" class="form-control" id="possible_action" name="possible_action" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="commitee" class="form-label">Commitee</label>
+                        <input type="text" class="form-control" id="commitee" name="commitee" required>
                     </div>
                     <div class="mb-3">
                         <label for="edit-start-date" class="form-label">Start Date</label>
@@ -530,8 +552,10 @@ document.addEventListener('DOMContentLoaded', function () {
         var project = JSON.parse(button.getAttribute('data-project'));
 
         document.getElementById('view-project-name').textContent = project.project_name;
-        document.getElementById('view-purok').textContent = project.purok;
+        document.getElementById('view-target').textContent = project.target;
         document.getElementById('view-category').textContent = project.category;
+        document.getElementById('view-possible_action').textContent = project.possible_action;
+        document.getElementById('view-commitee').textContent = project.commitee;
         document.getElementById('view-start-date').textContent = project.start_date;
         document.getElementById('view-target-date').textContent = project.target_date;
         document.getElementById('view-progress').textContent = project.progress;
@@ -547,8 +571,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
         document.getElementById('edit-project-id').value = project.id;
         document.getElementById('edit-project-name').value = project.project_name;
-        document.getElementById('edit-purok').value = project.purok;
+       document.getElementById('view-target').textContent = project.target;
         document.getElementById('edit-category').value = project.category;
+          document.getElementById('view-possible_action').textContent = project.possible_action;
+        document.getElementById('view-commitee').textContent = project.commitee;
         document.getElementById('edit-start-date').value = project.start_date;
         document.getElementById('edit-target-date').value = project.target_date;
         document.getElementById('edit-progress').value = project.progress;

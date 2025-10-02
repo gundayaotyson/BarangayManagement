@@ -26,7 +26,7 @@ class SKService extends Model
         'released_date' => 'datetime',
     ];
 
-    public function resident()
+      public function resident()
     {
         return $this->belongsTo(Resident::class);
     }

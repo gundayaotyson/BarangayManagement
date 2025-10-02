@@ -29,6 +29,15 @@ public function official()
 {
     return $this->hasOne(BarangayOfficial::class);
 }
+// Relationships
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
+    public function skServices()
+    {
+        return $this->hasMany(SKService::class);
+    }
 
 }

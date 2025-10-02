@@ -326,8 +326,10 @@
                             <th>School</th>
                             <th>Year</th>
                             <th>Service Type</th>
-                            <th>Status</th>
                             <th>Date Requested</th>
+                            <th>Released Date</th>
+                            <th>Status</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -337,12 +339,13 @@
                                 <td>{{ $service->school }}</td>
                                 <td>{{ $service->school_year }}</td>
                                 <td>{{ $service->type_of_service }}</td>
+                                  <td>{{ $service->created_at->format('M d, Y') }}</td>
+                                <td>{{ $service->released_date ? $service->released_date->format('M d, Y') : 'N/A' }}</td>
                                 <td>
                                     <span class="status-badge status-{{ strtolower($service->status) }}">
                                         {{ $service->status }}
                                     </span>
                                 </td>
-                                <td>{{ $service->created_at->format('M d, Y') }}</td>
                             </tr>
                         @empty
                             <tr>
@@ -375,6 +378,8 @@
             <div class="modal-body">
                 <form action="{{ route('sk-services.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
+                    <input type="hidden" name="resident_id" value="{{ $resident->id ?? '' }}">
+
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -382,13 +387,19 @@
                                     <i class="fas fa-user me-1"></i>
                                     First Name
                                 </label>
-                                <input type="text" class="form-control" id="firstname" name="firstname" required>
+                                <input type="text" class="form-control" id="firstname" name="firstname"
+                                       value="{{ $resident->Fname ?? '' }}" readonly>
                             </div>
                         </div>
+
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="lastname">Last Name</label>
-                                <input type="text" class="form-control" id="lastname" name="lastname" required>
+                                <label for="lastname">
+                                    <i class="fas fa-user me-1"></i>
+                                    Last Name
+                                </label>
+                                <input type="text" class="form-control" id="lastname" name="lastname"
+                                       value="{{ $resident->lname ?? '' }}" readonly>
                             </div>
                         </div>
                     </div>
@@ -401,25 +412,27 @@
                         <input type="text" class="form-control" id="school" name="school" required>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="school_year">
-                                    <i class="fas fa-calendar me-1"></i>
-                                    School Year
-                                </label>
-                                <input type="text" class="form-control" id="school_year" name="school_year" placeholder="e.g., 2024-2025" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="type_of_service">
-                                    <i class="fas fa-cogs me-1"></i>
-                                    Type of Service
-                                </label>
-                                <input type="text" class="form-control" id="type_of_service" name="type_of_service" required>
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        <label for="school_year">
+                            <i class="fas fa-calendar-alt me-1"></i>
+                            School Year
+                        </label>
+                        <input type="text" class="form-control" id="school_year" name="school_year" placeholder="e.g., 2024-2025" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="type_of_service">
+                            <i class="fas fa-tasks me-1"></i>
+                            Type of Service
+                        </label>
+                        <select class="form-control" id="type_of_service" name="type_of_service" required>
+                            <option value="">Select service type</option>
+                            <option value="Educational Assistance">Educational Assistance</option>
+                            <option value="Youth Leadership Training">Youth Leadership Training</option>
+                            <option value="Sports Program">Sports Program</option>
+                            <option value="Scholarship Program">Scholarship Program</option>
+                            <option value="Other">Other</option>
+                        </select>
                     </div>
 
                     <div class="form-group">
@@ -427,8 +440,10 @@
                             <i class="fas fa-paperclip me-1"></i>
                             Attachment (Optional)
                         </label>
-                        <input type="file" class="form-control-file" id="attachment" name="attachment">
-                        <small class="form-text text-muted">Accepted formats: PDF, DOC, DOCX, JPG, PNG (Max: 5MB)</small>
+                        <input type="file" class="form-control" id="attachment" name="attachment">
+                        <small class="form-text text-muted">
+                            Supported formats: PDF, JPG, PNG (Max: 5MB)
+                        </small>
                     </div>
 
                     <button type="submit" class="btn btn-primary btn-submit">
@@ -560,7 +575,6 @@
         </div>
     </div>
 </div>
-
 
 <script>
     // Set minimum date for pickup date to tomorrow

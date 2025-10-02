@@ -31,7 +31,9 @@ class SKProjectController extends Controller
     {
         $request->validate([
             'project_name' => 'required',
-            'purok' => 'required',
+            'target' => 'required',
+            'possible_action' => 'required',
+            'commitee' => 'required',
             'category' => 'required',
             'start_date' => 'required|date',
             'target_date' => 'required|date',
@@ -68,7 +70,10 @@ class SKProjectController extends Controller
     {
         $request->validate([
             'project_name' => 'required',
-            'purok' => 'required',
+            'target' => 'required',
+            'possible_action' => 'required',
+            'commitee' => 'required',
+            // 'purok' => 'required', --- IGNORE ---
             'category' => 'required',
             'start_date' => 'required|date',
             'target_date' => 'required|date',

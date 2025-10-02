@@ -13,7 +13,9 @@ class SKProject extends Model
 
     protected $fillable = [
         'project_name',
-        'purok',
+        'target',
+        'possible_action',
+        'commitee',
         'category',
         'start_date',
         'target_date',
