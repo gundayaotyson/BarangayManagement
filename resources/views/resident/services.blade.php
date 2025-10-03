@@ -174,14 +174,21 @@
 
     .status-pending {
         background-color: var(--warning-color);
-        color: var(--dark-color);
-    }
-
-    .status-approved {
-        background-color: var(--success-color);
         color: var(--light-color);
     }
 
+    .status-approved {
+        background-color: var(--primary-color);
+        color: var(--light-color);
+    }
+     .status-released {
+        background-color: var(--success-color);
+        color: var(--light-color);
+    }
+    .status-declined {
+        background-color: var(--danger-color);
+        color: var(--light-color);
+    }
     .status-rejected {
         background-color: var(--danger-color);
         color: var(--light-color);
@@ -194,7 +201,7 @@
     }
 
     .modal-header {
-        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        background:var(--primary-dark);
         color: var(--light-color);
         border: none;
         border-radius: 1rem 1rem 0 0;
@@ -244,15 +251,10 @@
     }
 
     .close {
-        color: var(--light-color);
         opacity: 0.8;
         font-size: 1.5rem;
     }
 
-    .close:hover {
-        color: var(--light-color);
-        opacity: 1;
-    }
 
     @media (max-width: 768px) {
         .hero-section {
@@ -431,6 +433,7 @@
                             <option value="Youth Leadership Training">Youth Leadership Training</option>
                             <option value="Sports Program">Sports Program</option>
                             <option value="Scholarship Program">Scholarship Program</option>
+                            <option value="Scholarship Program">Free Printing</option>
                             <option value="Other">Other</option>
                         </select>
                     </div>
@@ -438,11 +441,11 @@
                     <div class="form-group">
                         <label for="attachment">
                             <i class="fas fa-paperclip me-1"></i>
-                            Attachment (Optional)
+                            Attachment
                         </label>
-                        <input type="file" class="form-control" id="attachment" name="attachment">
+                        <input type="file" class="form-control" id="attachment" name="attachment" accept="application/pdf" required>
                         <small class="form-text text-muted">
-                            Supported formats: PDF, JPG, PNG (Max: 5MB)
+                            Supported formats: PDF (Max: 5MB)
                         </small>
                     </div>
 

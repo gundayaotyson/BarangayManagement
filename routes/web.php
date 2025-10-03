@@ -24,6 +24,8 @@ use App\Http\Controllers\ResidentRegistrationController;
 use App\Http\Controllers\SKServiceController;
 use Illuminate\Routing\RouteGroup;
 
+
+
 Route::get('/', [BarangayServicesController::class, 'webgenerallayout'])->name('webgenerallayout');
 
 
@@ -71,7 +73,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/sk-services', [SKServiceController::class, 'store'])->name('sk-services.store');
     Route::put('/sk-services/{id}', [SKServiceController::class, 'update'])->name('skuser.services.update');
     Route::delete('/sk-services/{id}', [SKServiceController::class, 'destroy'])->name('skuser.services.destroy');
-
+ Route::get('/sk-services/attachments/{path}', [SKServiceController::class, 'showAttachment'])->where('path', '.*')->name('sk.attachment');
 
 
     // officials and staff

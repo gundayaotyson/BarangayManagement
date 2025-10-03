@@ -308,7 +308,13 @@
                             <span class="status-badge status-{{ strtolower($service->status) }}">{{ $service->status }}</span>
                         </td>
                         <td>{{ $service->created_at->format('F d, Y') }}</td>
-                        <td>{{ $service->attachment }}</td>
+                        <td>
+                            @if ($service->attachment)
+                                <a href="{{ route('sk.attachment', ['path' => $service->attachment]) }}" target="_blank">View Attachment</a>
+                            @else
+                                N/A
+                            @endif
+                        </td>
                         <td>
                             {{ $service->status == 'Released' && $service->released_date ? $service->released_date->format('F d, Y') : 'N/A' }}
                         </td>
@@ -337,7 +343,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="8" class="text-center">No service requests found.</td>
+                        <td colspan="9" class="text-center">No service requests found.</td>
                     </tr>
                 @endforelse
             </tbody>
@@ -360,7 +366,14 @@
                     <p><strong>School Year:</strong> {{ $service->school_year }}</p>
                     <p><strong>Type of Service:</strong> {{ $service->type_of_service }}</p>
                     <p><strong>Status:</strong> <span class="status-badge status-{{ strtolower($service->status) }}">{{ $service->status }}</span></p>
-
+                    <p><strong>Attachment:</strong>
+                        @if ($service->attachment)
+                            <a href="{{ \Illuminate\Support\Facades\Storage::url($service->attachment) }}" target="_blank">View Attachment</a>
+                            <button class="btn btn-sm btn-primary" onclick="printAttachment('{{ \Illuminate\Support\Facades\Storage::url($service->attachment) }}')">Print</button>
+                        @else
+                            N/A
+                        @endif
+                    </p>
                     <p><strong>Date Requested:</strong> {{ $service->created_at->format('F d, Y') }}</p>
                     <p><strong>Released Date:</strong> {{ $service->status == 'Released' && $service->released_date ? $service->released_date->format('F d, Y') : 'N/A' }}</p>
                 </div>
@@ -427,6 +440,13 @@
     </div>
 @endforeach
 <script>
+    function printAttachment(url) {
+        var printWindow = window.open(url, '_blank');
+        printWindow.onload = function() {
+            printWindow.print();
+        }
+    }
+
     $(document).ready(function(){
         // Search functionality
         $("#searchInput").on("keyup", function() {

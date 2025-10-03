@@ -20,66 +20,60 @@ class BarangayofficialsController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
-    {
-        $request->validate([
-            'fullname' => 'required|string|max:255',
-            'position' => 'required|string|max:255',
-            'term_start' => 'required|date',
-            'term_end' => 'required|date|after_or_equal:term_start',
-            'status' => 'required|in:Active,Inactive',
-        ]);
-        $position = $request->position;
+{
+    $request->validate([
+        'fname'      => 'required|string|max:255',
+        'mname'      => 'nullable|string|max:255',
+        'lname'      => 'required|string|max:255',
+        'position'   => 'required|string|max:255',
+        'term_start' => 'required|date',
+        'term_end'   => 'required|date|after_or_equal:term_start',
+        'status'     => 'required|in:Active,Inactive',
+    ]);
 
-        // Enforce one-time-only positions
-        $uniquePositions = ['Barangay Captain', 'Barangay Treasurer', 'Barangay Secretary'];
-        if (in_array($position, $uniquePositions)) {
-            $exists = BarangayOfficial::where('position', $position)->exists();
-            if ($exists) {
-                return redirect()->back()->withErrors(['position' => "A $position is already assigned. Only one is allowed."])->withInput();
-            }
+    $position = $request->position;
+
+    // Enforce one-time-only positions
+    $uniquePositions = ['Barangay Captain', 'Barangay Treasurer', 'Barangay Secretary'];
+    if (in_array($position, $uniquePositions)) {
+        $exists = BarangayOfficial::where('position', $position)->exists();
+        if ($exists) {
+            return redirect()->back()
+                ->withErrors(['position' => "A $position is already assigned. Only one is allowed."])
+                ->withInput();
         }
-
-        // Enforce max 7 kagawads
-        if ($position === 'Barangay Kagawad') {
-            $kagawadCount = BarangayOfficial::where('position', 'Barangay Kagawad')->count();
-            if ($kagawadCount >= 7) {
-                return redirect()->back()->withErrors(['position' => 'Maximum of 7 Barangay Kagawads allowed.'])->withInput();
-            }
-        }
-        $fullNameParts = explode(' ', $request->fullname);
-        $firstName = $fullNameParts[0];
-        $lastName = $fullNameParts[count($fullNameParts) - 1];
-        $middleName = count($fullNameParts) > 2 ? $fullNameParts[1] : '';
-
-        // More flexible lookup
-        $resident = Resident::where('fname', 'like', "%$firstName%")
-                            ->where('lname', 'like', "%$lastName%")
-                            ->first();
-        // Find resident with matching fullname
-        // $resident = Resident::whereRaw("CONCAT(fname, ' ', mname, ' ', lname) = ?", [$request->fullname])->first();
-
-
-        BarangayOfficial::create([
-            'fullname'     => $request->fullname,
-            'position'     => $request->position,
-            'term_start'   => $request->term_start,
-            'term_end'     => $request->term_end,
-            'status'       => $request->status,
-            'resident_id'  => $resident ? $resident->id : null,
-        ]);
-
-        return redirect()->route('barangayofficials.index')->with('success', 'Barangay Official added successfully!');
     }
 
+    // Enforce max 7 kagawads
+    if ($position === 'Barangay Kagawad') {
+        $kagawadCount = BarangayOfficial::where('position', 'Barangay Kagawad')->count();
+        if ($kagawadCount >= 7) {
+            return redirect()->back()
+                ->withErrors(['position' => 'Maximum of 7 Barangay Kagawads allowed.'])
+                ->withInput();
+        }
+    }
+
+    // Match with resident
+    $resident = Resident::where('fname', 'like', "%{$request->fname}%")
+                        ->where('lname', 'like', "%{$request->lname}%")
+                        ->first();
+
+    BarangayOfficial::create([
+        'fname'       => $request->fname,
+        'mname'       => $request->mname,
+        'lname'       => $request->lname,
+        'position'    => $request->position,
+        'term_start'  => $request->term_start,
+        'term_end'    => $request->term_end,
+        'status'      => $request->status,
+        'resident_id' => $resident ? $resident->id : null,
+    ]);
+
+    return redirect()->route('barangayofficials.index')
+        ->with('success', 'Barangay Official added successfully!');
+}
     /**
      * Display the specified resource.
      */
@@ -105,24 +99,60 @@ class BarangayofficialsController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
-    {
+{
+    $official = BarangayOfficial::findOrFail($id);
 
-        $official = BarangayOfficial::findOrFail($id);
-        $request->validate([
-            'fullname' => 'required|string|max:255',
-            'position' => 'required|string|max:255',
-            'term_start' => 'required|date',
-            'term_end' => 'required|date|after:term_start',
-            'status' => 'required|in:Active,Inactive',
-        ]);
+    $request->validate([
+        'fname'      => 'required|string|max:255',
+        'mname'      => 'nullable|string|max:255',
+        'lname'      => 'required|string|max:255',
+        'position'   => 'required|string|max:255',
+        'term_start' => 'required|date',
+        'term_end'   => 'required|date|after_or_equal:term_start',
+        'status'     => 'required|in:Active,Inactive',
+    ]);
 
+    // Unique position check (exclude self)
+    $uniquePositions = ['Barangay Captain', 'Barangay Treasurer', 'Barangay Secretary'];
+    if (in_array($request->position, $uniquePositions)) {
+        $exists = BarangayOfficial::where('position', $request->position)
+            ->where('id', '!=', $id)
+            ->exists();
 
-        $official = BarangayOfficial::findOrFail($id);
-        $official->update($request->all());
-
-        return redirect()->route('barangayofficials.index');
+        if ($exists) {
+            return redirect()->back()
+                ->withErrors(['position' => "A {$request->position} is already assigned. Only one is allowed."])
+                ->withInput();
+        }
     }
 
+    // Kagawad limit (exclude self)
+    if ($request->position === 'Barangay Kagawad') {
+        $kagawadCount = BarangayOfficial::where('position', 'Barangay Kagawad')
+            ->where('id', '!=', $id)
+            ->count();
+
+        if ($kagawadCount >= 7) {
+            return redirect()->back()
+                ->withErrors(['position' => 'Maximum of 7 Barangay Kagawads allowed.'])
+                ->withInput();
+        }
+    }
+
+    // Update official
+    $official->update([
+        'fname'      => $request->fname,
+        'mname'      => $request->mname,
+        'lname'      => $request->lname,
+        'position'   => $request->position,
+        'term_start' => $request->term_start,
+        'term_end'   => $request->term_end,
+        'status'     => $request->status,
+    ]);
+
+    return redirect()->route(route: 'barangayofficials.index')
+        ->with('success', 'Barangay Official updated successfully!');
+}
     /**
      * Remove the specified resource from storage.
      */

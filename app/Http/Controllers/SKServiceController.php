@@ -5,6 +5,8 @@ use App\Models\Resident;
 use App\Models\SKService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+
 
 class SKServiceController extends Controller
 {
@@ -15,7 +17,8 @@ public function store(Request $request)
         'school' => 'required|string|max:255',
         'school_year' => 'required|string|max:255',
         'type_of_service' => 'required|string|max:255',
-        'attachment' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+        'attachment' => 'required|file|mimes:pdf|max:2048',
+
     ]);
 
     $user = Auth::user();
@@ -64,5 +67,13 @@ public function store(Request $request)
         $service->delete();
 
         return redirect()->back()->with('success', 'SK Service request deleted successfully.');
+    }
+      public function showAttachment($path)
+    {
+        if (!Storage::disk('public')->exists($path)) {
+            abort(404);
+        }
+
+        return Storage::disk('public')->response($path);
     }
 }
