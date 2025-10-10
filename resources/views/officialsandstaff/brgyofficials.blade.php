@@ -738,56 +738,63 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form id="editOfficialForm" method="POST" action="">
-                            @csrf
-                            @method('PUT')
-                            <input type="hidden" id="edit_id" name="id">
-                            <div class="row mb-3">
-                                <div class="col-md-4">
-                                    <label for="edit_fname" class="form-label">First Name</label>
-                                    <input type="text" name="fname" id="edit_fname" class="form-control" required>
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="edit_mname" class="form-label">Middle Name</label>
-                                    <input type="text" name="mname" id="edit_mname" class="form-control">
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="edit_lname" class="form-label">Last Name</label>
-                                    <input type="text" name="lname" id="edit_lname" class="form-control" required>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="edit_position" class="form-label">Position</label>
-                                <select id="edit_position" name="position" class="form-select" required>
-                                    <option value="Barangay Captain">Barangay Captain</option>
-                                    <option value="Barangay Kagawad">Barangay Kagawad</option>
-                                    <option value="Barangay Secretary">Barangay Secretary</option>
-                                    <option value="Barangay Treasurer">Barangay Treasurer</option>
-                                    <option value="SK Chairman">SK Chairman</option>
-                                </select>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label for="edit_term_start" class="form-label">Term Start</label>
-                                    <input type="date" id="edit_term_start" name="term_start" class="form-control" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="edit_term_end" class="form-label">Term End</label>
-                                    <input type="date" id="edit_term_end" name="term_end" class="form-control" required>
-                                </div>
-                            </div>
-                            <div class="mb-4">
-                                <label for="edit_status" class="form-label">Status</label>
-                                <select id="edit_status" name="status" class="form-select" required>
-                                    <option value="Active">Active</option>
-                                    <option value="Inactive">Inactive</option>
-                                </select>
-                            </div>
-                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                <button type="submit" class="btn btn-primary">Update Official</button>
-                            </div>
-                        </form>
+<form id="editOfficialForm" method="POST" action="">
+    @csrf
+    @method('PUT')
+    <input type="hidden" id="edit_id" name="id">
+
+
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label for="edit_fname" class="form-label">First Name</label>
+            <input type="text" name="fname" id="edit_fname" class="form-control" required>
+        </div>
+        <div class="col-md-4">
+            <label for="edit_mname" class="form-label">Middle Name</label>
+            <input type="text" name="mname" id="edit_mname" class="form-control">
+        </div>
+        <div class="col-md-4">
+            <label for="edit_lname" class="form-label">Last Name</label>
+            <input type="text" name="lname" id="edit_lname" class="form-control" required>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="edit_position" class="form-label">Position</label>
+        <select id="edit_position" name="position" class="form-select" required>
+            <option value="Barangay Captain">Barangay Captain</option>
+            <option value="Barangay Kagawad">Barangay Kagawad</option>
+            <option value="Barangay Secretary">Barangay Secretary</option>
+            <option value="Barangay Treasurer">Barangay Treasurer</option>
+            <option value="SK Chairman">SK Chairman</option>
+        </select>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label for="edit_term_start" class="form-label">Term Start</label>
+            <input type="date" id="edit_term_start" name="term_start" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+            <label for="edit_term_end" class="form-label">Term End</label>
+            <input type="date" id="edit_term_end" name="term_end" class="form-control" required>
+        </div>
+    </div>
+
+    <div class="mb-4">
+        <label for="edit_status" class="form-label">Status</label>
+        <select id="edit_status" name="status" class="form-select" required>
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+        </select>
+    </div>
+
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-primary">Update Official</button>
+    </div>
+</form>
+
                     </div>
                 </div>
             </div>
@@ -951,21 +958,23 @@
                     });
                 });
 
-                // Edit form submission with SweetAlert
-                document.getElementById('editOfficialForm').addEventListener('submit', function (e) {
-                    e.preventDefault();
-                    const form = this;
+// Edit form submission with SweetAlert
+document.getElementById('editOfficialForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const form = this;
 
-                    Swal.fire({
-                        title: 'Updating Official',
-                        text: 'Please wait...',
-                        allowOutsideClick: false,
-                        didOpen: () => {
-                            Swal.showLoading();
-                            form.submit();
-                        }
-                    });
-                });
+    Swal.fire({
+        title: 'Updating Official',
+        text: 'Please wait...',
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+            // Native form submit (para hindi ma-trigger ulit yung event listener)
+            HTMLFormElement.prototype.submit.call(form);
+        }
+    });
+});
+
 
                 // Delete confirmation with SweetAlert
                 document.querySelectorAll('.delete-form').forEach(form => {
@@ -997,18 +1006,23 @@
                 });
 
                 // Edit button click handler
-                document.querySelectorAll('.editOfficialBtn').forEach(button => {
-                    button.addEventListener('click', function () {
-                        document.getElementById('edit_id').value = this.dataset.id;
-                        document.getElementById('edit_fname').value = this.dataset.fname;
-                        document.getElementById('edit_mname').value = this.dataset.mname;
-                        document.getElementById('edit_lname').value = this.dataset.lname;
-                        document.getElementById('edit_position').value = this.dataset.position;
-                        document.getElementById('edit_term_start').value = this.dataset.term_start;
-                        document.getElementById('edit_term_end').value = this.dataset.term_end;
-                        document.getElementById('edit_status').value = this.dataset.status;
-                    });
-                });
+document.querySelectorAll('.editOfficialBtn').forEach(button => {
+    button.addEventListener('click', function () {
+        document.getElementById('edit_id').value = this.dataset.id;
+        document.getElementById('edit_fname').value = this.dataset.fname;
+        document.getElementById('edit_mname').value = this.dataset.mname;
+        document.getElementById('edit_lname').value = this.dataset.lname;
+        document.getElementById('edit_position').value = this.dataset.position;
+        document.getElementById('edit_term_start').value = this.dataset.term_start;
+        document.getElementById('edit_term_end').value = this.dataset.term_end;
+        document.getElementById('edit_status').value = this.dataset.status;
+
+        // ✅ Use dataset.id directly
+        document.getElementById('editOfficialForm').action =
+            "/barangayofficials/" + this.dataset.id;
+    });
+});
+
 
                 // Date validation
                 const termStartInput = document.getElementById('term_start');

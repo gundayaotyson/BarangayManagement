@@ -60,6 +60,7 @@ class BarangayofficialsController extends Controller
                         ->where('lname', 'like', "%{$request->lname}%")
                         ->first();
 
+
     BarangayOfficial::create([
         'fname'       => $request->fname,
         'mname'       => $request->mname,
@@ -98,10 +99,12 @@ class BarangayofficialsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+public function update(Request $request, string $id)
 {
     $official = BarangayOfficial::findOrFail($id);
 
+
+    // Validation
     $request->validate([
         'fname'      => 'required|string|max:255',
         'mname'      => 'nullable|string|max:255',
@@ -139,20 +142,23 @@ class BarangayofficialsController extends Controller
         }
     }
 
+    // Build fullname from fname + mname + lname
+    $fullname = trim("{$request->fname} {$request->mname} {$request->lname}");
+
     // Update official
     $official->update([
-        'fname'      => $request->fname,
-        'mname'      => $request->mname,
-        'lname'      => $request->lname,
+        'fullname'   => $fullname,
         'position'   => $request->position,
         'term_start' => $request->term_start,
         'term_end'   => $request->term_end,
         'status'     => $request->status,
+        'resident_id'=> $official->resident_id, // kung may relation
     ]);
 
-    return redirect()->route(route: 'barangayofficials.index')
+    return redirect()->route('barangayofficials.index')
         ->with('success', 'Barangay Official updated successfully!');
 }
+
     /**
      * Remove the specified resource from storage.
      */
