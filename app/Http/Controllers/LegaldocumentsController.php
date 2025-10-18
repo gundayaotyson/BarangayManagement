@@ -27,7 +27,10 @@ class LegaldocumentsController extends Controller
         try {
             // Validate the incoming request data
             $request->validate([
-                'fullname' => 'required|string|max:255',
+                'resident_id' => 'nullable|exists:residents,id',
+                'Fname' => 'required|string|max:255',
+                'mname' => 'required|string|max:255',
+                'lname' => 'required|string|max:255',
                 'address' => 'required|string|max:255',
                 'dateofbirth' => 'required|date',
                 'placeofbirth' => 'required|string|max:255',
@@ -39,11 +42,7 @@ class LegaldocumentsController extends Controller
               ]);
 
                 // Find matching resident by full name (with improved handling for not found)
-                $fullname = strtolower(trim($request->fullname));
-                $resident = Resident::get()->first(function ($r) use ($fullname) {
-                    $name = strtolower(trim($r->Fname . ' ' . $r->lname));
-                    return $name === $fullname;
-                });
+                $resident = Resident::where('Fname', $request->Fname)->where('lname', $request->lname)->first();
                 if (!$resident) {
                     return redirect()->back()->with('error', 'Resident not found!');
                 }
@@ -54,7 +53,9 @@ class LegaldocumentsController extends Controller
             // Create a new clearance request record
             ClearanceReq::create([
              'resident_id' => $resident->id,
-                'fullname' => $request->fullname,
+                'Fname' => $request->Fname,
+                'mname' => $request->mname,
+                'lname' => $request->lname,
                 'address' => $request->address,
                 'dateofbirth' => $request->dateofbirth,
                 'placeofbirth' => $request->placeofbirth,
@@ -188,7 +189,7 @@ public function trackClearance($trackingCode)
         // Return the required details
         return response()->json([
             'success' => true,
-            'fullname' => $clearanceRequest->fullname,
+            'fullname' => $clearanceRequest->Fname . ' ' . $clearanceRequest->mname . ' ' . $clearanceRequest->lname,
             'service_type' => $clearanceRequest->service_type,  // Assuming this column exists
             'request_date' => $clearanceRequest->created_at->format('Y-m-d'),
             'pickup_date' => $clearanceRequest->pickup_date, // Assuming this column exists

@@ -1,5 +1,5 @@
 @extends('skuser.dashboard')
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 @section('content')
 
 <style>
@@ -49,21 +49,23 @@
     .card-header {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between;
+        justify-content: right; /* Changed to distribute space */
         align-items: center;
         padding: 1rem 1.5rem;
         background-color: transparent;
         border-bottom: 1px solid var(--border-color);
+        gap: 1rem; /* Add gap for spacing */
     }
 
     .card-header .card-title {
-        margin-bottom: 0.5rem;
+        margin-right: 24.7rem;
+        margin-bottom: 0;
         padding-left: 0.5rem;
     }
 
     .card-header .search-form {
-        width: 100%;
-        max-width: 300px;
+        flex-grow: 1; /* Allow search form to take available space */
+        width: 200%;
     }
 
     .table-responsive {
@@ -80,9 +82,10 @@
     .table-modern thead th {
         background-color: #2c3e50;
         color: var(--bg-color);
+        /* font-weight: 600; */
         text-align: center;
+        /* padding: 1rem 1.5rem; */
         border-bottom: 2px solid var(--border-color);
-        padding: 1rem 1.5rem;
     }
 
     .table-modern tbody tr {
@@ -99,15 +102,16 @@
     }
 
     .table-modern tbody td {
+
         vertical-align: middle;
         text-align: center;
         white-space: nowrap;
-        padding: 1rem 1.5rem;
     }
 
     .table-modern tbody td:first-child {
         color: var(--text-color);
         font-weight: 500;
+        /* padding-left: 1.5rem; */
     }
 
     .status-badge {
@@ -130,7 +134,6 @@
 
     .actions-group {
         display: flex;
-        justify-content: center;
     }
 
     .actions-group .btn {
@@ -265,104 +268,135 @@
     }
 </style>
 
-<div class="content-container">
-    <div class="page-header">
-        <h1>SK Projects</h1>
+<div class="page-header">
+    <h1 class="page-title">Projects list</h1>
+    <nav aria-label="breadcrumb">
+        <!-- <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('skuser.dashboard') }}">Dashboard</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Services</li>
+        </ol> -->
+    </nav>
+</div>
 
+@if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
     </div>
+@endif
 
-    @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
+<div class="card ">
+    <div class="card-header gap-2">
+         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProjectModal">
+            <i class="fas fa-plus"></i> Add Project
+        </button>
+        <div class="d-flex align-items-center gap-2">
+            <select id="filterYear" class="form-select form-select-sm-0">
+                <option value="">Filter by Year</option>
+                @php
+                    $currentYear = \Carbon\Carbon::now()->year;
+                    $startYear = 2020; // Adjust as needed
+                @endphp
+                @for ($year = $currentYear; $year >= $startYear; $year--)
+                    <option value="{{ $year }}" {{ request('year') == $year ? 'selected' : '' }}>{{ $year }}</option>
+                @endfor
+            </select>
+            <select id="filterMonth" class="form-select form-select-sm-0">
+                <option value="">Filter by Month</option>
+                @php
+                    $months = [
+                        1 => 'January', 2 => 'February', 3 => 'March', 4 => 'April', 5 => 'May', 6 => 'June',
+                        7 => 'July', 8 => 'August', 9 => 'September', 10 => 'October', 11 => 'November', 12 => 'December'
+                    ];
+                @endphp
+                @foreach ($months as $monthNumber => $monthName)
+                    <option value="{{ $monthNumber }}" {{ request('month') == $monthNumber ? 'selected' : '' }}>{{ $monthName }}</option>
+                @endforeach
+            </select>
+             <div class="search-form ">
+            <input type="text" id="searchInput" class="form-control" placeholder="Search Project Name...">
         </div>
-    @endif
-
-    <div class="card">
-        <div class="card-header">
-            <h5 class="card-title">Projects List</h5>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProjectModal">
-                <i class="fas fa-plus"></i> Add Project
-            </button>
         </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-modern" id="projectsTable">
-                    <thead>
-                        <tr>
-                            <th>Project Name</th>
-                            <th>Target</th>
-                            <th>Category</th>
-                            <th>Possible Action</th>
-                            <th>Commitee</th>
-                            <th>Start Date</th>
-                            <th>Target Date</th>
-                            <th>Progress</th>
-                            <th>Budget</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if($projects->isEmpty())
-                        <tr>
-                            <td colspan="9" class="text-center">No projects available.</td>
-                        </tr>
-                        @else
-                        @foreach($projects as $project)
-                        <tr>
-                            <td>{{ $project->project_name }}</td>
-                            <td>{{ $project->target }}</td>
-                            <td>{{ $project->category }}</td>
-                            <td>{{ $project->possible_action }}</td>
-                            <td>{{ $project->committee }}</td>
-                            <td>{{ $project->start_date }}</td>
-                            <td>{{ $project->target_date }}</td>
-                            <td>
-                                <div class="progress">
-                                    <div class="progress-bar" role="progressbar" style="width: {{ $project->progress }}%;" aria-valuenow="{{ $project->progress }}" aria-valuemin="0" aria-valuemax="100">{{ $project->progress }}%</div>
-                                </div>
-                            </td>
-                            <td>{{ $project->budget }}</td>
-                            <td>
-                                @php
-                                    $statusClass = '';
-                                    switch($project->status) {
-                                        case 'Not Started':
-                                            $statusClass = 'status-pending';
-                                            break;
-                                        case 'In Progress':
-                                            $statusClass = 'status-approved';
-                                            break;
-                                        case 'Completed':
-                                            $statusClass = 'status-released';
-                                            break;
-                                        case 'On Hold':
-                                            $statusClass = 'status-declined';
-                                            break;
-                                    }
-                                @endphp
-                                <span class="status-badge {{ $statusClass }}">{{ $project->status }}</span>
-                            </td>
-                            <td>
-                                <div class="actions-group">
-                                    <button type="button" class="btn btn-sm btn-info view-project-btn" data-bs-toggle="modal" data-bs-target="#viewProjectModal" data-project='@json($project)' title="View Project">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-sm btn-warning edit-project-btn" data-bs-toggle="modal" data-bs-target="#editProjectModal" data-project='@json($project)' title="Edit Project">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-sm btn-danger delete-project-btn" data-bs-toggle="modal" data-bs-target="#deleteProjectModal" data-project-id="{{ $project->id }}" title="Delete Project">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        @endforeach
-                        @endif
-                    </tbody>
-                </table>
-            </div>
-        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-modern" id="projectsTable">
+            <thead>
+                <tr>
+                    <th>Project Name</th>
+                    <th>Target</th>
+                    <th>Category</th>
+                    <th>Possible Action</th>
+                    <th>Commitee</th>
+                    <th>Start Date</th>
+                    <th>Target Date</th>
+                    <th>Progress</th>
+                    <th>Budget</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if($projects->isEmpty())
+                <tr>
+                    <td colspan="11" class="text-center">No projects available.</td>
+                </tr>
+                @else
+                @foreach($projects as $project)
+                <tr>
+                    <td>{{ $project->project_name }}</td>
+                    <td>{{ $project->target }}</td>
+                    <td>{{ $project->category }}</td>
+                    <td>{{ $project->possible_action }}</td>
+                    <td>{{ $project->commitee }}</td>
+                    <td>{{ $project->start_date }}</td>
+                    <td>{{ $project->target_date }}</td>
+                    <td>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: {{ $project->progress }}%;" aria-valuenow="{{ $project->progress }}" aria-valuemin="0" aria-valuemax="100">{{ $project->progress }}%</div>
+                        </div>
+                    </td>
+                    <td>{{ $project->budget }}</td>
+                    <td>
+                        @php
+                            $statusClass = '';
+                            switch($project->status) {
+                                case 'Not Started':
+                                    $statusClass = 'status-pending';
+                                    break;
+                                case 'In Progress':
+                                    $statusClass = 'status-approved';
+                                    break;
+                                case 'Completed':
+                                    $statusClass = 'status-released';
+                                    break;
+                                case 'On Hold':
+                                    $statusClass = 'status-declined';
+                                    break;
+                            }
+                        @endphp
+                        <span class="status-badge {{ $statusClass }}">{{ $project->status }}</span>
+                    </td>
+                    <td class="actions-group">
+                        <span data-bs-toggle="tooltip" data-bs-container="body" data-bs-placement="top" title="View Project">
+                            <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#viewProjectModal" data-project='@json($project)'>
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </span>
+                        <span data-bs-toggle="tooltip" data-bs-container="body" data-bs-placement="top" title="Edit Project">
+                            <button type="button" class="btn btn-sm btn-outline-warning" data-bs-toggle="modal" data-bs-target="#editProjectModal" data-project='@json($project)'>
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </span>
+                        <span data-bs-toggle="tooltip" data-bs-container="body" data-bs-placement="top" title="Delete Project">
+                            <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteProjectModal" data-project-id="{{ $project->id }}">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </span>
+                    </td>
+                </tr>
+                @endforeach
+                @endif
+            </tbody>
+        </table>
     </div>
 </div>
 
@@ -478,12 +512,12 @@
                         <input type="text" class="form-control" id="edit-category" name="category" required>
                     </div>
                     <div class="mb-3">
-                        <label for="possible_action" class="form-label">Possible Action</label>
-                        <input type="text" class="form-control" id="possible_action" name="possible_action" required>
+                        <label for="edit_possible_action" class="form-label">Possible Action</label>
+                        <input type="text" class="form-control" id="edit_possible_action" name="possible_action" required>
                     </div>
                     <div class="mb-3">
-                        <label for="commitee" class="form-label">Commitee</label>
-                        <input type="text" class="form-control" id="commitee" name="commitee" required>
+                        <label for="edit_commitee" class="form-label">Commitee</label>
+                        <input type="text" class="form-control" id="edit_commitee" name="commitee" required>
                     </div>
                     <div class="mb-3">
                         <label for="edit-start-date" class="form-label">Start Date</label>
@@ -522,14 +556,14 @@
 
 <!-- Delete Project Modal -->
 <div class="modal fade" id="deleteProjectModal" tabindex="-1" aria-labelledby="deleteProjectModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered ">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="deleteProjectModalLabel">Delete Project</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>Are you sure you want to delete this project?</p>
+                <p>Are you sure you want to delete the project <strong><span id="delete-project-name"></span></strong>?</p>
             </div>
             <div class="modal-footer">
                 <form id="deleteProjectForm" method="POST">
@@ -571,10 +605,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
         document.getElementById('edit-project-id').value = project.id;
         document.getElementById('edit-project-name').value = project.project_name;
-       document.getElementById('view-target').textContent = project.target;
+        document.getElementById('edit-target').value = project.target;
         document.getElementById('edit-category').value = project.category;
-          document.getElementById('view-possible_action').textContent = project.possible_action;
-        document.getElementById('view-commitee').textContent = project.commitee;
+        document.getElementById('edit_possible_action').value = project.possible_action;
+        document.getElementById('edit_commitee').value = project.commitee;
         document.getElementById('edit-start-date').value = project.start_date;
         document.getElementById('edit-target-date').value = project.target_date;
         document.getElementById('edit-progress').value = project.progress;
@@ -590,8 +624,39 @@ document.addEventListener('DOMContentLoaded', function () {
     deleteProjectModal.addEventListener('show.bs.modal', function (event) {
         var button = event.relatedTarget;
         var projectId = button.getAttribute('data-project-id');
+        var projectName = button.closest('tr').querySelector('td:first-child').textContent; // Assuming project name is in the first column
         var form = document.getElementById('deleteProjectForm');
         form.action = '/sk-dashboard/projects/' + projectId;
+        document.getElementById('delete-project-name').textContent = projectName;
+    });
+});
+
+$(document).ready(function(){
+    // Search functionality
+    $("#searchInput").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#projectsTable tbody tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+
+    // Filtering functionality for year and month
+    $('#filterYear, #filterMonth').on('change', function() {
+        var year = $('#filterYear').val();
+        var month = $('#filterMonth').val();
+ var url = "{{ url('/sk-dashboard/projects') }}"; // Use full URL instead of route name
+        var params = [];
+        if (year) params.push('year=' + year);
+        if (month) params.push('month=' + month);
+        if (params.length > 0) url += '?' + params.join('&');
+
+        window.location.href = url;
+    });
+
+    // Initialize Bootstrap tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
     });
 });
 </script>

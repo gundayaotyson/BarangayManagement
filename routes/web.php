@@ -61,8 +61,7 @@ Route::middleware(['auth'])->group(function () {
     // skRoutes
     Route::get('/user/dashboard', [SKdashboardController::class, 'index'])->name('skuser.dashboard');
     Route::get('/sk-dashboard/home', [SKdashboardController::class, 'home'])->name('sk.home');
-    Route::get('/sk-dashboard/projects', [SKProjectController::class, 'index'])->name('sk.projects');
-    Route::post('/sk-dashboard/projects', [SKProjectController::class, 'store'])->name('sk.projects.store');
+    Route::get('/sk-dashboard/projects', [SKdashboardController::class, 'projects'])->name('sk.projects');    Route::post('/sk-dashboard/projects', [SKProjectController::class, 'store'])->name('sk.projects.store');
     Route::get('/sk-dashboard/projects/{sKProject}', [SKProjectController::class, 'show'])->name('sk.projects.show');
     Route::get('/sk-dashboard/projects/{sKProject}/edit', [SKProjectController::class, 'edit'])->name('sk.projects.edit');
     Route::put('/sk-dashboard/projects/{sKProject}', [SKProjectController::class, 'update'])->name('sk.projects.update');

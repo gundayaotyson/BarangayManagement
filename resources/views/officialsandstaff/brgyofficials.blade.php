@@ -586,12 +586,12 @@
 
                                 <div class="info-group">
                                     <div class="info-label">Full Name</div>
-                                    <div class="info-value" id="view-fullname"></div>
+                                    <div class="info-value" id="view-fullname"> </div>
                                 </div>
 
                                 <div class="info-group">
                                     <div class="info-label">Gender</div>
-                                    <div class="info-value" id="view-gender"></div>
+                                    <div class="info-value" id="view-gender-detail"></div>
                                 </div>
 
                                 <div class="info-group">
@@ -738,62 +738,62 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-<form id="editOfficialForm" method="POST" action="">
-    @csrf
-    @method('PUT')
-    <input type="hidden" id="edit_id" name="id">
+                        <form id="editOfficialForm" method="POST" action="">
+                            @csrf
+                            @method('PUT')
+                            <input type="hidden" id="edit_id" name="id">
 
 
-    <div class="row mb-3">
-        <div class="col-md-4">
-            <label for="edit_fname" class="form-label">First Name</label>
-            <input type="text" name="fname" id="edit_fname" class="form-control" required>
-        </div>
-        <div class="col-md-4">
-            <label for="edit_mname" class="form-label">Middle Name</label>
-            <input type="text" name="mname" id="edit_mname" class="form-control">
-        </div>
-        <div class="col-md-4">
-            <label for="edit_lname" class="form-label">Last Name</label>
-            <input type="text" name="lname" id="edit_lname" class="form-control" required>
-        </div>
-    </div>
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label for="edit_fname" class="form-label">First Name</label>
+                                    <input type="text" name="fname" id="edit_fname" class="form-control" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="edit_mname" class="form-label">Middle Name</label>
+                                    <input type="text" name="mname" id="edit_mname" class="form-control">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="edit_lname" class="form-label">Last Name</label>
+                                    <input type="text" name="lname" id="edit_lname" class="form-control" required>
+                                </div>
+                            </div>
 
-    <div class="mb-3">
-        <label for="edit_position" class="form-label">Position</label>
-        <select id="edit_position" name="position" class="form-select" required>
-            <option value="Barangay Captain">Barangay Captain</option>
-            <option value="Barangay Kagawad">Barangay Kagawad</option>
-            <option value="Barangay Secretary">Barangay Secretary</option>
-            <option value="Barangay Treasurer">Barangay Treasurer</option>
-            <option value="SK Chairman">SK Chairman</option>
-        </select>
-    </div>
+                            <div class="mb-3">
+                                <label for="edit_position" class="form-label">Position</label>
+                                <select id="edit_position" name="position" class="form-select" required>
+                                    <option value="Barangay Captain">Barangay Captain</option>
+                                    <option value="Barangay Kagawad">Barangay Kagawad</option>
+                                    <option value="Barangay Secretary">Barangay Secretary</option>
+                                    <option value="Barangay Treasurer">Barangay Treasurer</option>
+                                    <option value="SK Chairman">SK Chairman</option>
+                                </select>
+                            </div>
 
-    <div class="row mb-3">
-        <div class="col-md-6">
-            <label for="edit_term_start" class="form-label">Term Start</label>
-            <input type="date" id="edit_term_start" name="term_start" class="form-control" required>
-        </div>
-        <div class="col-md-6">
-            <label for="edit_term_end" class="form-label">Term End</label>
-            <input type="date" id="edit_term_end" name="term_end" class="form-control" required>
-        </div>
-    </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="edit_term_start" class="form-label">Term Start</label>
+                                    <input type="date" id="edit_term_start" name="term_start" class="form-control" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="edit_term_end" class="form-label">Term End</label>
+                                    <input type="date" id="edit_term_end" name="term_end" class="form-control" required>
+                                </div>
+                            </div>
 
-    <div class="mb-4">
-        <label for="edit_status" class="form-label">Status</label>
-        <select id="edit_status" name="status" class="form-select" required>
-            <option value="Active">Active</option>
-            <option value="Inactive">Inactive</option>
-        </select>
-    </div>
+                            <div class="mb-4">
+                                <label for="edit_status" class="form-label">Status</label>
+                                <select id="edit_status" name="status" class="form-select" required>
+                                    <option value="Active">Active</option>
+                                    <option value="Inactive">Inactive</option>
+                                </select>
+                            </div>
 
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button type="submit" class="btn btn-primary">Update Official</button>
-    </div>
-</form>
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Update Official</button>
+                            </div>
+                        </form>
 
                     </div>
                 </div>
@@ -848,23 +848,25 @@
                                 }
 
                                 // Personal information
-                                document.getElementById('view-fname').textContent = fname;
-                                document.getElementById('view-lname').textContent = lname;
-                                document.getElementById('view-mname').textContent = mname;
-                                document.getElementById('view-gender').textContent = data.gender;
+                                document.getElementById('view-fullname').textContent = fullName;
+                                document.getElementById('view-gender-detail').textContent = data.gender;
                                 document.getElementById('view-birthday').textContent = data.birthday;
                                 document.getElementById('view-age').textContent = data.age;
                                 document.getElementById('view-birthplace').textContent = data.birthplace;
                                 document.getElementById('view-civil-status').textContent = data.civil_status;
                                 document.getElementById('view-citizenship').textContent = data.Citizenship;
-                                document.getElementById('view-religion').textContent = data.religion || 'Not specified';
+                                 document.getElementById('view-religion').textContent = data.religion || 'Not specified';
+
 
                                 // Contact & address
                                 document.getElementById('view-contact-number').textContent = data.contact_number || 'Not specified';
                                 document.getElementById('view-occupation').textContent = data.occupation || 'Not specified';
                                 document.getElementById('view-household-no').textContent = data.household_no;
                                 document.getElementById('view-purok').textContent = data.purok_no;
-                                document.getElementById('view-sitio').textContent = data.sitio || 'Not specified';
+                                document.getElementById('view-sitio').textContent = data.sitio || 'N/A';
+                                 document.getElementById('view-fname').textContent = fname;
+                                document.getElementById('view-lname').textContent = lname;
+                                document.getElementById('view-mname').textContent = mname;
 
                                 // Set edit button data-id (if present)
                                 document.querySelector('#viewResidentModal .edit-from-view')?.setAttribute('data-id', residentId);

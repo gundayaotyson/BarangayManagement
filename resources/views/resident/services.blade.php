@@ -377,7 +377,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-.body">
                 <form action="{{ route('sk-services.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="resident_id" value="{{ $resident->id ?? '' }}">
@@ -429,10 +429,10 @@
                         </label>
                         <select class="form-control" id="type_of_service" name="type_of_service" required>
                             <option value="">Select service type</option>
-                            <option value="Educational Assistance">Educational Assistance</option>
+                            <!-- <option value="Educational Assistance">Educational Assistance</option>
                             <option value="Youth Leadership Training">Youth Leadership Training</option>
                             <option value="Sports Program">Sports Program</option>
-                            <option value="Scholarship Program">Scholarship Program</option>
+                            <option value="Scholarship Program">Scholarship Program</option> -->
                             <option value="Scholarship Program">Free Printing</option>
                             <option value="Other">Other</option>
                         </select>
@@ -475,6 +475,7 @@
             <div class="modal-body">
                 <form action="{{ route('legal-documents.store-clearance') }}" method="POST">
                     @csrf
+                    <input type="hidden" name="resident_id" value="{{ $resident->id ?? '' }}">
                     <div class="form-group">
                         <label for="service_type">
                             <i class="fas fa-list me-1"></i>
@@ -488,12 +489,38 @@
                         </select>
                     </div>
 
-                    <div class="form-group">
-                        <label for="fullname">
-                            <i class="fas fa-user me-1"></i>
-                            Full Name
-                        </label>
-                        <input type="text" class="form-control" id="fullname" name="fullname" required>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="Fname">
+                                    <i class="fas fa-user me-1"></i>
+                                    First Name
+                                </label>
+                                <input type="text" class="form-control" id="Fname" name="Fname"
+                                       value="{{ $resident->Fname ?? '' }}" readonly>
+                            </div>
+                        </div>
+                         <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="mname">
+                                    <i class="fas fa-user me-1"></i>
+                                    Middle Name
+                                </label>
+                                <input type="text" class="form-control" id="mname" name="mname"
+                                       value="{{ $resident->mname ?? '' }}" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="lname">
+                                    <i class="fas fa-user me-1"></i>
+                                    Last Name
+                                </label>
+                                <input type="text" class="form-control" id="lname" name="lname"
+                                       value="{{ $resident->lname ?? '' }}" readonly>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="form-group">
@@ -501,7 +528,7 @@
                             <i class="fas fa-map-marker-alt me-1"></i>
                             Address
                         </label>
-                        <input type="text" class="form-control" id="address" name="address" required>
+                        <input type="text" class="form-control" id="address" name="address" value="{{ $resident->address ?? '' }}" readonly>
                     </div>
 
                     <div class="row">
@@ -511,13 +538,14 @@
                                     <i class="fas fa-birthday-cake me-1"></i>
                                     Date of Birth
                                 </label>
-                                <input type="date" class="form-control" id="dateofbirth" name="dateofbirth" required>
+                                <input type="date" class="form-control" id="dateofbirth" name="dateofbirth" value="{{ $resident->dateofbirth ?? '' }}" readonly>
+
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="placeofbirth">Place of Birth</label>
-                                <input type="text" class="form-control" id="placeofbirth" name="placeofbirth" required>
+                                <input type="text" class="form-control" id="placeofbirth" name="placeofbirth" value="{{ $resident->placeofbirth ?? '' }}" readonly>
                             </div>
                         </div>
                     </div>
@@ -529,12 +557,8 @@
                                     <i class="fas fa-heart me-1"></i>
                                     Civil Status
                                 </label>
-                                <select class="form-control" id="civil_status" name="civil_status" required>
-                                    <option value="">Select status</option>
-                                    <option value="Single">Single</option>
-                                    <option value="Married">Married</option>
-                                    <option value="Divorced">Divorced</option>
-                                    <option value="Widowed">Widowed</option>
+                                <select class="form-control" id="civil_status" name="civil_status" readonly>
+                                    <option value="{{ $resident->civil_status ?? '' }}">{{ $resident->civil_status ?? '' }}</option>
                                 </select>
                             </div>
                         </div>
@@ -544,10 +568,8 @@
                                     <i class="fas fa-venus-mars me-1"></i>
                                     Gender
                                 </label>
-                                <select class="form-control" id="gender" name="gender" required>
-                                    <option value="">Select gender</option>
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
+                                <select class="form-control" id="gender" name="gender" readonly>
+                                    <option value="{{ $resident->gender ?? '' }}">{{ $resident->gender ?? '' }}</option>
                                 </select>
                             </div>
                         </div>

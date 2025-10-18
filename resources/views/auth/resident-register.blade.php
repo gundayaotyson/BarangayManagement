@@ -236,7 +236,7 @@
                                 </div>
                             </div>
                              <div class="row">
-                                <div class="col-md-6">
+                                <!-- <div class="col-md-6">
                                     <div class="form-floating mb-3">
                                         <input type="text" name="birthplace" id="birthplace" class="form-control" placeholder="Birthplace" required value="{{ old('birthplace') }}">
                                         <label for="birthplace">Birthplace</label>
@@ -254,8 +254,8 @@
                                         <label for="civil_status">Civil Status</label>
                                     </div>
                                 </div>
-                            </div>
-                             <div class="row">
+                            </div> -->
+                             <!-- <div class="row">
                                  <div class="col-md-6">
                                      <div class="form-floating mb-3">
                                         <input type="text" name="Citizenship" id="Citizenship" class="form-control" placeholder="Citizenship" required value="{{ old('Citizenship') }}">
@@ -268,9 +268,9 @@
                                         <label for="occupation">Occupation</label>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
-                            <h5 class="form-section-heading">Contact & Address</h5>
+                            <!-- <h5 class="form-section-heading">Contact & Address</h5>
                              <div class="row">
                                 <div class="col-md-6">
                                      <div class="form-floating mb-3">
@@ -284,8 +284,8 @@
                                         <label for="household_no">House/Lot/Bldg No.</label>
                                     </div>
                                 </div>
-                            </div>
-                             <div class="row">
+                            </div> -->
+                             <!-- <div class="row">
                                 <div class="col-md-6">
                                      <div class="form-floating mb-3">
                                         <select name="purok_no" id="purok_no" class="form-select" required>
@@ -308,7 +308,7 @@
                                         <label for="sitio">Sitio (if applicable)</label>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <h5 class="form-section-heading">Account Credentials</h5>
                              <div class="form-floating mb-3">

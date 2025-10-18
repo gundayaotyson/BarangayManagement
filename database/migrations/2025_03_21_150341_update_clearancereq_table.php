@@ -9,7 +9,9 @@ return new class extends Migration {
     {
         Schema::create('clearancereq', function (Blueprint $table) {
             $table->id();
-            $table->string('fullname');
+            $table->string('Fname');
+            $table->string('mname');
+            $table->string('lname');
             $table->string('address');
             $table->date('dateofbirth');
             $table->string('placeofbirth');

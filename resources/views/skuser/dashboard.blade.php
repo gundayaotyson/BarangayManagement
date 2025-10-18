@@ -347,11 +347,10 @@
             </div>
         </div>
     </div>
-
     <ul>
         <li>
             <a href="{{ route('sk.home') }}" class="{{ request()->routeIs('sk.home') ? 'active' : '' }}">
-                <i class="fas fa-home me-3"></i> <span>Home</span>
+                <i class="fas fa-home me-3"></i> <span>Dashboard</span>
             </a>
         </li>
         <li>
@@ -374,6 +373,8 @@
 <!-- Main Content -->
 <div class="main-content" id="main-content">
    @yield('content')
+
+
 </div>
 
 <!-- Bootstrap JS -->

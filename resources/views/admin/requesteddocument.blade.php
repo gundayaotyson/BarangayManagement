@@ -373,6 +373,7 @@
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="columnDropdown" id="columnSelection">
                     @php
                         $columns = ['Full Name','Address','Date of Birth','Birth Place','Civil Status','Gender','Purpose','Request Date','Pickup Date','Released Date','Tracking Code','Status','Actions'];
+
                     @endphp
                     @foreach ($columns as $index => $column)
                         <li>
@@ -406,7 +407,12 @@
                 <tbody>
                     @forelse($clearanceRequests as $request)
                         <tr>
-                          <td>{{ $request->fullname }}</td>
+                          <!-- <td>{{ $request->Fname}}{{ $request->mname}} {{ $request->lname}}   </td> -->
+                          <td>
+                                {{ $request->resident->lname ?? 'N/A' }},
+                                {{ $request->resident->Fname ?? '' }}
+                                {{ $request->resident->mname ?? '' }}
+                            </td>
                             <td>{{ $request->address }}</td>
                             <td>{{ $request->dateofbirth }}</td>
                             <td>{{ $request->placeofbirth }}</td>

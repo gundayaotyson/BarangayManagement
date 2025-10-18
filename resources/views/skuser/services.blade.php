@@ -48,21 +48,25 @@
     .card-header {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between;
+        justify-content: right; /* Changed to distribute space */
         align-items: center;
         padding: 1rem 1.5rem;
         background-color: transparent;
         border-bottom: 1px solid var(--border-color);
+        gap: 1rem; /* Add gap for spacing */
     }
 
-    .card-header .card-title {
-        margin-bottom: 0.5rem;
+
+   .card-header .card-title {
+        margin-right: 30rem;
+        margin-bottom: 0;
         padding-left: 0.5rem;
     }
 
+
     .card-header .search-form {
-        width: 100%;
-        max-width: 300px;
+        width: 200%;
+        /* max-width: 400px; */
     }
 
     .table-responsive {
@@ -266,7 +270,7 @@
 </style>
 
 <div class="page-header">
-    <h1 class="page-title">SK Services</h1>
+    <h1 class="page-title"> Service Requests</h1>
     <nav aria-label="breadcrumb">
         <!-- <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('skuser.dashboard') }}">Dashboard</a></li>
@@ -276,10 +280,26 @@
 </div>
 
 <div class="card">
-    <div class="card-header">
-        <h5 class="card-title mb-0">Service Requests</h5>
-        <div class="search-form">
-            <input type="text" id="searchInput" class="form-control" placeholder="Search Name...">
+    <div class="card-header gap-2">
+        <div class="d-flex align-items-center gap-2">
+                <select id="filterYear" class="form-select form-select-sm-0">
+                    <option value="">Filter by Year</option>
+                    @php
+                    $currentYear = date('Y');
+                    for ($year = $currentYear; $year >= $currentYear - 10; $year--) {
+                    echo "<option value='{$year}'>{$year}</option>";
+                    }
+                    @endphp
+                </select>
+                <select id="filterMonth" class="form-select form-select-sm-0">
+                    <option value="">Filter by Month</option>
+                    @for ($month = 1; $month <= 12; $month++)
+                    <option value="{{ $month }}">{{ date('F', mktime(0, 0, 0, $month, 1)) }}</option>
+                    @endfor
+                </select>
+                <div class="search-form">
+                    <input type="text" id="searchInput" class="form-control" placeholder="Search Name...">
+                </div>
         </div>
     </div>
     <div class="table-responsive">
@@ -328,7 +348,7 @@
 
                             <!-- Edit Button with Tooltip -->
                             <span data-bs-toggle="tooltip" data-bs-container="body" data-bs-placement="top" title="Edit Status">
-                                <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal{{ $service->id }}">
+                                <button type="button" class="btn btn-sm btn-outline-warning" data-bs-toggle="modal" data-bs-target="#editModal{{ $service->id }}">
                                     <i class="fas fa-edit"></i>
                                 </button>
                             </span>
@@ -425,7 +445,7 @@
                 </div>
                 <div class="modal-body">
                     <p>Are you sure you want to delete this service request for <strong>{{ $service->firstname }} {{ $service->lastname }}</strong>?</p>
-                    <p class="text-danger">This action cannot be undone.</p>
+                     <p class="text-danger">This action cannot be undone.</p>
                 </div>
                 <div class="modal-footer">
                      <form action="{{ route('skuser.services.destroy', $service->id) }}" method="POST">
@@ -448,12 +468,58 @@
     }
 
     $(document).ready(function(){
-        // Search functionality
+        // Combined Search and Filter functionality
         $("#searchInput").on("keyup", function() {
-            var value = $(this).val().toLowerCase();
+ filterTable();
+        });
+
+        $("#filterYear, #filterMonth").on("change", function() {
+ filterTable();
+        });
+
+        function filterTable() {
+            var searchValue = $("#searchInput").val().toLowerCase();
+            var filterYear = $("#filterYear").val();
+            var filterMonth = $("#filterMonth").val();
+
             $("#servicesTable tbody tr").filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                var row = $(this);
+                var textMatch = row.text().toLowerCase().indexOf(searchValue) > -1;
+
+                var dateRequested = row.find('td:eq(5)').text().trim(); // Index 5 is "Date Requested"
+                var dateRequestedObj = new Date(dateRequested);
+                var rowYear = dateRequestedObj.getFullYear();
+                var rowMonth = dateRequestedObj.getMonth() + 1; // Month is 0-indexed
+
+                var yearMatch = filterYear === '' || rowYear == filterYear;
+                var monthMatch = filterMonth === '' || rowMonth == filterMonth;
+
+                row.toggle(textMatch && yearMatch && monthMatch);
             });
+        }
+
+
+        // Initialize Bootstrap tooltips
+ var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+ return new bootstrap.Tooltip(tooltipTriggerEl);
+ });
+    });
+
+    function printAttachment(url) {
+ var printWindow = window.open(url, '_blank');
+ printWindow.onload = function() {
+ printWindow.print();
+ }
+    }
+
+    $(document).ready(function(){
+ // Search functionality
+ $("#searchInput").on("keyup", function() {
+ var value = $(this).val().toLowerCase();
+ $("#servicesTable tbody tr").filter(function() {
+ $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+ });
         });
 
         // Initialize Bootstrap tooltips

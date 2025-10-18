@@ -14,18 +14,22 @@ class Clearancereq extends Model
 
     protected $fillable = [
         'resident_id',
-        'fullname',
+        'Fname',
+        'mname',
+        'lname',
         'address',
         'dateofbirth',
         'placeofbirth',
         'civil_status',
         'gender',
         'purpose',
+        'service_type',
         'pickup_date',
         'tracking_code',
         'status',
         'requested_date', // ✅ Added requested_date
-        'released_date',  // ✅ Keep released_date
+        'released_date',
+          // ✅ Keep released_date
     ];
 
     // Automatically generate tracking_code & set requested_date when creating a new request
