@@ -1056,7 +1056,7 @@
         <nav class="navbar">
             <a href="#home" class="active">Home</a>
             <a href="#about">About</a>
-            <a href="#products">Services</a>
+            <a href="#services">Services</a>
             <a href="#more">Map</a>
             <a href="#contact">Contact</a>
             <a href="#tracking">Track Doc</a>

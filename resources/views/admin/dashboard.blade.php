@@ -372,10 +372,19 @@
                 <a href="#"><i class="fas fa-hands-helping"></i> 4P's Leaders</a>
             </div>
         </li>
+              <li class="dropdown">
+            <a href="#" onclick="toggleDropdown(event)">
+                <i class="fas fa-clipboard-list"></i> <span>Legal Documents</span>
+            </a>
+            <div class="dropdown-content">
+                <a href="{{ route('requesteddocument') }}" class="{{ request()->routeIs('requesteddocument') ? 'active' : '' }}"><i class="fas fa-clipboard-list"></i> <span>Request Documents</span></a>
+                <a href="{{ route('requestedclearance') }}" class="{{ request()->routeIs('requestedclearance') ? 'active' : '' }}"><i class="fas fa-certificate"></i> <span>Barangay Clearance</span></a>
+                <a href="{{ route('requestedindigency') }}" class="{{ request()->routeIs('requestedindigency') ? 'active' : '' }}"><i class="fas fa-certificate"></i> <span>Barangay Indigency</span></a>
+            </div>
+        </li>
+
         <!-- <li><a href="{{ route('reports.index') }}" class="{{ request()->routeIs('reports.*') ? 'active' : '' }}"><i class="fas fa-folder-open"></i> <span>Reports</span></a></li> -->
-        <li><a href="{{ route('requesteddocument') }}" class="{{ request()->routeIs('requesteddocument') ? 'active' : '' }}"><i class="fas fa-clipboard-list"></i> <span>Request Documents</span></a></li>
-        <li><a href="{{ route('requestedclearance') }}" class="{{ request()->routeIs('requestedclearance') ? 'active' : '' }}"><i class="fas fa-certificate"></i> <span>Barangay Clearance</span></a></li>
-        <li><a href="{{ route('requestedindigency') }}" class="{{ request()->routeIs('requestedindigency') ? 'active' : '' }}"><i class="fas fa-certificate"></i> <span>Barangay Indigency</span></a></li>
+
 
         <!-- <li><a href="{{ route('barangayservices') }}" class="{{ request()->routeIs('barangayservices') ? 'active' : '' }}"><i class="fas fa-plus"></i> <span>Barangay Services </span></a></li> -->
         <li><a href="#"><i class="fas fa-clipboard-list"></i> <span>SK Projects</span></a></li>

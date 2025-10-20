@@ -2,7 +2,7 @@
 
 @section('content')
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" /> -->
 <style>
     :root {
         --primary-color: #3498db;
@@ -21,7 +21,6 @@
     }
 
     body {
-        font-family: 'Poppins', sans-serif;
         background-color: var(--light-color);
         color: var(--text-color);
     }
@@ -79,15 +78,12 @@
     .table thead th {
         background-color: var(--dark-color);
         color: white;
-        font-weight: 500;
+        padding: 14px 12px;
+        text-align: center;
+        font-weight: 600;
         text-transform: uppercase;
         font-size: 14px;
         letter-spacing: 0.5px;
-        padding: 0.75rem 1rem;
-        border: none;
-        position: sticky;
-        top: 0;
-        z-index: 10;
     }
 
     .table tbody tr {
@@ -99,10 +95,12 @@
     }
 
     .table td {
-        padding: 0.75rem 1rem;
-        vertical-align: middle;
+        padding: 12px;
+        text-align: center;
         border-bottom: 1px solid var(--border-color);
-        font-size: 14px;
+        white-space: nowrap;
+        vertical-align: middle;
+
     }
 
     .table td:first-child {
@@ -372,7 +370,7 @@
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="columnDropdown" id="columnSelection">
                     @php
-                        $columns = ['Full Name','Address','Date of Birth','Birth Place','Civil Status','Gender','Purpose','Request Date','Pickup Date','Released Date','Tracking Code','Status','Actions'];
+                        $columns = ['Full Name','Address','Service Type','Date of Birth','Birth Place','Civil Status','Gender','Purpose','Request Date','Pickup Date','Released Date','Tracking Code','Status','Actions'];
 
                     @endphp
                     @foreach ($columns as $index => $column)
@@ -393,6 +391,7 @@
         </div>
     </div>
 
+
     <div class="card">
     <div class="table-container">
         <div class="table-responsive">
@@ -409,11 +408,12 @@
                         <tr>
                           <!-- <td>{{ $request->Fname}}{{ $request->mname}} {{ $request->lname}}   </td> -->
                           <td>
-                                {{ $request->resident->lname ?? 'N/A' }},
-                                {{ $request->resident->Fname ?? '' }}
+                                {{ $request->resident->Fname ?? 'N/A' }},
                                 {{ $request->resident->mname ?? '' }}
+                                {{ $request->resident->lname ?? '' }}
                             </td>
                             <td>{{ $request->address }}</td>
+                            <td>{{ $request->service_type }}</td>
                             <td>{{ $request->dateofbirth }}</td>
                             <td>{{ $request->placeofbirth }}</td>
                             <td>{{ $request->civil_status }}</td>

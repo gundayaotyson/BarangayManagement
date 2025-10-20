@@ -235,7 +235,7 @@
 
     <div class="certificate">
         <div class="control-number">
-            <p><strong>CONTROL NO.</strong> {{0}}</p>
+            <p><strong>CONTROL NO.</strong> {{$indigency->id}}</p>
         </div>
         <div class="header">
             <div class="logo">
@@ -269,9 +269,9 @@
         <div class="content">
             <p>To Whom It May Concern:</p>
 
-            <p class="address-line">This is to certify that <u>{{ $indigency->fullname }}</u> OF LEGAL AGE, A BONAFIDE RESIDENT OF Barangay Cobol, San Carlos City, Pangasinan, is personally known to me to be a member of an indigent family in this Barangay. I certify that the above mentioned name is honest.</p>
+            <p class="address-line">This is to certify that <u>{{ $indigency->Fname }} {{ $indigency->mname }}.{{ $indigency->lname }}</u> OF LEGAL AGE, A BONAFIDE RESIDENT OF Barangay Cobol, San Carlos City, Pangasinan, is personally known to me to be a member of an indigent family in this Barangay. I certify that the above mentioned name is honest.</p>
 
-            <p class="address-line">This certification is issued upon the request of <u>{{ $indigency->fullname }}</u> for whatever legal purpose it may serve him/her best.</p>
+            <p class="address-line">This certification is issued upon the request of <u>{{ $indigency->Fname }} {{ $indigency->mname }}. {{ $indigency->lname }}</u> for whatever legal purpose it may serve him/her best.</p>
         </div>
 
         <div class="certification">

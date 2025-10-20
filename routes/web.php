@@ -134,8 +134,7 @@ Route::get('/BarangayCobolServices/Clearance', [LegaldocumentsController::class,
 Route::post('/BarangayCobolServices/Clearance/submit', [LegaldocumentsController::class, 'storeClearance'])->name('clearance.store');
 Route::post('/legal-documents/store-clearance', [LegaldocumentsController::class, 'storeClearance'])->name('legal-documents.store-clearance');
 
-Route::get('/clearance/view/{id}', [LegaldocumentsController::class, 'showClearance'])
-    ->name('clearance.view');
+Route::get('/clearance/view/{id}', [LegaldocumentsController::class, 'showClearance'])->name('clearance.view');
 Route::patch('/update-clearance-status/{id}', [LegaldocumentsController::class, 'updateClearanceStatus'])->name('update-clearance-status');
 Route::delete('/clearance/delete/{id}', [LegaldocumentsController::class, 'destroy'])->name('clearance.delete');
 Route::get('/clearance-requests', [LegaldocumentsController::class, 'clearanceview'])->name('clearance.requests');
@@ -144,7 +143,7 @@ Route::get('/BarangayClearance', [LegaldocumentsController::class, 'clearanceReq
 Route::get('/indigency/view/{id}', [LegaldocumentsController::class, 'showIndigency'])->name('indigency.view');
 Route::get('/BarangayIndigency', [LegaldocumentsController::class, 'indigencyRequested'])->name('requestedindigency');
 Route::get('/BarangayCobolServices/Indigency', [LegaldocumentsController::class, 'index'])->name('brgyindigencyform');
-
+Route::post('/BarangayCobolServices/BarangayPermit', [LegaldocumentsController::class, 'BrgyBussinesspermit'])->name('brgybussniesspermitform');
 // Add this to your routes/web.php
 Route::get('/track-clearance/{trackingCode}', [LegaldocumentsController::class, 'trackClearance']);
 

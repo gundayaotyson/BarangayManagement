@@ -227,11 +227,11 @@
     <!-- Personal Information -->
 <div class="personal-info">
     <p><strong>Full Name:</strong>
-        {{ $clearance->resident->lname ?? '' }},
-        {{ $clearance->resident->Fname ?? '' }}
+        {{ $clearance->resident->Fname ?? '' }},
         {{ $clearance->resident->mname ?? '' }}
+        {{ $clearance->resident->lname ?? '' }}
     </p>
-    <p><strong>Address:</strong> {{ $clearance->resident->purok_no ?? '' }}, {{ $clearance->address}}</p>
+    <p><strong>Address:</strong>{{ $clearance->address}}</p>
     <p><strong>Date of Birth:</strong> {{ $clearance->resident->birthday ?? $clearance->dateofbirth }}</p>
     <p><strong>Place of Birth:</strong> {{ $clearance->resident->birthplace ?? $clearance->placeofbirth }}</p>
     <p><strong>Gender:</strong> {{ ucfirst($clearance->resident->gender ?? $clearance->gender) }}</p>

@@ -4,9 +4,9 @@
 @section('content')
 <style>
     :root {
-        --primary: #4361ee;
+         --primary-color: #3498db;
         --primary-light: rgba(67, 97, 238, 0.1);
-        --secondary: #3f37c9;
+          --secondary-color: #2ecc71;
         --danger: #ef233c;
         --danger-light: rgba(239, 35, 60, 0.1);
         --dark: #2b2d42;
@@ -35,15 +35,17 @@
         text-transform: uppercase;
         font-size: 0.75rem;
         letter-spacing: 0.5px;
-        color: var(--gray);
+        color: var(--light);
         border-bottom-width: 1px;
-        background-color: var(--light);
+        background-color: var(--dark);
         padding: 0.75rem;
+        display:center;
     }
 
     .table td {
         vertical-align: middle;
         padding: 1rem 0.75rem;
+        color: var(--dark);
         border-color: var(--border);
     }
 
@@ -62,19 +64,22 @@
     }
 
     /* Button styling */
-    .btn {
-        border-radius: 0.375rem;
-        padding: 0.375rem 0.75rem;
-        font-size: 0.75rem;
+    .btn-view{
+         color: var(--danger-color);
+        background-color: rgba(208, 0, 122, 0.1);
+        border: none;
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         transition: all 0.2s;
     }
-
-    .btn-outline-primary:hover {
-        background-color: var(--primary-light);
-    }
-
-    .btn-outline-danger:hover {
-        background-color: var(--danger-light);
+.btn-view:hover {
+        background-color: var(--danger-color);
+        color: white;
+        transform: scale(1.1);
     }
 
     /* Search box */
@@ -85,6 +90,18 @@
 
     .search-box .form-control {
         padding-left: 2.5rem;
+    }
+     .search-box::before {
+        content: "\f002";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-color);
+        opacity: 0.5;
+        z-index: 10;
     }
 
     .search-box i {
@@ -98,6 +115,17 @@
     /* Empty state */
     .empty-state {
         padding: 3rem 0;
+    }
+     /* Dropdown Styling */
+    .dropdown-menu {
+        padding: 0.5rem;
+        min-width: 200px;
+        box-shadow: 0 5px 15px var(--shadow-color);
+    }
+
+    .dropdown-item {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
     }
 
     /* Responsive adjustments */
@@ -156,7 +184,7 @@
 </style>
 
 <div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
         <div>
             <h2 class="m-0 text-primary">
                 <i class="fas fa-file-alt me-2"></i>Requested Barangay Clearance
@@ -164,17 +192,17 @@
             <p class="text-muted mb-0">Manage and process clearance requests from residents</p>
         </div>
 
-        <div class="d-flex gap-2">
+        <div class="d-flex gap-2 flex-grow-1 flex-md-grow-0">
             <div class="search-box flex-grow-1">
                 <i class="fas fa-search"></i>
                 <input type="text" id="searchInput" class="form-control" placeholder="Search residents...">
             </div>
 
             <div class="dropdown">
-                <button class="btn btn-outline-primary dropdown-toggle" type="button" id="columnDropdown" data-bs-toggle="dropdown">
-                    <i class="fas fa-table-columns me-1"></i> Columns
+                <button class="btn btn-primary dropdown-toggle" type="button" id="columnDropdown" data-bs-toggle="dropdown">
+                    <i class="fas fa-columns me-1"></i> Columns
                 </button>
-                <ul class="dropdown-menu dropdown-menu-end shadow" id="columnSelection"></ul>
+                <ul class="dropdown-menu dropdown-menu-end" id="columnSelection"></ul>
             </div>
         </div>
     </div>
@@ -250,7 +278,6 @@
                                        title="Generate PDF">
                                         <i class="fas fa-file-pdf"></i>
                                     </a>
-
                                 </div>
                             </td>
                         </tr>

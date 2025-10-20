@@ -528,7 +528,8 @@
                             <i class="fas fa-map-marker-alt me-1"></i>
                             Address
                         </label>
-                        <input type="text" class="form-control" id="address" name="address" value="{{ $resident->address ?? '' }}" readonly>
+                        <input type="text" class="form-control" id="address" name="address" value="{{ $resident->purok_no?? '' }} Cobol San Carlos City Pangasinan"
+                         readonly>
                     </div>
 
                     <div class="row">
@@ -538,14 +539,14 @@
                                     <i class="fas fa-birthday-cake me-1"></i>
                                     Date of Birth
                                 </label>
-                                <input type="date" class="form-control" id="dateofbirth" name="dateofbirth" value="{{ $resident->dateofbirth ?? '' }}" readonly>
+                                <input type="date" class="form-control" id="dateofbirth" name="dateofbirth" value="{{ $resident->birthday ?? '' }}" readonly>
 
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="placeofbirth">Place of Birth</label>
-                                <input type="text" class="form-control" id="placeofbirth" name="placeofbirth" value="{{ $resident->placeofbirth ?? '' }}" readonly>
+                                <input type="text" class="form-control" id="placeofbirth" name="placeofbirth" value="{{ $resident->birthplace?? '' }}" readonly>
                             </div>
                         </div>
                     </div>
@@ -591,15 +592,26 @@
                         <input type="date" class="form-control" id="pickup_date" name="pickup_date" required>
                     </div>
 
-                    <button type="submit" class="btn btn-primary btn-submit">
+                    <input type="submit" class="btn btn-primary btn-submit">
                         <i class="fas fa-paper-plane me-2"></i>
                         Submit Application
-                    </button>
+                    </input>
                 </form>
             </div>
         </div>
     </div>
 </div>
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <strong>There were some problems with your input:</strong>
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 
 <script>
     // Set minimum date for pickup date to tomorrow

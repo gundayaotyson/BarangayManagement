@@ -4,23 +4,24 @@
 @section('content')
 <style>
     :root {
-        --primary-color: #3498db;
-        --secondary-color: #2ecc71;
-        --danger-color: #e74c3c;
-        --warning-color: #f39c12;
-        --dark-color: #2c3e50;
-        --light-color: #ecf0f1;
-        --text-color: #333;
-        --border-color: #ddd;
-        --shadow-color: rgba(0, 0, 0, 0.1);
+         --primary-color: #3498db;
+        --primary-light: rgba(67, 97, 238, 0.1);
+          --secondary-color: #2ecc71;
+        --danger: #ef233c;
+        --danger-light: rgba(239, 35, 60, 0.1);
+        --dark: #2b2d42;
+        --light: #f8f9fa;
+        --gray: #6c757d;
+        --border: #e9ecef;
+        --shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
     }
 
     /* Card and Table Styling */
-    .card {
-        border-radius: 8px;
-        box-shadow: 0 4px 12px var(--shadow-color);
+     .card {
+        border-radius: 0.5rem;
+        overflow: hidden;
+        box-shadow: var(--shadow);
         border: none;
-        margin-bottom: 2rem;
     }
 
     .table-responsive {
@@ -29,20 +30,38 @@
     }
 
     .table {
-        font-size: 0.9rem;
-        min-width: 1000px; /* Minimum width for smaller screens */
+        font-size: 0.875rem;
+        margin-bottom: 0;
     }
-
     .table th {
-        background-color: var(--light-color);
         font-weight: 600;
         text-transform: uppercase;
-        font-size: 0.8rem;
-        white-space: nowrap;
+        font-size: 0.75rem;
+        letter-spacing: 0.5px;
+        color: var(--light);
+        border-bottom-width: 1px;
+        background-color: var(--dark);
+        padding: 0.75rem;
+        display:center;
     }
 
-    .table td {
+     .table td {
         vertical-align: middle;
+        padding: 1rem 0.75rem;
+        color: var(--dark);
+        border-color: var(--border);
+    }
+    .avatar {
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .avatar-sm {
+        width: 32px;
+        height: 32px;
     }
 
     /* Search and Filter Styling */
@@ -70,7 +89,7 @@
     /* Button Styling */
     .btn-view {
         color: var(--danger-color);
-        background-color: rgba(231, 76, 60, 0.1);
+        background-color: rgba(208, 0, 122, 0.1);
         border: none;
         border-radius: 50%;
         width: 32px;
@@ -99,42 +118,70 @@
         font-size: 0.85rem;
     }
 
-    /* Tooltip Styling */
-    .tooltip-inner {
-        background-color: var(--dark-color);
-        font-size: 0.8rem;
-        padding: 0.5rem 1rem;
-    }
 
-    .bs-tooltip-auto[data-popper-placement^=top] .tooltip-arrow::before,
-    .bs-tooltip-top .tooltip-arrow::before {
-        border-top-color: var(--dark-color);
-    }
-
-    /* Responsive Adjustments */
-    @media (max-width: 768px) {
+   /* Responsive adjustments */
+    @media (max-width: 992px) {
         .d-flex.justify-content-between {
             flex-direction: column;
             gap: 1rem;
         }
 
         .search-box {
-            width: 100% !important;
-        }
-
-        .dropdown {
             width: 100%;
         }
+    }
 
-        .dropdown-toggle {
-            width: 100%;
+    @media (max-width: 768px) {
+        .table-responsive {
+            border: 0;
+        }
+
+        .table thead {
+            display: none;
+
+        }
+
+        .table tr {
+            display: block;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+
+        }
+
+        .table td {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .table td::before {
+            content: attr(data-label);
+            font-weight: 600;
+            color: var(--gray);
+            margin-right: 1rem;
+        }
+
+        .table td:last-child {
+            border-bottom: 0;
+            justify-content: flex-end;
+        }
+
+        .table td .btn {
+            margin: 0 0.25rem;
         }
     }
 </style>
 
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
-        <h2 class="m-0 mb-2 mb-md-0">Requested Barangay indigency</h2>
+         <div>
+            <h2 class="m-0 text-primary">
+                <i class="fas fa-file-alt me-2"></i>Requested Certificate of Indigency
+            </h2>
+            <p class="text-muted mb-0">Manage and process Certificate of Indigency requests from residents</p>
+        </div>
         <div class="d-flex gap-2 flex-grow-1 flex-md-grow-0">
             <div class="search-box flex-grow-1">
                 <input type="text" id="searchInput" class="form-control" placeholder="Search by Name...">
@@ -148,76 +195,109 @@
         </div>
     </div>
 
-    <div class="card">
-        <div class="table-responsive">
-            <table class="table table-hover table-bordered" id="clearanceTable">
-                <thead>
-                    <tr>
-                        <th>Full Name</th>
-                        <th>Date of Birth</th>
-                        <th>Birthplace</th>
-                        <th>Age</th>
-                        <th>Civil Status</th>
-                        <th>Citizenship</th>
-                        <th>Religion</th>
-                        <th>Contact Number</th>
-                        <th>Occupation</th>
-                        <th>Household No</th>
-                        <th>Purok No</th>
-                        <th>Sitio</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($indigencyRequests as $request)
-
+     <div class="card">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0" id="clearanceTable">
+                    <thead class="table-light">
                         <tr>
-                            <td>
-                                {{ $request->resident->lname ?? 'N/A' }},
-                                {{ $request->resident->Fname ?? '' }}
-                                {{ $request->resident->mname ?? '' }}
+                            <th class="ps-4">Resident</th>
+                            <th>Basic Information</th>
+                            <th>Contact Details</th>
+                            <th>Address</th>
+                            <th class="text-end pe-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($indigencyRequests as $request)
+                        <tr>
+                            <td class="ps-4">
+                                <div class="d-flex align-items-center">
+                                    <div class="avatar avatar-sm bg-light-primary rounded-circle me-3">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0">
+                                            {{ $request->resident->lname ?? 'N/A' }},
+                                            {{ $request->resident->Fname ?? '' }}
+                                        </h6>
+                                        <small class="text-muted">Age: {{ $request->resident->age ?? 'N/A' }}</small>
+                                    </div>
+                                </div>
                             </td>
-                           <td>{{ $request->resident->birthday ?? 'N/A' }}</td>
-                            <td>{{ $request->resident->birthplace ?? 'N/A' }}</td>
-                            <td>{{ $request->resident->age ?? 'N/A' }}</td>
-                            <td>{{ $request->resident->civil_status ?? 'N/A' }}</td>
-                            <td>{{ $request->resident->Citizenship ?? 'N/A' }}</td>
-                            <td>{{ $request->resident->religion ?? 'N/A' }}</td>
-                            <td>{{ $request->resident->contact_number ?? 'N/A' }}</td>
-                            <td>{{ $request->resident->occupation ?? 'N/A' }}</td>
-                            <td>{{ $request->resident->household_no ?? 'N/A' }}</td>
-                            <td>{{ $request->resident->purok_no ?? 'N/A' }}</td>
-                            <td>{{ $request->resident->sitio ?? 'N/A' }}</td>
                             <td>
-                                <a href="{{ route('indigency.view', $request->id) }}"
-                                   class="btn btn-sm btn-view"
-                                   data-bs-toggle="tooltip"
-                                   data-bs-placement="top"
-                                   title="Generate PDF Document">
-                                    <i class="fas fa-file-pdf"></i>
-                                </a>
+                                <div>
+                                    <small class="text-muted">Birthday:</small>
+                                    <p class="mb-0">{{ $request->resident->birthday ?? 'N/A' }}</p>
+                                </div>
+                                <div class="mt-2">
+                                    <small class="text-muted">Civil Status:</small>
+                                    <p class="mb-0">{{ $request->resident->civil_status ?? 'N/A' }}</p>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <small class="text-muted">Contact:</small>
+                                    <p class="mb-0">{{ $request->resident->contact_number ?? 'N/A' }}</p>
+                                </div>
+                                <div class="mt-2">
+                                    <small class="text-muted">Occupation:</small>
+                                    <p class="mb-0">{{ $request->resident->occupation ?? 'N/A' }}</p>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <small class="text-muted">Address:</small>
+                                    <p class="mb-0">
+                                        Purok {{ $request->resident->purok_no ?? 'N/A' }},
+                                        Sitio {{ $request->resident->sitio ?? 'N/A' }}
+                                    </p>
+                                </div>
+                                <div class="mt-2">
+                                    <small class="text-muted">Household No:</small>
+                                    <p class="mb-0">{{ $request->resident->household_no ?? 'N/A' }}</p>
+                                </div>
+                            </td>
+                            <td class="text-end pe-4">
+                                <div class="d-flex justify-content-end gap-2">
+                                    <a href="{{ route('indigency.view', $request->id) }}"
+                                        class="btn btn-sm btn-outline-danger"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        title="Generate PDF">
+                                        <i class="fas fa-file-pdf"></i>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
-                    @empty
+                        @empty
                         <tr>
-                            <td colspan="12" class="text-center py-4">No clearance requests found.</td>
+                            <td colspan="5" class="text-center py-5">
+                                <div class="py-4">
+                                    <i class="fas fa-folder-open fa-3x text-muted mb-3"></i>
+                                    <h5 class="text-muted">No clearance requests found</h5>
+                                    <p class="text-muted">When residents request clearances, they'll appear here</p>
+                                </div>
+                            </td>
                         </tr>
-                    @endforelse
-                </tbody>
-            </table>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
 
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize tooltips
-    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl, {
-            trigger: 'hover focus'
+     const tooltips = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        .map(function (el) {
+            return new bootstrap.Tooltip(el, {
+                trigger: 'hover focus'
+            });
         });
-    });
 
     // Search functionality
     const searchInput = document.getElementById("searchInput");

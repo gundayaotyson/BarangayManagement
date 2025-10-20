@@ -15,6 +15,11 @@ class LegaldocumentsController extends Controller
     {
         return view("admin.brgyclearance");
     }
+    public function BrgyBussinesspermit()
+    {
+        return view("admin.brgybussniesspermitform");
+    }
+    // Show Barangay Indigency Form
     public function index()
     {
 
@@ -24,8 +29,9 @@ class LegaldocumentsController extends Controller
     // Store Barangay Clearance Request
     public function storeClearance(Request $request)
     {
-        try {
+        // try {
             // Validate the incoming request data
+
             $request->validate([
                 'resident_id' => 'nullable|exists:residents,id',
                 'Fname' => 'required|string|max:255',
@@ -35,7 +41,7 @@ class LegaldocumentsController extends Controller
                 'dateofbirth' => 'required|date',
                 'placeofbirth' => 'required|string|max:255',
                 'civil_status' => 'required|string',
-                'gender' => 'required|in:male,female',
+                'gender' => 'required|in:Male,Female',
                 'purpose' => 'required|string',
                 'pickup_date' => 'required|date',
                 'service_type' => 'required|string',
@@ -49,7 +55,6 @@ class LegaldocumentsController extends Controller
 
             // Generate a unique tracking code
             $trackingCode = strtoupper(Str::random(10));
-
             // Create a new clearance request record
             ClearanceReq::create([
              'resident_id' => $resident->id,
@@ -69,12 +74,12 @@ class LegaldocumentsController extends Controller
 
             ]);
 
-
-            return redirect()->route('webgenerallayout')->with('success', 'Request Submitted Successfully! Your tracking code is: ' . $trackingCode);
-        } catch (\Exception $e) {
-            Log::error('Error storing Barangay Clearance request: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Something went wrong! Please try again.');
-        }
+            // return redirect()->back('webgenerallayout')->with('success', 'Request Submitted Successfully! Your tracking code is: ' . $trackingCode);
+        // } catch (\Exception $e) {
+        //     Log::error('Error storing Barangay Clearance request: ' . $e->getMessage());
+        //
+        // }
 
     }
 
@@ -146,21 +151,20 @@ class LegaldocumentsController extends Controller
 public function clearanceRequested()
 {
     // Correct: Fetch clearance requests with resident info
-    $clearanceRequests = ClearanceReq::with('resident')->latest()->get();
+    $clearanceRequests = ClearanceReq::with('resident')
+     ->where('service_type', 'Barangay Clearance')
+    ->latest()->get();
 
     return view('admin.requestedclearance', compact('clearanceRequests'));
 }
 
 public function indigencyRequested()
 {
-        $indigencyRequests   = ClearanceReq::with('resident')->latest()->get();
 
-    // Get all full names from the clearancereq table
-    // $fullNames = DB::table('clearancereq')->pluck('fullname')->toArray(); // Convert to array for IN clause
-
-    // Fetch the clearance requests in a single query by using the 'IN' clause
-    // $indigencyRequests = Resident::whereIn(DB::raw("CONCAT(Fname, ' ', lname)"), $fullNames)->get();
-    // dd($indigencyRequests);
+    $indigencyRequests = ClearanceReq::with('resident')
+        ->where('service_type', 'Certificate of Indigency') // ✅ filter by service_type
+        ->latest()
+        ->get();
     return view('admin.requestedindigency', compact('indigencyRequests'));
 }
 public function showIndigency($id)
@@ -203,7 +207,5 @@ public function trackClearance($trackingCode)
         ]);
     }
 }
-
-
 
 }

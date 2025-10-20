@@ -6,7 +6,7 @@
             <div class="col-md-12">
                 <h1>Welcome, {{ $resident->Fname }} {{ $resident->mname }} {{ $resident->lname }}</h1>
                 <hr>
-                <h3>Personal Information</h3>
+                <!-- <h3>Personal Information</h3>
                 <table class="table">
                     <tbody>
                         <tr>
@@ -54,7 +54,7 @@
                             <td>{{ $resident->sitio }}</td>
                         </tr>
                     </tbody>
-                </table>
+                </table> -->
             </div>
         </div>
     </div>
