@@ -132,11 +132,19 @@
         display: none;
         cursor: pointer;
         transition: transform 0.3s ease;
+        z-index: 1001;
+        /* position: relative; */
+        margin-right: 50px
     }
 
     #menu-icon:hover {
         transform: rotate(90deg);
         color: var(--main-color);
+    }
+
+    /* Burger Menu Animation */
+    #menu-icon.bx-x {
+        transform: rotate(180deg);
     }
 
     .home {
@@ -875,7 +883,7 @@
         to { transform: rotate(360deg); }
     }
 
-    /* Responsive Design */
+    /* Enhanced Responsive Design */
     @media (max-width: 1200px) {
         html {
             font-size: 55%;
@@ -883,6 +891,14 @@
 
         .more-container {
             grid-template-columns: repeat(2, 1fr);
+        }
+
+        .home {
+            gap: 3rem;
+        }
+
+        .carousel-container {
+            width: 40vw;
         }
     }
 
@@ -914,39 +930,90 @@
         .carousel-container {
             width: 45vw;
         }
+
+        .logo h1 {
+            font-size: 2.4rem;
+        }
+
+        .navbar a {
+            margin-left: 2.5rem;
+        }
     }
 
+    /* Enhanced Tablet and Mobile Menu */
     @media (max-width: 768px) {
         #menu-icon {
             display: block;
         }
 
         .navbar {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 100%;
-            padding: 1rem 3%;
-            background: var(--bg-color);
-            border-top: .1rem solid rgba(0, 0, 0, .2);
-            box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .2);
-            display: none;
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 80%;
+            max-width: 300px;
+            height: 100vh;
+            background: var(--nav-color);
+            padding: 8rem 3rem 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.5s ease;
             z-index: 1000;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+            overflow-y: auto;
         }
 
         .navbar.active {
-            display: block;
+            right: 0;
         }
 
         .navbar a {
             display: block;
-            font-size: 2rem;
-            margin: 3rem 0;
+            font-size: 2.2rem;
+            margin: 2rem 0;
+            padding: 1rem 2rem;
+            width: 100%;
+            text-align: center;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .navbar a:hover,
+        .navbar a.active {
+            background: var(--main-color);
+            color: var(--second-bg-color);
+            transform: translateX(-5px);
+        }
+
+        .navbar a::after {
+            display: none;
+        }
+
+        /* Overlay when menu is open */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
         }
 
         .home {
             flex-direction: column;
             text-align: center;
+            gap: 3rem;
         }
 
         .home-content h3 {
@@ -955,16 +1022,19 @@
 
         .home-content h1 {
             font-size: 5rem;
+            line-height: 1.3;
         }
 
         .carousel-container {
             width: 70vw;
             margin-top: 4rem;
+            height: 350px;
         }
 
         .about {
             flex-direction: column-reverse;
             text-align: center;
+            gap: 3rem;
         }
 
         .about-img img {
@@ -986,6 +1056,29 @@
 
         .tracking {
             padding: 3rem 2rem;
+            margin: 2rem auto;
+        }
+
+        .logo h1 {
+            font-size: 2rem;
+        }
+
+        .logo img {
+            width: 60px;
+        }
+
+        .carousel-btn {
+            width: 3.5rem;
+            height: 3.5rem;
+            font-size: 1.6rem;
+        }
+
+        .prev {
+            left: 1rem;
+        }
+
+        .next {
+            right: 1rem;
         }
     }
 
@@ -1001,6 +1094,58 @@
         .tracking h2 {
             font-size: 3rem;
         }
+
+        .home-content h1 {
+            font-size: 4.2rem;
+        }
+
+        .heading {
+            font-size: 3.8rem;
+        }
+
+        .products-box,
+        .products-box1,
+        .products-box2 {
+            min-height: 350px;
+            padding: 2.5rem 1.5rem 3.5rem;
+        }
+
+        .map-container {
+            height: 400px;
+            margin: 20px auto;
+        }
+
+        .input-group {
+            flex-direction: column;
+            border-radius: 8px;
+        }
+
+        #tracking-code {
+            border-radius: 8px 8px 0 0;
+            padding: 1.2rem 1.5rem;
+        }
+
+        .track-button {
+            border-radius: 0 0 8px 8px;
+            padding: 1.2rem 2rem;
+        }
+
+        .result-table th,
+        .result-table td {
+            padding: 1rem;
+            font-size: 1.4rem;
+        }
+
+        .navbar {
+            width: 85%;
+            padding: 7rem 2rem 2rem;
+        }
+
+        .navbar a {
+            font-size: 2rem;
+            margin: 1.5rem 0;
+            padding: 0.8rem 1.5rem;
+        }
     }
 
     @media (max-width: 450px) {
@@ -1009,21 +1154,71 @@
         }
 
         .home-content h1 {
-            font-size: 4.5rem;
+            font-size: 4rem;
         }
 
         .carousel-container {
             width: 90vw;
+            height: 300px;
         }
 
         .tracking {
             padding: 2rem 1.5rem;
+        }
+
+        section {
+            padding: 8rem 3% 2rem;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+        }
+
+        .logo img {
+            width: 50px;
+        }
+
+        .social-media a {
+            width: 4rem;
+            height: 4rem;
+            font-size: 2rem;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            font-size: 1.5rem;
+        }
+
+        .products-box i,
+        .products-box1 i,
+        .products-box2 i {
+            font-size: 6rem;
+        }
+
+        .map-container {
+            height: 350px;
+        }
+
+        .contact form {
+            padding: 2rem;
+        }
+
+        .navbar {
+            width: 90%;
+            max-width: none;
+            padding: 6rem 1.5rem 1.5rem;
+        }
+
+        .navbar a {
+            font-size: 1.8rem;
+            margin: 1.2rem 0;
         }
     }
 
     @media (max-width: 365px) {
         .carousel-container {
             width: 90vw;
+            height: 250px;
         }
 
         .about-img img {
@@ -1033,11 +1228,94 @@
         .footer {
             flex-direction: column-reverse;
             gap: 2rem;
+            text-align: center;
         }
 
         .footer p {
             text-align: center;
             margin-top: 2rem;
+        }
+
+        .home-content h1 {
+            font-size: 3.5rem;
+        }
+
+        .heading {
+            font-size: 3.2rem;
+        }
+
+        .logo {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .logo img {
+            margin-right: 0;
+            margin-bottom: 0.5rem;
+        }
+
+        .navbar {
+            width: 100%;
+            padding: 5rem 1rem 1rem;
+        }
+
+        .navbar a {
+            font-size: 1.7rem;
+            margin: 1rem 0;
+        }
+    }
+
+    /* Extra small devices */
+    @media (max-width: 320px) {
+        .home-content h1 {
+            font-size: 3.2rem;
+        }
+
+        .carousel-container {
+            height: 220px;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            font-size: 1.4rem;
+        }
+
+        .map-container {
+            height: 300px;
+        }
+
+        .navbar a {
+            font-size: 1.6rem;
+            padding: 0.7rem 1rem;
+        }
+    }
+
+    /* Landscape mode for mobile */
+    @media (max-height: 500px) and (orientation: landscape) {
+        .header {
+            padding: 1rem 2%;
+        }
+
+        section {
+            min-height: auto;
+            padding: 8rem 2% 2rem;
+        }
+
+        .home {
+            min-height: 80vh;
+        }
+
+        .carousel-container {
+            height: 250px;
+        }
+
+        .navbar {
+            padding: 4rem 2rem 2rem;
+        }
+
+        .navbar a {
+            margin: 0.8rem 0;
+            font-size: 1.6rem;
         }
     }
 </style>
@@ -1062,6 +1340,8 @@
             <a href="#tracking">Track Doc</a>
             <a href="/login">Login</a>
         </nav>
+        <!-- Overlay for menu -->
+        <div class="menu-overlay" id="menu-overlay"></div>
     </header>
 
     <section class="home" id="home">
@@ -1374,12 +1654,36 @@
 
             let menuIcon = document.querySelector('#menu-icon');
             let navbar = document.querySelector('.navbar');
+            let menuOverlay = document.querySelector('#menu-overlay');
 
-            // Toggle menu icon and navbar
-            menuIcon.onclick = () => {
+            // Enhanced toggle menu function
+            function toggleMenu() {
                 menuIcon.classList.toggle('bx-x');
                 navbar.classList.toggle('active');
-            };
+                menuOverlay.classList.toggle('active');
+
+                // Prevent body scroll when menu is open
+                if (navbar.classList.contains('active')) {
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    document.body.style.overflow = '';
+                }
+            }
+
+            // Toggle menu icon and navbar
+            menuIcon.onclick = toggleMenu;
+
+            // Close menu when clicking overlay
+            menuOverlay.onclick = toggleMenu;
+
+            // Close menu when clicking on nav links
+            document.querySelectorAll('.navbar a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth <= 768) {
+                        toggleMenu();
+                    }
+                });
+            });
 
             let sections = document.querySelectorAll('section');
             let navLinks = document.querySelectorAll('header nav a');
@@ -1404,10 +1708,24 @@
                 let header = document.querySelector('header');
                 header.classList.toggle('sticky', window.scrollY > 100);
 
-                // Close menu on scroll
-                menuIcon.classList.remove('bx-x');
-                navbar.classList.remove('active');
+                // Close menu on scroll (mobile only)
+                if (window.innerWidth <= 768) {
+                    menuIcon.classList.remove('bx-x');
+                    navbar.classList.remove('active');
+                    menuOverlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
             };
+
+            // Close menu on window resize (if resizing to larger screen)
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 768) {
+                    menuIcon.classList.remove('bx-x');
+                    navbar.classList.remove('active');
+                    menuOverlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
 
             // ScrollReveal animations
             ScrollReveal({

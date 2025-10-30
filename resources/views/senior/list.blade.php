@@ -372,16 +372,16 @@
         <form action="{{ route('senior.store') }}" method="POST">
             @csrf
             <div class="mb-3">
-                <label for="lastname" class="form-label">Last Name</label>
-                <input type="text" class="form-control" id="lastname" name="lastname" required>
-            </div>
-            <div class="mb-3">
                 <label for="firstname" class="form-label">First Name</label>
                 <input type="text" class="form-control" id="firstname" name="firstname" required>
             </div>
             <div class="mb-3">
                 <label for="middlename" class="form-label">Middle Name</label>
                 <input type="text" class="form-control" id="middlename" name="middlename">
+            </div>
+            <div class="mb-3">
+                <label for="lastname" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="lastname" name="lastname" required>
             </div>
             <div class="mb-3">
                 <label for="birthday" class="form-label">Birthday</label>

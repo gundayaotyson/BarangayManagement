@@ -23,8 +23,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding-left: 250px;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 15px;
         }
 
         .login-container {
@@ -65,6 +65,12 @@
             margin: 0 auto 15px;
             color: var(--primary-color);
             font-size: 40px;
+        }
+
+        .logo img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 50%;
         }
 
         .system-name {
@@ -145,8 +151,7 @@
         }
 
         .login-options {
-            /* display: flex; */
-              text-align: center;
+            text-align: center;
             justify-content: space-between;
             margin-top: 15px;
             font-size: 14px;
@@ -168,9 +173,80 @@
             color: #7f8c8d;
         }
 
+        /* Mobile-specific styles */
         @media (max-width: 768px) {
-            .login-left {
-                display: none;
+            body {
+                padding: 10px;
+                align-items: flex-start;
+                padding-top: 20px;
+            }
+
+            .login-container {
+                border-radius: 10px;
+            }
+
+            .login-right {
+                padding: 25px;
+            }
+
+            .login-header h2 {
+                font-size: 1.5rem;
+            }
+
+            .form-control {
+                padding: 10px 12px;
+                margin-bottom: 15px;
+            }
+
+            .btn-login {
+                padding: 10px;
+            }
+
+            .feature-list {
+                margin-top: 20px;
+            }
+
+            .feature-item {
+                flex-direction: column;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+            .feature-icon {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+
+            .feature-item h5 {
+                font-size: 1rem;
+                margin-bottom: 5px;
+            }
+
+            .feature-item p {
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Small mobile devices */
+        @media (max-width: 576px) {
+            .login-right {
+                padding: 20px;
+            }
+
+            .login-header {
+                margin-bottom: 20px;
+            }
+
+            .system-name {
+                font-size: 1.3rem;
+            }
+
+            .login-options {
+                font-size: 0.85rem;
+            }
+
+            .footer-text {
+                font-size: 0.75rem;
             }
         }
     </style>
@@ -180,11 +256,11 @@
         <div class="login-container">
             <div class="row g-0">
                 <!-- Left Side - Information -->
-                <div class="col-lg-6">
+                <div class="col-lg-6 d-none d-lg-block">
                     <div class="login-left">
                         <div class="logo-container">
                             <div class="logo">
-                            <img src="images/cobol logo small.png" alt="Barangay Cobol Logo " >
+                                <img src="images/cobol logo small.png" alt="Barangay Cobol Logo">
                             </div>
                             <h1 class="system-name">Barangay Management System</h1>
                             <p class="system-tagline">Streamlining community services and governance</p>
@@ -225,8 +301,17 @@
                 </div>
 
                 <!-- Right Side - Login Form -->
-                <div class="col-lg-6">
+                <div class="col-12 col-lg-6">
                     <div class="login-right">
+                        <!-- Mobile-only logo and title -->
+                        <div class="d-lg-none text-center mb-4">
+                            <div class="logo mx-auto mb-3">
+                                <img src="images/cobol logo small.png" alt="Barangay Cobol Logo">
+                            </div>
+                            <h3 class="system-name">Barangay Management System</h3>
+                            <p class="system-tagline">Streamlining community services and governance</p>
+                        </div>
+
                         <div class="login-header">
                             <h2>Welcome Back</h2>
                             <p>Sign in to your account to continue</p>

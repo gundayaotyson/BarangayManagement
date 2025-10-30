@@ -1217,7 +1217,7 @@
 
                                 <div class="col-md-6">
                                     <label for="citizenship" class="form-label">Citizenship</label>
-                                    <input type="text" id="citizenship" name="Citizenship" class="form-control" value="Filipino" placeholder="Enter citizenship">
+                                    <input type="text" id="citizenship" name="Citizenship" class="form-control" placeholder="Enter citizenship">
                                 </div>
 
                                 <div class="col-md-12">

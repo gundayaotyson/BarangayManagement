@@ -321,6 +321,7 @@
         <button class="menu-toggle" onclick="toggleSidebar()">
             <i class="fa-solid fa-bars"></i>
         </button>
+        <!-- <h2>Welcome {{ Auth::user()->name }}</h2> -->
         <div class="profile-container dropdown">
             <button class="profile-btn dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown" aria-expanded="false">
                 <img src="{{ Auth::user() && Auth::user()->image ? asset('storage/profile_images/' . Auth::user()->image) : asset('images/images1.jpg') }}"
@@ -354,7 +355,10 @@
     <ul>
         <li><a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'active' : '' }}"><i class="fas fa-home"></i> <span>Dashboard</span></a></li>
         <li><a href="{{ route('residents') }}" class="{{ request()->routeIs('residents') ? 'active' : '' }}"><i class="fas fa-users"></i> <span>Residents</span></a></li>
-        <li class="dropdown">
+        <li><a href="{{ route('barangayofficials.index') }}" class="{{ request()->routeIs('barangayofficials.index') ? 'active' : '' }}"><i class="fas fa-users"></i> <span>Barangay Officials</span></a></li>
+
+
+        <!-- <li class="dropdown">
             <a href="#" onclick="toggleDropdown(event)">
                 <i class="fas fa-users"></i> <span>Officials and Staff</span>
             </a>
@@ -371,7 +375,7 @@
                 <a href="#"><i class="fas fa-users-cog"></i> BRK</a>
                 <a href="#"><i class="fas fa-hands-helping"></i> 4P's Leaders</a>
             </div>
-        </li>
+        </li> -->
               <li class="dropdown">
             <a href="#" onclick="toggleDropdown(event)">
                 <i class="fas fa-clipboard-list"></i> <span>Legal Documents</span>

@@ -53,10 +53,6 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-    Route::get('/Senior', [DashboardController::class, 'Senior'])->name('senior');
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/dashboard', [DashboardController::class, 'homepage'])->name('dashboard');
-    Route::get('/admin/profile', [PartialsController::class, 'profile'])->name('admin.profile');
 
     // skRoutes
     Route::get('/user/dashboard', [SKdashboardController::class, 'index'])->name('skuser.dashboard');
@@ -99,6 +95,10 @@ Route::middleware(['auth'])->group(function () {
 
 
     // Senior Routes
+     Route::get('/Senior', [DashboardController::class, 'Senior'])->name('senior');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'homepage'])->name('dashboard');
+    Route::get('/admin/profile', [PartialsController::class, 'profile'])->name('admin.profile');
     Route::get('/senior/dashboard', [SeniorController::class, 'dashboard'])->name('senior.dashboard');
     Route::get('/senior/list', [SeniorController::class, 'list'])->name('senior.list');
     Route::post('/senior/store', [SeniorController::class, 'store'])->name('senior.store');
