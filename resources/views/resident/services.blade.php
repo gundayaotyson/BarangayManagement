@@ -377,7 +377,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-.body">
+            <div class="modal-body">
                 <form action="{{ route('sk-services.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="resident_id" value="{{ $resident->id ?? '' }}">
@@ -592,10 +592,10 @@
                         <input type="date" class="form-control" id="pickup_date" name="pickup_date" required>
                     </div>
 
-                    <input type="submit" class="btn btn-primary btn-submit">
+                      <button type="submit" class="btn btn-primary btn-submit">
                         <i class="fas fa-paper-plane me-2"></i>
                         Submit Application
-                    </input>
+                    </button>
                 </form>
             </div>
         </div>

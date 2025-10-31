@@ -43,10 +43,7 @@ class ProfileController extends Controller
             $user->image = basename($imagePath);
         }
 
-        // Update User Data
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->save();
+
 
         return back()->with('success', 'Profile updated successfully!');
     }

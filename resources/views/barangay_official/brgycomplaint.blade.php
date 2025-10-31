@@ -627,9 +627,9 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-6 mb-3">
+                         <div class="col-md-6 mb-3">
                             <label for="respondent" class="form-label">Respondent Name *</label>
-                            <input type="text" name="respondent" id="respondent" class="form-control" required>
+ <input type="text" name="respondent" value="{{ Auth::user()->name }}" id="respondent" class="form-control" required>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="victim" class="form-label">Victim Name (if different)</label>
@@ -766,7 +766,8 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="edit-respondent" class="form-label">Respondent Name *</label>
-                            <input type="text" name="respondent" id="edit-respondent" class="form-control" required>
+                            <input type="text" class="form-control" id="name" name="name"
+                           value="{{ $user->name }}" required>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="edit-victim" class="form-label">Victim Name</label>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\BarangayComplaint;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class BarangaycomplaintsController extends Controller
 {
@@ -13,7 +14,8 @@ class BarangaycomplaintsController extends Controller
     public function index()
     {
         $complaints = BarangayComplaint::all();
-        return view('barangay_official.brgycomplaint', compact('complaints'));
+         $user = Auth::user();
+        return view('barangay_official.brgycomplaint', compact('complaints', 'user'));
     }
 
     /**

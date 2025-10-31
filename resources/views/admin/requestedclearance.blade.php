@@ -261,8 +261,8 @@
                                 <div>
                                     <small class="text-muted">Address:</small>
                                     <p class="mb-0">
-                                        Purok {{ $request->resident->purok_no ?? 'N/A' }},
-                                        Sitio {{ $request->resident->sitio ?? 'N/A' }}
+                                         {{ $request->resident->purok_no ?? 'N/A' }},
+                                        {{ $request->resident->sitio ?? 'N/A' }}
                                     </p>
                                 </div>
                                 <div class="mt-2">

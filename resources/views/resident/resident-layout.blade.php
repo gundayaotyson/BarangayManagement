@@ -30,8 +30,8 @@
             overflow-x: hidden;
         }
 
-        /* Header Row */
-        .header-row {
+        /* Main Header - Always Visible */
+        .main-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -85,7 +85,7 @@
             top: 0;
             left: 0;
             padding-top: 70px;
-            transition: width var(--transition-speed) ease;
+            transition: transform var(--transition-speed) ease, width var(--transition-speed) ease;
             overflow-x: hidden;
             white-space: nowrap;
             z-index: 999;
@@ -150,9 +150,9 @@
         }
 
         /* Profile Container */
-    .profile-container .dropdown-menu {
-    transform: translate3d(-1px, 58.4px, 0px) !important;
-}
+        .profile-container .dropdown-menu {
+            transform: translate3d(-1px, 58.4px, 0px) !important;
+        }
 
         .profile-btn {
             background: transparent;
@@ -214,39 +214,6 @@
             text-align: center;
         }
 
-        /* Nested Dropdown */
-        .dropdown-content {
-            display: none;
-            background-color: rgba(0, 0, 0, 0.2);
-            padding-left: 15px;
-        }
-
-        .dropdown-content a {
-            color: var(--text-muted) !important;
-            font-size: 14px !important;
-            padding: 8px 15px 8px 30px;
-            position: relative;
-        }
-
-        .dropdown-content a:before {
-            content: "→";
-            position: absolute;
-            left: 15px;
-            color: var(--text-muted);
-        }
-
-        .dropdown-content a:hover {
-            color: var(--hover-color) !important;
-        }
-
-        .dropdown-content a:hover:before {
-            color: var(--hover-color);
-        }
-
-        .dropdown.active .dropdown-content {
-            display: block;
-        }
-
         /* Main Content */
         .main-content {
             margin-left: 240px;
@@ -279,33 +246,56 @@
             color: var(--hover-color);
         }
 
+        /* Mobile Overlay */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+            display: none;
+        }
+
         /* Responsive Adjustments */
         @media (max-width: 992px) {
             .sidebar {
                 transform: translateX(-100%);
+                width: 240px;
+            }
+
+            .sidebar.mobile-open {
+                transform: translateX(0);
             }
 
             .sidebar.collapsed {
-                transform: translateX(0);
-                width: 80px;
+                transform: translateX(-100%);
+                width: 240px;
             }
 
             .main-content {
                 margin-left: 0;
+                padding: 90px 15px 15px;
             }
 
             .main-content.collapsed {
-                margin-left: 80px;
+                margin-left: 0;
             }
 
             .profile-name {
                 display: none;
             }
+
+            .sidebar-overlay.active {
+                display: block;
+            }
         }
 
         @media (max-width: 576px) {
-            .header-row {
-                padding: 0.5rem;
+            .main-header {
+                padding: 0.5rem 1rem;
+                height: 60px;
             }
 
             .menu-toggle {
@@ -313,53 +303,95 @@
                 height: 36px;
                 font-size: 1.1rem;
             }
+
+            .profile-img {
+                width: 35px;
+                height: 35px;
+            }
+
+            .main-content {
+                padding: 75px 10px 10px;
+            }
+
+            .sidebar {
+                padding-top: 60px;
+            }
+
+            .dropdown-menu {
+                min-width: 150px;
+            }
+        }
+
+        /* Extra Small Devices */
+        @media (max-width: 400px) {
+            .main-header {
+                padding: 0.5rem;
+            }
+
+            .main-content {
+                padding: 70px 8px 8px;
+            }
+
+            .sidebar ul li a {
+                padding: 10px 12px;
+                font-size: 14px;
+            }
+
+            .sidebar ul li a i {
+                margin-right: 12px;
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <!-- Sidebar Navigation -->
-    <nav class="sidebar" id="sidebar">
-        <!-- Header Row -->
-        <div class="header-row">
-            <!-- Menu Toggle -->
-            <button class="menu-toggle" onclick="toggleSidebar()">
-                <i class="fa-solid fa-bars"></i>
+    <!-- Mobile Overlay -->
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+    <!-- Main Header - Always Visible -->
+    <header class="main-header">
+        <!-- Menu Toggle -->
+        <button class="menu-toggle" onclick="toggleSidebar()">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <!-- Profile Section -->
+        <div class="profile-container dropdown">
+            <button class="profile-btn dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <img src="{{ Auth::user() && Auth::user()->image ? asset('storage/profile_images/' . Auth::user()->image) : asset('images/images1.jpg') }}"
+                    alt="Admin Profile" class="profile-img me-2">
+                <div class="d-flex flex-column">
+                    <span class="profile-name">{{ Auth::user()->name ?? 'User' }}</span>
+                </div>
             </button>
-            <div class="profile-container dropdown">
-                <button class="profile-btn dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                    <img src="{{ Auth::user() && Auth::user()->image ? asset('storage/profile_images/' . Auth::user()->image) : asset('images/images1.jpg') }}"
-                        alt="Admin Profile" class="profile-img me-2">
-                    <div class="d-flex flex-column">
-                        <span class="profile-name">{{ Auth::user()->name ?? 'User' }}</span>
 
-                    </div>
-                </button>
-
-                <div class="dropdown-menu dropdown-menu-end" style="min-width: 170px;">
-                    <div class="dropdown-option">
-                        <a href="{{ route('resident.profile')}}"
-                            class="dropdown-item d-flex align-items-center px-3 py-2 rounded">
-                            <i class="fas fa-user-circle me-3"></i>
-                            <span>Edit Profile</span>
-                        </a>
-                    </div>
-                    <div class="dropdown-option">
-                        <form action="{{ route('logout') }}" method="POST">
-                            @csrf
-                            <button type="submit"
-                                class="dropdown-item d-flex align-items-center px-3 py-2 rounded w-100">
-                                <i class="fas fa-sign-out-alt me-3"></i>
-                                <span>Logout</span>
-                            </button>
-                        </form>
-                    </div>
+            <div class="dropdown-menu dropdown-menu-end" style="min-width: 170px;">
+                <div class="dropdown-option">
+                    <a href="{{ route('resident.profile')}}"
+                        class="dropdown-item d-flex align-items-center px-3 py-2 rounded">
+                        <i class="fas fa-user-circle me-3"></i>
+                        <span>Edit Profile</span>
+                    </a>
+                </div>
+                <div class="dropdown-option">
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit"
+                            class="dropdown-item d-flex align-items-center px-3 py-2 rounded w-100">
+                            <i class="fas fa-sign-out-alt me-3"></i>
+                            <span>Logout</span>
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
+    </header>
 
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar" id="sidebar">
         <ul>
             <li><a href="{{ route('resident.dashboard') }}"
                     class="{{ request()->routeIs('resident.dashboard') ? 'active' : '' }}"><i class="fas fa-home"></i>
@@ -393,13 +425,6 @@
             links.forEach(link => {
                 if (link.getAttribute('href') === currentPath) {
                     link.classList.add('active');
-
-                    // If this is a nested link, ensure parent dropdown is visible
-                    const dropdown = link.closest('.dropdown-content');
-                    if (dropdown) {
-                        dropdown.style.display = 'block';
-                        dropdown.previousElementSibling.classList.add('active');
-                    }
                 }
 
                 link.addEventListener("click", function (e) {
@@ -408,6 +433,11 @@
                     links.forEach(l => l.classList.remove("active"));
                     this.classList.add("active");
                     localStorage.setItem("activeLink", this.getAttribute("href"));
+
+                    // Close sidebar on mobile after clicking a link
+                    if (window.innerWidth <= 992) {
+                        closeSidebar();
+                    }
                 });
             });
 
@@ -426,40 +456,56 @@
             const sidebar = document.getElementById('sidebar');
             const mainContent = document.getElementById('main-content');
             const menuToggle = document.querySelector('.menu-toggle');
+            const overlay = document.getElementById('sidebar-overlay');
 
-            sidebar.classList.toggle('collapsed');
-            mainContent.classList.toggle('collapsed');
-            menuToggle.classList.toggle('active');
+            if (window.innerWidth <= 992) {
+                // Mobile behavior
+                sidebar.classList.toggle('mobile-open');
+                overlay.classList.toggle('active');
+                menuToggle.classList.toggle('active');
+            } else {
+                // Desktop behavior
+                sidebar.classList.toggle('collapsed');
+                mainContent.classList.toggle('collapsed');
+                menuToggle.classList.toggle('active');
 
-            // Store sidebar state in localStorage
-            localStorage.setItem('sidebarCollapsed', sidebar.classList.contains('collapsed'));
+                // Store sidebar state in localStorage
+                localStorage.setItem('sidebarCollapsed', sidebar.classList.contains('collapsed'));
+            }
         }
 
-        function toggleDropdown(event) {
-            event.preventDefault();
-            let dropdown = event.target.closest('.dropdown');
-            dropdown.classList.toggle('active');
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            const menuToggle = document.querySelector('.menu-toggle');
 
-            // Close other dropdowns when opening a new one
-            if (dropdown.classList.contains('active')) {
-                document.querySelectorAll('.dropdown').forEach(item => {
-                    if (item !== dropdown) {
-                        item.classList.remove('active');
-                    }
-                });
-            }
+            sidebar.classList.remove('mobile-open');
+            overlay.classList.remove('active');
+            menuToggle.classList.remove('active');
         }
 
         // Initialize sidebar state from localStorage
         window.addEventListener('load', function () {
-            if (localStorage.getItem('sidebarCollapsed') === 'true') {
+            if (window.innerWidth > 992 && localStorage.getItem('sidebarCollapsed') === 'true') {
                 document.getElementById('sidebar').classList.add('collapsed');
                 document.getElementById('main-content').classList.add('collapsed');
             }
         });
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('sidebar');
+            const menuToggle = document.querySelector('.menu-toggle');
+
+            if (window.innerWidth <= 992 &&
+                sidebar.classList.contains('mobile-open') &&
+                !sidebar.contains(event.target) &&
+                !menuToggle.contains(event.target)) {
+                closeSidebar();
+            }
+        });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 
 </html>

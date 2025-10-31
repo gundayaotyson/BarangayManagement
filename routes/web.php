@@ -37,6 +37,9 @@ Route::post('register', [AuthController::class, 'register']);
 Route::get('resident/register', [ResidentRegistrationController::class, 'showRegistrationForm'])->name('resident.register');
 Route::post('resident/register', [ResidentRegistrationController::class, 'register']);
 
+
+
+
 // Protected Routes (Only accessible when logged in)
 Route::middleware(['auth'])->group(function () {
     Route::get('/reports', [AllreportsController::class, 'index'])->name('reports.index');
