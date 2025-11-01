@@ -255,10 +255,78 @@
         font-size: 1.5rem;
     }
 
+    /* Mobile Responsive Table Styles */
+    .mobile-request-card {
+        background: white;
+        border-radius: 0.75rem;
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 2px 10px var(--shadow-color);
+        border-left: 4px solid var(--primary-color);
+    }
+
+    .mobile-request-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 0.75rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .mobile-request-row:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+    }
+
+    .mobile-request-label {
+        font-weight: 600;
+        color: var(--dark-color);
+        font-size: 0.875rem;
+        min-width: 120px;
+    }
+
+    .mobile-request-value {
+        color: var(--text-color);
+        font-size: 0.875rem;
+        text-align: right;
+        flex: 1;
+    }
+
+    .mobile-status-badge {
+        padding: 0.35rem 0.7rem;
+        border-radius: 50px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        display: inline-block;
+    }
+
+    .desktop-table {
+        display: table;
+    }
+
+    .mobile-cards {
+        display: none;
+    }
+
+    .no-requests-mobile {
+        text-align: center;
+        padding: 3rem 1rem;
+        color: var(--text-muted);
+    }
+
+    .no-requests-mobile i {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        opacity: 0.5;
+    }
 
     @media (max-width: 768px) {
         .hero-section {
-            padding: 2rem 0;
+            padding: 1.5rem 0;
+            margin-bottom: 2rem;
         }
 
         .service-card .card-body {
@@ -266,11 +334,98 @@
         }
 
         .requests-section {
-            padding: 1rem;
+            padding: 1.25rem;
+            margin-top: 2rem;
         }
 
         .table-responsive {
             border-radius: 1rem;
+        }
+
+        /* Hide desktop table on mobile */
+        .desktop-table {
+            display: none;
+        }
+
+        /* Show mobile cards on mobile */
+        .mobile-cards {
+            display: block;
+        }
+
+        .mobile-request-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .requests-title {
+            font-size: 1.25rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .hero-content h1 {
+            font-size: 1.75rem;
+        }
+
+        .hero-content p {
+            font-size: 1rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .hero-section {
+            padding: 1rem 0;
+            border-radius: 0.75rem;
+        }
+
+        .requests-section {
+            padding: 1rem;
+            border-radius: 0.75rem;
+        }
+
+        .mobile-request-card {
+            padding: 1rem;
+        }
+
+        .mobile-request-row {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .mobile-request-label {
+            min-width: auto;
+            margin-bottom: 0.25rem;
+        }
+
+        .mobile-request-value {
+            text-align: left;
+            width: 100%;
+        }
+
+        .service-card .card-body {
+            padding: 1.25rem;
+        }
+
+        .btn-apply {
+            padding: 0.6rem 1.5rem;
+            font-size: 0.875rem;
+        }
+    }
+
+    @media (max-width: 400px) {
+        .mobile-request-card {
+            padding: 0.875rem;
+        }
+
+        .mobile-request-label {
+            font-size: 0.8rem;
+        }
+
+        .mobile-request-value {
+            font-size: 0.8rem;
+        }
+
+        .mobile-status-badge {
+            font-size: 0.65rem;
+            padding: 0.3rem 0.6rem;
         }
     }
 </style>
@@ -320,45 +475,93 @@
     <div class="requests-section">
         <h3 class="requests-title"> SK Service Requests</h3>
         <div class="table-container">
-            <div class="table-responsive">
-                <table class="table table-hover mb-0">
-                    <thead>
-                        <tr>
-                            <th>Full Name</th>
-                            <th>School</th>
-                            <th>Year</th>
-                            <th>Service Type</th>
-                            <th>Date Requested</th>
-                            <th>Released Date</th>
-                            <th>Status</th>
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($skServices as $service)
+            <!-- Desktop Table View -->
+            <div class="desktop-table">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead>
                             <tr>
-                                <td class="font-weight-medium">{{ $service->firstname }} {{ $service->lastname }}</td>
-                                <td>{{ $service->school }}</td>
-                                <td>{{ $service->school_year }}</td>
-                                <td>{{ $service->type_of_service }}</td>
-                                  <td>{{ $service->created_at->format('M d, Y') }}</td>
-                                <td>{{ $service->released_date ? $service->released_date->format('M d, Y') : 'N/A' }}</td>
-                                <td>
-                                    <span class="status-badge status-{{ strtolower($service->status) }}">
-                                        {{ $service->status }}
-                                    </span>
-                                </td>
+                                <th>Full Name</th>
+                                <th>School</th>
+                                <th>Year</th>
+                                <th>Service Type</th>
+                                <th>Date Requested</th>
+                                <th>Released Date</th>
+                                <th>Status</th>
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="6" class="text-center py-4 text-muted">
-                                    <i class="fas fa-inbox fa-2x mb-3 d-block"></i>
-                                    No requests found
-                                </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @forelse ($skServices as $service)
+                                <tr>
+                                    <td class="font-weight-medium">{{ $service->firstname }} {{ $service->lastname }}</td>
+                                    <td>{{ $service->school }}</td>
+                                    <td>{{ $service->school_year }}</td>
+                                    <td>{{ $service->type_of_service }}</td>
+                                    <td>{{ $service->created_at->format('M d, Y') }}</td>
+                                    <td>{{ $service->released_date ? $service->released_date->format('M d, Y') : 'N/A' }}</td>
+                                    <td>
+                                        <span class="status-badge status-{{ strtolower($service->status) }}">
+                                            {{ $service->status }}
+                                        </span>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="7" class="text-center py-4 text-muted">
+                                        <i class="fas fa-inbox fa-2x mb-3 d-block"></i>
+                                        No requests found
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Mobile Card View -->
+            <div class="mobile-cards">
+                @forelse ($skServices as $service)
+                    <div class="mobile-request-card">
+                        <div class="mobile-request-row">
+                            <span class="mobile-request-label">Full Name:</span>
+                            <span class="mobile-request-value font-weight-medium">{{ $service->firstname }} {{ $service->lastname }}</span>
+                        </div>
+                        <div class="mobile-request-row">
+                            <span class="mobile-request-label">School:</span>
+                            <span class="mobile-request-value">{{ $service->school }}</span>
+                        </div>
+                        <div class="mobile-request-row">
+                            <span class="mobile-request-label">School Year:</span>
+                            <span class="mobile-request-value">{{ $service->school_year }}</span>
+                        </div>
+                        <div class="mobile-request-row">
+                            <span class="mobile-request-label">Service Type:</span>
+                            <span class="mobile-request-value">{{ $service->type_of_service }}</span>
+                        </div>
+                        <div class="mobile-request-row">
+                            <span class="mobile-request-label">Date Requested:</span>
+                            <span class="mobile-request-value">{{ $service->created_at->format('M d, Y') }}</span>
+                        </div>
+                        <div class="mobile-request-row">
+                            <span class="mobile-request-label">Released Date:</span>
+                            <span class="mobile-request-value">{{ $service->released_date ? $service->released_date->format('M d, Y') : 'N/A' }}</span>
+                        </div>
+                        <div class="mobile-request-row">
+                            <span class="mobile-request-label">Status:</span>
+                            <span class="mobile-request-value">
+                                <span class="mobile-status-badge status-{{ strtolower($service->status) }}">
+                                    {{ $service->status }}
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                @empty
+                    <div class="no-requests-mobile">
+                        <i class="fas fa-inbox"></i>
+                        <p class="mb-0">No requests found</p>
+                    </div>
+                @endforelse
             </div>
         </div>
     </div>
@@ -429,10 +632,6 @@
                         </label>
                         <select class="form-control" id="type_of_service" name="type_of_service" required>
                             <option value="">Select service type</option>
-                            <!-- <option value="Educational Assistance">Educational Assistance</option>
-                            <option value="Youth Leadership Training">Youth Leadership Training</option>
-                            <option value="Sports Program">Sports Program</option>
-                            <option value="Scholarship Program">Scholarship Program</option> -->
                             <option value="Scholarship Program">Free Printing</option>
                             <option value="Other">Other</option>
                         </select>
