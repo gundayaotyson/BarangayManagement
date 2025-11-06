@@ -444,7 +444,7 @@
 <!-- Dashboard Header -->
 <div class="dashboard-header">
     <div>
-        <h1>Barangay Complaints Management</h1>
+        <h1>Barangay Complaints </h1>
         <p class="mb-0">Manage and track all barangay complaints efficiently</p>
     </div>
     <div class="header-actions">

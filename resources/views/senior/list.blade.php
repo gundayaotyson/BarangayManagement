@@ -151,70 +151,73 @@
 
         /* Profile Container */
         .profile-container {
-    margin-left: auto;
-}
+            margin-left: auto;
+        }
 
-.profile-btn {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 0.5rem;
-    border-radius: 50px;
-    transition: all 0.3s ease;
-    color: var(--text-light);
-}
+        .profile-btn {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            color: var(--text-light);
+        }
 
-.profile-btn:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-}
+        .profile-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
 
-.profile-img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-}
+        .profile-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
 
-.profile-name {
-    font-weight: 500;
-    font-size: 0.9rem;
-    line-height: 1.2;
-}
-.profile-container .dropdown-menu {
-    transform: translate3d(-1px, 58.4px, 0px) !important;
-}
-/* Dropdown Menu */
-.dropdown-menu {
-    border: none;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    border-radius: 8px;
-}
+        .profile-name {
+            font-weight: 500;
+            font-size: 0.9rem;
+            line-height: 1.2;
+        }
 
-.dropdown-item {
-    transition: all 0.2s ease;
-    font-size: 0.9rem;
-    color: #495057;
-}
+        .profile-container .dropdown-menu {
+            transform: translate3d(-1px, 58.4px, 0px) !important;
+        }
 
-/* Blue hover for Edit Profile */
-.dropdown-option:first-child .dropdown-item:hover {
-    background-color: #e7f1ff;
-    color: #0d6efd;
-}
+        /* Dropdown Menu */
+        .dropdown-menu {
+            border: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border-radius: 8px;
+        }
 
-/* Red hover for Logout */
-.dropdown-option:last-child .dropdown-item:hover {
-    background-color: #fff0f0;
-    color: #dc3545;
-}
+        .dropdown-item {
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+            color: #495057;
+        }
 
-/* Icon alignment */
-.fa-user-circle,
-.fa-sign-out-alt {
-    width: 1.25em;
-    text-align: center;
-}
+        /* Blue hover for Edit Profile */
+        .dropdown-option:first-child .dropdown-item:hover {
+            background-color: #e7f1ff;
+            color: #0d6efd;
+        }
+
+        /* Red hover for Logout */
+        .dropdown-option:last-child .dropdown-item:hover {
+            background-color: #fff0f0;
+            color: #dc3545;
+        }
+
+        /* Icon alignment */
+        .fa-user-circle,
+        .fa-sign-out-alt {
+            width: 1.25em;
+            text-align: center;
+        }
+
         /* Main Content */
         .main-content {
             margin-left: 240px;
@@ -234,162 +237,321 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
+        /* Search Bar Styles */
+        .search-container {
+            position: relative;
+            margin-bottom: 20px;
+            max-width: 400px;
+        }
+
+        .search-input {
+            padding-left: 40px;
+            border-radius: 25px;
+            border: 1px solid #ddd;
+            height: 45px;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+            border-color: #86b7fe;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+            z-index: 5;
+        }
+
+        /* Enhanced Table Styles */
+        .table-responsive {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .table thead th {
+            background-color: #f8f9fa;
+            border-bottom: 2px solid #dee2e6;
+            font-weight: 600;
+            color: #495057;
+            padding: 12px 15px;
+        }
+
+        .table tbody tr {
+            transition: all 0.2s ease;
+        }
+
+        .table tbody tr:hover {
+            background-color: rgba(13, 110, 253, 0.05);
+        }
+
+        .table tbody td {
+            padding: 12px 15px;
+            vertical-align: middle;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+        }
+
+        .action-buttons .btn {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+        }
+
+        /* Enhanced Modal Styles */
+        .modal-header {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            padding: 15px 20px;
+        }
+
+        .modal-title {
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .modal-content {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: #495057;
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            border-radius: 6px;
+            border: 1px solid #ced4da;
+            padding: 10px 12px;
+            transition: all 0.2s ease;
+        }
+
+        .form-control:focus {
+            box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+            border-color: #86b7fe;
+        }
+
+        .modal-footer {
+            border-top: 1px solid #dee2e6;
+            padding: 15px 20px;
+        }
+
+        /* View Modal Specific Styles */
+        .detail-row {
+            display: flex;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #495057;
+            min-width: 120px;
+        }
+
+        .detail-value {
+            color: #6c757d;
+        }
+
+        /* Badge Styles */
+        .badge {
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+        }
+
+        /* Alert Styles */
+        .alert {
+            border-radius: 8px;
+            border: none;
+            padding: 12px 16px;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .main-content {
+                margin-left: 0;
+                padding: 90px 15px 15px;
+            }
+
+            .main-content.collapsed {
+                margin-left: 0;
+            }
+
+            .dashboard-box {
+                padding: 20px;
+            }
+
+            .table-responsive {
+                font-size: 0.9rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                gap: 3px;
+            }
+
+            .action-buttons .btn {
+                width: 32px;
+                height: 32px;
+            }
+        }
     </style>
 </head>
 <body>
 
-<!-- Sidebar Navigation -->
-<nav class="sidebar" id="sidebar">
-    <!-- Header Row -->
-   <div class="header-row">
-        <!-- Menu Toggle -->
-        <button class="menu-toggle" onclick="toggleSidebar()">
-            <i class="fa-solid fa-bars"></i>
-        </button>
-        <div class="profile-container dropdown">
-            <button class="profile-btn dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="{{ Auth::user() && Auth::user()->image ? asset('storage/profile_images/' . Auth::user()->image) : asset('images/images1.jpg') }}"
-                    alt="User Profile" class="profile-img me-2">
-                <div class="d-flex flex-column">
-                    <span class="profile-name">{{ Auth::user()->name ?? 'User' }}</span>
-                </div>
-            </button>
 
-            <div class="dropdown-menu dropdown-menu-end" style="min-width: 170px;">
-                <div class="dropdown-option">
-                    <a href="{{ route('senior.profile')}}" class="dropdown-item d-flex align-items-center px-3 py-2 rounded">
-                        <i class="fas fa-user-circle me-3"></i>
-                        <span>Edit Profile</span>
-                    </a>
-                </div>
-                <div class="dropdown-option">
-                    <form action="{{ route('logout') }}" method="POST">
-                        @csrf
-                        <button type="submit" class="dropdown-item d-flex align-items-center px-3 py-2 rounded w-100">
-                            <i class="fas fa-sign-out-alt me-3"></i>
-                            <span>Logout</span>
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <ul>
-        <li><a href="{{ route('senior.dashboard') }}"><i class="fas fa-home"></i> <span>Home</span></a></li>
-        <li><a href="{{ route('senior.list') }}" class="active"><i class="fas fa-list"></i> <span>Senior List</span></a></li>
-    </ul>
-</nav>
 
 <!-- Main Content -->
 <div class="main-content" id="main-content">
-    <div class="dashboard-box">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1>Senior Citizen List</h1>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSeniorModal">Add Senior</button>
-        </div>
-
-        @if (session('success'))
+     @if (session('success'))
             <div class="alert alert-success">
-                {{ session('success') }}
+                <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
             </div>
         @endif
 
         @if ($errors->any())
             <div class="alert alert-danger">
-                <ul>
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                <ul class="mb-0">
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                     @endforeach
                 </ul>
             </div>
         @endif
+    <div class="dashboard-box">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Senior Citizen List</h1>
+             <div class="search-container">
+            <input type="text" id="searchInput" class="form-control search-input" placeholder="Search seniors...">
 
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Last Name</th>
-                    <th>First Name</th>
-                    <th>Middle Name</th>
-                    <th>Birthday</th>
-                    <th>OSCA ID</th>
-                    <th>FCAP ID</th>
-                    <th>Resident Match</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($seniors as $senior)
+        </div>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSeniorModal">
+                <i class="fas fa-plus me-2"></i>Add Senior
+            </button>
+        </div>
+        <!-- Search Bar -->
+
+
+        <div class="table-responsive">
+            <table class="table table-striped" id="seniorTable">
+                <thead>
                     <tr>
-                        <td>{{ $senior->lastname }}</td>
-                        <td>{{ $senior->firstname }}</td>
-                        <td>{{ $senior->middlename }}</td>
-                        <td>{{ $senior->birthday }}</td>
-                        <td>{{ $senior->osca_id }}</td>
-                        <td>{{ $senior->fcap_id }}</td>
-                        <td>
-                            @if ($senior->resident)
-                                <span class="badge bg-success">Yes</span>
-                            @else
-                                <span class="badge bg-danger">No</span>
-                            @endif
-                        </td>
-                        <td>
-                            <button class="btn btn-sm btn-info" onclick="openViewModal({{$senior->id}})">
-                                 <i class="fas fa-eye"></i>
-                            </button>
-                            <button class="btn btn-sm btn-warning" onclick="openEditModal({{$senior->id}})">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <form action="{{ route('senior.destroy', $senior) }}" method="POST" class="d-inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this senior?')">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                            </form>
-                        </td>
+                        <th>Full Name</th>
+                        <th>Birthday</th>
+                        <th>OSCA ID</th>
+                        <th>FCAP ID</th>
+                        <th>Resident Match</th>
+                        <th>Actions</th>
                     </tr>
-                @empty
-                    <tr>
-                        <td colspan="8" class="text-center">No seniors found.</td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @forelse ($seniors as $senior)
+                        <tr>
+                            <td>{{ $senior->firstname }} {{ $senior->middlename }} {{ $senior->lastname }}</td>
+                            <td>{{ $senior->birthday }}</td>
+                            <td>{{ $senior->osca_id }}</td>
+                            <td>{{ $senior->fcap_id }}</td>
+                            <td>
+                                @if ($senior->resident)
+                                    <span class="badge bg-success">Yes</span>
+                                @else
+                                    <span class="badge bg-danger">No</span>
+                                @endif
+                            </td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn btn-sm btn-info" onclick="openViewModal({{$senior->id}})">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-warning" onclick="openEditModal({{$senior->id}})">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <form action="{{ route('senior.destroy', $senior) }}" method="POST" class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this senior?')">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="8" class="text-center">No seniors found.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
 <!-- Add Senior Modal -->
 <div class="modal fade" id="addSeniorModal" tabindex="-1" aria-labelledby="addSeniorModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="addSeniorModalLabel">Add New Senior</h5>
+        <h5 class="modal-title" id="addSeniorModalLabel">
+            <i class="fas fa-user-plus me-2"></i>Add New Senior
+        </h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form action="{{ route('senior.store') }}" method="POST">
             @csrf
-            <div class="mb-3">
-                <label for="firstname" class="form-label">First Name</label>
-                <input type="text" class="form-control" id="firstname" name="firstname" required>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="firstname" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="firstname" name="firstname" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="lastname" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="lastname" name="lastname" required>
+                    </div>
+                </div>
             </div>
             <div class="mb-3">
                 <label for="middlename" class="form-label">Middle Name</label>
                 <input type="text" class="form-control" id="middlename" name="middlename">
             </div>
-            <div class="mb-3">
-                <label for="lastname" class="form-label">Last Name</label>
-                <input type="text" class="form-control" id="lastname" name="lastname" required>
-            </div>
-            <div class="mb-3">
-                <label for="birthday" class="form-label">Birthday</label>
-                <input type="date" class="form-control" id="birthday" name="birthday" required>
-            </div>
-            <div class="mb-3">
-                <label for="osca_id" class="form-label">OSCA ID</label>
-                <input type="text" class="form-control" id="osca_id" name="osca_id" required>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="birthday" class="form-label">Birthday</label>
+                        <input type="date" class="form-control" id="birthday" name="birthday" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="osca_id" class="form-label">OSCA ID</label>
+                        <input type="text" class="form-control" id="osca_id" name="osca_id" required>
+                    </div>
+                </div>
             </div>
             <div class="mb-3">
                 <label for="fcap_id" class="form-label">FCAP ID</label>
@@ -397,7 +559,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save Senior</button>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save me-2"></i>Save Senior
+                </button>
             </div>
         </form>
       </div>
@@ -410,11 +574,16 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="viewSeniorModalLabel">Senior Details</h5>
+        <h5 class="modal-title" id="viewSeniorModalLabel">
+            <i class="fas fa-user me-2"></i>Senior Details
+        </h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <div id="viewSeniorContent"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
@@ -422,35 +591,49 @@
 
 <!-- Edit Senior Modal -->
 <div class="modal fade" id="editSeniorModal" tabindex="-1" aria-labelledby="editSeniorModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="editSeniorModalLabel">Edit Senior</h5>
+        <h5 class="modal-title" id="editSeniorModalLabel">
+            <i class="fas fa-edit me-2"></i>Edit Senior
+        </h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form id="editSeniorForm" method="POST">
             @csrf
             @method('PUT')
-            <div class="mb-3">
-                <label for="edit_lastname" class="form-label">Last Name</label>
-                <input type="text" class="form-control" id="edit_lastname" name="lastname" required>
-            </div>
-            <div class="mb-3">
-                <label for="edit_firstname" class="form-label">First Name</label>
-                <input type="text" class="form-control" id="edit_firstname" name="firstname" required>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="edit_lastname" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="edit_lastname" name="lastname" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="edit_firstname" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="edit_firstname" name="firstname" required>
+                    </div>
+                </div>
             </div>
             <div class="mb-3">
                 <label for="edit_middlename" class="form-label">Middle Name</label>
                 <input type="text" class="form-control" id="edit_middlename" name="middlename">
             </div>
-            <div class="mb-3">
-                <label for="edit_birthday" class="form-label">Birthday</label>
-                <input type="date" class="form-control" id="edit_birthday" name="birthday" required>
-            </div>
-            <div class="mb-3">
-                <label for="edit_osca_id" class="form-label">OSCA ID</label>
-                <input type="text" class="form-control" id="edit_osca_id" name="osca_id" required>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="edit_birthday" class="form-label">Birthday</label>
+                        <input type="date" class="form-control" id="edit_birthday" name="birthday" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="edit_osca_id" class="form-label">OSCA ID</label>
+                        <input type="text" class="form-control" id="edit_osca_id" name="osca_id" required>
+                    </div>
+                </div>
             </div>
             <div class="mb-3">
                 <label for="edit_fcap_id" class="form-label">FCAP ID</label>
@@ -458,7 +641,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Update Senior</button>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save me-2"></i>Update Senior
+                </button>
             </div>
         </form>
       </div>
@@ -482,12 +667,30 @@
         const senior = await response.json();
 
         const content = `
-            <p><strong>Last Name:</strong> ${senior.lastname}</p>
-            <p><strong>First Name:</strong> ${senior.firstname}</p>
-            <p><strong>Middle Name:</strong> ${senior.middlename}</p>
-            <p><strong>Birthday:</strong> ${senior.birthday}</p>
-            <p><strong>OSCA ID:</strong> ${senior.osca_id}</p>
-            <p><strong>FCAP ID:</strong> ${senior.fcap_id}</p>
+            <div class="detail-row">
+                <div class="detail-label">Last Name:</div>
+                <div class="detail-value">${senior.lastname}</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">First Name:</div>
+                <div class="detail-value">${senior.firstname}</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Middle Name:</div>
+                <div class="detail-value">${senior.middlename || 'N/A'}</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Birthday:</div>
+                <div class="detail-value">${senior.birthday}</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">OSCA ID:</div>
+                <div class="detail-value">${senior.osca_id}</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">FCAP ID:</div>
+                <div class="detail-value">${senior.fcap_id}</div>
+            </div>
         `;
 
         document.getElementById('viewSeniorContent').innerHTML = content;
@@ -501,7 +704,7 @@
 
         document.getElementById('edit_lastname').value = senior.lastname;
         document.getElementById('edit_firstname').value = senior.firstname;
-        document.getElementById('edit_middlename').value = senior.middlename;
+        document.getElementById('edit_middlename').value = senior.middlename || '';
         document.getElementById('edit_birthday').value = senior.birthday;
         document.getElementById('edit_osca_id').value = senior.osca_id;
         document.getElementById('edit_fcap_id').value = senior.fcap_id;
@@ -513,7 +716,21 @@
         editModal.show();
     }
 
+    // Search functionality
+    document.getElementById('searchInput').addEventListener('keyup', function() {
+        const searchText = this.value.toLowerCase();
+        const table = document.getElementById('seniorTable');
+        const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+
+        for (let i = 0; i < rows.length; i++) {
+            const rowText = rows[i].textContent.toLowerCase();
+            if (rowText.includes(searchText)) {
+                rows[i].style.display = '';
+            } else {
+                rows[i].style.display = 'none';
+            }
+        }
+    });
 </script>
 </body>
 </html>
-

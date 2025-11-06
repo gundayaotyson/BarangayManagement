@@ -411,6 +411,7 @@
     <!-- Main Content -->
     <div class="main-content" id="main-content">
         @yield('content')
+
     </div>
 
     <!-- Bootstrap JS -->

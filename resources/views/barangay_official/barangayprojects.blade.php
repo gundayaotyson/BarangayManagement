@@ -484,7 +484,7 @@ body {
 <div class="container-fluid">
     <div class="page-header">
         <h1 class="page-title">
-            <i class="fas fa-project-diagram me-2"></i>Barangay Projects Management
+            <i class="fas fa-project-diagram me-2"></i>Barangay Projects
         </h1>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProjectModal">
             <i class="fas fa-plus me-2"></i>Add New Project

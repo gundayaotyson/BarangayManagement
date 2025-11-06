@@ -41,7 +41,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 1.5rem;
+        padding: 1rem;
         background-color: white;
         border-bottom: 1px solid #e9ecef;
         border-radius: var(--border-radius) var(--border-radius) 0 0;
@@ -62,7 +62,7 @@
     .header-actions {
         display: flex;
         align-items: center;
-        gap: 1rem;
+        gap: 0rem;
     }
 
     /* Clean Search Bar */
@@ -83,9 +83,9 @@
     }
 
     #searchInput {
-        border: none;
-        outline: none;
-        padding: 0.5rem;
+        border: 1px solid #e0e0e0;
+        min-width: 300px;
+        padding: 11px;
         flex: 1;
         background: transparent;
     }
@@ -124,8 +124,8 @@
     }
 
     .btn-add-official:hover {
-        background-color: #219653;
-        border-color: #219653;
+        background-color: #2c3e50;
+        border-color: #2c3e50;
         transform: translateY(-2px);
         box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
         color: white;
@@ -359,12 +359,11 @@
                <div class="card-header">
                     <h2>Barangay Officials</h2>
                     <div class="header-actions">
-                        <div class="search-container">
+
                             <input type="text" id="searchInput" class="form-control" placeholder="Search officials...">
                             <button class="btn btn-outline-secondary" type="button" id="searchButton">
-                                <i class="fas fa-search"></i>
                             </button>
-                        </div>
+
                         <button class="btn btn-add-official" data-bs-toggle="modal" data-bs-target="#addOfficialModal">
                             <i class="fas fa-plus"></i> Add New Official
                         </button>

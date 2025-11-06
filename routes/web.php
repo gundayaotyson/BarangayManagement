@@ -99,6 +99,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Senior Routes
      Route::get('/Senior', [DashboardController::class, 'Senior'])->name('senior');
+    Route::get('/senior/homepage', [SeniorController::class, 'homepage'])->name('senior.homepage');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard', [DashboardController::class, 'homepage'])->name('dashboard');
     Route::get('/admin/profile', [PartialsController::class, 'profile'])->name('admin.profile');

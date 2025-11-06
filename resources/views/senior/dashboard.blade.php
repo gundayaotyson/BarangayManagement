@@ -301,14 +301,14 @@
     </div>
 
     <ul>
-        <li><a href="dashboard" class="active"><i class="fas fa-home"></i> <span>Home</span></a></li>
-            <li><a href="{{ route('senior.list') }}"><i class="fas fa-list"></i> <span>Senior List</span></a></li>
+         <li><a href="{{ route('senior.homepage') }}"><i class="fas fa-home"></i> <span>Home</span></a></li>
+        <li><a href="{{ route('senior.list') }}" class="active"><i class="fas fa-list"></i> <span>Senior List</span></a></li>
     </ul>
 </nav>
 
 <!-- Main Content -->
 <div class="main-content" id="main-content">
-    <div class="dashboard-box">
+    <!-- <div class="dashboard-box">
         <h1>Welcome to Senior Dashboard</h1>
         @auth
             <p>You are logged in as <strong>{{ Auth::user()->name }}</strong></p>
@@ -317,7 +317,7 @@
             <p>Please log in to access this dashboard.</p>
             <a href="{{ route('login') }}" class="login-link">Login</a>
         @endauth
-    </div>
+    </div> -->
 </div>
 
 <!-- Bootstrap JS -->
