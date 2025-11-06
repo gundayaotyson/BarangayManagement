@@ -289,6 +289,20 @@
         border-color: var(--secondary-color);
         box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
     }
+    .resident-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 3px solid white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.resident-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
     /* Responsive Adjustments */
     @media (max-width: 768px) {
@@ -771,11 +785,11 @@
 
                             // Set photo if available
                             const photoElement = document.getElementById('view-resident-photo');
-                            if (data.photo && data.photo !== '') {
-                                if (data.photo.startsWith('http') || data.photo.startsWith('/')) {
-                                    photoElement.src = data.photo;
+                            if (data.image&& data.image !== '') {
+                                if (data.image.startsWith('http') || data.image.startsWith('/')) {
+                                    photoElement.src = data.image;
                                 } else {
-                                    photoElement.src = `/storage/${data.photo}`;
+                                    photoElement.src = `/storage/${data.image}`;
                                 }
                             } else {
                                 photoElement.src = "{{ asset('images/default-profile.png') }}";

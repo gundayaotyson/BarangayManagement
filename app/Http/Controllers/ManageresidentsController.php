@@ -30,60 +30,44 @@ class ManageresidentsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        // Validate form inputs
-        $request->validate([
-            'Fname' => 'required|string|max:255',
-            'mname' => 'nullable|string|max:255',
-            'lname' => 'required|string|max:255',
-            'gender' => 'required|in:Male,Female',
-            'birthday' => 'required|date',
-            'birthplace' => 'required|string|max:255',
-            'civil_status' => 'required|in:Single,Married,Widowed,Separated,Divorced',
-            'contact_number' => 'nullable|string|max:15',
-            'occupation' => 'nullable|string|max:255',
-            'Citizenship' => 'required|string|max:255',
-            'household_no' => 'required|string|max:255',
-            'purok_no' => 'required|in:Purok 1,Purok 2,Purok 3',
-            'sitio' => 'nullable|string|max:255',
-            'religion' => 'nullable|string|max:255',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
-        ]);
+   public function store(Request $request)
+{
+    // Validate form inputs
+    $validatedData = $request->validate([
+        'Fname' => 'required|string|max:255',
+        'mname' => 'nullable|string|max:255',
+        'lname' => 'required|string|max:255',
+        'gender' => 'required|in:Male,Female',
+        'birthday' => 'required|date',
+        'birthplace' => 'required|string|max:255',
+        'civil_status' => 'required|in:Single,Married,Widowed,Separated,Divorced',
+        'contact_number' => 'nullable|string|max:15',
+        'occupation' => 'nullable|string|max:255',
+        'Citizenship' => 'required|string|max:255',
+        'household_no' => 'required|string|max:255',
+        'purok_no' => 'required|in:Purok 1,Purok 2,Purok 3',
+        'sitio' => 'nullable|string|max:255',
+        'religion' => 'nullable|string|max:255',
+        'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+    ]);
 
-        // Calculate age using Carbon
-        $age = Carbon::parse($request->birthday)->age;
-               // Handle the image upload if a file is provided
-            $imagePath = null;
-            if ($request->hasFile('image')) {
-                $imagePath = $request->file('image')->store('resident_images', 'public');
-            }
-        // Create new resident instance
-        $resident = new Resident();
-        $resident->Fname = $request->input('Fname');
-        $resident->mname = $request->input('mname');
-        $resident->lname = $request->input('lname');
-        $resident->gender = $request->input('gender');
-        $resident->birthday = $request->input('birthday');
-        $resident->birthplace = $request->input('birthplace');
-        $resident->civil_status = $request->input('civil_status');
-        $resident->contact_number = $request->input('contact_number');
-        $resident->occupation = $request->input('occupation');
-        $resident->Citizenship = $request->input('Citizenship');
-        $resident->household_no = $request->input('household_no');
-        $resident->purok_no = $request->input('purok_no');
-        $resident->sitio = $request->input('sitio');
-        $resident->religion = $request->input('religion');
-        $resident->image = $imagePath;
-        $resident->age = $age;
+    // Compute age
+    $validatedData['age'] = Carbon::parse($validatedData['birthday'])->age;
 
-        // Save resident
-        $resident->save();
-
-        // Redirect back with success message
-        return redirect()->route('residents')->with('success', 'Resident added successfully!');
+    // Handle image upload
+    if ($request->hasFile('image')) {
+        $filename = time() . '_' . $request->file('image')->getClientOriginalName();
+        $path = $request->file('image')->storeAs('resident_images', $filename, 'public');
+        $validatedData['image'] = $path;
+    } else {
+        $validatedData['image'] = null;
     }
 
+    // Create and save resident
+    Resident::create($validatedData);
+
+    return redirect()->route('residents')->with('success', 'Resident added successfully!');
+}
     /**
      * Display the specified resource.
      */

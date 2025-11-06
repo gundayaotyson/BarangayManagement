@@ -52,7 +52,7 @@
 
 /* View Modal Specific */
 .resident-info-card {
-    background-color: var(--primary-light);
+    /* background-color: var(--primary-light); */
     border-radius: 12px;
     padding: 1.25rem;
     margin-bottom: 1.5rem;
@@ -774,28 +774,28 @@
                 <div class="resident-info-card">
                     <div class="row">
                         <div class="col-md-9">
-                            <h4 class="resident-name" id="view-fullname-header"></h4>
+                            <h4 class="resident-name" id="view-fullname-header"hidden></h4>
                             <div class="resident-meta">
                                 <div class="resident-meta-item">
-                                    <i class="fas fa-venus-mars"></i> <span id="view-gender-meta"></span>
+                                    <i class="fas fa-venus-mars" hidden></i> <span id="view-gender-meta"hidden></span>
                                 </div>
-                                <div class="resident-meta-item">
-                                    <i class="fas fa-birthday-cake"></i> <span id="view-age-meta"></span> years old
+                                <div class="resident-meta-item"hidden>
+                                    <i class="fas fa-birthday-cake"hidden></i> <span id="view-age-meta"hidden></span> years old
                                 </div>
-                                <div class="resident-meta-item">
-                                    <i class="fas fa-ring"></i> <span id="view-civil-status-meta"></span>
+                                <div class="resident-meta-item"hidden>
+                                    <i class="fas fa-ring"hidden></i> <span id="view-civil-status-meta" hidden  ></span>
                                 </div>
                             </div>
-                            <div class="resident-meta">
-                                <div class="resident-meta-item">
-                                    <i class="fas fa-map-marker-alt"></i> <span id="view-address-meta"></span>
+                            <div class="resident-meta" hidden>
+                                <div class="resident-meta-item" hidden>
+                                    <i class="fas fa-map-marker-alt"hidden></i> <span id="view-address-meta" hidden></span>
                                 </div>
                                 <div class="resident-meta-item">
                                     <i class="fas fa-home"></i> Household #<span id="view-household-meta"></span>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3 text-end">
+                        <div >
                             <div class="resident-photo">
                                 <img id="view-resident-photo" src="https://via.placeholder.com/150?text=No+Photo" alt="Resident Photo">
                             </div>
@@ -804,10 +804,10 @@
                 </div>
 
                 <div class="row mt-4">
-                    <div class="col-md-6">
-                        <h6 class="section-title">
+                     <h6 class="section-title">
                             <i class="fas fa-user-circle"></i> Personal Information
                         </h6>
+                    <div class="col-md-6">
 
                         <div class="info-group">
                             <div class="info-label">Full Name</div>
@@ -828,6 +828,8 @@
                             <div class="info-label">Age</div>
                             <div class="info-value" id="view-age"></div>
                         </div>
+                    </div>
+                        <div class="col-md-6">
 
                         <div class="info-group">
                             <div class="info-label">Birthplace</div>
@@ -851,10 +853,9 @@
                     </div>
 
                     <div class="col-md-6">
-                        <h6 class="section-title">
+                         <h6 class="section-title">
                             <i class="fas fa-address-card"></i> Contact & Address Information
-                        </h6>
-
+                    </h6>
                         <div class="info-group">
                             <div class="info-label">Contact Number</div>
                             <div class="info-value" id="view-contact-number"></div>
@@ -864,22 +865,29 @@
                             <div class="info-label">Occupation</div>
                             <div class="info-value" id="view-occupation"></div>
                         </div>
-
-                        <div class="info-group">
-                            <div class="info-label">Household No.</div>
-                            <div class="info-value" id="view-household-no"></div>
-                        </div>
-
-                        <div class="info-group">
-                            <div class="info-label">Purok</div>
-                            <div class="info-value" id="view-purok"></div>
-                        </div>
-
-                        <div class="info-group">
-                            <div class="info-label">Sitio</div>
-                            <div class="info-value" id="view-sitio"></div>
-                        </div>
                     </div>
+                  <div class="col-md-6">
+                     <h6 class="section-title">
+                            <i class="fas fa-address-card"></i>Address Information
+                    </h6>
+            <div class="d-flex align-items-center flex-wrap gap-3">
+                <div class="info-group d-flex align-items-center gap-1">
+                    <div class="info-label fw-semibold">Household No:</div>
+                    <div class="info-value" id="view-household-no">---</div>
+                </div>
+
+                <div class="info-group d-flex align-items-center gap-1">
+                    <div class="info-label fw-semibold">Purok:</div>
+                    <div class="info-value" id="view-purok">---</div>
+                </div>
+
+                <div class="info-group d-flex align-items-center gap-1">
+                    <div class="info-label fw-semibold">Sitio:</div>
+                    <div class="info-value" id="view-sitio">---</div>
+                </div>
+            </div>
+</div>
+
                 </div>
             </div>
             <div class="modal-footer">
@@ -975,12 +983,7 @@
                                 <div class="col-md-6">
                                     <label for="edit-birthday" class="form-label">Birthdate <span class="required-field">*</span></label>
                                     <input type="date" id="edit-birthday" name="birthday" class="form-control" required>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="edit-age" class="form-label">Age</label>
-                                    <input type="number" id="edit-age" name="age" class="form-control" readonly>
-                                    <small class="text-muted">Automatically calculated from birthdate</small>
+                                    <input type="number" id="edit-age" name="age" class="form-control" hidden>
                                 </div>
 
                                 <div class="col-md-6">
@@ -1004,7 +1007,7 @@
                                     <input type="text" id="edit-citizenship" name="Citizenship" class="form-control">
                                 </div>
 
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <label for="edit-birthplace" class="form-label">Birthplace</label>
                                     <input type="text" id="edit-birthplace" name="birthplace" class="form-control">
                                 </div>
@@ -1154,13 +1157,9 @@
             <div class="col-md-6">
                 <label for="birthday" class="form-label">Birthdate <span class="required-field">*</span></label>
                 <input type="date" id="birthday" name="birthday" class="form-control" required>
+                <input type="number" id="age" name="age" class="form-control" hidden>
             </div>
 
-            <div class="col-md-6">
-                <label for="age" class="form-label">Age</label>
-                <input type="number" id="age" name="age" class="form-control" readonly>
-                <small class="text-muted">Automatically calculated from birthdate</small>
-            </div>
 
             <div class="col-md-6">
                 <label for="civil_status" class="form-label">Civil Status</label>
@@ -1184,7 +1183,7 @@
                 <input type="text" id="citizenship" name="Citizenship" class="form-control" placeholder="Enter citizenship">
             </div>
 
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <label for="birthplace" class="form-label">Birthplace</label>
                 <input type="text" id="birthplace" name="birthplace" class="form-control" placeholder="Enter birthplace">
             </div>
@@ -1247,13 +1246,18 @@
             <!-- Photo Upload -->
             <hr class="mt-4 mb-3">
             <h6><i class="fas fa-camera"></i> Resident Photo</h6>
+
             <div class="col-md-12">
                 <div class="d-flex align-items-center gap-3">
-                    <div class="image-preview">
-                        <div class="image-preview-placeholder">
+
+                    <!-- Image Preview Container -->
+                    <div class="image-preview" id="imagePreview">
+                        <div class="image-preview-placeholder" id="imagePlaceholder">
                             <i class="fas fa-user fa-2x"></i>
                         </div>
+                        <img id="previewImg" src="" alt="Resident Image" class="d-none rounded" width="100" height="100">
                     </div>
+
                     <div>
                         <label for="image" class="custom-file-upload">
                             <i class="fas fa-upload"></i> Choose Photo
@@ -1278,8 +1282,30 @@
         </div>
     </div>
 </div>
+<script>
+document.getElementById('image').addEventListener('change', function (event) {
+    const file = event.target.files[0];
+    const previewImg = document.getElementById('previewImg');
+    const placeholder = document.getElementById('imagePlaceholder');
+
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            previewImg.src = e.target.result;
+            previewImg.classList.remove('d-none');
+            placeholder.style.display = 'none';
+        };
+        reader.readAsDataURL(file);
+    } else {
+        previewImg.src = '';
+        previewImg.classList.add('d-none');
+        placeholder.style.display = 'flex';
+    }
+});
+</script>
 <!-- JavaScript Functions -->
 <script>
+
     // Search function
     function searchResidents() {
         let input = document.getElementById("searchInput").value.toLowerCase();

@@ -271,6 +271,7 @@
         <button class="menu-toggle" onclick="toggleSidebar()">
             <i class="fa-solid fa-bars"></i>
         </button>
+         <!-- <h2>Welcome, <strong>{{ Auth::user()->name }}</strong></h2> -->
         <div class="profile-container dropdown">
             <button class="profile-btn dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown" aria-expanded="false">
                 <img src="{{ Auth::user() && Auth::user()->image ? asset('storage/profile_images/' . Auth::user()->image) : asset('images/images1.jpg') }}"

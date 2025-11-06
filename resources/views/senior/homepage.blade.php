@@ -15,6 +15,17 @@
     --transition: all 0.3s ease;
 }
 
+.main-content {
+    margin-left: 240px;
+    padding: 90px 20px 20px;
+    transition: margin-left var(--transition-speed, 0.3s) ease;
+    min-height: 100vh;
+}
+
+.main-content.collapsed {
+    margin-left: 80px;
+}
+
 .dashboard-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -32,6 +43,7 @@
     text-align: center;
     position: relative;
     overflow: hidden;
+    margin-top: auto;
 }
 
 .welcome-box::before {
@@ -223,6 +235,15 @@
 }
 
 @media (max-width: 768px) {
+    .main-content {
+        margin-left: 0;
+        padding: 90px 15px 15px;
+    }
+
+    .main-content.collapsed {
+        margin-left: 0;
+    }
+
     .dashboard-container {
         padding: 20px 15px;
     }
@@ -267,69 +288,72 @@
 }
 </style>
 
-<div class="dashboard-container">
-    <div class="welcome-box">
-        <h1>Welcome, <strong>{{ Auth::user()->name }}</strong></h1>
-        <p>Senior Citizen Management Dashboard</p>
-    </div>
+<div class="main-content" id="main-content">
+    <div class="dashboard-container">
 
-    <div class="dashboard-grid">
-        <div class="statistics-card">
-            <h2>
-                <i class="fas fa-filter"></i> Filter Statistics
-            </h2>
-            <form id="filterForm" class="filter-form">
-                <div class="filter-controls">
-                    <select name="year" id="year">
-                        <option value="">Select Year</option>
-                        @php
-                            $currentYear = date('Y');
-                        @endphp
-                        @for ($year = $currentYear; $year >= $currentYear - 10; $year--)
-                            <option value="{{ $year }}" {{ request('year') == $year ? 'selected' : '' }}>{{ $year }}</option>
-                        @endfor
-                    </select>
-                    <select name="month" id="month">
-                        <option value="">Select Month</option>
-                        @php
-                            $months = [
-                                '01' => 'January', '02' => 'February', '03' => 'March', '04' => 'April',
-                                '05' => 'May', '06' => 'June', '07' => 'July', '08' => 'August',
-                                '09' => 'September', '10' => 'October', '11' => 'November', '12' => 'December'
-                            ];
-                        @endphp
-                        @foreach ($months as $key => $month)
-                            <option value="{{ $key }}" {{ request('month') == $key ? 'selected' : '' }}>{{ $month }}</option>
-                        @endforeach
-                    </select>
-                    <button type="submit">Apply Filter</button>
-                </div>
-            </form>
+        <div class="welcome-box">
+            <h1>Welcome, <strong>{{ Auth::user()->name }}</strong></h1>
+            <p>Senior Citizen Management Dashboard</p>
+        </div>
 
-            <div class="stats-display">
-                <div class="stat-item male">
-                    <div class="stat-value male" id="filteredMaleSeniors">{{ $filteredMaleSeniors }}</div>
-                    <div class="stat-label">Male Seniors</div>
+        <div class="dashboard-grid">
+            <div class="statistics-card">
+                <h2>
+                    <i class="fas fa-filter"></i> Filter Statistics
+                </h2>
+                <form id="filterForm" class="filter-form">
+                    <div class="filter-controls">
+                        <select name="year" id="year">
+                            <option value="">Select Year</option>
+                            @php
+                                $currentYear = date('Y');
+                            @endphp
+                            @for ($year = $currentYear; $year >= $currentYear - 10; $year--)
+                                <option value="{{ $year }}" {{ request('year') == $year ? 'selected' : '' }}>{{ $year }}</option>
+                            @endfor
+                        </select>
+                        <select name="month" id="month">
+                            <option value="">Select Month</option>
+                            @php
+                                $months = [
+                                    '01' => 'January', '02' => 'February', '03' => 'March', '04' => 'April',
+                                    '05' => 'May', '06' => 'June', '07' => 'July', '08' => 'August',
+                                    '09' => 'September', '10' => 'October', '11' => 'November', '12' => 'December'
+                                ];
+                            @endphp
+                            @foreach ($months as $key => $month)
+                                <option value="{{ $key }}" {{ request('month') == $key ? 'selected' : '' }}>{{ $month }}</option>
+                            @endforeach
+                        </select>
+                        <button type="submit">Apply Filter</button>
+                    </div>
+                </form>
+
+                <div class="stats-display">
+                    <div class="stat-item male">
+                        <div class="stat-value male" id="filteredMaleSeniors">{{ $filteredMaleSeniors }}</div>
+                        <div class="stat-label">Male Seniors</div>
+                    </div>
+                    <div class="stat-item female">
+                        <div class="stat-value female" id="filteredFemaleSeniors">{{ $filteredFemaleSeniors }}</div>
+                        <div class="stat-label">Female Seniors</div>
+                    </div>
                 </div>
-                <div class="stat-item female">
-                    <div class="stat-value female" id="filteredFemaleSeniors">{{ $filteredFemaleSeniors }}</div>
-                    <div class="stat-label">Female Seniors</div>
+            </div>
+
+            <div class="statistics-card">
+                <h2>
+                    <i class="fas fa-chart-pie"></i> Gender Distribution
+                </h2>
+                <div class="chart-wrapper">
+                    <canvas id="seniorStatusChart"></canvas>
                 </div>
             </div>
         </div>
 
-        <div class="statistics-card">
-            <h2>
-                <i class="fas fa-chart-pie"></i> Gender Distribution
-            </h2>
-            <div class="chart-wrapper">
-                <canvas id="seniorStatusChart"></canvas>
-            </div>
+        <div class="loading" id="loadingIndicator">
+            <p>Loading data...</p>
         </div>
-    </div>
-
-    <div class="loading" id="loadingIndicator">
-        <p>Loading data...</p>
     </div>
 </div>
 

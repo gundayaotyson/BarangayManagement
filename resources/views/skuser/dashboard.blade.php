@@ -330,7 +330,7 @@
 
             <div class="dropdown-menu dropdown-menu-end" style="min-width: 170px;">
                 <div class="dropdown-option">
-                    <a href="{{ route('resident.profile')}}" class="dropdown-item d-flex align-items-center px-3 py-2 rounded">
+                    <a href="{{ route('skuser.profile')}}" class="dropdown-item d-flex align-items-center px-3 py-2 rounded">
                         <i class="fas fa-user-circle me-3"></i>
                         <span>Edit Profile</span>
                     </a>

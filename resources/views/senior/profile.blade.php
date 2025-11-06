@@ -192,7 +192,7 @@
 
                 <!-- Profile Image with Upload Button -->
                 <div class="profile-img-container">
-                    <img src="{{ isset($user) && $user->image ? asset('storage/profile_images/' . $user->image) : asset('images/default-avatar.png') }}"
+                    <img src="{{ isset($user) && $user->image ? asset('storage/profile_images/' . $user->image) : asset('images/images1.jpg') }}"
                          class="profile-img" alt="Profile Image" id="profileImagePreview">
                     <label for="image" class="profile-upload-btn" title="Change photo">
                         <i class="fas fa-camera"></i>

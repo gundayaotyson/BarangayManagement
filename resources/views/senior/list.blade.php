@@ -386,12 +386,7 @@
             border: none;
             padding: 12px 16px;
         }
-        .search-container {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 300px;
-        }
+
         /* Responsive Adjustments */
         @media (max-width: 768px) {
             .main-content {
@@ -420,20 +415,7 @@
                 width: 32px;
                 height: 32px;
             }
-
         }
-        @media (max-width: 992px) {
-    .search-container {
-        position: static;
-        transform: none;
-        width: 100%;
-        margin: 15px 0;
-    }
-
-    .d-flex.justify-content-between.align-items-center.mb-4 {
-        flex-direction: column;
-    }
-}
     </style>
 </head>
 <body>
@@ -459,11 +441,11 @@
             </div>
         @endif
     <div class="dashboard-box">
-        <div class="d-flex justify-content-between align-items-center mb-4 position-relative">
-            <h1 class="mb-0">Senior Citizen List</h1>
-            <div class="search-container position-absolute start-50 translate-middle-x">
-                <i class="fas fa-search search-icon"></i>
+        <div >
+            <h1>Senior Citizen List</h1>
+             <div class="search-container">
                 <input type="text" id="searchInput" class="form-control search-input" placeholder="Search seniors...">
+
             </div>
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSeniorModal">
                 <i class="fas fa-plus me-2"></i>Add Senior
