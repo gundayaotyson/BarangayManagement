@@ -1118,213 +1118,163 @@
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <div class="modal-body">
-                <form action="{{ route('manageresidents.store') }}" method="POST" id="residentForm" enctype="multipart/form-data">
-                    @csrf
+           <div class="modal-body">
+    <form action="{{ route('manageresidents.store') }}" method="POST" id="residentForm" enctype="multipart/form-data">
+        @csrf
 
-                    <!-- Progress Indicator -->
-                    <div class="form-progress mb-4">
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 33%;" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <div class="progress-steps mt-3">
-                            <div class="progress-step">
-                                <div class="step-icon active">
-                                    <i class="fas fa-user"></i>
-                                </div>
-                                <span class="step-label active">Personal Info</span>
-                            </div>
-                            <div class="progress-step">
-                                <div class="step-icon">
-                                    <i class="fas fa-phone"></i>
-                                </div>
-                                <span class="step-label">Contact Info</span>
-                            </div>
-                            <div class="progress-step">
-                                <div class="step-icon">
-                                    <i class="fas fa-home"></i>
-                                </div>
-                                <span class="step-label">Address</span>
-                            </div>
-                        </div>
-                    </div>
+        <h5 class="mb-3"><i class="fas fa-user-circle"></i> Resident Information</h5>
 
-                    <!-- Form Sections -->
-                    <div class="form-sections">
-                        <!-- Section 1: Personal Information -->
-                        <div class="form-section active">
-                            <h6 class="section-title">
-                                <i class="fas fa-user-circle"></i> Personal Information
-                            </h6>
-
-                            <div class="row g-3">
-                                <div class="col-md-4">
-                                    <label for="fname" class="form-label">First Name <span class="required-field">*</span></label>
-                                    <input type="text" id="fname" name="Fname" class="form-control" required placeholder="Enter first name">
-                                    <div class="invalid-feedback">Please provide a first name</div>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <label for="mname" class="form-label">Middle Name</label>
-                                    <input type="text" id="mname" name="mname" class="form-control" placeholder="Enter middle name">
-                                </div>
-
-                                <div class="col-md-4">
-                                    <label for="lname" class="form-label">Last Name <span class="required-field">*</span></label>
-                                    <input type="text" id="lname" name="lname" class="form-control" required placeholder="Enter last name">
-                                    <div class="invalid-feedback">Please provide a last name</div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="gender" class="form-label">Gender <span class="required-field">*</span></label>
-                                    <select id="gender" name="gender" class="form-select" required>
-                                        <option value="">Select Gender</option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                        <option value="Other">Other</option>
-                                    </select>
-                                    <div class="invalid-feedback">Please select a gender</div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="birthday" class="form-label">Birthdate <span class="required-field">*</span></label>
-                                    <input type="date" id="birthday" name="birthday" class="form-control" required>
-                                    <div class="invalid-feedback">Please provide a valid birthdate</div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="age" class="form-label">Age</label>
-                                    <input type="number" id="age" name="age" class="form-control" readonly>
-                                    <small class="text-muted">Automatically calculated from birthdate</small>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="civil_status" class="form-label">Civil Status</label>
-                                    <select id="civil_status" name="civil_status" class="form-select">
-                                        <option value="">Select Status</option>
-                                        <option value="Single">Single</option>
-                                        <option value="Married">Married</option>
-                                        <option value="Widowed">Widowed</option>
-                                        <option value="Separated">Separated</option>
-                                        <option value="Divorced">Divorced</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="religion" class="form-label">Religion</label>
-                                    <input type="text" name="religion" class="form-control" placeholder="Enter religion">
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="citizenship" class="form-label">Citizenship</label>
-                                    <input type="text" id="citizenship" name="Citizenship" class="form-control" placeholder="Enter citizenship">
-                                </div>
-
-                                <div class="col-md-12">
-                                    <label for="birthplace" class="form-label">Birthplace</label>
-                                    <input type="text" id="birthplace" name="birthplace" class="form-control" placeholder="Enter birthplace">
-                                </div>
-
-                                <div class="col-md-12">
-                                    <label for="image" class="form-label">Resident Photo</label>
-                                    <div class="d-flex align-items-center gap-3">
-                                        <div class="image-preview">
-                                            <div class="image-preview-placeholder">
-                                                <i class="fas fa-user fa-2x"></i>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <label for="image" class="custom-file-upload">
-                                                <i class="fas fa-upload"></i> Choose Photo
-                                            </label>
-                                            <input type="file" name="image" id="image" class="form-control d-none" accept="image/*">
-                                            <div class="mt-2 text-muted small">Recommended size: 300x300px, Max: 2MB</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Section 2: Contact Information -->
-                        <div class="form-section">
-                            <h6 class="section-title">
-                                <i class="fas fa-address-card"></i> Contact Information
-                            </h6>
-
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <label for="contact_number" class="form-label">Contact Number</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text">+63</span>
-                                        <input type="text" id="contact_number" name="contact_number" class="form-control" placeholder="9XX XXX XXXX">
-                                    </div>
-                                    <div class="form-text">Format: 9XX XXX XXXX (without leading zero)</div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="occupation" class="form-label">Occupation</label>
-                                    <input type="text" id="occupation" name="occupation" class="form-control" placeholder="Enter occupation">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Section 3: Address Information -->
-                        <div class="form-section">
-                            <h6 class="section-title">
-                                <i class="fas fa-map-marker-alt"></i> Address Information
-                            </h6>
-
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <label for="household_no" class="form-label">Household No.</label>
-                                    <input type="text" id="household_no" name="household_no" class="form-control" placeholder="Enter household number">
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="purok_no" class="form-label">Purok <span class="required-field">*</span></label>
-                                    <select id="purok_no" name="purok_no" class="form-select" required>
-                                        <option value="">Select Purok</option>
-                                        <option value="Purok 1">Purok 1</option>
-                                        <option value="Purok 2">Purok 2</option>
-                                        <option value="Purok 3">Purok 3</option>
-                                    </select>
-                                    <div class="invalid-feedback">Please select a purok</div>
-                                </div>
-
-                                <div class="col-md-6" id="sitio_container">
-                                    <label for="sitio" class="form-label">Sitio</label>
-                                    <select id="sitio" name="sitio" class="form-select">
-                                        <option value="">Select Sitio</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <div class="form-check mt-2">
-                                        <input class="form-check-input" type="checkbox" id="is_household_head" name="is_household_head">
-                                        <label class="form-check-label" for="is_household_head">
-                                            This resident is the head of the household
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Navigation Buttons -->
-                    <div class="modal-footer mt-4">
-                        <button type="button" class="btn btn-secondary" id="prevBtn" style="display:none;">
-                            <i class="fas fa-arrow-left"></i> Previous
-                        </button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-primary" id="nextBtn">
-                            Next <i class="fas fa-arrow-right"></i>
-                        </button>
-                        <button type="submit" class="btn btn-success" id="submitBtn" style="display:none;">
-                            <i class="fas fa-save"></i> Save Resident
-                        </button>
-                    </div>
-                </form>
+        <div class="row g-3">
+            <!-- Personal Information -->
+            <div class="col-md-4">
+                <label for="fname" class="form-label">First Name <span class="required-field">*</span></label>
+                <input type="text" id="fname" name="Fname" class="form-control" required placeholder="Enter first name">
             </div>
+
+            <div class="col-md-4">
+                <label for="mname" class="form-label">Middle Name</label>
+                <input type="text" id="mname" name="mname" class="form-control" placeholder="Enter middle name">
+            </div>
+
+            <div class="col-md-4">
+                <label for="lname" class="form-label">Last Name <span class="required-field">*</span></label>
+                <input type="text" id="lname" name="lname" class="form-control" required placeholder="Enter last name">
+            </div>
+
+            <div class="col-md-6">
+                <label for="gender" class="form-label">Gender <span class="required-field">*</span></label>
+                <select id="gender" name="gender" class="form-select" required>
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label for="birthday" class="form-label">Birthdate <span class="required-field">*</span></label>
+                <input type="date" id="birthday" name="birthday" class="form-control" required>
+            </div>
+
+            <div class="col-md-6">
+                <label for="age" class="form-label">Age</label>
+                <input type="number" id="age" name="age" class="form-control" readonly>
+                <small class="text-muted">Automatically calculated from birthdate</small>
+            </div>
+
+            <div class="col-md-6">
+                <label for="civil_status" class="form-label">Civil Status</label>
+                <select id="civil_status" name="civil_status" class="form-select">
+                    <option value="">Select Status</option>
+                    <option value="Single">Single</option>
+                    <option value="Married">Married</option>
+                    <option value="Widowed">Widowed</option>
+                    <option value="Separated">Separated</option>
+                    <option value="Divorced">Divorced</option>
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label for="religion" class="form-label">Religion</label>
+                <input type="text" name="religion" class="form-control" placeholder="Enter religion">
+            </div>
+
+            <div class="col-md-6">
+                <label for="citizenship" class="form-label">Citizenship</label>
+                <input type="text" id="citizenship" name="Citizenship" class="form-control" placeholder="Enter citizenship">
+            </div>
+
+            <div class="col-md-12">
+                <label for="birthplace" class="form-label">Birthplace</label>
+                <input type="text" id="birthplace" name="birthplace" class="form-control" placeholder="Enter birthplace">
+            </div>
+
+            <!-- Contact Information -->
+            <hr class="mt-4 mb-3">
+            <h6><i class="fas fa-address-card"></i> Contact Information</h6>
+
+            <div class="col-md-6">
+                <label for="contact_number" class="form-label">Contact Number</label>
+                <div class="input-group">
+                    <span class="input-group-text">+63</span>
+                    <input type="text" id="contact_number" name="contact_number" class="form-control" placeholder="9XX XXX XXXX">
+                </div>
+                <div class="form-text">Format: 9XX XXX XXXX (without leading zero)</div>
+            </div>
+
+            <div class="col-md-6">
+                <label for="occupation" class="form-label">Occupation</label>
+                <input type="text" id="occupation" name="occupation" class="form-control" placeholder="Enter occupation">
+            </div>
+
+            <!-- Address Information -->
+          <hr class="mt-4 mb-3">
+            <h6><i class="fas fa-map-marker-alt"></i> Address Information</h6>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="household_no" class="form-label">Household No.</label>
+                    <input type="text" id="household_no" name="household_no" class="form-control" placeholder="Enter household number">
+                </div>
+
+                <div class="col-md-6">
+                    <label for="purok_no" class="form-label">Purok <span class="required-field">*</span></label>
+                    <select id="purok_no" name="purok_no" class="form-select" required>
+                        <option value="">Select Purok</option>
+                        <option value="Purok 1">Purok 1</option>
+                        <option value="Purok 2">Purok 2</option>
+                        <option value="Purok 3">Purok 3</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6" id="sitio_container" style="display: none;">
+                    <label for="sitio" class="form-label">Sitio</label>
+                    <select id="sitio" name="sitio" class="form-select">
+                        <option value="">Select Sitio</option>
+                    </select>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="form-check mt-2">
+                        <input class="form-check-input" type="checkbox" id="is_household_head" name="is_household_head">
+                        <label class="form-check-label" for="is_household_head">
+                            This resident is the head of the household
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Photo Upload -->
+            <hr class="mt-4 mb-3">
+            <h6><i class="fas fa-camera"></i> Resident Photo</h6>
+            <div class="col-md-12">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="image-preview">
+                        <div class="image-preview-placeholder">
+                            <i class="fas fa-user fa-2x"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="image" class="custom-file-upload">
+                            <i class="fas fa-upload"></i> Choose Photo
+                        </label>
+                        <input type="file" name="image" id="image" class="form-control d-none" accept="image/*">
+                        <div class="mt-2 text-muted small">Recommended size: 300x300px, Max: 2MB</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Buttons -->
+        <div class="modal-footer mt-4">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-success">
+                <i class="fas fa-save"></i> Save Resident
+            </button>
+        </div>
+    </form>
+</div>
+
         </div>
     </div>
 </div>
@@ -1673,44 +1623,32 @@ const purokSitioMap = {
     "Purok 3": ["Pidlaoan"]
 };
 
-// Multi-step Form Navigation
-let currentSection = 0;
-const sections = document.querySelectorAll('.form-section');
-const progressBar = document.querySelector('.progress-bar');
-const prevBtn = document.getElementById('prevBtn');
-const nextBtn = document.getElementById('nextBtn');
-const submitBtn = document.getElementById('submitBtn');
-
-// Initialize form
+// Initialize form behavior
 document.addEventListener('DOMContentLoaded', function() {
-    // Show first section
-    showSection(currentSection);
-
-    // Purok-Sitio functionality
-    document.getElementById('purok_no').addEventListener('change', function() {
+    // Listen to purok change
+    const purokSelect = document.getElementById('purok_no');
+    purokSelect.addEventListener('change', function() {
         updateSitioOptions(this.value, 'sitio');
     });
 
-    // Age calculation
-    document.getElementById('birthday').addEventListener('change', calculateAge);
-
-    // Image preview for new resident
-    setupImagePreview('image', '.image-preview');
-
-    // Image preview for edit resident
-    setupImagePreview('edit-image', '#edit-resident-photo');
+    // Hide sitio initially
+    document.getElementById('sitio_container').style.display = 'none';
 });
 
-// Show Sitio options based on Purok selection
+// Update Sitio options based on selected Purok
 function updateSitioOptions(purokValue, sitioElementId) {
     const sitioSelect = document.getElementById(sitioElementId);
-    const sitioContainer = sitioElementId === 'sitio' ? document.getElementById('sitio_container') : sitioSelect.closest('.col-md-6');
+    const sitioContainer = document.getElementById('sitio_container');
 
+    // Reset sitio options
     sitioSelect.innerHTML = '<option value="">Select Sitio</option>';
 
     if (purokValue && purokSitioMap[purokValue]) {
         purokSitioMap[purokValue].forEach(sitio => {
-            sitioSelect.innerHTML += `<option value="${sitio}">${sitio}</option>`;
+            const option = document.createElement('option');
+            option.value = sitio;
+            option.textContent = sitio;
+            sitioSelect.appendChild(option);
         });
         sitioContainer.style.display = 'block';
     } else {
@@ -1718,21 +1656,36 @@ function updateSitioOptions(purokValue, sitioElementId) {
     }
 }
 
-// Calculate age from birthdate
-function calculateAge() {
-    const birthday = new Date(this.value);
-    if (isNaN(birthday.getTime())) return;
 
-    const today = new Date();
-    let age = today.getFullYear() - birthday.getFullYear();
-    const monthDiff = today.getMonth() - birthday.getMonth();
+// Calculate age when birthdate changes
+    document.addEventListener('DOMContentLoaded', function() {
+        const birthdayInput = document.getElementById('birthday');
+        birthdayInput.addEventListener('change', calculateAge);
+    });
 
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthday.getDate())) {
-        age--;
+    function calculateAge() {
+        const birthdayInput = document.getElementById('birthday');
+        const birthdayValue = birthdayInput.value;
+
+        if (!birthdayValue) return;
+
+        const birthday = new Date(birthdayValue);
+        const today = new Date();
+
+        let age = today.getFullYear() - birthday.getFullYear();
+        const monthDiff = today.getMonth() - birthday.getMonth();
+        const dayDiff = today.getDate() - birthday.getDate();
+
+        // Adjust if the birthday hasn’t occurred yet this year
+        if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+            age--;
+        }
+
+        // Prevent negative ages
+        age = age < 0 ? 0 : age;
+
+        document.getElementById('age').value = age;
     }
-
-    document.getElementById('age').value = age;
-}
 
 // Form Navigation
 function showSection(n) {
@@ -1908,4 +1861,4 @@ function updateViewResidentPhoto(imageUrl) {
 
 @endsection
 
-```
+

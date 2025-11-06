@@ -12,9 +12,44 @@ class SeniorController extends Controller
     {
         return view('senior.dashboard');
     }
-    public function homepage()
+
+    public function homepage(Request $request)
     {
-        return view('senior.homepage');
+        $maleSeniors = Senior::whereHas('resident', function ($query) {
+            $query->where('gender', 'Male');
+        })->count();
+
+        $femaleSeniors = Senior::whereHas('resident', function ($query) {
+            $query->where('gender', 'Female');
+        })->count();
+
+        $filteredMaleSeniors = 0;
+        $filteredFemaleSeniors = 0;
+
+        if ($request->has('year')) {
+            $query = Senior::whereYear('created_at', $request->year);
+
+            if ($request->has('month')) {
+                $query->whereMonth('created_at', $request->month);
+            }
+
+            $filteredMaleSeniors = (clone $query)->whereHas('resident', function ($q) {
+                $q->where('gender', 'Male');
+            })->count();
+
+            $filteredFemaleSeniors = (clone $query)->whereHas('resident', function ($q) {
+                $q->where('gender', 'Female');
+            })->count();
+        }
+
+        if ($request->ajax()) {
+            return response()->json([
+                'filteredMaleSeniors' => $filteredMaleSeniors,
+                'filteredFemaleSeniors' => $filteredFemaleSeniors,
+            ]);
+        }
+
+        return view('senior.homepage', compact('maleSeniors', 'femaleSeniors', 'filteredMaleSeniors', 'filteredFemaleSeniors'));
     }
 
     public function store(Request $request)
