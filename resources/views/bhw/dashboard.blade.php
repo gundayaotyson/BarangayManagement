@@ -273,7 +273,7 @@
         </button>
         <div class="profile-container dropdown">
             <button class="profile-btn dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="{{ Auth::user() && Auth::user()->image ? asset('storage/profile_images/' . Auth::user()->image) : asset('images/images1.jpg') }}"
+                <img src="{{ Auth::user() && Auth::user()->image ? asset('storage/profile_images/' . Auth::user()->image) : asset('images/default.png') }}"
                     alt="User Profile" class="profile-img me-2">
                 <div class="d-flex flex-column">
                     <span class="profile-name">{{ Auth::user()->name ?? 'User' }}</span>

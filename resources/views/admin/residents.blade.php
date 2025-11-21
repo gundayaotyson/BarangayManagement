@@ -829,8 +829,8 @@
                             <div class="info-value" id="view-age"></div>
                         </div>
                     </div>
-                        <div class="col-md-6">
 
+                    <div class="col-md-6">
                         <div class="info-group">
                             <div class="info-label">Birthplace</div>
                             <div class="info-value" id="view-birthplace"></div>
@@ -854,7 +854,7 @@
 
                     <div class="col-md-6">
                          <h6 class="section-title">
-                            <i class="fas fa-address-card"></i> Contact & Address Information
+                        <i class="fas fa-address-card"></i> Contact
                     </h6>
                         <div class="info-group">
                             <div class="info-label">Contact Number</div>
@@ -867,26 +867,26 @@
                         </div>
                     </div>
                   <div class="col-md-6">
-                     <h6 class="section-title">
-                            <i class="fas fa-address-card"></i>Address Information
-                    </h6>
-            <div class="d-flex align-items-center flex-wrap gap-3">
-                <div class="info-group d-flex align-items-center gap-1">
-                    <div class="info-label fw-semibold">Household No:</div>
-                    <div class="info-value" id="view-household-no">---</div>
-                </div>
+                            <h6 class="section-title">
+                                    <i class="fas fa-address-card"></i>Address Information
+                            </h6>
+                        <div class="d-flex align-items-center flex-wrap gap-3">
+                            <div class="info-group d-flex align-items-center gap-1">
+                                <div class="info-label fw-semibold">Household No:</div>
+                                <div class="info-value" id="view-household-no">---</div>
+                            </div>
 
-                <div class="info-group d-flex align-items-center gap-1">
-                    <div class="info-label fw-semibold">Purok:</div>
-                    <div class="info-value" id="view-purok">---</div>
-                </div>
+                            <div class="info-group d-flex align-items-center gap-1">
+                                <div class="info-label fw-semibold">Purok:</div>
+                                <div class="info-value" id="view-purok">---</div>
+                            </div>
 
-                <div class="info-group d-flex align-items-center gap-1">
-                    <div class="info-label fw-semibold">Sitio:</div>
-                    <div class="info-value" id="view-sitio">---</div>
-                </div>
-            </div>
-</div>
+                            <div class="info-group d-flex align-items-center gap-1">
+                                <div class="info-label fw-semibold">Sitio:</div>
+                                <div class="info-value" id="view-sitio">---</div>
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
             </div>

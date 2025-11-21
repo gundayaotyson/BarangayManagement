@@ -421,7 +421,8 @@
                             <td>{{ $request->purpose }}</td>
                             <td>{{ $request->requested_date }}</td>
                             <td>{{ $request->pickup_date }}</td>
-                            <td>{{ $request->released_date ?? 'N/A' }}</td>
+                         <td>{{ $request->released_date ? \Carbon\Carbon::parse($request->released_date)->format('Y-m-d') : 'N/A' }}</td>
+
                             <td>
                                 <span class="badge bg-light text-dark font-monospace">{{ $request->tracking_code }}</span>
                             </td>

@@ -57,6 +57,11 @@
         color: var(--primary-color);
         letter-spacing: -0.5px;
     }
+    .info-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 0.25rem;
+}
 
     /* Search and Button Container */
     .header-actions {
@@ -465,28 +470,28 @@
                     <div class="resident-info-card">
                         <div class="row">
                             <div class="col-md-9">
-                                <h4 class="resident-name" id="view-fullname-header"></h4>
+                                <h4 class="resident-name" id="view-fullname-header"hidden></h4>
                                 <div class="resident-meta">
-                                    <div class="resident-meta-item">
-                                        <i class="fas fa-venus-mars"></i> <span id="view-gender-meta"></span>
+                                    <div class="resident-meta-item" hidden>
+                                        <i class="fas fa-venus-mars"></i> <span id="view-gender-meta" hidden></span>
                                     </div>
-                                    <div class="resident-meta-item">
-                                        <i class="fas fa-birthday-cake"></i> <span id="view-age-meta"></span> years old
+                                    <div class="resident-meta-item" hidden>
+                                        <i class="fas fa-birthday-cake"></i> <span id="view-age-meta" hidden></span> years old
                                     </div>
-                                    <div class="resident-meta-item">
-                                        <i class="fas fa-ring"></i> <span id="view-civil-status-meta"></span>
+                                    <div class="resident-meta-item" hidden>
+                                        <i class="fas fa-ring"></i> <span id="view-civil-status-meta" hidden></span>
                                     </div>
                                 </div>
-                                <div class="resident-meta">
-                                    <div class="resident-meta-item">
-                                        <i class="fas fa-map-marker-alt"></i> <span id="view-address-meta"></span>
+                                <div class="resident-meta" hidden>
+                                    <div class="resident-meta-item" hidden>
+                                        <i class="fas fa-map-marker-alt"></i> <span id="view-address-meta" hidden></span>
                                     </div>
                                     <div class="resident-meta-item">
                                         <i class="fas fa-home"></i> Household #<span id="view-household-meta"></span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3 text-end">
+                            <div>
                                 <div class="resident-photo">
                                     <img id="view-resident-photo" src="{{ asset('images/default-profile.png') }}"
                                         alt="Resident Photo">
@@ -496,11 +501,10 @@
                     </div>
 
                     <div class="row mt-4">
-                        <div class="col-md-6">
-                            <h6 class="section-title">
+                         <h6 class="section-title">
                                 <i class="fas fa-user-circle"></i> Personal Information
-                            </h6>
-
+                         </h6>
+                        <div class="col-md-6">
                             <div class="info-group">
                                 <div class="info-label">Full Name</div>
                                 <div class="info-value" id="view-fullname"> </div>
@@ -520,7 +524,8 @@
                                 <div class="info-label">Age</div>
                                 <div class="info-value" id="view-age"></div>
                             </div>
-
+                       </div>
+                       <div class="col-md-6">
                             <div class="info-group">
                                 <div class="info-label">Birthplace</div>
                                 <div class="info-value" id="view-birthplace"></div>
@@ -544,7 +549,7 @@
 
                         <div class="col-md-6">
                             <h6 class="section-title">
-                                <i class="fas fa-address-card"></i> Contact & Address Information
+                                <i class="fas fa-address-card"></i> Contact
                             </h6>
 
                             <div class="info-group">
@@ -556,22 +561,29 @@
                                 <div class="info-label">Occupation</div>
                                 <div class="info-value" id="view-occupation"></div>
                             </div>
+                        </div>
 
-                            <div class="info-group">
-                                <div class="info-label">Household No.</div>
-                                <div class="info-value" id="view-household-no"></div>
+                       <div class="col-md-6">
+                            <h6 class="section-title">
+                                    <i class="fas fa-address-card"></i>Address Information
+                            </h6>
+                        <div class="d-flex align-items-center flex-wrap gap-3">
+                            <div class="info-group d-flex align-items-center gap-1">
+                                <div class="info-label fw-semibold">Household No:</div>
+                                <div class="info-value" id="view-household-no">---</div>
                             </div>
 
-                            <div class="info-group">
-                                <div class="info-label">Purok</div>
-                                <div class="info-value" id="view-purok"></div>
+                            <div class="info-group d-flex align-items-center gap-1">
+                                <div class="info-label fw-semibold">Purok:</div>
+                                <div class="info-value" id="view-purok">---</div>
                             </div>
 
-                            <div class="info-group">
-                                <div class="info-label">Sitio</div>
-                                <div class="info-value" id="view-sitio"></div>
+                            <div class="info-group d-flex align-items-center gap-1">
+                                <div class="info-label fw-semibold">Sitio:</div>
+                                <div class="info-value" id="view-sitio">---</div>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
                 <div class="modal-footer">

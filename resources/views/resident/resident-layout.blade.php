@@ -361,7 +361,7 @@
         <div class="profile-container dropdown">
             <button class="profile-btn dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown"
                 aria-expanded="false">
-                <img src="{{ Auth::user() && Auth::user()->image ? asset('storage/profile_images/' . Auth::user()->image) : asset('images/images1.jpg') }}"
+                <img src="{{ Auth::user() && Auth::user()->image ? asset('storage/profile_images/' . Auth::user()->image) : asset('images/default.png') }}"
                     alt="Admin Profile" class="profile-img me-2">
                 <div class="d-flex flex-column">
                     <span class="profile-name">{{ Auth::user()->name ?? 'User' }}</span>
@@ -399,9 +399,9 @@
             <li><a href="{{ route('resident.services') }}"
                     class="{{ request()->routeIs('resident.services') ? 'active' : '' }}"><i
                         class="fas fa-concierge-bell"></i> <span>Barangay Services</span></a></li>
-            <li><a href="{{ route('resident.complaints') }}"
+            <!-- <li><a href="{{ route('resident.complaints') }}"
                     class="{{ request()->routeIs('resident.complaints') ? 'active' : '' }}"><i
-                        class="fas fa-comment-dots"></i> <span>Complaint & Feedback</span></a></li>
+                        class="fas fa-comment-dots"></i> <span>Complaint & Feedback</span></a></li> -->
             <li><a href="{{ route('resident.requests') }}"
                     class="{{ request()->routeIs('resident.requests') ? 'active' : '' }}"><i
                         class="fas fa-file-alt"></i> <span>My request</span></a></li>

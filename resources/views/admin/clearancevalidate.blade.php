@@ -126,6 +126,22 @@
             margin-bottom: 5px;
         }
 
+        .signature-box {
+            width: 1000px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 5px;
+            overflow: hidden;
+        }
+
+        .signature-box img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+
         /* Signature */
         .signature-section {
             text-align: center;
@@ -225,19 +241,19 @@
     </p>
 
     <!-- Personal Information -->
-<div class="personal-info">
-    <p><strong>Full Name:</strong>
-        {{ $clearance->resident->Fname ?? '' }},
-        {{ $clearance->resident->mname ?? '' }}
-        {{ $clearance->resident->lname ?? '' }}
-    </p>
-    <p><strong>Address:</strong>{{ $clearance->address}}</p>
-    <p><strong>Date of Birth:</strong> {{ $clearance->resident->birthday ?? $clearance->dateofbirth }}</p>
-    <p><strong>Place of Birth:</strong> {{ $clearance->resident->birthplace ?? $clearance->placeofbirth }}</p>
-    <p><strong>Gender:</strong> {{ ucfirst($clearance->resident->gender ?? $clearance->gender) }}</p>
-    <p><strong>Civil Status:</strong> {{ $clearance->resident->civil_status ?? $clearance->civil_status }}</p>
-    <p><strong>Purpose:</strong> {{ $clearance->purpose }}</p>
-</div>
+    <div class="personal-info">
+        <p><strong>Full Name:</strong>
+            {{ $clearance->resident->Fname ?? '' }},
+            {{ $clearance->resident->mname ?? '' }}
+            {{ $clearance->resident->lname ?? '' }}
+        </p>
+        <p><strong>Address:</strong>{{ $clearance->address}}</p>
+        <p><strong>Date of Birth:</strong> {{ $clearance->resident->birthday ?? $clearance->dateofbirth }}</p>
+        <p><strong>Place of Birth:</strong> {{ $clearance->resident->birthplace ?? $clearance->placeofbirth }}</p>
+        <p><strong>Gender:</strong> {{ ucfirst($clearance->resident->gender ?? $clearance->gender) }}</p>
+        <p><strong>Civil Status:</strong> {{ $clearance->resident->civil_status ?? $clearance->civil_status }}</p>
+        <p><strong>Purpose:</strong> {{ $clearance->purpose }}</p>
+    </div>
 
     <!-- CTC & OR Details -->
     <div>
@@ -260,6 +276,9 @@
         </div>
 
         <div class="column">
+            <div class="signature-box">
+                <img src="{{ asset('images/signiture-removebg.png') }}" alt="Signature" />
+            </div>
             <div class="signature-line"></div>
             <p>Signature</p>
         </div>

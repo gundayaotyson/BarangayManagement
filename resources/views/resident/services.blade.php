@@ -473,11 +473,11 @@
     </div>
 
     <div class="requests-section">
-        <h3 class="requests-title"> SK Service Requests</h3>
+        <!-- <h3 class="requests-title"> SK Service Requests</h3> -->
         <div class="table-container">
 
             <!-- Desktop Table View -->
-            <div class="desktop-table">
+            <!-- <div class="desktop-table">
                 <div class="table-responsive">
                     <table class="table table-hover mb-0">
                         <thead>
@@ -517,7 +517,7 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </div> -->
 
             <!-- Mobile Card View -->
             <div class="mobile-cards">

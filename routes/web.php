@@ -147,7 +147,8 @@ Route::get('/BarangayClearance', [LegaldocumentsController::class, 'clearanceReq
 Route::get('/indigency/view/{id}', [LegaldocumentsController::class, 'showIndigency'])->name('indigency.view');
 Route::get('/BarangayIndigency', [LegaldocumentsController::class, 'indigencyRequested'])->name('requestedindigency');
 Route::get('/BarangayCobolServices/Indigency', [LegaldocumentsController::class, 'index'])->name('brgyindigencyform');
-Route::post('/BarangayCobolServices/BarangayPermit', [LegaldocumentsController::class, 'BrgyBussinesspermit'])->name('brgybussniesspermitform');
+Route::get('/BarangayCobolServices/BarangayPermit', [LegaldocumentsController::class, 'BrgyBussinesspermit'])->name('requestedbussniesspermit');
+Route::get('/BarangayCobolServices/residency', [LegaldocumentsController::class, 'ResidencyRequest'])->name('requestedresidency');
 // Add this to your routes/web.php
 Route::get('/track-clearance/{trackingCode}', [LegaldocumentsController::class, 'trackClearance']);
 

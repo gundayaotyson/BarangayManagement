@@ -14,10 +14,18 @@ class LegaldocumentsController extends Controller
     public function BrgyClearance()
     {
         return view("admin.brgyclearance");
+
     }
+    public function ResidencyRequest()
+    {
+
+        return view("admin.requestedresidency");
+    }
+    // Show Barangay Business Permit request page
     public function BrgyBussinesspermit()
     {
-        return view("admin.brgybussniesspermitform");
+
+        return view("admin.requestedbussnesspermit");
     }
     // Show Barangay Indigency Form
     public function index()
@@ -97,6 +105,7 @@ class LegaldocumentsController extends Controller
     {
         return view('admin.clearancevalidate');
     }
+
 
   public function showClearance($id)
 {

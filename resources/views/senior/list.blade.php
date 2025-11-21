@@ -238,34 +238,60 @@
         }
 
         /* Search Bar Styles */
-        .search-container {
-            position: relative;
-            margin-left: 500px;
-            margin-bottom: 2px;
-            max-width: 400px;
-        }
+       /* Header row above the table */
+.header-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 10px;
+}
 
-        .search-input {
-            padding-left: 40px;
-            border-radius: 25px;
-            border: 1px solid #ddd;
-            height: 45px;
-            transition: all 0.3s ease;
-        }
+.header-controls h1 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+}
 
-        .search-input:focus {
-            box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
-            border-color: #86b7fe;
-        }
+.search-container {
+    position: relative;
+    flex: 1;
+    margin-left: 550px;
+    max-width: 400px;
+}
 
-        .search-icon {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #6c757d;
-            z-index: 5;
-        }
+.search-input {
+    width: 100%;
+    padding-left: 40px;
+    border-radius: 25px;
+    border: 1px solid #ddd;
+    height: 45px;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+    border-color: #86b7fe;
+}
+
+.search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6c757d;
+}
+
+.add-senior-btn {
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 45px;
+}
+
 
         /* Enhanced Table Styles */
         .table-responsive {
@@ -312,14 +338,14 @@
 
         /* Enhanced Modal Styles */
         .modal-header {
-            background-color: #f8f9fa;
+            background-color:var(--primary-color);
             border-bottom: 1px solid #dee2e6;
             padding: 15px 20px;
         }
 
         .modal-title {
             font-weight: 600;
-            color: #495057;
+            color: #ffffffff;
         }
 
         .modal-content {
@@ -441,16 +467,19 @@
             </div>
         @endif
     <div class="dashboard-box">
-        <div >
-            <h1>Senior Citizen List</h1>
-             <div class="search-container">
-                <input type="text" id="searchInput" class="form-control search-input" placeholder="Search seniors...">
+       <div class="header-controls">
+    <h1>Senior Citizen List</h1>
 
-            </div>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSeniorModal">
-                <i class="fas fa-plus me-2"></i>Add Senior
-            </button>
-        </div>
+    <div class="search-container">
+        <!-- <i class="fas fa-search search-icon"></i> -->
+        <input type="text" id="searchInput" class="form-control search-input" placeholder="Search seniors...">
+    </div>
+
+    <button class="btn btn-primary add-senior-btn" data-bs-toggle="modal" data-bs-target="#addSeniorModal">
+        <i class="fas fa-plus"></i> Add Senior
+    </button>
+</div>
+
         <!-- Search Bar -->
 
 

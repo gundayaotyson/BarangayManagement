@@ -136,6 +136,10 @@
         background-color: var(--warning-color);
         color: white;
     }
+    .status-expired {
+    background-color: #dc3545; /* Bootstrap red */
+    color: #fff;
+}
 
     /* Mobile Card Styling */
     .mobile-cards {
@@ -289,6 +293,7 @@
         .mobile-request-card:last-child {
             margin-bottom: 0;
         }
+
     }
 
     /* Small Mobile (576px and below) */
@@ -430,29 +435,44 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @php
+                            use Carbon\Carbon;
+                        @endphp
                         @forelse ($requests as $request)
-                            <tr>
-                                <td>{{ $request->Fname }} {{ $request->mname }} {{ $request->lname }}</td>
-                                <td>{{ $request->tracking_code }}</td>
-                                <td>{{ $request->purpose }}</td>
-                                <td>{{ $request->service_type }}</td>
-                                <td>{{ $request->requested_date }}</td>
-                                <td>{{ $request->pickup_date }}</td>
-                                <td>{{ $request->released_date ? $request->released_date->format('M d, Y') : 'N/A' }}</td>
-                                <td>
-                                    <span class="status-badge status-{{ strtolower($request->status) }}">
-                                        {{ $request->status }}
-                                    </span>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="8" class="text-center py-4 text-muted">
-                                    <i class="fas fa-inbox fa-2x mb-3 d-block"></i>
-                                    No requests found
-                                </td>
-                            </tr>
-                        @endforelse
+                                @php
+                                    $status = $request->status;
+
+                                    if ($request->released_date) {
+                                        $released = Carbon::parse($request->released_date);
+                                        // Check if released date is more than 7 days ago
+                                        if ($released->diffInDays(now()) > 7) {
+                                            $status = 'Expired';
+                                        }
+                                    }
+                                @endphp
+
+                                <tr>
+                                    <td>{{ $request->Fname }} {{ $request->mname }} {{ $request->lname }}</td>
+                                    <td>{{ $request->tracking_code }}</td>
+                                    <td>{{ $request->purpose }}</td>
+                                    <td>{{ $request->service_type }}</td>
+                                    <td>{{ $request->requested_date }}</td>
+                                    <td>{{ $request->pickup_date }}</td>
+                                    <td>{{ $request->released_date ? \Carbon\Carbon::parse($request->released_date)->format('M d, Y') : 'N/A' }}</td>
+                                    <td>
+                                        <span class="status-badge status-{{ strtolower($status) }}">
+                                            {{ $status }}
+                                        </span>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="8" class="text-center py-4 text-muted">
+                                        <i class="fas fa-inbox fa-2x mb-3 d-block"></i>
+                                        No requests found
+                                    </td>
+                                </tr>
+                            @endforelse
                     </tbody>
                 </table>
             </div>
@@ -460,51 +480,66 @@
 
         <!-- Mobile Card View -->
         <div class="mobile-cards">
-            @forelse ($requests as $request)
-                <div class="mobile-request-card">
-                    <div class="mobile-request-row">
-                        <span class="mobile-request-label">Full Name:</span>
-                        <span class="mobile-request-value">{{ $request->Fname }} {{ $request->mname }} {{ $request->lname }}</span>
-                    </div>
-                    <div class="mobile-request-row">
-                        <span class="mobile-request-label">Tracking Code:</span>
-                        <span class="mobile-request-value">{{ $request->tracking_code }}</span>
-                    </div>
-                    <div class="mobile-request-row">
-                        <span class="mobile-request-label">Purpose:</span>
-                        <span class="mobile-request-value">{{ $request->purpose }}</span>
-                    </div>
-                    <div class="mobile-request-row">
-                        <span class="mobile-request-label">Service Type:</span>
-                        <span class="mobile-request-value">{{ $request->service_type }}</span>
-                    </div>
-                    <div class="mobile-request-row">
-                        <span class="mobile-request-label">Requested Date:</span>
-                        <span class="mobile-request-value">{{ $request->requested_date }}</span>
-                    </div>
-                    <div class="mobile-request-row">
-                        <span class="mobile-request-label">Pickup Date:</span>
-                        <span class="mobile-request-value">{{ $request->pickup_date }}</span>
-                    </div>
-                    <div class="mobile-request-row">
-                        <span class="mobile-request-label">Release Date:</span>
-                        <span class="mobile-request-value">{{ $request->released_date ? $request->released_date->format('M d, Y') : 'N/A' }}</span>
-                    </div>
-                    <div class="mobile-request-row">
-                        <span class="mobile-request-label">Status:</span>
-                        <span class="mobile-request-value">
-                            <span class="mobile-status-badge status-{{ strtolower($request->status) }}">
-                                {{ $request->status }}
-                            </span>
-                        </span>
-                    </div>
-                </div>
-            @empty
-                <div class="no-requests-mobile">
-                    <i class="fas fa-inbox"></i>
-                    <p class="mb-0">No certificate requests found</p>
-                </div>
-            @endforelse
+@forelse ($requests as $request)
+    @php
+        $status = $request->status;
+
+        if ($request->released_date) {
+            $released = Carbon::parse($request->released_date);
+            // If more than 7 days have passed since release date
+            if ($released->diffInDays(now()) > 7) {
+                $status = 'Expired';
+            }
+        }
+    @endphp
+
+    <div class="mobile-request-card">
+        <div class="mobile-request-row">
+            <span class="mobile-request-label">Full Name:</span>
+            <span class="mobile-request-value">{{ $request->Fname }} {{ $request->mname }} {{ $request->lname }}</span>
+        </div>
+        <div class="mobile-request-row">
+            <span class="mobile-request-label">Tracking Code:</span>
+            <span class="mobile-request-value">{{ $request->tracking_code }}</span>
+        </div>
+        <div class="mobile-request-row">
+            <span class="mobile-request-label">Purpose:</span>
+            <span class="mobile-request-value">{{ $request->purpose }}</span>
+        </div>
+        <div class="mobile-request-row">
+            <span class="mobile-request-label">Service Type:</span>
+            <span class="mobile-request-value">{{ $request->service_type }}</span>
+        </div>
+        <div class="mobile-request-row">
+            <span class="mobile-request-label">Requested Date:</span>
+            <span class="mobile-request-value">{{ $request->requested_date }}</span>
+        </div>
+        <div class="mobile-request-row">
+            <span class="mobile-request-label">Pickup Date:</span>
+            <span class="mobile-request-value">{{ $request->pickup_date }}</span>
+        </div>
+        <div class="mobile-request-row">
+            <span class="mobile-request-label">Release Date:</span>
+            <span class="mobile-request-value">
+                {{ $request->released_date ? \Carbon\Carbon::parse($request->released_date)->format('M d, Y') : 'N/A' }}
+            </span>
+        </div>
+        <div class="mobile-request-row">
+            <span class="mobile-request-label">Status:</span>
+            <span class="mobile-request-value">
+                <span class="mobile-status-badge status-{{ strtolower($status) }}">
+                    {{ $status }}
+                </span>
+            </span>
+        </div>
+    </div>
+@empty
+    <div class="no-requests-mobile">
+        <i class="fas fa-inbox"></i>
+        <p class="mb-0">No certificate requests found</p>
+    </div>
+@endforelse
+
         </div>
     </div>
 </div>
@@ -530,17 +565,29 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($skServices as $request)
+
+
+                    @forelse ($skServices as $request)
+                            @php
+                                $status = $request->status;
+
+                                if ($request->released_date) {
+                                    $released = Carbon::parse($request->released_date);
+                                    if ($released->diffInDays(now()) > 7) {
+                                        $status = 'Expired';
+                                    }
+                                }
+                            @endphp
                             <tr>
                                 <td class="font-weight-medium">{{ $request->firstname }} {{ $request->lastname }}</td>
                                 <td>{{ $request->school }}</td>
                                 <td>{{ $request->school_year }}</td>
                                 <td>{{ $request->type_of_service }}</td>
                                 <td>{{ $request->created_at->format('M d, Y') }}</td>
-                                <td>{{ $request->released_date ? $request->released_date->format('M d, Y') : 'N/A' }}</td>
+                                <td>{{ $request->released_date ? \Carbon\Carbon::parse($request->released_date)->format('M d, Y') : 'N/A' }}</td>
                                 <td>
-                                    <span class="status-badge status-{{ strtolower($request->status) }}">
-                                        {{ $request->status }}
+                                    <span class="status-badge status-{{ strtolower($status) }}">
+                                        {{ $status }}
                                     </span>
                                 </td>
                             </tr>
@@ -551,7 +598,8 @@
                                     No requests found
                                 </td>
                             </tr>
-                        @endforelse
+                    @endforelse
+
                     </tbody>
                 </table>
             </div>
@@ -559,47 +607,67 @@
 
         <!-- Mobile Card View -->
         <div class="mobile-cards">
-            @forelse ($skServices as $request)
-                <div class="mobile-request-card">
-                    <div class="mobile-request-row">
-                        <span class="mobile-request-label">Full Name:</span>
-                        <span class="mobile-request-value font-weight-medium">{{ $request->firstname }} {{ $request->lastname }}</span>
-                    </div>
-                    <div class="mobile-request-row">
-                        <span class="mobile-request-label">School:</span>
-                        <span class="mobile-request-value">{{ $request->school }}</span>
-                    </div>
-                    <div class="mobile-request-row">
-                        <span class="mobile-request-label">School Year:</span>
-                        <span class="mobile-request-value">{{ $request->school_year }}</span>
-                    </div>
-                    <div class="mobile-request-row">
-                        <span class="mobile-request-label">Service Type:</span>
-                        <span class="mobile-request-value">{{ $request->type_of_service }}</span>
-                    </div>
-                    <div class="mobile-request-row">
-                        <span class="mobile-request-label">Date Requested:</span>
-                        <span class="mobile-request-value">{{ $request->created_at->format('M d, Y') }}</span>
-                    </div>
-                    <div class="mobile-request-row">
-                        <span class="mobile-request-label">Released Date:</span>
-                        <span class="mobile-request-value">{{ $request->released_date ? $request->released_date->format('M d, Y') : 'N/A' }}</span>
-                    </div>
-                    <div class="mobile-request-row">
-                        <span class="mobile-request-label">Status:</span>
-                        <span class="mobile-request-value">
-                            <span class="mobile-status-badge status-{{ strtolower($request->status) }}">
-                                {{ $request->status }}
-                            </span>
-                        </span>
-                    </div>
-                </div>
-            @empty
-                <div class="no-requests-mobile">
-                    <i class="fas fa-inbox"></i>
-                    <p class="mb-0">No SK service requests found</p>
-                </div>
-            @endforelse
+
+@forelse ($requests as $request)
+    @php
+        $status = $request->status;
+
+        if ($request->released_date) {
+            $released = Carbon::parse($request->released_date);
+            // If more than 7 days have passed since release date
+            if ($released->diffInDays(now()) > 7) {
+                $status = 'Expired';
+            }
+        }
+    @endphp
+
+    <div class="mobile-request-card">
+        <div class="mobile-request-row">
+            <span class="mobile-request-label">Full Name:</span>
+            <span class="mobile-request-value">{{ $request->Fname }} {{ $request->mname }} {{ $request->lname }}</span>
+        </div>
+        <div class="mobile-request-row">
+            <span class="mobile-request-label">Tracking Code:</span>
+            <span class="mobile-request-value">{{ $request->tracking_code }}</span>
+        </div>
+        <div class="mobile-request-row">
+            <span class="mobile-request-label">Purpose:</span>
+            <span class="mobile-request-value">{{ $request->purpose }}</span>
+        </div>
+        <div class="mobile-request-row">
+            <span class="mobile-request-label">Service Type:</span>
+            <span class="mobile-request-value">{{ $request->service_type }}</span>
+        </div>
+        <div class="mobile-request-row">
+            <span class="mobile-request-label">Requested Date:</span>
+            <span class="mobile-request-value">{{ $request->requested_date }}</span>
+        </div>
+        <div class="mobile-request-row">
+            <span class="mobile-request-label">Pickup Date:</span>
+            <span class="mobile-request-value">{{ $request->pickup_date }}</span>
+        </div>
+        <div class="mobile-request-row">
+            <span class="mobile-request-label">Release Date:</span>
+            <span class="mobile-request-value">
+                {{ $request->released_date ? \Carbon\Carbon::parse($request->released_date)->format('M d, Y') : 'N/A' }}
+            </span>
+        </div>
+        <div class="mobile-request-row">
+            <span class="mobile-request-label">Status:</span>
+            <span class="mobile-request-value">
+                <span class="mobile-status-badge status-{{ strtolower($status) }}">
+                    {{ $status }}
+                </span>
+            </span>
+        </div>
+    </div>
+@empty
+    <div class="no-requests-mobile">
+        <i class="fas fa-inbox"></i>
+        <p class="mb-0">No certificate requests found</p>
+    </div>
+@endforelse
+
         </div>
     </div>
 </div>

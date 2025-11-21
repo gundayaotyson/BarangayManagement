@@ -384,6 +384,8 @@
                 <a href="{{ route('requesteddocument') }}" class="{{ request()->routeIs('requesteddocument') ? 'active' : '' }}"><i class="fas fa-clipboard-list"></i> <span>Request Documents</span></a>
                 <a href="{{ route('requestedclearance') }}" class="{{ request()->routeIs('requestedclearance') ? 'active' : '' }}"><i class="fas fa-certificate"></i> <span>Barangay Clearance</span></a>
                 <a href="{{ route('requestedindigency') }}" class="{{ request()->routeIs('requestedindigency') ? 'active' : '' }}"><i class="fas fa-certificate"></i> <span>Barangay Indigency</span></a>
+                <a href="{{ route('requestedbussniesspermit') }}" class="{{ request()->routeIs('requestedbussniesspermit') ? 'active' : '' }}"><i class="fas fa-certificate"></i> <span>Business Permit</span></a>
+                <a href="{{ route('requestedresidency') }}" class="{{ request()->routeIs('requestedresidency') ? 'active' : '' }}"><i class="fas fa-certificate"></i> <span>Residency</span></a>
             </div>
         </li>
 

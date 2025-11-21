@@ -52,7 +52,7 @@
         font-weight: 700;
         font-size: 2.25rem;
         margin-bottom: 0.5rem;
-        position: relative;
+        /* position: relative; */
     }
 
     .dashboard-title:after {

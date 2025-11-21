@@ -12,6 +12,10 @@ class Clearancereq extends Model
 
     protected $table = 'clearancereq';
 
+    protected $casts = [
+    'released_date' => 'datetime',
+];
+
     protected $fillable = [
         'resident_id',
         'Fname',
