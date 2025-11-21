@@ -672,131 +672,183 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('legal-documents.store-clearance') }}" method="POST">
-                    @csrf
-                    <input type="hidden" name="resident_id" value="{{ $resident->id ?? '' }}">
-                    <div class="form-group">
-                        <label for="service_type">
-                            <i class="fas fa-list me-1"></i>
-                            Type of Service
-                        </label>
-                        <select class="form-control" id="service_type" name="service_type" required>
-                            <option value="">Select a service type</option>
-                            <option value="Barangay Clearance">Barangay Clearance</option>
-                            <option value="Certificate of Indigency">Certificate of Indigency</option>
-                            <option value="Barangay Certification">Barangay Certification</option>
-                        </select>
-                    </div>
+    <form action="{{ route('legal-documents.store-clearance') }}" method="POST">
+        @csrf
+        <input type="hidden" name="resident_id" value="{{ $resident->id ?? '' }}">
 
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="Fname">
-                                    <i class="fas fa-user me-1"></i>
-                                    First Name
-                                </label>
-                                <input type="text" class="form-control" id="Fname" name="Fname"
-                                       value="{{ $resident->Fname ?? '' }}" readonly>
-                            </div>
-                        </div>
-                         <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="mname">
-                                    <i class="fas fa-user me-1"></i>
-                                    Middle Name
-                                </label>
-                                <input type="text" class="form-control" id="mname" name="mname"
-                                       value="{{ $resident->mname ?? '' }}" readonly>
-                            </div>
-                        </div>
+        <div class="form-group">
+            <label for="service_type">
+                <i class="fas fa-list me-1"></i>
+                Type of Service
+            </label>
+            <select class="form-control" id="service_type" name="service_type" required>
+                <option value="">Select a service type</option>
+                <option value="Barangay Clearance">Barangay Clearance</option>
+                <option value="Certificate of Indigency">Certificate of Indigency</option>
+                <option value="Barangay Business Permit">Barangay Business Permit</option>
+                <option value="Barangay Residency">Barangay Residency</option>
+            </select>
+        </div>
 
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="lname">
-                                    <i class="fas fa-user me-1"></i>
-                                    Last Name
-                                </label>
-                                <input type="text" class="form-control" id="lname" name="lname"
-                                       value="{{ $resident->lname ?? '' }}" readonly>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="address">
-                            <i class="fas fa-map-marker-alt me-1"></i>
-                            Address
-                        </label>
-                        <input type="text" class="form-control" id="address" name="address" value="{{ $resident->purok_no?? '' }} Cobol San Carlos City Pangasinan"
-                         readonly>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="dateofbirth">
-                                    <i class="fas fa-birthday-cake me-1"></i>
-                                    Date of Birth
-                                </label>
-                                <input type="date" class="form-control" id="dateofbirth" name="dateofbirth" value="{{ $resident->birthday ?? '' }}" readonly>
-
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="placeofbirth">Place of Birth</label>
-                                <input type="text" class="form-control" id="placeofbirth" name="placeofbirth" value="{{ $resident->birthplace?? '' }}" readonly>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="civil_status">
-                                    <i class="fas fa-heart me-1"></i>
-                                    Civil Status
-                                </label>
-                                <select class="form-control" id="civil_status" name="civil_status" readonly>
-                                    <option value="{{ $resident->civil_status ?? '' }}">{{ $resident->civil_status ?? '' }}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="gender">
-                                    <i class="fas fa-venus-mars me-1"></i>
-                                    Gender
-                                </label>
-                                <select class="form-control" id="gender" name="gender" readonly>
-                                    <option value="{{ $resident->gender ?? '' }}">{{ $resident->gender ?? '' }}</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="purpose">
-                            <i class="fas fa-clipboard me-1"></i>
-                            Purpose
-                        </label>
-                        <textarea class="form-control" id="purpose" name="purpose" rows="3" placeholder="Please specify the purpose of your request..." required></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="pickup_date">
-                            <i class="fas fa-calendar-check me-1"></i>
-                            Preferred Pickup Date
-                        </label>
-                        <input type="date" class="form-control" id="pickup_date" name="pickup_date" required>
-                    </div>
-
-                      <button type="submit" class="btn btn-primary btn-submit">
-                        <i class="fas fa-paper-plane me-2"></i>
-                        Submit Application
-                    </button>
-                </form>
+        <div class="row">
+            <!-- First Name -->
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Fname">
+                        <i class="fas fa-user me-1"></i>
+                        First Name
+                    </label>
+                    <input type="text" class="form-control" id="Fname" name="Fname"
+                           value="{{ $resident->Fname ?? '' }}" readonly>
+                </div>
             </div>
+
+            <!-- Middle Name -->
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="mname">
+                        <i class="fas fa-user me-1"></i>
+                        Middle Name
+                    </label>
+                    <input type="text" class="form-control" id="mname" name="mname"
+                           value="{{ $resident->mname ?? '' }}" readonly>
+                </div>
+            </div>
+
+            <!-- Last Name -->
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="lname">
+                        <i class="fas fa-user me-1"></i>
+                        Last Name
+                    </label>
+                    <input type="text" class="form-control" id="lname" name="lname"
+                           value="{{ $resident->lname ?? '' }}" readonly>
+                </div>
+            </div>
+        </div>
+
+        <!-- Address -->
+        <div class="form-group">
+            <label for="address">
+                <i class="fas fa-map-marker-alt me-1"></i>
+                Address
+            </label>
+            <input type="text" class="form-control" id="address" name="address" value="{{ $resident->purok_no ?? '' }} Cobol San Carlos City Pangasinan"
+                   readonly>
+        </div>
+
+        <!-- Date of Birth & Place of Birth -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="dateofbirth">
+                        <i class="fas fa-birthday-cake me-1"></i>
+                        Date of Birth
+                    </label>
+                    <input type="date" class="form-control" id="dateofbirth" name="dateofbirth" value="{{ $resident->birthday ?? '' }}" readonly>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="placeofbirth">Place of Birth</label>
+                    <input type="text" class="form-control" id="placeofbirth" name="placeofbirth" value="{{ $resident->birthplace ?? '' }}" readonly>
+                </div>
+            </div>
+        </div>
+
+        <!-- Civil Status & Gender -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="civil_status">
+                        <i class="fas fa-heart me-1"></i>
+                        Civil Status
+                    </label>
+                    <select class="form-control" id="civil_status" name="civil_status" readonly>
+                        <option value="{{ $resident->civil_status ?? '' }}">{{ $resident->civil_status ?? '' }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="gender">
+                        <i class="fas fa-venus-mars me-1"></i>
+                        Gender
+                    </label>
+                    <select class="form-control" id="gender" name="gender" readonly>
+                        <option value="{{ $resident->gender ?? '' }}">{{ $resident->gender ?? '' }}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Purpose -->
+        <div class="form-group">
+            <label for="purpose">
+                <i class="fas fa-clipboard me-1"></i>
+                Purpose
+            </label>
+            <textarea class="form-control" id="purpose" name="purpose" rows="3" placeholder="Please specify the purpose of your request..." required></textarea>
+        </div>
+
+        <div id="business_fields" style="display: none; margin-top: 15px;">
+
+    <div class="form-group">
+        <label for="business_name">
+            <i class="fas fa-building me-1"></i>
+            Name of Business
+        </label>
+        <input type="text" class="form-control" name="business_name" id="business_name">
+    </div>
+
+    <div class="form-group">
+        <label for="business_type">
+            <i class="fas fa-briefcase me-1"></i>
+            Type of Business
+        </label>
+        <input type="text" class="form-control" name="business_type" id="business_type">
+    </div>
+
+    <div class="form-group">
+        <label for="business_address">
+            <i class="fas fa-map-marker-alt me-1"></i>
+            Business Address
+        </label>
+        <input type="text" class="form-control" name="business_address" id="business_address">
+    </div>
+
+</div>
+
+
+        <!-- Business / Residency additional fields (hidden by default) -->
+
+
+        <div class="form-group" id="residency_start_field" style="display: none;">
+            <label for="res_started_living"><i class="fas fa-calendar me-1"></i>Started Living in the Barangay (Year)</label>
+            <input type="text" class="form-control" id="res_started_living" name="res_started_living" placeholder="Enter the year">
+        </div>
+
+        <div class="form-group" id="cert_use_field" style="display: none;">
+            <label for="cert_use_date"><i class="fas fa-calendar me-1"></i>When will the Certificate be Used</label>
+            <input type="date" class="form-control" id="cert_use_date" name="cert_use_date">
+        </div>
+
+        <!-- Pickup Date -->
+        <div class="form-group">
+            <label for="pickup_date">
+                <i class="fas fa-calendar-check me-1"></i>
+                Preferred Pickup Date
+            </label>
+            <input type="date" class="form-control" id="pickup_date" name="pickup_date" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-submit">
+            <i class="fas fa-paper-plane me-2"></i>
+            Submit Application
+        </button>
+    </form>
+</div>
         </div>
     </div>
 </div>
@@ -810,7 +862,72 @@
         </ul>
     </div>
 @endif
+<script>
+    document.getElementById('service_type').addEventListener('change', function () {
+        const businessFields = document.getElementById('business_fields');
 
+        if (this.value === "Barangay Business Permit") {
+            businessFields.style.display = "block";
+        } else {
+            businessFields.style.display = "none";
+        }
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const serviceType = document.getElementById('service_type');
+
+        const addressField = document.getElementById('address').closest('.form-group');
+        const dateOfBirthField = document.getElementById('dateofbirth').closest('.form-group');
+        const placeOfBirthField = document.getElementById('placeofbirth').closest('.form-group');
+        const civilStatusField = document.getElementById('civil_status').closest('.form-group');
+        const genderField = document.getElementById('gender').closest('.form-group');
+        const purposeField = document.getElementById('purpose').closest('.form-group');
+
+        const residencyStartField = document.getElementById('residency_start_field');
+        const certUseField = document.getElementById('cert_use_field');
+
+        function toggleFields() {
+            const value = serviceType.value;
+
+            if (value === 'Barangay Business Permit') {
+                // Business Permit: show address, hide DOB, place, civil, gender, purpose, residency fields
+                addressField.style.display = 'block';
+                dateOfBirthField.style.display = 'none';
+                placeOfBirthField.style.display = 'none';
+                civilStatusField.style.display = 'none';
+                genderField.style.display = 'none';
+                purposeField.style.display = 'none';
+                residencyStartField.style.display = 'none';
+                certUseField.style.display = 'none';
+            } else if (value === 'Barangay Residency') {
+                // Residency: show residency fields, hide address, DOB, place, civil, gender, purpose
+                addressField.style.display = 'none';
+                dateOfBirthField.style.display = 'none';
+                placeOfBirthField.style.display = 'none';
+                civilStatusField.style.display = 'none';
+                genderField.style.display = 'none';
+                purposeField.style.display = 'none';
+                residencyStartField.style.display = 'block';
+                certUseField.style.display = 'block';
+            } else {
+                // Other services: show all
+                addressField.style.display = 'block';
+                dateOfBirthField.style.display = 'block';
+                placeOfBirthField.style.display = 'block';
+                civilStatusField.style.display = 'block';
+                genderField.style.display = 'block';
+                purposeField.style.display = 'block';
+                residencyStartField.style.display = 'none';
+                certUseField.style.display = 'none';
+            }
+        }
+
+        serviceType.addEventListener('change', toggleFields);
+        toggleFields(); // Set correct fields on page load
+    });
+</script>
 
 <script>
     // Set minimum date for pickup date to tomorrow

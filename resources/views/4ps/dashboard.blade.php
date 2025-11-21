@@ -301,14 +301,15 @@
     </div>
 
     <ul>
-        <li><a href="#" class="active"><i class="fas fa-home"></i> <span>Home</span></a></li>
-
+        <li><a href="{{ route('4ps.home') }}" class="{{ request()->routeIs('home') ? 'active' : '' }}"><i class="fas fa-home"></i> <span>Home</span></a></li>
+        <li><a href="{{ route('4ps.residentlist') }}" class="{{ request()->routeIs('residentlist') ? 'active' : '' }}"><i class="fas fa-users"></i> <span>Residents List</span></a></li>
     </ul>
 </nav>
 
 <!-- Main Content -->
 <div class="main-content" id="main-content">
-    <div class="dashboard-box">
+    @yield('content')
+    <!-- <div class="dashboard-box">
         <h1>Welcome to 4ps Dashboard</h1>
         @auth
             <p>You are logged in as <strong>{{ Auth::user()->name }}</strong></p>
@@ -317,7 +318,7 @@
             <p>Please log in to access this dashboard.</p>
             <a href="{{ route('login') }}" class="login-link">Login</a>
         @endauth
-    </div>
+    </div> -->
 </div>
 
 <!-- Bootstrap JS -->

@@ -114,8 +114,8 @@ Route::middleware(['auth'])->group(function () {
     // Fourps Routes
     Route::get('/4ps/dashboard', [FourpsController::class, 'dashboard'])->name('4ps.dashboard');
     Route::get('/4psprofile', [ProfileController::class, 'edit4psProfile'])->name('4ps.profile');
-
-
+    Route::get('/4ps/residentlist', [FourpsController::class, 'ResidentList'])->name('4ps.residentlist');
+    Route::get('/4ps/home', [FourpsController::class, 'home'])->name('4ps.home');
 
     Route::get('/resident/dashboard', [ResidentController::class, 'dashboard'])->name('resident.dashboard');
      Route::get('/resident-profile', [ProfileController::class, 'residentProfile'])->name('resident.profile');
