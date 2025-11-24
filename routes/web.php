@@ -21,6 +21,7 @@ use App\Http\Controllers\SeniorController;
 use App\Http\Controllers\FourpsController;
 use App\Http\Controllers\ResidentController;
 use App\Http\Controllers\ResidentRegistrationController;
+use App\Http\Controllers\SeniorReqController;
 use App\Http\Controllers\SKServiceController;
 
 // Public Routes
@@ -91,6 +92,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'homepage'])->name('dashboard');
     Route::get('/admin/profile', [PartialsController::class, 'profile'])->name('admin.profile');
     Route::get('/senior/dashboard', [SeniorController::class, 'dashboard'])->name('senior.dashboard');
+    Route::get('/senior/request', [SeniorReqController::class, 'request'])->name('senior.request');
+    Route::post('/senior/request', [SeniorReqController::class, 'store'])->name('senior.req.store');
+
     Route::get('/senior/list', [SeniorController::class, 'list'])->name('senior.list');
     Route::post('/senior/store', [SeniorController::class, 'store'])->name('senior.store');
     // Route::get('seniors/{senior}/resident', [SeniorController::class, 'getSeniorResident'])->name('senior.resident');

@@ -12,6 +12,10 @@ class SeniorController extends Controller
     {
         return view('senior.dashboard');
     }
+     public function request()
+    {
+        return view('senior.Request');
+    }
 
     public function homepage(Request $request)
     {
