@@ -19,8 +19,13 @@ class Senior extends Model
         'fcap_id',
     ];
 
+    // public function resident()
+    // {
+    //     return $this->belongsTo(Resident::class);
+    // }
     public function resident()
-    {
-        return $this->belongsTo(Resident::class);
-    }
+{
+    return $this->belongsTo(Resident::class, 'resident_id');
+}
+
 }

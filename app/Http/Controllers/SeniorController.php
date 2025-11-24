@@ -89,10 +89,36 @@ class SeniorController extends Controller
         return view('senior.list', compact('seniors'));
     }
 
-    public function getSeniorJson(Senior $senior)
-    {
-        return response()->json($senior);
+  public function getSeniorResident(Senior $senior)
+{
+    if (!$senior->resident) {
+        return response()->json([
+            'error' => 'No resident linked to this senior.'
+        ]);
     }
+
+    return response()->json($senior->resident);
+}
+public function getSeniorJson(Senior $senior)
+{
+    return response()->json($senior);
+}
+
+public function residentDetails($id)
+{
+    $senior = Senior::with('resident')->find($id);
+
+    if (!$senior) {
+        return response()->json(['error' => 'Senior not found']);
+    }
+
+    if (!$senior->resident) {
+        return response()->json(['error' => 'No resident linked to this senior']);
+    }
+
+    return response()->json($senior->resident);
+}
+
 
     public function update(Request $request, Senior $senior)
     {

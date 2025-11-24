@@ -1,6 +1,7 @@
 @extends('admin.dashboard')
 @section('content')
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 <style>
     :root {
         --primary-color: #3498db;
@@ -119,8 +120,8 @@
         background: var(--primary-light);
         color: var(--primary-color);
         font-size: 1.5rem;
-         margin-top: -11px;
-            margin-left: 73px;
+        margin-top: -11px;
+        margin-left: 73px;
     }
 
     .modern-stat-card:nth-child(2) .stat-icon {
@@ -215,7 +216,6 @@
     }
 
     .action-icon {
-
         width: 40px;
         height: 40px;
         border-radius: 8px;
@@ -226,7 +226,6 @@
         justify-content: center;
         margin-right: 12px;
         font-size: 1.1rem;
-
     }
 
     /* Enhanced existing styles - keeping all your functionality */
@@ -507,185 +506,172 @@
     </div>
 
     <!-- Modern Stats Grid (Additional to your existing stats) -->
-    <div class="modern-stats-grid">
-
-        <div class="modern-stat-card">
-            <div class="modern-stat-label">Total Residents
-                <div class="stat-icon">
-                    <i class="fas fa-users"></i>
+    <div class="row g-4 mb-4">
+        <div class="col-xl-3 col-lg-4 col-md-6">
+            <div class="modern-stat-card">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div class="modern-stat-label">Total Residents</div>
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
+                <div class="modern-stat-number">{{ number_format($totalResidentsCount) }}</div>
+                <div class="modern-stat-label">Registered Residents</div>
+                <div class="stat-trend trend-up">
+                    <i class="fas fa-arrow-up"></i>
                 </div>
             </div>
-            <div class="modern-stat-number">{{ number_format($totalResidentsCount) }}</div>
-            <div class="modern-stat-label">Registered residents</div>
-            <div class="stat-trend trend-up">
-                <i class="fas fa-arrow-up"></i>
-            </div>
         </div>
-        <div class="modern-stat-card">
-             <div class="modern-stat-label">Total Male Residents
-                <div class="stat-icon">
-                <i class="fas fa-users"></i>
-            </div>
-             </div>
-            <div class="modern-stat-number">{{ number_format( $totalResidentsMale ) }}</div>
-
-            <div class="stat-trend trend-up">
-                <i class="fas fa-arrow-up"></i>
-
-            </div>
-        </div>
-        <div class="modern-stat-card">
-              <div class="modern-stat-label">Total Female Residents
-                <div class="stat-icon">
-                    <i class="fas fa-users"></i>
+        <div class="col-xl-3 col-lg-4 col-md-6">
+            <div class="modern-stat-card">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div class="modern-stat-label">Total Male Residents</div>
+                    <div class="stat-icon">
+                        <i class="fas fa-male"></i>
+                    </div>
+                </div>
+                <div class="modern-stat-number">{{ number_format($totalResidentsMale) }}</div>
+                <div class="modern-stat-label">Registered Male Residents</div>
+                <div class="stat-trend trend-up">
+                    <i class="fas fa-arrow-up"></i>
                 </div>
             </div>
-            <div class="modern-stat-number">{{ number_format( $totalResidentsFemale ) }}</div>
-            <div class="modern-stat-label">Total Female Residents</div>
-            <div class="stat-trend trend-up">
-                <i class="fas fa-arrow-up"></i>
-
-            </div>
         </div>
-        <div class="modern-stat-card">
-             <div class="modern-stat-label">Total Seniors
-                <div class="stat-icon">
-                    <i class="fas fa-users"></i>
+        <div class="col-xl-3 col-lg-4 col-md-6">
+            <div class="modern-stat-card">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div class="modern-stat-label">Total Female Residents</div>
+                    <div class="stat-icon">
+                        <i class="fas fa-female"></i>
+                    </div>
+                </div>
+                <div class="modern-stat-number">{{ number_format($totalResidentsFemale) }}</div>
+                <div class="modern-stat-label">Registered Female Residents</div>
+                <div class="stat-trend trend-up">
+                    <i class="fas fa-arrow-up"></i>
                 </div>
             </div>
-            <div class="modern-stat-number">{{ number_format( $totalSeniors ) }}</div>
-            <div class="modern-stat-label">Total Senior</div>
-            <div class="stat-trend trend-up">
-                <i class="fas fa-arrow-up"></i>
-
-            </div>
         </div>
-        <div class="modern-stat-card">
-            <div class="modern-stat-label">Total Youth
-               <div class="stat-icon">
-                   <i class="fas fa-users"></i>
-               </div>
-           </div>
-           <div class="modern-stat-number">{{ number_format( $totalYouth ) }}</div>
-           <div class="modern-stat-label">Total Youth</div>
-           <div class="stat-trend trend-up">
-               <i class="fas fa-arrow-up"></i>
-
-           </div>
-       </div>
-        <div class="modern-stat-card">
-              <div class="modern-stat-label">Total Households
-                <div class="stat-icon">
-                    <i class="fas fa-users"></i>
+        <div class="col-xl-3 col-lg-4 col-md-6">
+            <div class="modern-stat-card">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div class="modern-stat-label">Total Seniors</div>
+                    <div class="stat-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                </div>
+                <div class="modern-stat-number">{{ number_format($totalSeniors) }}</div>
+                <div class="modern-stat-label">Registered Senior Residents</div>
+                <div class="stat-trend trend-up">
+                    <i class="fas fa-arrow-up"></i>
                 </div>
             </div>
-            <div class="modern-stat-number">{{ number_format( $totalHouseholds ) }}</div>
-            <div class="modern-stat-label">Total Households</div>
-            <div class="stat-trend trend-up">
-                <i class="fas fa-arrow-up"></i>
-
-            </div>
         </div>
-        <div class="modern-stat-card">
-              <div class="modern-stat-label">Total Families
-                <div class="stat-icon">
-                    <i class="fas fa-users"></i>
+        <div class="col-xl-3 col-lg-4 col-md-6">
+            <div class="modern-stat-card">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div class="modern-stat-label">Total Youth</div>
+                    <div class="stat-icon">
+                        <i class="fas fa-child"></i>
+                    </div>
+                </div>
+                <div class="modern-stat-number">{{ number_format($totalYouth) }}</div>
+                <div class="modern-stat-label">Registered Youth Residents</div>
+                <div class="stat-trend trend-up">
+                    <i class="fas fa-arrow-up"></i>
                 </div>
             </div>
-            <div class="modern-stat-number">{{ number_format( $totalFamilies ) }}</div>
-
-            <div class="stat-trend trend-up">
-                <i class="fas fa-arrow-up"></i>
-
+        </div>
+        <div class="col-xl-3 col-lg-4 col-md-6">
+            <div class="modern-stat-card">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div class="modern-stat-label">Total Households</div>
+                    <div class="stat-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                </div>
+                <div class="modern-stat-number">{{ number_format($totalHouseholds) }}</div>
+                <div class="modern-stat-label">Total Households</div>
+                <div class="stat-trend trend-up">
+                    <i class="fas fa-arrow-up"></i>
+                </div>
             </div>
         </div>
-        <!-- <div class="modern-stat-card">
-            <div class="stat-icon">
-                <i class="fas fa-file-alt"></i>
-            </div>
-            <div class="modern-stat-number">156</div>
-            <div class="modern-stat-label">Service Requests</div>
-            <div class="stat-trend trend-up">
-                <i class="fas fa-arrow-up"></i>
-                +86 from last month
+        <div class="col-xl-3 col-lg-4 col-md-6">
+            <div class="modern-stat-card">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div class="modern-stat-label">Total Families</div>
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
+                <div class="modern-stat-number">{{ number_format($totalFamilies) }}</div>
+                <div class="modern-stat-label">Total Families</div>
+                <div class="stat-trend trend-up">
+                    <i class="fas fa-arrow-up"></i>
+                </div>
             </div>
         </div>
-
-        <div class="modern-stat-card">
-            <div class="stat-icon">
-                <i class="fas fa-print"></i>
-            </div>
-            <div class="modern-stat-number">23</div>
-            <div class="modern-stat-label">Printing Approvals</div>
-            <div class="stat-trend">
-                Awaiting review
-            </div>
-        </div> -->
-
-        <!-- <div class="modern-stat-card">
-            <div class="stat-icon">
-                <i class="fas fa-project-diagram"></i>
-            </div>
-            <div class="modern-stat-number">8</div>
-            <div class="modern-stat-label">Active Projects</div>
-            <div class="stat-trend">
-                Ongoing initiatives
-            </div>
-        </div> -->
     </div>
 
-
-
-
-    <!-- Your Original Functional Content - Completely Preserved -->
-  <!-- <div class="stats-row row">
-        <div class="col-md-4">
-            <div class="stat-card card">
-                <div class="card-header">Total Residents</div>
-                <div class="card-body">{{ $totalResidentsCount }}</div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="stat-card card">
-                <div class="card-header">Total Male Residents</div>
-                <div class="card-body">{{ $totalResidentsMale }}</div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="stat-card card">
-                <div class="card-header">Total Female Residents</div>
-                <div class="card-body">{{ $totalResidentsFemale }}</div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="stat-card card">
-                <div class="card-header">Total Senior Citizens</div>
-                <div class="card-body">{{ $totalSeniors }}</div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="stat-card card">
-                <div class="card-header">Total Households</div>
-                <div class="card-body">{{ $totalHouseholds }}</div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="stat-card card">
-                <div class="card-header">Total Families</div>
-                <div class="card-body">{{ $totalFamilies }}</div>
+    <!-- Quick Actions Section with Bootstrap -->
+    <!-- <div class="row g-4 mb-4">
+        <div class="col-12">
+            <div class="quick-actions-section">
+                <div class="section-header">
+                    <h3 class="section-title">Quick Actions</h3>
+                </div>
+                <div class="row g-3">
+                    <div class="col-md-3 col-sm-6">
+                        <a href="#" class="action-btn">
+                            <div class="action-icon">
+                                <i class="fas fa-user-plus"></i>
+                            </div>
+                            Add Resident
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <a href="#" class="action-btn">
+                            <div class="action-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            Service Requests
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <a href="#" class="action-btn">
+                            <div class="action-icon">
+                                <i class="fas fa-chart-bar"></i>
+                            </div>
+                            Reports
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <a href="#" class="action-btn">
+                            <div class="action-icon">
+                                <i class="fas fa-cog"></i>
+                            </div>
+                            Settings
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div> -->
 
-    <div class="row">
+    <!-- Households Information -->
+    <div class="row g-4">
         <div class="col-md-6">
             <div class="chart-card card">
-                <div class="card-header">Households per Purok</div>
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span>Households per Purok</span>
+                    <span class="badge bg-primary">{{ $householdsPerPurok->count() }} Puroks</span>
+                </div>
                 <div class="card-body">
                     <ul class="list-group purok-list">
                         @foreach($householdsPerPurok as $purok)
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                {{ $purok->purok_no }}
+                                Purok {{ $purok->purok_no }}
                                 <span class="badge badge-count rounded-pill">{{ $purok->household_count }}</span>
                             </li>
                         @endforeach
@@ -695,7 +681,10 @@
         </div>
         <div class="col-md-6">
             <div class="chart-card card">
-                <div class="card-header">Households per Sitio</div>
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span>Households per Sitio</span>
+                    <span class="badge bg-primary">{{ $householdsPerSitio->count() }} Sitios</span>
+                </div>
                 <div class="card-body">
                     <ul class="list-group sitio-list">
                         @foreach($householdsPerSitio as $sitio)
@@ -710,56 +699,63 @@
         </div>
     </div>
 
+    <!-- Service Requests Section -->
     <div class="requests-section">
         <div class="section-header">
             <h4>Recent Service Requests</h4>
-            <a href="" class="view-all-btn">View All</a>
+            <a href="#" class="view-all-btn">View All</a>
         </div>
 
-        @forelse($recentRequests as $request)
-            <div class="request-card card">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="request-info">
-                            <h5 class="card-title">{{ $request->service_type }}</h5>
-                            <p class="request-meta mb-1">
-                                Requested by {{ $request->resident->name ?? ($request->Fname . ' ' . $request->lname) }}
-                            </p>
-                            <p class="request-date mb-0">
-                                {{ $request->created_at->format('Y-m-d') }}
-                            </p>
-                        </div>
-                        <div>
-                            @php
-                                $statusClass = 'status-default';
-                                $statusText = strtolower($request->status ?? '');
-                                if ($statusText === 'approved') {
-                                    $statusClass = 'status-approved';
-                                } elseif ($statusText === 'processing') {
-                                    $statusClass = 'status-processing';
-                                } elseif ($statusText === 'pending') {
-                                    $statusClass = 'status-pending';
-                                } elseif ($statusText === 'completed') {
-                                    $statusClass = 'status-completed';
-                                } elseif ($statusText === 'rejected') {
-                                    $statusClass = 'status-rejected';
-                                }
-                            @endphp
-                            <span class="status-badge {{ $statusClass }}">{{ ucfirst($request->status) }}</span>
+        <div class="row g-3">
+            @forelse($recentRequests as $request)
+                <div class="col-12">
+                    <div class="request-card card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="request-info">
+                                    <h5 class="card-title">{{ $request->service_type }}</h5>
+                                    <p class="request-meta mb-1">
+                                        Requested by {{ $request->resident->name ?? ($request->Fname . ' ' . $request->lname) }}
+                                    </p>
+                                    <p class="request-date mb-0">
+                                        {{ $request->created_at->format('Y-m-d') }}
+                                    </p>
+                                </div>
+                                <div>
+                                    @php
+                                        $statusClass = 'status-default';
+                                        $statusText = strtolower($request->status ?? '');
+                                        if ($statusText === 'approved') {
+                                            $statusClass = 'status-approved';
+                                        } elseif ($statusText === 'processing') {
+                                            $statusClass = 'status-processing';
+                                        } elseif ($statusText === 'pending') {
+                                            $statusClass = 'status-pending';
+                                        } elseif ($statusText === 'completed') {
+                                            $statusClass = 'status-completed';
+                                        } elseif ($statusText === 'rejected') {
+                                            $statusClass = 'status-rejected';
+                                        }
+                                    @endphp
+                                    <span class="status-badge {{ $statusClass }}">{{ ucfirst($request->status) }}</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        @empty
-            <div class="card">
-                <div class="card-body empty-state">
-                    <p class="mb-0">No recent service requests found.</p>
+            @empty
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body empty-state">
+                            <p class="mb-0">No recent service requests found.</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        @endforelse
+            @endforelse
+        </div>
     </div>
 </div>
 
-<!-- Font Awesome for icons -->
-<script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>
+<!-- Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 @endsection

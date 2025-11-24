@@ -93,10 +93,18 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/senior/dashboard', [SeniorController::class, 'dashboard'])->name('senior.dashboard');
     Route::get('/senior/list', [SeniorController::class, 'list'])->name('senior.list');
     Route::post('/senior/store', [SeniorController::class, 'store'])->name('senior.store');
-    Route::get('seniors/{senior}/json', [SeniorController::class, 'getSeniorJson'])->name('senior.json');
+    // Route::get('seniors/{senior}/resident', [SeniorController::class, 'getSeniorResident'])->name('senior.resident');
+    // Get Senior JSON
+Route::get('/seniors/{senior}/json', [SeniorController::class, 'getSeniorJson'])->name('senior.json');
+
+// Get Resident Details for a Senior
+Route::get('/seniors/{id}/resident', [SeniorController::class, 'residentDetails'])->name('senior.resident');
+
+
     Route::put('seniors/{senior}', [SeniorController::class, 'update'])->name('senior.update');
     Route::delete('seniors/{senior}', [SeniorController::class, 'destroy'])->name('senior.destroy');
     Route::get('/senior-profile', [ProfileController::class, 'editseniorProfile'])->name('senior.profile');
+    Route::get('/seniors/{senior}/resident', [SeniorController::class, 'showResident'])->name('senior.show_resident');
 
     // 4Ps Routes
     Route::get('/4ps/dashboard', [FourpsController::class, 'dashboard'])->name('4ps.dashboard');

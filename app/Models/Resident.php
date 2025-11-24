@@ -39,5 +39,9 @@ public function official()
     {
         return $this->hasMany(SKService::class);
     }
+    public function seniors()
+    {
+        return $this->hasMany(Senior::class);
+    }
 
 }
