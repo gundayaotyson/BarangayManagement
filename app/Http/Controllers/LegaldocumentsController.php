@@ -18,14 +18,28 @@ class LegaldocumentsController extends Controller
     }
     public function ResidencyRequest()
     {
+        $residencyRequests = ClearanceReq::with('resident')
+        ->where('service_type', 'Barangay Residency')
+        ->latest()
+        ->get();
 
-        return view("admin.requestedresidency");
+    return view('admin.requestedresidency', compact('residencyRequests'));
     }
+    public function showBusinessPermit($id)
+{
+    $business_permit = ClearanceReq::with('resident')->findOrFail($id);
+    return view('admin.brgybussniesspermitform', compact('business_permit'));
+}
+
     // Show Barangay Business Permit request page
     public function BrgyBussinesspermit()
     {
+        $businessPermitRequests = ClearanceReq::with('resident')
+        ->where('service_type', 'Barangay Business Permit')
+        ->latest()
+        ->get();
 
-        return view("admin.requestedbussnesspermit");
+    return view('admin.requestedbussnesspermit', compact('businessPermitRequests'));
     }
     // Show Barangay Indigency Form
     public function index()
@@ -37,9 +51,7 @@ class LegaldocumentsController extends Controller
     // Store Barangay Clearance Request
     public function storeClearance(Request $request)
     {
-        // try {
-            // Validate the incoming request data
-
+        try {
             $request->validate([
                 'resident_id' => 'nullable|exists:residents,id',
                 'Fname' => 'required|string|max:255',
@@ -53,17 +65,19 @@ class LegaldocumentsController extends Controller
                 'purpose' => 'required|string',
                 'pickup_date' => 'required|date',
                 'service_type' => 'required|string',
+                'business_name' => 'nullable|string',
+                'business_type' => 'nullable|string',
+                'business_address' => 'nullable|string',
+                'res_started_living' => 'nullable|string',
+                'cert_use_date' => 'nullable|date',
               ]);
 
-                // Find matching resident by full name (with improved handling for not found)
                 $resident = Resident::where('Fname', $request->Fname)->where('lname', $request->lname)->first();
                 if (!$resident) {
                     return redirect()->back()->with('error', 'Resident not found!');
                 }
 
-            // Generate a unique tracking code
             $trackingCode = strtoupper(Str::random(10));
-            // Create a new clearance request record
             ClearanceReq::create([
              'resident_id' => $resident->id,
                 'Fname' => $request->Fname,
@@ -77,24 +91,27 @@ class LegaldocumentsController extends Controller
                 'purpose' => $request->purpose,
                 'pickup_date' => $request->pickup_date,
                 'tracking_code' => $trackingCode,
-                'status' => 'pending', // Default status
+                'status' => 'pending',
                 'service_type' => $request->service_type,
+                'business_name' => $request->business_name,
+                'business_type' => $request->business_type,
+                'business_address' => $request->business_address,
+                'res_started_living' => $request->res_started_living,
+                'cert_use_date' => $request->cert_use_date,
 
             ]);
 
+            return redirect()->back()->with('success', 'Request Submitted Successfully! Your tracking code is: ' . $trackingCode);
+        } catch (\Exception $e) {
+            Log::error('Error storing Barangay Clearance request: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Something went wrong! Please try again.');
-            // return redirect()->back('webgenerallayout')->with('success', 'Request Submitted Successfully! Your tracking code is: ' . $trackingCode);
-        // } catch (\Exception $e) {
-        //     Log::error('Error storing Barangay Clearance request: ' . $e->getMessage());
-        //
-        // }
+        }
 
     }
 
     // View all clearance requests
     public function clearanceview()
 {
-    // Get all clearance requests with their associated residents
     $clearanceRequests = ClearanceReq::with('resident')->latest()->get();
 
     return view('admin.requesteddocument', compact('clearanceRequests'));
@@ -109,11 +126,7 @@ class LegaldocumentsController extends Controller
 
   public function showClearance($id)
 {
-    // Get the clearance request with resident data
     $clearance = ClearanceReq::with('resident')->findOrFail($id);
-
-    // Debugging - uncomment to check data
-    // dd($clearance);
 
     return view('admin.clearancevalidate', compact('clearance'));
 }
@@ -126,10 +139,10 @@ class LegaldocumentsController extends Controller
             $clearance->status = $request->status;
 
             if ($request->status === 'released') {
-                $clearance->released_date = now(); // ✅ Fix column name
+                $clearance->released_date = now();
             }
 
-            $clearance->save(); // ✅ Save the changes
+            $clearance->save();
 
             return response()->json(['success' => true, 'message' => 'Status updated successfully!']);
         } catch (\Exception $e) {
@@ -149,17 +162,9 @@ class LegaldocumentsController extends Controller
             return response()->json(['success' => false, 'message' => 'Failed to delete request.']);
         }
     }
-    // public function clearanceRequested()
-    // {
-    //     $clearanceRequests = Resident::latest()->get(); // Fetch all clearance requests
-
-    //     return view('requestedclearance', compact('clearanceRequests'));
-    // }
-// Controller method
 
 public function clearanceRequested()
 {
-    // Correct: Fetch clearance requests with resident info
     $clearanceRequests = ClearanceReq::with('resident')
      ->where('service_type', 'Barangay Clearance')
     ->latest()->get();
@@ -171,7 +176,7 @@ public function indigencyRequested()
 {
 
     $indigencyRequests = ClearanceReq::with('resident')
-        ->where('service_type', 'Certificate of Indigency') // ✅ filter by service_type
+        ->where('service_type', 'Certificate of Indigency')
         ->latest()
         ->get();
     return view('admin.requestedindigency', compact('indigencyRequests'));
@@ -180,36 +185,51 @@ public function showIndigency($id)
 {
         $indigency = ClearanceReq::with('resident')->findOrFail($id);
 
-
-    // $indigency = ClearanceReq::findOrFail($id);
-    // dd($indigency);
     return view('admin.brgyindigencyform', compact('indigency'));
 }
 
 
-// public function clearanceRequested()
-// {
-//     $clearanceRequests = Clearancereq::with('resident')->latest()->get(); // eager load relation
-//     return view('requestedclearance', compact('clearanceRequests'));
-// }
+public function showResidencyCert($id)
+{
+    $residency = ClearanceReq::with('resident')->findOrFail($id);
+    return view('admin.brgycertresidency', compact('residency'));
+}
+
+public function residencyRequested()
+{
+    $residencyRequests = ClearanceReq::with('resident')
+        ->where('service_type', 'Barangay Residency')
+        ->latest()
+        ->get();
+
+    return view('admin.requestedresidency', compact('residencyRequests'));
+}
+
+public function businessPermitRequested()
+{
+    $businessPermitRequests = ClearanceReq::with('resident')
+        ->where('service_type', 'Barangay Business Permit')
+        ->latest()
+        ->get();
+
+    return view('admin.requestedbussnesspermit', compact('businessPermitRequests'));
+}
+
 
 public function trackClearance($trackingCode)
 {
-    // Query the clearance request by tracking code
     $clearanceRequest = ClearanceReq::where('tracking_code', $trackingCode)->first();
 
     if ($clearanceRequest) {
-        // Return the required details
         return response()->json([
             'success' => true,
             'fullname' => $clearanceRequest->Fname . ' ' . $clearanceRequest->mname . ' ' . $clearanceRequest->lname,
-            'service_type' => $clearanceRequest->service_type,  // Assuming this column exists
+            'service_type' => $clearanceRequest->service_type,
             'request_date' => $clearanceRequest->created_at->format('Y-m-d'),
-            'pickup_date' => $clearanceRequest->pickup_date, // Assuming this column exists
+            'pickup_date' => $clearanceRequest->pickup_date,
             'status' => $clearanceRequest->status,
         ]);
     } else {
-        // Return a response if no record is found
         return response()->json([
             'success' => false,
             'message' => 'No record found for this tracking code'

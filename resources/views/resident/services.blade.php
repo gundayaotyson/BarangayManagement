@@ -783,47 +783,35 @@
             </div>
         </div>
 
-        <!-- Purpose -->
-        <div class="form-group">
-            <label for="purpose">
-                <i class="fas fa-clipboard me-1"></i>
-                Purpose
-            </label>
-            <textarea class="form-control" id="purpose" name="purpose" rows="3" placeholder="Please specify the purpose of your request..." required></textarea>
-        </div>
+
 
         <div id="business_fields" style="display: none; margin-top: 15px;">
+            <div class="form-group">
+                <label for="business_name">
+                    <i class="fas fa-building me-1"></i>
+                    Name of Business
+                </label>
+                <input type="text" class="form-control" name="business_name" id="business_name">
+            </div>
 
-    <div class="form-group">
-        <label for="business_name">
-            <i class="fas fa-building me-1"></i>
-            Name of Business
-        </label>
-        <input type="text" class="form-control" name="business_name" id="business_name">
-    </div>
+            <div class="form-group">
+                <label for="business_type">
+                    <i class="fas fa-briefcase me-1"></i>
+                    Type of Business
+                </label>
+                <input type="text" class="form-control" name="business_type" id="business_type">
+            </div>
 
-    <div class="form-group">
-        <label for="business_type">
-            <i class="fas fa-briefcase me-1"></i>
-            Type of Business
-        </label>
-        <input type="text" class="form-control" name="business_type" id="business_type">
-    </div>
-
-    <div class="form-group">
-        <label for="business_address">
-            <i class="fas fa-map-marker-alt me-1"></i>
-            Business Address
-        </label>
-        <input type="text" class="form-control" name="business_address" id="business_address">
-    </div>
-
-</div>
-
+            <div class="form-group">
+                <label for="business_address">
+                    <i class="fas fa-map-marker-alt me-1"></i>
+                    Business Address
+                </label>
+                <input type="text" class="form-control" name="business_address" id="business_address">
+            </div>
+        </div>
 
         <!-- Business / Residency additional fields (hidden by default) -->
-
-
         <div class="form-group" id="residency_start_field" style="display: none;">
             <label for="res_started_living"><i class="fas fa-calendar me-1"></i>Started Living in the Barangay (Year)</label>
             <input type="text" class="form-control" id="res_started_living" name="res_started_living" placeholder="Enter the year">
@@ -833,7 +821,14 @@
             <label for="cert_use_date"><i class="fas fa-calendar me-1"></i>When will the Certificate be Used</label>
             <input type="date" class="form-control" id="cert_use_date" name="cert_use_date">
         </div>
-
+         <!-- Purpose -->
+        <div class="form-group">
+            <label for="purpose">
+                <i class="fas fa-clipboard me-1"></i>
+                Purpose
+            </label>
+            <textarea class="form-control" id="purpose" name="purpose" rows="3" placeholder="Please specify the purpose of your request..." required></textarea>
+        </div>
         <!-- Pickup Date -->
         <div class="form-group">
             <label for="pickup_date">
@@ -842,6 +837,8 @@
             </label>
             <input type="date" class="form-control" id="pickup_date" name="pickup_date" required>
         </div>
+
+
 
         <button type="submit" class="btn btn-primary btn-submit">
             <i class="fas fa-paper-plane me-2"></i>
@@ -898,7 +895,7 @@
                 placeOfBirthField.style.display = 'none';
                 civilStatusField.style.display = 'none';
                 genderField.style.display = 'none';
-                purposeField.style.display = 'none';
+                purposeField.style.display = 'block';
                 residencyStartField.style.display = 'none';
                 certUseField.style.display = 'none';
             } else if (value === 'Barangay Residency') {
@@ -908,7 +905,7 @@
                 placeOfBirthField.style.display = 'none';
                 civilStatusField.style.display = 'none';
                 genderField.style.display = 'none';
-                purposeField.style.display = 'none';
+                purposeField.style.display = 'block';
                 residencyStartField.style.display = 'block';
                 certUseField.style.display = 'block';
             } else {

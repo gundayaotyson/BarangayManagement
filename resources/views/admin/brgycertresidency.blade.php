@@ -14,7 +14,7 @@
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Times New Roman', serif;
+             font-family: 'Times New Roman', Times, serif;
             background-color: #f5f5f5;
             display: flex;
             justify-content: center;
@@ -92,13 +92,30 @@
 
         .certification-text {
             margin-bottom: 6mm;
-            text-align: justify;
+            /* text-align: justify; */
+        }
+         .signature-box {
+            width: 1000px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 5px;
+            overflow: hidden;
+            margin-left: 50px;
+
+        }
+
+        .signature-box img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
         }
 
         .underline-field {
             display: inline-block;
             border-bottom: 1px solid #000;
-            min-width: 80mm;
+            /* min-width: 80mm; */
             text-align: center;
             padding: 0 2mm;
             margin: 0 1mm;
@@ -181,7 +198,6 @@
 <body>
     <div class="no-print preview-controls">
         <button onclick="window.print()">Print Certificate</button>
-        <button onclick="togglePreview()">Toggle Preview</button>
     </div>
 
     <div class="a4-container">
@@ -211,26 +227,28 @@
             </div>
 
             <div class="certification-text">
-                <p>This is to certify that <span class="underline-field">Jomarie A. Neria</span> of legal age, <span class="underline-field">Single</span> is a bonafide resident of Barangay Cobol, San Carlos City, Pangasinan.</p>
+                 <p>This is to certify that <span class="underline-field">{{ $residency->Fname }} {{ $residency->mname }} {{ $residency->lname }}</span> of legal age, <span class="underline-field">{{ $residency->civil_status }}</span> is a bonafide resident of Barangay Cobol, San Carlos City, Pangasinan.</p>
 
-                <p>This is to certify further that the above name person is a resident of this Barangay since <span class="underline-field"></span> up to the present.</p>
+                <p>This is to certify further that the above name person is a resident of this Barangay since <span class="underline-field">{{ \Carbon\Carbon::parse($residency->res_started_living)->format('F d, Y') }}</span> up to the present.</p>
 
-                <p>This certification is issued upon the request of <span class="underline-field">Jomarie A. Neria</span> for any legal purpose it may serve.</p>
+                <p>This certification is issued upon the request of <span class="underline-field">{{ $residency->Fname }} {{ $residency->mname }} {{ $residency->lname }}</span> for any legal purpose it may serve.</p>
             </div>
 
-            <p>Issued this <span class="underline-field">25th</span> day of <span class="underline-field">October</span> <span class="underline-field">2025</span> at Barangay Cobol, San Carlos City, Pangasinan.</p>
+            <p>Issued this <span class="underline-field">{{ \Carbon\Carbon::parse($residency->cert_use_date)->format('jS') }}</span> day of <span class="underline-field">{{ \Carbon\Carbon::parse($residency->cert_use_date)->format('F') }}</span> <span class="underline-field">{{ \Carbon\Carbon::parse($residency->cert_use_date)->format('Y') }}</span> at Barangay Cobol, San Carlos City, Pangasinan.</p>
 
             <div class="signature-area">
                 <p>Respectfully yours,</p>
-
-                <div class="signature-name">DIONISTO R. CALDONA</div>
+                <div class="signature-box">
+                    <img src="{{ asset('images/signiture-removebg.png') }}" alt="Signature" />
+                </div>
+                <div class="signature-name">DIONISIO R. CALDONA</div>
                 <div class="signature-title">Punong Barangay</div>
             </div>
         </div>
-
+<!--
         <div class="footer">
             <p>Note: This certificate is valid for six (6) months from the date of issuance.</p>
-        </div>
+        </div> -->
     </div>
 
     <script>

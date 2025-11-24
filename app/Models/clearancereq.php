@@ -31,9 +31,13 @@ class Clearancereq extends Model
         'pickup_date',
         'tracking_code',
         'status',
-        'requested_date', // ✅ Added requested_date
+        'requested_date',
         'released_date',
-          // ✅ Keep released_date
+        'business_name',
+        'business_type',
+        'business_address',
+        'res_started_living',
+        'cert_use_date',
     ];
 
     // Automatically generate tracking_code & set requested_date when creating a new request
@@ -47,24 +51,8 @@ class Clearancereq extends Model
         });
     }
 
-    // Mutator: Update `released_date` when status is changed to "released"
-    public function setStatusAttribute($value)
-{
-    $this->attributes['status'] = $value;
-
-    if ($value === 'released') {
-        $this->attributes['released_date'] = now(); // ✅ Set released_date kapag released
-    } else {
-        $this->attributes['released_date'] = null; // ✅ Reset released_date kung hindi released
+    public function resident()
+    {
+        return $this->belongsTo(Resident::class, 'resident_id');
     }
-
-    $this->save(); // ✅ Ensure that changes are saved to the database
-}
-
-
-public function resident()
-{
-    return $this->belongsTo(Resident::class, 'resident_id');
-}
-
 }

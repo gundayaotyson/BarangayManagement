@@ -1,5 +1,4 @@
-@extends('admin.dashboard')
-@section('content')
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,6 +14,21 @@
             font-family: 'Times New Roman', Times, serif;
             margin: 0;
             padding: 0;
+        }
+        .signature-box {
+            width: 1000px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 5px;
+            overflow: hidden;
+        }
+
+        .signature-box img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
         }
         .container {
             width: 21cm;
@@ -82,12 +96,57 @@
             border-bottom: 1px solid #000;
             padding: 0 20px;
         }
+         .print-container {
+            text-align: right;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        .print-btn {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-right: 20px;
+            margin-top: 10px;
+        }
+
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .container, .container * {
+                visibility: visible;
+            }
+            .container {
+                position: absolute;
+                left: 0;
+                top: 0;
+                margin: 0;
+                border: none;
+                box-shadow: none;
+            }
+            .print-container {
+                display: none;
+            }
+        }
+
     </style>
 </head>
 <body>
+    <div class="print-container">
+        <button button onclick="window.print()" class="print-btn">Print</button>
+    </div>
     <div class="container">
         <div class="header">
-         <img src="{{ asset('images/cobol log.png') }}" alt="Barangay Cobol Seal" />
+          <div class="logo-container">
+                <img src="{{ asset('images/cobol log.png') }}" alt="Barangay Cobol Logo" class="logo">
+            </div>
             <div class="header-text">
                 <p>Republic of the Philippines</p>
                 <p>City of San Carlos</p>
@@ -95,34 +154,38 @@
                 <p><strong>BARANGAY COBOL</strong></p>
                 <p>Office of the Punong Barangay</p>
             </div>
-         <img src="{{ asset('images/SC_logo.png') }}" alt="City of San Carlos Seal" />
-
+         <div class="logo-container">
+                <img src="{{ asset('images/SC_logo.png') }}" alt="San Carlos City Logo" class="logo">
+            </div>
         </div>
         <hr>
-        <h1 class="title">BARANGAY BUSINESS CLEARANCE</h1>
-        <div class="date-line">
-            Date: <span></span>
-        </div>
+        <h1 class="title">BARANGAY BUSINESS PERMIT</h1>
+
+             <span class="date-line"><p><strong>DATE:</strong> {{ now()->format('F d, Y') }}</p></span>
+
         <div class="content">
             <div class="line">
-                is hereby granted to <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                is hereby granted to <span class="underline-field">{{  $business_permit->Fname }} {{  $business_permit->mname }} {{ $business_permit->lname }}</span>
             </div>
             <div class="line">
                 a resident of <span> Barangay Cobol San Carlos City Pangasinan&nbsp;&nbsp;&nbsp;
             </div>
             <div class="line">
-                to operate/manage a <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                to operate/manage a <span class="underline-field">{{  $business_permit->business_name }} </span>
             </div>
             <div class="line">
-                to be known as <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                to be known as <span class="underline-field">{{  $business_permit->business_type }} </span>
             </div>
             <div class="line">
-                located at <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-            </div>
+                located at <span class="underline-field">{{  $business_permit->business_address}} </span>
             <p>Subject however to all rules/regulations and existing laws relevant there with.</p>
         </div>
         <div class="footer">
+              <!-- <div class="signature-box">
+                <img src="{{ asset('images/signiture-removebg.png') }}" alt="Signature" />
+            </div> -->
             <div class="signature">
+
                 <div class="name">Signature over printed Name</div>
             </div>
             <div class="certified">
@@ -133,8 +196,7 @@
                 </div>
             </div>
         </div>
-        <hr>
+
     </div>
 </body>
 </html>
-@endsection

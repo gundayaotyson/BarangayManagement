@@ -625,8 +625,8 @@
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="columnDropdown" id="columnSelection">
                 @php
                     $columns = [
-                        'Full Name','Gender', 'Birthday','Birthplace', 'Age', 'Civil Status', 'Citizenship','Religion',
-                        'image','Contact No', 'Occupation','Household No', 'Purok No', 'Sitio','Actions'
+                        'image','Full Name','Gender', 'Birthday','Birthplace', 'Age', 'Civil Status', 'Citizenship','Religion',
+                        'Contact No', 'Occupation','Household No', 'Purok No', 'Sitio','Actions'
                     ];
                 @endphp
                 @foreach ($columns as $index => $column)
@@ -675,6 +675,14 @@
             <tbody id="residentsTableBody">
             @foreach ($residents as $resident)
                 <tr>
+                                        <td>
+                        @if($resident->image)
+                            <img src="{{ asset('storage/' . $resident->image) }}" alt="Resident" width="50" height="50" style="border-radius: 50%; object-fit: cover;">
+                        @else
+                            <img src="{{ asset('images/default.png') }}" alt="Resident" width="50" height="50" style="border-radius: 50%; object-fit: cover;">
+                        @endif
+                    </td>
+
                     <td>{{ $resident->lname }}, {{ $resident->Fname }} {{ $resident->mname ?? '' }}</td>
                     <td>{{ $resident->gender }}</td>
                     <td>{{ $resident->birthday }}</td>
@@ -683,13 +691,6 @@
                     <td>{{ $resident->civil_status }}</td>
                     <td>{{ $resident->Citizenship }}</td>
                     <td>{{ $resident->religion }}</td>
-                    <td>
-                        @if($resident->image)
-                            <img src="{{ asset('storage/' . $resident->image) }}" alt="Resident" width="50" height="50" style="border-radius: 50%; object-fit: cover;">
-                        @else
-                            <img src="{{ asset('images/default.png') }}" alt="Resident" width="50" height="50" style="border-radius: 50%; object-fit: cover;">
-                        @endif
-                    </td>
                     <td>{{ $resident->contact_number }}</td>
                     <td>{{ $resident->occupation }}</td>
                     <td>{{ $resident->household_no }}</td>
