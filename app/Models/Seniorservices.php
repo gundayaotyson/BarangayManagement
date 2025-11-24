@@ -9,8 +9,8 @@ class Seniorservices extends Model
 {
     use HasFactory;
 
-    // Optional: specify table if needed
-    protected $table = 'Seniorservices';
+    // Specify the actual table name
+    protected $table = 'seniorservices';
 
     protected $fillable = [
         'resident_id',

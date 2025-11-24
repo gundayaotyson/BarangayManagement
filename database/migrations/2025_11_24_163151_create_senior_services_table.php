@@ -20,8 +20,9 @@ return new class extends Migration
             $table->string('house_no');
             $table->string('purok');
             $table->string('sitio')->default('N/A');
-            $table->string('oscaId');
-            $table->string('fcapId')->nullable();
+            $table->string('oscaId')->unique();
+
+            $table->string('fcapId')->unique();
 
             // New fields
             $table->enum('status', ['pending', 'processing', 'accept', 'rejected'])->default('pending');
