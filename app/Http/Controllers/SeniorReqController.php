@@ -9,15 +9,28 @@ use Carbon\Carbon;
 
 class SeniorReqController extends Controller
 {
-    // Show the request form
+    /**
+     * Show the senior request form
+     */
     public function request()
     {
-        return view('senior.Request');
+        $resident = auth()->user()->resident ?? null;
+
+        // Get all requests for this resident
+        $requests = Seniorservices::where('resident_id', $resident?->id)
+                          ->latest()
+                          ->get();
+
+
+        return view('senior.Request', compact('resident', 'requests'));
     }
 
-    // Save the senior request to the database
+    /**
+     * Store the senior service request
+     */
     public function store(Request $request)
     {
+        // Validate input
         $request->validate([
             'firstname' => 'required|string|max:255',
             'middlename' => 'nullable|string|max:255',
@@ -26,8 +39,8 @@ class SeniorReqController extends Controller
             'gender' => 'required|string',
             'house_no' => 'required|string|max:50',
             'purok' => 'required|string',
-            'oscaId' => 'required|string|max:255|unique:senior_services',
-            'fcapId' => 'nullable|string|max:255|unique:senior_services',
+                'oscaId' => 'required|string|max:255|unique:senior_services',
+                'fcapId' => 'required|string|max:255|unique:senior_services',
         ]);
 
         // Find the resident if exists
@@ -37,6 +50,10 @@ class SeniorReqController extends Controller
                                 return $query->where('mname', $request->middlename);
                             })
                             ->first();
+
+        if (!$resident) {
+            return redirect()->back()->withErrors(['resident' => 'Resident not found.']);
+        }
 
         // Auto-set sitio based on Purok
         $sitio = match($request->purok) {
@@ -48,7 +65,7 @@ class SeniorReqController extends Controller
 
         // Create the senior service request
         Seniorservices::create([
-            'resident_id' => $resident?->id,
+            'resident_id' => $resident->id,
             'first_name' => $request->firstname,
             'middle_name' => $request->middlename,
             'last_name' => $request->lastname,
@@ -65,6 +82,10 @@ class SeniorReqController extends Controller
             'accept_date' => null,
         ]);
 
-        return redirect()->route('senior.req.request')->with('success', 'Senior service request submitted successfully.');
+        // Redirect back with success message
+
+        return redirect()->back()->with('success', 'Senior service request submitted successfully.');
     }
+
+
 }

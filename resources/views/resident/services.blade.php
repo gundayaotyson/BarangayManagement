@@ -578,19 +578,19 @@
           <!-- Middle Name -->
           <div class="mb-3">
               <label for="middlename" class="form-label">Middle Name</label>
-               <input type="text" class="form-control" id="firstname" name="firstname"value="{{ $resident->mname ?? '' }}" readonly>
+               <input type="text" class="form-control" id="middlename" name="middlename"value="{{ $resident->mname ?? '' }}" readonly>
           </div>
 
           <!-- Last Name -->
           <div class="mb-3">
               <label for="lastname" class="form-label">Last Name</label>
-                             <input type="text" class="form-control" id="firstname" name="firstname"value="{{ $resident->lname ?? '' }}" readonly>
+                <input type="text" class="form-control" id="lastname" name="lastname"value="{{ $resident->lname ?? '' }}" readonly>
           </div>
 
           <!-- DOB -->
           <div class="mb-3">
               <label for="dob" class="form-label">Date of Birth</label>
-              <input type="text" class="form-control" id="firstname" name="firstname"value="{{ $resident->birthday ?? '' }}" readonly>
+              <input type="text" class="form-control" id="dob" name="dob"value="{{ $resident->birthday ?? '' }}" readonly>
           </div>
 
           <!-- Gender -->
@@ -607,7 +607,7 @@
           <!-- House No -->
           <div class="mb-3">
               <label for="house_no" class="form-label">House No.</label>
-               <input type="text" class="form-control" id="firstname" name="firstname"value="{{ $resident->household_no ?? '' }}" readonly>
+               <input type="text" class="form-control" id="house_no" name="house_no"value="{{ $resident->household_no ?? '' }}" readonly>
           </div>
 
           <!-- Purok -->

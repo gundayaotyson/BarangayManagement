@@ -27,5 +27,9 @@ class Senior extends Model
 {
     return $this->belongsTo(Resident::class, 'resident_id');
 }
+    public function seniorservices()
+    {
+        return $this->hasMany(Seniorservices::class, 'senior_id');
+    }
 
 }

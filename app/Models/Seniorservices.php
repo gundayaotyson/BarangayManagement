@@ -9,8 +9,8 @@ class Seniorservices extends Model
 {
     use HasFactory;
 
-    // Specify the actual table name
-    protected $table = 'seniorservices';
+    // Specify table if it doesn't follow Laravel naming convention
+    protected $table = 'senior_services';
 
     protected $fillable = [
         'resident_id',
@@ -24,12 +24,13 @@ class Seniorservices extends Model
         'purok',
         'sitio',
         'oscaId',
-        'fcapId',
         'status',
+        'fcapId',
         'request_date',
-        'accept_date',
+        'accept_date'
     ];
 
+    // Optional: relationship with resident
     public function resident()
     {
         return $this->belongsTo(Resident::class);

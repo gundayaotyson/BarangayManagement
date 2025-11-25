@@ -303,7 +303,7 @@
 
     <ul>
          <li><a href="{{ route('senior.homepage') }}"><i class="fas fa-home"></i> <span>Home</span></a></li>
-            <li><a href="{{ route('senior.request') }}"><i class="fas fa-file-alt"></i> <span>Request</span></a></li>
+            <li><a href="{{ route('senior.req.request') }}"><i class="fas fa-file-alt"></i> <span>Request</span></a></li>
          <li><a href="{{ route('senior.list') }}" class="active"><i class="fas fa-list"></i> <span>Senior List</span></a></li>
     </ul>
 </nav>
