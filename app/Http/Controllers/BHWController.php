@@ -10,4 +10,12 @@ class BHWController extends Controller
     {
         return view('bhw.dashboard');
     }
+    public function request()
+    {
+        return view('bhw.Requestlist');
+    }
+    public function home()
+    {
+        return view('bhw.home');
+    }
 }

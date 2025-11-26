@@ -600,6 +600,21 @@
         <div class="col-xl-3 col-lg-4 col-md-6">
             <div class="modern-stat-card">
                 <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div class="modern-stat-label">Total Seniors</div>
+                    <div class="stat-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                </div>
+                <div class="modern-stat-number">{{ number_format($totalSeniorPensioners) }}</div>
+                <div class="modern-stat-label">Registered Senior Residents Pensioners</div>
+                <div class="stat-trend trend-up">
+                    <i class="fas fa-arrow-up"></i>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="col-xl-3 col-lg-4 col-md-6">
+            <div class="modern-stat-card">
+                <div class="d-flex justify-content-between align-items-start mb-3">
                     <div class="modern-stat-label">Total Families</div>
                     <div class="stat-icon">
                         <i class="fas fa-users"></i>
@@ -611,7 +626,7 @@
                     <i class="fas fa-arrow-up"></i>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 
     <!-- Quick Actions Section with Bootstrap -->

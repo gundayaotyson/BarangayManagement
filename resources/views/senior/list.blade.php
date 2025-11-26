@@ -127,10 +127,10 @@
         }
 
         .table thead th {
-            background-color: #f8f9fa;
+            background-color:var( --header-bg);
             border-bottom: 2px solid #dee2e6;
             font-weight: 600;
-            color: #343a40;
+            color: #ffffffff;
             padding: 12px 15px;
             white-space: nowrap;
         }
@@ -514,6 +514,7 @@
         </div>
     </div>
 </div>
+
 
 <!-- Add Senior Modal -->
 <div class="modal fade" id="addSeniorModal" tabindex="-1" aria-labelledby="addSeniorModalLabel" aria-hidden="true">

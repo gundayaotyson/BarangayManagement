@@ -194,6 +194,51 @@
     color: var(--text-dark);
     font-weight: 500;
 }
+   .stats-card {
+        text-align: center;
+        padding: 20px;
+        border-radius: var(--border-radius);
+        margin-bottom: 20px;
+        box-shadow: var(--box-shadow);
+        transition: var(--transition);
+    }
+
+    .stats-card:hover {
+        transform: translateY(-3px);
+    }
+
+    .stats-card .number {
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+
+    .stats-card .label {
+        font-size: 0.9rem;
+        color: var(--dark-color);
+        font-weight: 500;
+    }
+
+    .stats-pending {
+        background-color: rgba(243, 156, 18, 0.1);
+        border-left: 4px solid var(--warning-color);
+    }
+
+    .stats-processing {
+        background-color: rgba(52, 152, 219, 0.1);
+        border-left: 4px solid var(--primary-color);
+    }
+
+    .stats-accepted {
+        background-color: rgba(46, 204, 113, 0.1);
+        border-left: 4px solid var(--success-color);
+    }
+
+    .stats-rejected {
+        background-color: rgba(231, 76, 60, 0.1);
+        border-left: 4px solid var(--danger-color);
+    }
+
 
 .chart-container {
     background-color: var(--white);
@@ -294,6 +339,34 @@
         <div class="welcome-box">
             <h1>Welcome, <strong>{{ Auth::user()->name }}</strong></h1>
             <p>Senior Citizen Management Dashboard</p>
+        </div>
+
+        <!-- Stats Overview -->
+        <div class="row mb-4">
+            <div class="col-md-3 col-sm-6">
+                <div class="stats-card stats-pending">
+                    <div class="number">{{ $statusCounts['pending'] }}</div>
+                    <div class="label">Pending Requests</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="stats-card stats-processing">
+                    <div class="number">{{ $statusCounts['processing'] }}</div>
+                    <div class="label">Processing</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="stats-card stats-accepted">
+                    <div class="number">{{ $statusCounts['accept'] }}</div>
+                    <div class="label">Accepted</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="stats-card stats-rejected">
+                    <div class="number">{{ $statusCounts['rejected'] }}</div>
+                    <div class="label">Rejected</div>
+                </div>
+            </div>
         </div>
 
         <div class="dashboard-grid">

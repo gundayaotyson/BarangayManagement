@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Seniorservices;
 use App\Models\Resident;
+use App\Models\Senior;
 use Carbon\Carbon;
 
 class SeniorReqController extends Controller
@@ -14,15 +15,17 @@ class SeniorReqController extends Controller
      */
     public function request()
     {
+        $requests = Seniorservices::latest()->get();
         $resident = auth()->user()->resident ?? null;
 
-        // Get all requests for this resident
-        $requests = Seniorservices::where('resident_id', $resident?->id)
-                          ->latest()
-                          ->get();
+        $statusCounts = [
+            'pending' => Seniorservices::where('status', 'pending')->count(),
+            'processing' => Seniorservices::where('status', 'processing')->count(),
+            'accept' => Seniorservices::where('status', 'accept')->count(),
+            'rejected' => Seniorservices::where('status', 'rejected')->count(),
+        ];
 
-
-        return view('senior.Request', compact('resident', 'requests'));
+        return view('senior.Request', compact('resident', 'requests', 'statusCounts'));
     }
 
     /**
@@ -39,8 +42,8 @@ class SeniorReqController extends Controller
             'gender' => 'required|string',
             'house_no' => 'required|string|max:50',
             'purok' => 'required|string',
-                'oscaId' => 'required|string|max:255|unique:senior_services',
-                'fcapId' => 'required|string|max:255|unique:senior_services',
+            'oscaId' => 'required|string|max:255|unique:senior_services',
+            'fcapId' => 'required|string|max:255|unique:senior_services',
         ]);
 
         // Find the resident if exists
@@ -82,10 +85,77 @@ class SeniorReqController extends Controller
             'accept_date' => null,
         ]);
 
-        // Redirect back with success message
-
         return redirect()->back()->with('success', 'Senior service request submitted successfully.');
     }
 
+    /**
+     * Update the status of a senior service request.
+     */
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:pending,processing,accept,rejected'
+        ]);
 
+        $seniorRequest = Seniorservices::find($id);
+        if (!$seniorRequest) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Request not found.'
+            ], 404);
+        }
+
+        $newStatus = $request->status;
+
+        $seniorRequest->status = $newStatus;
+
+        if ($newStatus === 'accept') {
+            $seniorRequest->accept_date = now();
+
+            // Check if senior already exists to avoid duplicates
+            $existingSenior = Senior::where('osca_id', $seniorRequest->oscaId)->first();
+
+            if (!$existingSenior) {
+                Senior::create([
+                    'resident_id' => $seniorRequest->resident_id,
+                    'lastname' => $seniorRequest->last_name,
+                    'firstname' => $seniorRequest->first_name,
+                    'middlename' => $seniorRequest->middle_name,
+                    'birthday' => $seniorRequest->dob,
+                    'osca_id' => $seniorRequest->oscaId,
+                    'fcap_id' => $seniorRequest->fcapId,
+                ]);
+            }
+        } else {
+            $seniorRequest->accept_date = null;
+        }
+
+        $seniorRequest->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Status updated successfully.',
+            'request' => [
+                'id' => $seniorRequest->id,
+                'status' => $seniorRequest->status,
+                'accept_date' => $seniorRequest->accept_date ? $seniorRequest->accept_date->format('Y-m-d') : null,
+            ]
+        ]);
+    }
+
+    /**
+     * Delete a senior service request.
+     */
+    public function destroy($id)
+    {
+        $seniorRequest = Seniorservices::find($id);
+
+        if (!$seniorRequest) {
+            return redirect()->back()->with('error', 'Request not found.');
+        }
+
+        $seniorRequest->delete();
+
+        return redirect()->route('senior.req.request')->with('success', 'Request deleted successfully.');
+    }
 }

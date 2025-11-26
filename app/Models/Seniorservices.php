@@ -30,6 +30,12 @@ class Seniorservices extends Model
         'accept_date'
     ];
 
+
+    protected $casts = [
+        'request_date' => 'date',
+        'accept_date' => 'date',
+    ];
+
     // Optional: relationship with resident
     public function resident()
     {

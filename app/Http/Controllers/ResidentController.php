@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Resident;
 use App\Models\Clearancereq;
 use App\Models\SKService;
+use App\Models\Seniorservices;
 
 class ResidentController extends Controller
 {
@@ -50,12 +51,14 @@ class ResidentController extends Controller
         if ($resident) {
             $requests = Clearancereq::where('resident_id', $resident->id)->get();
             $skServices = SKService::where('resident_id', $resident->id)->latest()->get();
+            $seniorRequests = Seniorservices::where('resident_id', $resident->id)->latest()->get();
         } else {
             $requests = collect();
-             $skServices = collect();  // Empty collection if no resident found
+            $skServices = collect();  // Empty collection if no resident found
+            $seniorRequests = collect(); // Empty collection if no resident found
         }
 
-        return view('resident.requests', compact('resident', 'requests','skServices'));
+        return view('resident.requests', compact('resident', 'requests', 'skServices', 'seniorRequests'));
     }
 
 }

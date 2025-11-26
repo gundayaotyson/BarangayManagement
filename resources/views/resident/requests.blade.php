@@ -116,6 +116,10 @@
         background-color: var(--success-color);
         color: white;
     }
+    .status-accept {
+        background-color: var(--success-color);
+        color: white;
+    }
 
     .status-declined {
         background-color: var(--danger-color);
@@ -337,6 +341,7 @@
             font-size: 0.65rem;
             padding: 0.3rem 0.6rem;
         }
+
     }
 
     /* Extra Small Mobile (400px and below) */
@@ -373,6 +378,7 @@
         .no-requests-mobile i {
             font-size: 2.5rem;
         }
+
     }
 
     /* Print Styles */
@@ -668,6 +674,94 @@
     </div>
 @endforelse
 
+        </div>
+    </div>
+</div>
+
+<!-- Senior Service Requests Section -->
+<div class="requests-section">
+    <h3 class="requests-title">Senior Service Requests</h3>
+    <div class="table-container">
+        <!-- Desktop Table View -->
+        <div class="desktop-table">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Full Name</th>
+                            <th>OSCA ID</th>
+                            <th>FCAP ID</th>
+                            <th>Date Requested</th>
+                            <th>Accept Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($seniorRequests as $request)
+                            <tr>
+                                <td class="font-weight-medium">{{ $request->first_name }} {{ $request->last_name }}</td>
+                                <td>{{ $request->oscaId }}</td>
+                                <td>{{ $request->fcapId }}</td>
+                                <td>{{ $request->request_date->format('M d, Y') }}</td>
+                                <td>{{ $request->accept_date ? \Carbon\Carbon::parse($request->accept_date)->format('M d, Y') : 'N/A' }}</td>
+                                <td>
+                                    <span class="status-badge status-{{ strtolower($request->status) }}">
+                                        {{ $request->status }}
+                                    </span>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6" class="text-center py-4 text-muted">
+                                    <i class="fas fa-inbox fa-2x mb-3 d-block"></i>
+                                    No senior service requests found
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Mobile Card View -->
+        <div class="mobile-cards">
+            @forelse ($seniorRequests as $request)
+                <div class="mobile-request-card">
+                    <div class="mobile-request-row">
+                        <span class="mobile-request-label">Full Name:</span>
+                        <span class="mobile-request-value">{{ $request->first_name }} {{ $request->last_name }}</span>
+                    </div>
+                    <div class="mobile-request-row">
+                        <span class="mobile-request-label">OSCA ID:</span>
+                        <span class="mobile-request-value">{{ $request->oscaId }}</span>
+                    </div>
+                    <div class="mobile-request-row">
+                        <span class="mobile-request-label">FCAP ID:</span>
+                        <span class="mobile-request-value">{{ $request->fcapId }}</span>
+                    </div>
+                    <div class="mobile-request-row">
+                        <span class="mobile-request-label">Date Requested:</span>
+                        <span class="mobile-request-value">{{ $request->request_date->format('M d, Y') }}</span>
+                    </div>
+                    <div class="mobile-request-row">
+                        <span class="mobile-request-label">Accept Date:</span>
+                        <span class="mobile-request-value">{{ $request->accept_date ? \Carbon\Carbon::parse($request->accept_date)->format('M d, Y') : 'N/A' }}</span>
+                    </div>
+                    <div class="mobile-request-row">
+                        <span class="mobile-request-label">Status:</span>
+                        <span class="mobile-request-value">
+                            <span class="mobile-status-badge status-{{ strtolower($request->status) }}">
+                                {{ $request->status }}
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            @empty
+                <div class="no-requests-mobile">
+                    <i class="fas fa-inbox"></i>
+                    <p class="mb-0">No senior service requests found</p>
+                </div>
+            @endforelse
         </div>
     </div>
 </div>

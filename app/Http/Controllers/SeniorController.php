@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Resident;
 use App\Models\Senior;
+use App\Models\Seniorservices;
 use Illuminate\Http\Request;
 
 class SeniorController extends Controller
@@ -46,6 +47,13 @@ class SeniorController extends Controller
             })->count();
         }
 
+        $statusCounts = [
+            'pending' => Seniorservices::where('status', 'pending')->count(),
+            'processing' => Seniorservices::where('status', 'processing')->count(),
+            'accept' => Seniorservices::where('status', 'accept')->count(),
+            'rejected' => Seniorservices::where('status', 'rejected')->count(),
+        ];
+
         if ($request->ajax()) {
             return response()->json([
                 'filteredMaleSeniors' => $filteredMaleSeniors,
@@ -53,7 +61,7 @@ class SeniorController extends Controller
             ]);
         }
 
-        return view('senior.homepage', compact('maleSeniors', 'femaleSeniors', 'filteredMaleSeniors', 'filteredFemaleSeniors'));
+        return view('senior.homepage', compact('maleSeniors', 'femaleSeniors', 'filteredMaleSeniors', 'filteredFemaleSeniors', 'statusCounts'));
     }
 
     public function store(Request $request)

@@ -23,6 +23,7 @@ use App\Http\Controllers\ResidentController;
 use App\Http\Controllers\ResidentRegistrationController;
 use App\Http\Controllers\SeniorReqController;
 use App\Http\Controllers\SKServiceController;
+use Symfony\Component\Routing\Attribute\Route as AttributeRoute;
 
 // Public Routes
 Route::get('/', [BarangayServicesController::class, 'webgenerallayout'])->name('webgenerallayout');
@@ -84,6 +85,8 @@ Route::middleware(['auth'])->group(function () {
     // BHW Routes
     Route::get('/bhw/dashboard', [BHWController::class, 'dashboard'])->name('bhw.dashboard');
     Route::get('/bhwprofile', [ProfileController::class, 'editbhwProfile'])->name('bhw.profile');
+    Route::get('/bhw/request', [BHWController::class, 'request'])->name('bhw.Requestlist');
+    Route::get('/bhw/home', [BHWController::class, 'home'])->name('bhw.home');
 
     // Senior Routes
     Route::get('/Senior', [DashboardController::class, 'Senior'])->name('senior');
@@ -94,7 +97,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/senior/dashboard', [SeniorController::class, 'dashboard'])->name('senior.dashboard');
     Route::get('/senior/request', [SeniorReqController::class, 'request'])->name('senior.req.request');
     Route::post('/senior/request', [SeniorReqController::class, 'store'])->name('senior.req.store');
-
+    Route::delete('/senior/request/{id}', [SeniorReqController::class, 'destroy'])->name('senior.req.destroy');
+    Route::post('/senior/request/update-status/{id}', [SeniorReqController::class, 'updateStatus'])->name('senior.req.updateStatus');
 
     Route::get('/senior/list', [SeniorController::class, 'list'])->name('senior.list');
     Route::post('/senior/store', [SeniorController::class, 'store'])->name('senior.store');

@@ -571,15 +571,15 @@ $(document).ready(function () {
                     badge.removeClass("status-pending status-processing status-ready status-released");
 
                     // Add the appropriate class
-                    if (newStatus === "pending") {
-                        badge.addClass("status-pending").text("Pending");
-                    } else if (newStatus === "processing") {
-                        badge.addClass("status-processing").text("Processing");
-                    } else if (newStatus === "ready to pick up") {
-                        badge.addClass("status-ready").text("Ready to Pick Up");
-                    } else if (newStatus === "released") {
-                        badge.addClass("status-released").text("Released");
-                    }
+                        if (newStatus === "pending") {
+                            badge.addClass("status-pending").text("Pending");
+                        } else if (newStatus === "processing") {
+                            badge.addClass("status-processing").text("Processing");
+                        } else if (newStatus === "ready to pick up") {
+                            badge.addClass("status-ready").text("Ready to Pick Up");
+                        } else if (newStatus === "released") {
+                            badge.addClass("status-released").text("Released");
+                        }
 
                     // Show success message
                     showAlert("success", "Status updated successfully!");

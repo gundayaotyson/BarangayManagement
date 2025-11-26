@@ -22,6 +22,7 @@ class DashboardController extends Controller
             'totalResidentsMale' => Resident::where('gender', 'Male')->count(),
             'totalResidentsFemale' => Resident::where('gender', 'Female')->count(),
             'totalSeniors' => Resident::where('birthday', '<=', Carbon::now()->subYears(60))->count(),
+            'totalSeniorPensioners' => Senior::count(),
             'totalYouth' => Resident::where('birthday', '<=', Carbon::now()->subYears(15))->where('birthday', '>=', Carbon::now()->subYears(30))->count(),
             'totalHouseholds' => Resident::distinct('household_no')->count('household_no'),
             'totalFamilies' => Resident::select('household_no', 'lname')->distinct()->get()->count(),
