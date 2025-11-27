@@ -461,20 +461,20 @@
         </div>
 
         <div class="col-lg-6 col-md-6 mb-4">
-            <div class="card service-card">
-                <div class="card-body">
-                    <div class="service-icon">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <h5 class="card-title font-weight-bold mb-3">BHW Service</h5>
-                        <p class="card-text text-muted mb-4"> Access health programs, check-ups, and support provided by our Barangay Health Workers.</p>
-
-                    <button type="button" class="btn btn-primary btn-apply" data-toggle="modal" data-target="#skServiceModal">
-                        Apply Now
-                    </button>
-                </div>
+    <div class="card service-card">
+        <div class="card-body">
+            <div class="service-icon">
+                <i class="fas fa-heartbeat"></i>
             </div>
-          </div>
+            <h5 class="card-title font-weight-bold mb-3">BHW Service</h5>
+            <p class="card-text text-muted mb-4"> Access health programs, check-ups, and support provided by our Barangay Health Workers.</p>
+            <button type="button" class="btn btn-primary btn-apply" data-toggle="modal" data-target="#bhwServiceModal">
+                Apply Now
+            </button>
+        </div>
+    </div>
+</div>
+
     </div>
 
     <div class="row mb-5">
@@ -556,6 +556,122 @@
                     </table>
                 </div>
             </div> -->
+        <!-- BHW Service Modal -->
+                    <div class="modal fade" id="bhwServiceModal" tabindex="-1" role="dialog" aria-labelledby="bhwServiceModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="bhwServiceModalLabel">
+                                            <i class="fas fa-heartbeat me-2"></i>BHW Service Application</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        <form action="{{ route('bhw.request.store') }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="resident_id" value="{{ $resident->id ?? '' }}">
+
+                                            <!-- Personal Information -->
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="bhw_fname">First Name</label>
+                                                        <input type="text" class="form-control" id="bhw_fname" name="fname" value="{{ $resident->Fname ?? '' }}" readonly>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="bhw_mname">Middle Name</label>
+                                                        <input type="text" class="form-control" id="bhw_mname" name="mname" value="{{ $resident->mname ?? '' }}" readonly>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="bhw_lname">Last Name</label>
+                                                        <input type="text" class="form-control" id="bhw_lname" name="lname" value="{{ $resident->lname ?? '' }}" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="bhw_dob">Date of Birth</label>
+                                                        <input type="date" class="form-control" id="bhw_dob" name="dob" value="{{ $resident->birthday ?? '' }}" readonly>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="bhw_age">Age</label>
+                                                        <input type="number" class="form-control" id="bhw_age" name="age" value="{{ $resident->age ?? '' }}" readonly>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="bhw_gender">Gender</label>
+                                                        <input type="text" class="form-control" id="bhw_gender" name="gender" value="{{ $resident->gender ?? '' }}" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Address Information -->
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="bhw_purok_no">Purok</label>
+                                                        <input type="text" class="form-control" id="bhw_purok_no" name="purok_no" value="{{ $resident->purok_no ?? '' }}" readonly>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="bhw_sitio">Sitio</label>
+                                                        <input type="text" class="form-control" id="bhw_sitio" name="sitio" value="{{ $resident->sitio ?? '' }}" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Service Details -->
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="bhw_service_type">Service Type</label>
+                                                        <select class="form-control" id="bhw_service_type" name="service_type" required>
+                                                            <option value="">Select a service</option>
+                                                            <option value="Check-up">Check-up</option>
+                                                            <option value="Immunization">Immunization</option>
+                                                            <option value="Prenatal Care">Prenatal Care</option>
+                                                            <option value="Family Planning">Family Planning</option>
+                                                            <option value="Other">Other</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="bhw_contact_no">Contact Number</label>
+                                                        <input type="text" class="form-control" id="bhw_contact_no" name="contact_no" value="{{ $resident->contact_number ?? '' }}" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="bhw_chief_complaint">Chief Complaint</label>
+                                                <textarea class="form-control" id="bhw_chief_complaint" name="chief_complaint" rows="3" placeholder="Describe the main health concern..." required></textarea>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="bhw_phil_no">PhilHealth Number (Optional)</label>
+                                                <input type="text" class="form-control" id="bhw_phil_no" name="phil_no" placeholder="Enter PhilHealth number if available">
+                                            </div>
+
+                                            <button type="submit" class="btn btn-primary btn-submit w-100">
+                                                <i class="fas fa-paper-plane me-2"></i>
+                                                Submit Request
+                                            </button>
+                                        </form>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
             <!-- Modal senior services-->
     <div class="modal fade" id="seniorServiceModal" tabindex="-1" aria-labelledby="seniorServiceModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -760,8 +876,8 @@
                     <i class="fas fa-graduation-cap me-2"></i>
                     SK Service Application
                 </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
                 </button>
             </div>
             <div class="modal-body">
@@ -851,8 +967,7 @@
                     <i class="fas fa-file-alt me-2"></i>
                     Legal Document Application
                 </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
                 </button>
             </div>
             <div class="modal-body">
@@ -1044,6 +1159,16 @@
         </ul>
     </div>
 @endif
+{{-- Script to trigger BHW modal --}}
+<script>
+    $(document).ready(function() {
+        // When the "Apply Now" button for BHW service is clicked
+        $('button[data-target="#bhwServiceModal"]').on('click', function() {
+            // Show the modal
+            $('#bhwServiceModal').modal('show');
+        });
+    });
+</script>
 <script>
     document.getElementById('service_type').addEventListener('change', function () {
         const businessFields = document.getElementById('business_fields');

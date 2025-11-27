@@ -574,10 +574,11 @@
             @csrf
             @method('PUT')
             <div class="row">
-                <div class="col-md-6 mb-3"><label for="edit_lastname" class="form-label">Last Name</label><input type="text" class="form-control" id="edit_lastname" name="lastname" required></div>
-                <div class="col-md-6 mb-3"><label for="edit_firstname" class="form-label">First Name</label><input type="text" class="form-control" id="edit_firstname" name="firstname" required></div>
+                <div class="col-md-4 mb-3"><label for="edit_firstname" class="form-label">First Name</label><input type="text" class="form-control" id="edit_firstname" name="firstname" required></div>
+                <div class="col-md-4 mb-3"><label for="edit_lastname" class="form-label">Last Name</label><input type="text" class="form-control" id="edit_lastname" name="lastname" required></div>
+                <div class="col-md-4 mb-3"><label for="edit_middlename" class="form-label">Middle Name</label><input type="text" class="form-control" id="edit_middlename" name="middlename" required></div>
             </div>
-            <div class="mb-3"><label for="edit_middlename" class="form-label">Middle Name</label><input type="text" class="form-control" id="edit_middlename" name="middlename"></div>
+
             <div class="row">
                 <div class="col-md-6 mb-3"><label for="edit_birthday" class="form-label">Birthday</label><input type="date" class="form-control" id="edit_birthday" name="birthday" required></div>
                 <div class="col-md-6 mb-3"><label for="edit_osca_id" class="form-label">OSCA ID</label><input type="text" class="form-control" id="edit_osca_id" name="osca_id" required></div>

@@ -94,12 +94,14 @@
     }
 
     .status-badge {
+        background-color: var(--secondary-color);
         padding: 0.4rem 0.8rem;
         border-radius: 50px;
         font-size: 0.75rem;
         font-weight: 600;
         text-transform: uppercase;
         white-space: nowrap;
+        color: white;
     }
 
     .status-pending {
@@ -113,6 +115,10 @@
     }
 
     .status-released {
+        background-color: var(--success-color);
+        color: white;
+    }
+    .status-schedule {
         background-color: var(--success-color);
         color: white;
     }
@@ -197,6 +203,7 @@
     }
 
     .mobile-status-badge {
+
         padding: 0.35rem 0.7rem;
         border-radius: 50px;
         font-size: 0.7rem;
@@ -612,21 +619,20 @@
         </div>
 
         <!-- Mobile Card View -->
-        <div class="mobile-cards">
+    <div class="mobile-cards">
 
-@forelse ($requests as $request)
-    @php
-        $status = $request->status;
+        @forelse ($requests as $request)
+            @php
+                $status = $request->status;
 
-        if ($request->released_date) {
-            $released = Carbon::parse($request->released_date);
-            // If more than 7 days have passed since release date
-            if ($released->diffInDays(now()) > 7) {
-                $status = 'Expired';
-            }
-        }
-    @endphp
-
+                if ($request->released_date) {
+                    $released = Carbon::parse($request->released_date);
+                    // If more than 7 days have passed since release date
+                    if ($released->diffInDays(now()) > 7) {
+                        $status = 'Expired';
+                    }
+                }
+            @endphp
     <div class="mobile-request-card">
         <div class="mobile-request-row">
             <span class="mobile-request-label">Full Name:</span>
@@ -667,12 +673,12 @@
             </span>
         </div>
     </div>
-@empty
-    <div class="no-requests-mobile">
-        <i class="fas fa-inbox"></i>
-        <p class="mb-0">No certificate requests found</p>
-    </div>
-@endforelse
+        @empty
+            <div class="no-requests-mobile">
+                <i class="fas fa-inbox"></i>
+                <p class="mb-0">No certificate requests found</p>
+            </div>
+        @endforelse
 
         </div>
     </div>
@@ -698,6 +704,7 @@
                     </thead>
                     <tbody>
                         @forelse ($seniorRequests as $request)
+
                             <tr>
                                 <td class="font-weight-medium">{{ $request->first_name }} {{ $request->last_name }}</td>
                                 <td>{{ $request->oscaId }}</td>
@@ -760,6 +767,95 @@
                 <div class="no-requests-mobile">
                     <i class="fas fa-inbox"></i>
                     <p class="mb-0">No senior service requests found</p>
+                </div>
+            @endforelse
+        </div>
+    </div>
+</div>
+
+<!-- BHW Service Requests Section -->
+<div class="requests-section">
+    <h3 class="requests-title">BHW Service Requests</h3>
+    <div class="table-container">
+        <!-- Desktop Table View -->
+        <div class="desktop-table">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Full Name</th>
+                            <th>Service Type</th>
+                            <th>Chief Complaint</th>
+                            <th>Date Requested</th>
+                            <th>Schedule Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @forelse ($bhwRequests as $request)
+                            <tr>
+                                <td class="font-weight-medium">{{ $request->fname }} {{ $request->mname }} {{ $request->lname }}</td>
+                                <td>{{ $request->service_type }}</td>
+                                <td>{{ $request->chief_complaint }}</td>
+                                <td>{{ $request->created_at->format('M d, Y') }}</td>
+                                <td>{{ $request->sched_date ? \Carbon\Carbon::parse($request->sched_date)->format('M d, Y') : 'N/A' }}</td>
+                                <td>
+                                    <span class="status-badge status-{{ strtolower($request->status) }}">
+                                        {{ $request->status }}
+                                    </span>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6" class="text-center py-4 text-muted">
+                                    <i class="fas fa-inbox fa-2x mb-3 d-block"></i>
+                                    No BHW service requests found
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Mobile Card View -->
+        <div class="mobile-cards">
+            @forelse ($bhwRequests as $request)
+                <div class="mobile-request-card">
+                    <div class="mobile-request-row">
+                        <span class="mobile-request-label">Full Name:</span>
+                        <span class="mobile-request-value">{{ $request->fname }} {{ $request->mname }} {{ $request->lname }}</span>
+                    </div>
+                    <div class="mobile-request-row">
+                        <span class="mobile-request-label">Service Type:</span>
+                        <span class="mobile-request-value">{{ $request->service_type }}</span>
+                    </div>
+                    <div class="mobile-request-row">
+                        <span class="mobile-request-label">Chief Complaint:</span>
+                        <span class="mobile-request-value">{{ $request->chief_complaint }}</span>
+                    </div>
+                    <div class="mobile-request-row">
+                        <span class="mobile-request-label">Date Requested:</span>
+                        <span class="mobile-request-value">{{ $request->created_at->format('M d, Y') }}</span>
+                    </div>
+                    <div class="mobile-request-row">
+                        <span class="mobile-request-label">Schedule Date:</span>
+                        <span class="mobile-request-value">{{ $request->sched_date ? \Carbon\Carbon::parse($request->sched_date)->format('M d, Y') : 'N/A' }}</span>
+                    </div>
+                    <div class="mobile-request-row">
+                        <span class="mobile-request-label">Status:</span>
+                        <span class="mobile-request-value">
+                            <span class="mobile-status-badge status-{{ strtolower($request->status) }}">
+                                {{ $request->status }}
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            @empty
+                <div class="no-requests-mobile">
+                    <i class="fas fa-inbox"></i>
+                    <p class="mb-0">No BHW service requests found</p>
                 </div>
             @endforelse
         </div>

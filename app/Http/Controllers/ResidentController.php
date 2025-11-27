@@ -8,6 +8,7 @@ use App\Models\Resident;
 use App\Models\Clearancereq;
 use App\Models\SKService;
 use App\Models\Seniorservices;
+use App\Models\BhwRequest;
 
 class ResidentController extends Controller
 {
@@ -52,13 +53,15 @@ class ResidentController extends Controller
             $requests = Clearancereq::where('resident_id', $resident->id)->get();
             $skServices = SKService::where('resident_id', $resident->id)->latest()->get();
             $seniorRequests = Seniorservices::where('resident_id', $resident->id)->latest()->get();
+            $bhwRequests = BhwRequest::where('resident_id', $resident->id)->latest()->get();
         } else {
             $requests = collect();
-            $skServices = collect();  // Empty collection if no resident found
-            $seniorRequests = collect(); // Empty collection if no resident found
+            $skServices = collect();
+            $seniorRequests = collect();
+            $bhwRequests = collect();
         }
 
-        return view('resident.requests', compact('resident', 'requests', 'skServices', 'seniorRequests'));
+        return view('resident.requests', compact('resident', 'requests', 'skServices', 'seniorRequests', 'bhwRequests'));
     }
 
 }

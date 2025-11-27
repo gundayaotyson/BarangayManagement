@@ -352,8 +352,8 @@
         <li><a href="#" class="active"><i class="fas fa-home"></i> <span>Dashboard</span></a></li>
          <li><a href="{{ route('brgycomplaint.index') }}" class="{{ request()->routeIs('brgycomplaint.*') ? 'active' : '' }}"><i class="fas fa-balance-scale"></i> <span>Barangay Complaint</span></a></li>
         <li><a href="{{ route('barangayprojects.index') }}" class="{{ request()->routeIs('barangayprojects.*') ? 'active' : '' }}"><i class="fas fa-building"></i>  <span>Barangay Projects</span></a></li>
-        <li><a href="#"><i class="fas fa-folder-open"></i> <span>Reports</span></a></li>
-        <li><a href="#"><i class="fas fa-clipboard-list"></i> <span>Request Documents</span></a></li>
+        <!-- <li><a href="#"><i class="fas fa-folder-open"></i> <span>Reports</span></a></li>
+        <li><a href="#"><i class="fas fa-clipboard-list"></i> <span>Request Documents</span></a></li> -->
 
     </ul>
 </nav>
