@@ -509,53 +509,24 @@
                 </div>
             </div>
         </div>
-    </div>
-    <!-- <div class="requests-section"> -->
-        <!-- <h3 class="requests-title"> SK Service Requests</h3> -->
-        <div class="table-container">
 
-            <!-- Desktop Table View -->
-            <!-- <div class="desktop-table">
-                <div class="table-responsive">
-                    <table class="table table-hover mb-0">
-                        <thead>
-                            <tr>
-                                <th>Full Name</th>
-                                <th>School</th>
-                                <th>Year</th>
-                                <th>Service Type</th>
-                                <th>Date Requested</th>
-                                <th>Released Date</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse ($skServices as $service)
-                                <tr>
-                                    <td class="font-weight-medium">{{ $service->firstname }} {{ $service->lastname }}</td>
-                                    <td>{{ $service->school }}</td>
-                                    <td>{{ $service->school_year }}</td>
-                                    <td>{{ $service->type_of_service }}</td>
-                                    <td>{{ $service->created_at->format('M d, Y') }}</td>
-                                    <td>{{ $service->released_date ? $service->released_date->format('M d, Y') : 'N/A' }}</td>
-                                    <td>
-                                        <span class="status-badge status-{{ strtolower($service->status) }}">
-                                            {{ $service->status }}
-                                        </span>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="7" class="text-center py-4 text-muted">
-                                        <i class="fas fa-inbox fa-2x mb-3 d-block"></i>
-                                        No requests found
-                                    </td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+        <div class="col-lg-6 col-md-6 mb-4">
+            <div class="card service-card">
+                <div class="card-body">
+                    <div class="service-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h5 class="card-title font-weight-bold mb-3">4p's Services</h5>
+                    <p class="card-text text-muted mb-4">Apply for residency, clearance, and other official barangay documents conveniently online.</p>
+
+                    <button type="button" class="btn btn-primary btn-apply" data-toggle="modal" data-target="#legalDocumentModal">
+                        Apply Now
+                    </button>
                 </div>
-            </div> -->
+            </div>
+        </div>
+    </div>
+
         <!-- BHW Service Modal -->
                     <div class="modal fade" id="bhwServiceModal" tabindex="-1" role="dialog" aria-labelledby="bhwServiceModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document">
@@ -819,51 +790,8 @@
             </div>
         </div>
 </div>
-            <!-- Mobile Card View -->
-            <!-- <div class="mobile-cards">
-                @forelse ($skServices as $service)
-                    <div class="mobile-request-card">
-                        <div class="mobile-request-row">
-                            <span class="mobile-request-label">Full Name:</span>
-                            <span class="mobile-request-value font-weight-medium">{{ $service->firstname }} {{ $service->lastname }}</span>
-                        </div>
-                        <div class="mobile-request-row">
-                            <span class="mobile-request-label">School:</span>
-                            <span class="mobile-request-value">{{ $service->school }}</span>
-                        </div>
-                        <div class="mobile-request-row">
-                            <span class="mobile-request-label">School Year:</span>
-                            <span class="mobile-request-value">{{ $service->school_year }}</span>
-                        </div>
-                        <div class="mobile-request-row">
-                            <span class="mobile-request-label">Service Type:</span>
-                            <span class="mobile-request-value">{{ $service->type_of_service }}</span>
-                        </div>
-                        <div class="mobile-request-row">
-                            <span class="mobile-request-label">Date Requested:</span>
-                            <span class="mobile-request-value">{{ $service->created_at->format('M d, Y') }}</span>
-                        </div>
-                        <div class="mobile-request-row">
-                            <span class="mobile-request-label">Released Date:</span>
-                            <span class="mobile-request-value">{{ $service->released_date ? $service->released_date->format('M d, Y') : 'N/A' }}</span>
-                        </div>
-                        <div class="mobile-request-row">
-                            <span class="mobile-request-label">Status:</span>
-                            <span class="mobile-request-value">
-                                <span class="mobile-status-badge status-{{ strtolower($service->status) }}">
-                                    {{ $service->status }}
-                                </span>
-                            </span>
-                        </div>
-                    </div>
-                @empty
-                    <div class="no-requests-mobile">
-                        <i class="fas fa-inbox"></i>
-                        <p class="mb-0">No requests found</p>
-                    </div>
-                @endforelse
-            </div> -->
-        <!-- </div> -->
+
+
     </div>
 <!-- </div> -->
 

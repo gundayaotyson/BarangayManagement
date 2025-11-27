@@ -6,6 +6,7 @@ use App\Models\Resident;
 use App\Models\Senior;
 use App\Models\Seniorservices;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SeniorController extends Controller
 {
@@ -54,6 +55,13 @@ class SeniorController extends Controller
             'rejected' => Seniorservices::where('status', 'rejected')->count(),
         ];
 
+        $seniorsByPurok = Senior::join('residents', 'seniors.resident_id', '=', 'residents.id')
+        ->whereNotNull('residents.purok_no')
+        ->where('residents.purok_no', '!=', '')
+        ->groupBy('residents.purok_no')
+        ->select('residents.purok_no', DB::raw('count(*) as count'))
+        ->pluck('count', 'residents.purok_no');
+
         if ($request->ajax()) {
             return response()->json([
                 'filteredMaleSeniors' => $filteredMaleSeniors,
@@ -61,7 +69,7 @@ class SeniorController extends Controller
             ]);
         }
 
-        return view('senior.homepage', compact('maleSeniors', 'femaleSeniors', 'filteredMaleSeniors', 'filteredFemaleSeniors', 'statusCounts'));
+        return view('senior.homepage', compact('maleSeniors', 'femaleSeniors', 'filteredMaleSeniors', 'filteredFemaleSeniors', 'statusCounts', 'seniorsByPurok'));
     }
 
     public function store(Request $request)

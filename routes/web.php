@@ -123,6 +123,7 @@ Route::get('/seniors/{id}/resident', [SeniorController::class, 'residentDetails'
     Route::get('/4psprofile', [ProfileController::class, 'edit4psProfile'])->name('4ps.profile');
     Route::get('/4ps/residentlist', [FourpsController::class, 'ResidentList'])->name('4ps.residentlist');
     Route::get('/4ps/home', [FourpsController::class, 'home'])->name('4ps.home');
+    Route::get('/4ps/requestslist', [FourpsController::class, 'requestslist'])->name('4ps.requestslist');
 
     // Resident Routes
     Route::get('/resident/dashboard', [ResidentController::class, 'dashboard'])->name('resident.dashboard');
@@ -130,6 +131,7 @@ Route::get('/seniors/{id}/resident', [SeniorController::class, 'residentDetails'
     Route::get('/resident/services', [ResidentController::class, 'services'])->name('resident.services');
     Route::get('/resident/complaints', [ResidentController::class, 'complaints'])->name('resident.complaints');
     Route::get('/resident/requests', [ResidentController::class, 'requests'])->name('resident.requests');
+   Route::delete('/resident/requests/cancel/{id}', [ResidentController::class, 'cancelRequest'])->name('resident.requests.cancel');
 
     // Barangay Official Dashboard
     Route::get('/barangay-official/dashboard', [BarangayofficialsController::class, 'dashboard'])->name('barangay_official.dashboard');

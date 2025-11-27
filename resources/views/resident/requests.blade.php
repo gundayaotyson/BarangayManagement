@@ -445,6 +445,7 @@
                             <th>Pickup Date</th>
                             <th>Release Date</th>
                             <th>Status</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -477,10 +478,19 @@
                                             {{ $status }}
                                         </span>
                                     </td>
+                                    <td>
+                                        @if ($request->status === 'pending')
+                                            <form action="{{ route('resident.requests.cancel', ['id' => $request->id, 'type' => 'clearance']) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
+                                            </form>
+                                        @endif
+                                    </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="8" class="text-center py-4 text-muted">
+                                    <td colspan="9" class="text-center py-4 text-muted">
                                         <i class="fas fa-inbox fa-2x mb-3 d-block"></i>
                                         No requests found
                                     </td>
@@ -545,6 +555,18 @@
                 </span>
             </span>
         </div>
+        @if ($request->status === 'pending')
+            <div class="mobile-request-row">
+                <span class="mobile-request-label"></span>
+              <span class="mobile-request-value" style="display:flex; justify-content:center; margin-top:0.5rem;">
+                    <form action="{{ route('resident.requests.cancel', ['id' => $request->id, 'type' => 'clearance']) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
+                    </form>
+                </span>
+            </div>
+        @endif
     </div>
 @empty
     <div class="no-requests-mobile">
@@ -575,6 +597,7 @@
                             <th>Date Requested</th>
                             <th>Released Date</th>
                             <th>Status</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -603,10 +626,20 @@
                                         {{ $status }}
                                     </span>
                                 </td>
+                                <td>
+                                    @if (strtolower($request->status) === 'pending' || strtolower($request->status) === 'processing')
+
+                                        <form action="{{ route('resident.requests.cancel', ['id' => $request->id, 'type' => 'sk']) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
+                                            </form>
+                                        @endif
+                                </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="text-center py-4 text-muted">
+                                <td colspan="8" class="text-center py-4 text-muted">
                                     <i class="fas fa-inbox fa-2x mb-3 d-block"></i>
                                     No requests found
                                 </td>
@@ -672,6 +705,18 @@
                 </span>
             </span>
         </div>
+                @if ($request->status === 'pending')
+                        <div class="mobile-request-row">
+                            <span class="mobile-request-label"></span>
+                            <span class="mobile-request-value" style="display:flex; justify-content:center; margin-top:0.5rem;">
+                                <form action="{{ route('resident.requests.cancel', ['id' => $request->id, 'type' => 'sk']) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
+                                </form>
+                            </span>
+                        </div>
+                    @endif
     </div>
         @empty
             <div class="no-requests-mobile">
@@ -700,6 +745,7 @@
                             <th>Date Requested</th>
                             <th>Accept Date</th>
                             <th>Status</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -716,10 +762,19 @@
                                         {{ $request->status }}
                                     </span>
                                 </td>
+                                <td>
+                                    @if ($request->status === 'pending')
+                                        <form action="{{ route('resident.requests.cancel', ['id' => $request->id, 'type' => 'senior']) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
+                                        </form>
+                                    @endif
+                                </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="text-center py-4 text-muted">
+                                <td colspan="7" class="text-center py-4 text-muted">
                                     <i class="fas fa-inbox fa-2x mb-3 d-block"></i>
                                     No senior service requests found
                                 </td>
@@ -762,6 +817,18 @@
                             </span>
                         </span>
                     </div>
+                     @if ($request->status === 'pending')
+                        <div class="mobile-request-row">
+                            <span class="mobile-request-label"></span>
+                             <span class="mobile-request-value" style="display:flex; justify-content:center; margin-top:0.5rem;">
+                                <form action="{{ route('resident.requests.cancel', ['id' => $request->id, 'type' => 'senior']) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
+                                </form>
+                            </span>
+                        </div>
+                    @endif
                 </div>
             @empty
                 <div class="no-requests-mobile">
@@ -789,6 +856,7 @@
                             <th>Date Requested</th>
                             <th>Schedule Date</th>
                             <th>Status</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
 
@@ -805,10 +873,19 @@
                                         {{ $request->status }}
                                     </span>
                                 </td>
+                                <td>
+                                    @if ($request->status === 'pending')
+                                        <form action="{{ route('resident.requests.cancel', ['id' => $request->id, 'type' => 'bhw']) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
+                                        </form>
+                                    @endif
+                                </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="text-center py-4 text-muted">
+                                <td colspan="7" class="text-center py-4 text-muted">
                                     <i class="fas fa-inbox fa-2x mb-3 d-block"></i>
                                     No BHW service requests found
                                 </td>
@@ -851,6 +928,18 @@
                             </span>
                         </span>
                     </div>
+                     @if ($request->status === 'pending')
+            <div class="mobile-request-row">
+                <span class="mobile-request-label"></span>
+                <span class="mobile-request-value" style="display:flex; justify-content:center; margin-top:0.5rem;">
+                    <form action="{{ route('resident.requests.cancel', ['id' => $request->id, 'type' => 'bhw']) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
+                    </form>
+                </span>
+            </div>
+        @endif
                 </div>
             @empty
                 <div class="no-requests-mobile">

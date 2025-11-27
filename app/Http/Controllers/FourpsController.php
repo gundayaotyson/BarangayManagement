@@ -21,4 +21,8 @@ class FourpsController extends Controller
     {
         return view('4ps.home');
     }
+    public function requestslist()
+    {
+        return view('4ps.requestslist');
+    }
 }

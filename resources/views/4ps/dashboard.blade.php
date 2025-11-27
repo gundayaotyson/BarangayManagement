@@ -302,6 +302,7 @@
 
     <ul>
         <li><a href="{{ route('4ps.home') }}" class="{{ request()->routeIs('home') ? 'active' : '' }}"><i class="fas fa-home"></i> <span>Home</span></a></li>
+            <li><a href="{{ route('4ps.requestslist')}}"><i class="fas fa-file-alt"></i> <span>Request List</span></a></li>
         <li><a href="{{ route('4ps.residentlist') }}" class="{{ request()->routeIs('residentlist') ? 'active' : '' }}"><i class="fas fa-users"></i> <span>Residents List</span></a></li>
     </ul>
 </nav>

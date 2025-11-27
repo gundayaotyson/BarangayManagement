@@ -279,6 +279,35 @@
     display: block;
 }
 
+.purok-stats {
+    margin-top: 20px;
+}
+
+.purok-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.purok-item:last-child {
+    border-bottom: none;
+}
+
+.purok-name {
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+.purok-count {
+    font-weight: 600;
+    color: var(--primary-color);
+    background-color: var(--primary-light);
+    padding: 5px 10px;
+    border-radius: 6px;
+}
+
 @media (max-width: 768px) {
     .main-content {
         margin-left: 0;
@@ -420,6 +449,24 @@
                 </h2>
                 <div class="chart-wrapper">
                     <canvas id="seniorStatusChart"></canvas>
+                </div>
+            </div>
+
+            <div class="statistics-card">
+                <h2>
+                    <i class="fas fa-map-marker-alt"></i> Seniors by Purok
+                </h2>
+                <div class="purok-stats">
+                    @forelse ($seniorsByPurok as $purok => $count)
+                        @if($purok)
+                        <div class="purok-item">
+                            <span class="purok-name">{{ $purok }}</span>
+                            <span class="purok-count">{{ $count }}</span>
+                        </div>
+                        @endif
+                    @empty
+                        <p class="text-muted">No senior residents found.</p>
+                    @endforelse
                 </div>
             </div>
         </div>
