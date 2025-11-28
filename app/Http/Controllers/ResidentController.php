@@ -9,6 +9,7 @@ use App\Models\clearancereq;
 use App\Models\SKService;
 use App\Models\Seniorservices;
 use App\Models\BhwRequest;
+use App\Models\FourpsRequest;
 
 class ResidentController extends Controller
 {
@@ -97,14 +98,17 @@ class ResidentController extends Controller
             $skServices = SKService::where('resident_id', $resident->id)->latest()->get();
             $seniorRequests = Seniorservices::where('resident_id', $resident->id)->latest()->get();
             $bhwRequests = BhwRequest::where('resident_id', $resident->id)->latest()->get();
+            $fourpsRequests = FourpsRequest::where('resident_id', $resident->id)->latest()->get();
         } else {
             $requests = collect();
             $skServices = collect();
             $seniorRequests = collect();
             $bhwRequests = collect();
+            $fourpsRequests = collect();
         }
 
-        return view('resident.requests', compact('resident', 'requests', 'skServices', 'seniorRequests', 'bhwRequests'));
+
+        return view('resident.requests', compact('resident', 'fourpsRequests','requests', 'skServices', 'seniorRequests', 'bhwRequests'));
     }
     public function cancelRequest(Request $request, $id)
 {
@@ -124,6 +128,11 @@ class ResidentController extends Controller
         case 'bhw':
             $requestModel = BhwRequest::find($id);
             break;
+        case 'fourps':
+            $requestModel = FourpsRequest::find($id);
+            break;
+        default:
+            return redirect()->back()->with('error', 'Invalid request type.');
     }
 
     if ($requestModel) {

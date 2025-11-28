@@ -43,5 +43,12 @@ public function official()
     {
         return $this->hasMany(Senior::class);
     }
-
+    public function bhwRequests()
+    {
+        return $this->hasMany(BhwRequest::class);
+    }
+    public function fourpsRequests()
+    {
+        return $this->hasMany(FourpsRequest::class);
+    }
 }

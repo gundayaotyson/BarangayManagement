@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('fourps_requests', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('resident_id')->nullable();
             $table->string('lastname');
             $table->string('firstname');
             $table->string('middlename');
@@ -22,8 +21,6 @@ return new class extends Migration
             $table->string('house_no');
             $table->string('status')->default('pending');
             $table->timestamps();
-
-            $table->foreign('resident_id')->references('id')->on('residents')->onDelete('cascade');
         });
     }
 

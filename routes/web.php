@@ -124,6 +124,9 @@ Route::get('/seniors/{id}/resident', [SeniorController::class, 'residentDetails'
     Route::get('/4ps/residentlist', [FourpsController::class, 'ResidentList'])->name('4ps.residentlist');
     Route::get('/4ps/home', [FourpsController::class, 'home'])->name('4ps.home');
     Route::get('/4ps/requestslist', [FourpsController::class, 'requestslist'])->name('4ps.requestslist');
+    Route::post('/4ps/requests', [FourpsController::class, 'store'])->name('4ps.store');
+    Route::put('/4ps/requests/{fourpsRequest}', [FourpsController::class, 'update'])->name('4ps.update');
+    Route::put('/4ps/requests/{fourpsRequest}/cancel', [FourpsController::class, 'cancel'])->name('4ps.cancel');
 
     // Resident Routes
     Route::get('/resident/dashboard', [ResidentController::class, 'dashboard'])->name('resident.dashboard');

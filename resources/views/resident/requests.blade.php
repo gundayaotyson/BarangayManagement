@@ -211,6 +211,22 @@
         text-transform: uppercase;
         display: inline-block;
     }
+    .mobile-status-badge.status-pending {
+        background-color: var(--warning-color);
+        color: white;
+    }
+    .mobile-status-badge.status-approved {
+        background-color: var(--primary-color);
+        color: white;
+    }
+    .mobile-status-badge.status-released {
+        background-color: var(--success-color);
+        color: white;
+    }
+    .mobile-status-badge.status-scheduled {
+        background-color: var(--success-color);
+        color: white;
+    }
 
     .no-requests-mobile {
         text-align: center;
@@ -912,6 +928,115 @@
                         <span class="mobile-request-label">Chief Complaint:</span>
                         <span class="mobile-request-value">{{ $request->chief_complaint }}</span>
                     </div>
+                    <div class="mobile-request-row">
+                        <span class="mobile-request-label">Date Requested:</span>
+                        <span class="mobile-request-value">{{ $request->created_at->format('M d, Y') }}</span>
+                    </div>
+                    <div class="mobile-request-row">
+                        <span class="mobile-request-label">Schedule Date:</span>
+                        <span class="mobile-request-value">{{ $request->sched_date ? \Carbon\Carbon::parse($request->sched_date)->format('M d, Y') : 'N/A' }}</span>
+                    </div>
+                    <div class="mobile-request-row">
+                        <span class="mobile-request-label">Status:</span>
+                        <span class="mobile-request-value">
+                            <span class="mobile-status-badge status-{{ strtolower($request->status) }}">
+                                {{ $request->status }}
+                            </span>
+                        </span>
+                    </div>
+                     @if ($request->status === 'pending')
+            <div class="mobile-request-row">
+                <span class="mobile-request-label"></span>
+                <span class="mobile-request-value" style="display:flex; justify-content:center; margin-top:0.5rem;">
+                    <form action="{{ route('resident.requests.cancel', ['id' => $request->id, 'type' => 'bhw']) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
+                    </form>
+                </span>
+            </div>
+        @endif
+                </div>
+            @empty
+                <div class="no-requests-mobile">
+                    <i class="fas fa-inbox"></i>
+                    <p class="mb-0">No BHW service requests found</p>
+                </div>
+            @endforelse
+        </div>
+    </div>
+</div>
+<!-- 4ps Service Requests Section -->
+<div class="requests-section">
+    <h3 class="requests-title">4P's Service Requests</h3>
+    <div class="table-container">
+        <!-- Desktop Table View -->
+        <div class="desktop-table">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Full Name</th>
+                            <th>Address</th>
+                            <th>4PS ID</th>
+                            <th>Date Requested</th>
+                            <th>Schedule Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @forelse ($fourpsRequests as $request)
+                            <tr>
+                                <td class="font-weight-medium">{{ $request->firstname }} {{ $request->middlename }} {{ $request->lastname }}</td>
+                                <td># {{ $request->house_no}} {{ $request->purok_no }} </td>
+                                <td>{{ $request->fourps_id }}</td>
+                                <td>{{ $request->created_at->format('M d, Y') }}</td>
+                                <td>{{ $request->sched_date ? \Carbon\Carbon::parse($request->sched_date)->format('M d, Y') : 'N/A' }}</td>
+                                <td>
+                                    <span class="status-badge status-{{ strtolower($request->status) }}">
+                                        {{ $request->status }}
+                                    </span>
+                                </td>
+                                <td>
+                                    @if ($request->status === 'pending')
+                                        <form action="{{ route('resident.requests.cancel', ['id' => $request->id, 'type' => 'bhw']) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
+                                        </form>
+                                    @endif
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="7" class="text-center py-4 text-muted">
+                                    <i class="fas fa-inbox fa-2x mb-3 d-block"></i>
+                                    No BHW service requests found
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Mobile Card View -->
+        <div class="mobile-cards">
+            @forelse ($fourpsRequests as $request)
+                <div class="mobile-request-card">
+                    <div class="mobile-request-row">
+                        <span class="mobile-request-label">Full Name:</span>
+                        <span class="mobile-request-value">{{ $request->firstname }} {{ $request->middlename }} {{ $request->lastname }}</span>
+                    </div>
+                    <div class="mobile-request-row">
+                        <span class="mobile-request-label">Address:</span>
+                        <span class="mobile-request-value"># {{ $request->house_no }} {{ $request->purok_no }}</span>
+                    </div>
+                    <div class="mobile-request-row">
+                        <span class="mobile-request-label">4PS ID:</span>
+                        <span class="mobile-request-value">{{ $request->fourps_id }}</span>
                     <div class="mobile-request-row">
                         <span class="mobile-request-label">Date Requested:</span>
                         <span class="mobile-request-value">{{ $request->created_at->format('M d, Y') }}</span>
