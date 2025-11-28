@@ -1,5 +1,5 @@
 @extends('bhw.dashboard')
 @section('content')
-    <h1>New Pregnant List
+    <h1>Newborn List
     </h1>
 @endsection

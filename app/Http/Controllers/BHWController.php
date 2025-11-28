@@ -24,6 +24,10 @@ class BHWController extends Controller
     {
         return view('bhw.pregnant');
     }
+    public function newdeliver()
+    {
+        return view('bhw.newdeliverpregnant');
+    }
 
     public function store(Request $request)
     {
