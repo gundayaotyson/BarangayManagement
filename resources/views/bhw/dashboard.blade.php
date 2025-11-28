@@ -305,6 +305,7 @@
         <!-- <li><a href="#" class="active"><i class="fas fa-home"></i> <span>Home</span></a></li> -->
         <!-- <li><a href="#"><i class="fas fa-user"></i> <span>Request List</span></a></li> -->
         <li><a href="{{ route('bhw.Requestlist') }}"class="{{ request()->routeIs('bhw.Requestlist') ? 'active' : '' }}"><i class="fas fa-file-alt"></i> <span>Request List</span></a></li>
+        <li><a href="{{ route('bhw.pregnant') }}"class="{{ request()->routeIs('bhw.pregnant') ? 'active' : '' }}"><i class="fas fa-baby"></i> <span>Pregnant</span></a></li>
     </ul>
 </nav>
 

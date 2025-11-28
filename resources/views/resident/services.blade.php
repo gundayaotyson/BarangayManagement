@@ -516,8 +516,10 @@
                     <div class="service-icon">
                         <i class="fas fa-file-alt"></i>
                     </div>
-                    <h5 class="card-title font-weight-bold mb-3">4P's Service</h5>
-                    <p class="card-text text-muted mb-4">Apply for residency, clearance, and other official barangay documents conveniently online.</p>
+                    <h5 class="card-title font-weight-bold mb-3">4P's Services</h5>
+                        <p class="card-text text-muted mb-4">
+                            Submit and manage your 4Ps service requests online for faster processing and easier assistance.
+                        </p>
 
                     <button type="button" class="btn btn-primary btn-apply" data-toggle="modal" data-target="#4psservicesModal">
                         Apply Now
@@ -875,7 +877,7 @@
                     </div> -->
 
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <i class="fas fa-birthday-cake me-1"></i>
                                 <label for="house_no">
@@ -884,7 +886,7 @@
                                <input type="text" class="form-control" id="house_no" name="house_no"value="{{ $resident->household_no ?? '' }}" readonly>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="house_no">
                                     <i class="fas fa-user me-1"></i>
@@ -895,22 +897,9 @@
                             </select>
                             </div>
                         </div>
-
-
-                        <!-- <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="sitio">
-                                     <i class="fas fa-venus-mars me-1"></i>
-                                   Sitio
-                                </label>
-                                   <select class="form-control" id="sitio" name="sitio" readonly>
-                                    <option value="{{ $resident->sitio  ?? '' }}">{{ $resident->sitio ?? '' }} </option>
-                            </select>
-                            </div>
-                        </div> -->
                     </div>
                     <div class="row">
-                        <div class="col-md-7">
+                        <div class="col-md-15">
                             <div class="form-group">
                                 <label for="fourps_id">
                                     <i class="fas fa-id-card me-1"></i>
@@ -940,6 +929,7 @@
             </div>
         </div>
     </div>
+</div>
 
 <!-- SK Service Modal -->
 <div class="modal fade" id="skServiceModal" tabindex="-1" role="dialog" aria-labelledby="skServiceModalLabel" aria-hidden="true">
@@ -1235,6 +1225,13 @@
 @endif
 {{-- Script to trigger BHW modal --}}
 <script>
+    $('.modal').on('hidden.bs.modal', function () {
+        $('.modal-backdrop').remove();
+        $('body').removeClass('modal-open');
+    });
+</script>
+
+<script>
     $(document).ready(function() {
         // When the "Apply Now" button for BHW service is clicked
         $('button[data-target="#bhwServiceModal"]').on('click', function() {
@@ -1249,6 +1246,15 @@
         $('button[data-target="#4psservicesModal"]').on('click', function() {
             // Show the modal
             $('#4psservicesModal').modal('show');
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        // When the "Apply Now" button for BHW service is clicked
+        $('button[data-target="#legalDocumentModal"]').on('click', function() {
+            // Show the modal
+            $('#legalDocumentModal').modal('show');
         });
     });
 </script>

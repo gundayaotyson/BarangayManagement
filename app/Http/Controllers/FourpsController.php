@@ -24,7 +24,8 @@ class FourpsController extends Controller
     }
     public function requestslist()
     {
-        $requests = FourpsRequest::with('resident')->get();
+        $requests = FourpsRequest::with('resident')->paginate(10);
+
         return view('4ps.requestslist', compact('requests'));
     }
 

@@ -14,8 +14,9 @@ class SeniorReqController extends Controller
      * Show the senior request form
      */
     public function request()
-    {
-        $requests = Seniorservices::latest()->get();
+    {    $requests = Seniorservices::latest()->paginate(10);
+ // 10 items per page
+
         $resident = auth()->user()->resident ?? null;
 
         $statusCounts = [

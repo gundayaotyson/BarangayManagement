@@ -90,6 +90,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/bhw/request/store', [BHWController::class, 'store'])->name('bhw.request.store');
     Route::put('/bhw/request/{id}', [BHWController::class, 'update'])->name('bhw.request.update');
     Route::delete('/bhw/request/{id}', [BHWController::class, 'destroy'])->name('bhw.request.destroy');
+    Route::get('/bhw/pregnant', [BHWController::class, 'pregnant'])->name('bhw.pregnant');
 
     // Senior Routes
     Route::get('/Senior', [DashboardController::class, 'Senior'])->name('senior');

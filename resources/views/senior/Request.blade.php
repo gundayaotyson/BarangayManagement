@@ -1,348 +1,235 @@
 @extends('senior.dashboard')
 
 @section('content')
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
     :root {
-        --primary-color: #3498db;
-        --secondary-color: #2ecc71;
-        --danger-color: #e74c3c;
-        --warning-color: #f39c12;
-        --success-color: #2ecc71;
-        --dark-color: #2c3e50;
-        --light-color: #ecf0f1;
-        --text-color: #333;
-        --border-color: #ddd;
-        --shadow-color: rgba(0, 0, 0, 0.1);
-        --transition: all 0.3s ease;
-        --border-radius: 8px;
-        --box-shadow: 0 4px 12px var(--shadow-color);
+        --primary: #4361ee;
+        --secondary: #2c3e50;
+        --success: #4cc9f0;
+        --danger: #f72585;
+        --warning: #f8961e;
+        --info: #4895ef;
+        --light: #f8f9fa;
+        --dark: #212529;
+        --gray: #6c757d;
     }
 
     body {
-        background-color: var(--light-color);
+        background-color: #f5f7fb;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        color: var(--text-color);
     }
 
-    .container {
-        max-width: 1400px;
-        padding: 20px;
-    }
-
-    .page-header {
-        background:  var(--dark-color);
+    .dashboard-header {
+        background:var(--secondary);
         color: white;
-        padding: 25px 30px;
-        border-radius: var(--border-radius);
-        margin-bottom: 30px;
-        box-shadow: var(--box-shadow);
-    }
-
-    .page-header h1 {
-        margin: 0;
-        font-weight: 600;
-        font-size: 2.2rem;
-    }
-
-    .page-header p {
-        margin: 8px 0 0;
-        opacity: 0.9;
-        font-size: 1.1rem;
+        padding: 1.5rem 0;
+        border-radius: 15px 15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        margin-bottom: 2rem;
     }
 
     .card {
         border: none;
-        border-radius: var(--border-radius);
-        box-shadow: var(--box-shadow);
-        transition: var(--transition);
-        margin-bottom: 25px;
-        overflow: hidden;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        margin-bottom: 1.5rem;
     }
 
     .card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 8px 25px var(--shadow-color);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
     }
 
     .card-header {
-        background: linear-gradient(to right, var(--light-color), #e9ecef);
-        border-bottom: 1px solid var(--border-color);
-        padding: 18px 25px;
-        font-weight: 600;
-        font-size: 1.3rem;
-        color: var(--dark-color);
-    }
-
-    .table-container {
-        overflow-x: auto;
-        border-radius: 0 0 var(--border-radius) var(--border-radius);
-    }
-
-    table {
-        margin: 0;
-        min-width: 1000px;
-    }
-     .table thead th {
-        background: var(--dark-color);
-        color: white;
-        border: none;
-        font-weight: 600;
-        text-transform: uppercase;
-        font-size: 0.8rem;
-        padding: 1rem 0.75rem;
-        text-align: left;
-        white-space: nowrap;
-    }
-
-    thead {
-        background-color: var(--dark-color);
-        color: white;
-    }
-
-    thead th {
-        padding: 15px 12px;
-        font-weight: 500;
-        border: none;
-    }
-
-    tbody tr {
-        transition: var(--transition);
-    }
-
-    tbody tr:hover {
-        background-color: rgba(52, 152, 219, 0.05);
-    }
-
-    .table tbody td {
-        padding: 1rem 0.75rem;
-        border-bottom: 1px solid var(--border-color);
-        vertical-align: middle;
-        /* font-size: 0.9rem; */
+        background-color: white;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        border-radius: 12px 12px 0 0 !important;
+        padding: 1.25rem 1.5rem;
     }
 
     .status-badge {
-        padding: 6px 12px;
-        border-radius: 20px;
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        font-weight: 600;
         font-size: 0.85rem;
-        font-weight: 500;
     }
 
     .status-pending {
-        background-color: rgba(243, 156, 18, 0.15);
-        color: var(--warning-color);
-        border: 1px solid rgba(243, 156, 18, 0.3);
+        background-color: rgba(248, 150, 30, 0.15);
+        color: var(--warning);
     }
 
     .status-processing {
-        background-color: rgba(52, 152, 219, 0.15);
-        color: var(--primary-color);
-        border: 1px solid rgba(52, 152, 219, 0.3);
+        background-color: rgba(76, 201, 240, 0.15);
+        color: var(--success);
     }
 
     .status-accept {
         background-color: rgba(46, 204, 113, 0.15);
-        color: var(--success-color);
-        border: 1px solid rgba(46, 204, 113, 0.3);
+        color: var(--success);
     }
 
     .status-rejected {
-        background-color: rgba(231, 76, 60, 0.15);
-        color: var(--danger-color);
-        border: 1px solid rgba(231, 76, 60, 0.3);
+        background-color: rgba(247, 37, 133, 0.15);
+        color: var(--danger);
     }
 
-    .btn-edit {
-        background-color: var(--primary-color);
-        border: none;
-        /* border-radius: var(--border-radius); */
-        padding: 6px 9px;
+    .btn-primary {
+        background-color: var(--primary);
+        border-color: var(--primary);
+        border-radius: 8px;
+        padding: 0.5rem 1.25rem;
+        font-weight: 600;
+    }
+
+    .btn-primary:hover {
+        background-color: var(--secondary);
+        border-color: var(--secondary);
+    }
+
+    .btn-danger {
+        border-radius: 8px;
+        padding: 0.5rem 1.25rem;
+        font-weight: 600;
+    }
+
+    .search-box {
+        position: relative;
+    }
+
+    .search-box input {
+        padding-left: 2.5rem;
+        border-radius: 8px;
+        border: 1px solid #e2e8f0;
+    }
+
+    .search-box i {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--gray);
+    }
+
+    .filter-btn {
+        border-radius: 8px;
+        font-weight: 600;
+    }
+
+    .resident-info {
+        display: flex;
+        align-items: center;
+    }
+
+    .resident-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: var(--primary);
         color: white;
-        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        margin-right: 12px;
     }
 
-    .btn-edit:hover {
-        background-color: #2980b9;
-        transform: translateY(-2px);
+    .table th {
+        border-top: none;
+        font-weight: 600;
+        color: var(--gray);
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
 
-    .btn-delete {
-        background-color: var(--danger-color);
-        border: none;
-        /* border-radius: var(--border-radius); */
-        padding: 6px 9px;
-        color: white;
-        transition: var(--transition);
-    }
-
-    .btn-delete:hover {
-        background-color: #c0392b;
-        transform: translateY(-2px);
-    }
-
-   .action-buttons {
-            display: flex;
-            gap: 5px;
-            flex-wrap: nowrap;
-        }
-
-        .action-buttons .btn {
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 6px;
-        }
-
-    .alert {
-        border: none;
-        border-radius: var(--border-radius);
-        padding: 15px 20px;
-        margin-bottom: 25px;
-        box-shadow: 0 2px 5px var(--shadow-color);
-    }
-
-    .alert-success {
-        background-color: rgba(46, 204, 113, 0.15);
-        color: #155724;
-        border-left: 4px solid var(--success-color);
-    }
-
-    .alert-danger {
-        background-color: rgba(231, 76, 60, 0.15);
-        color: #721c24;
-        border-left: 4px solid var(--danger-color);
-    }
-
-    .modal-content {
-        border: none;
-        border-radius: var(--border-radius);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    .table-responsive {
+        border-radius: 12px;
     }
 
     .modal-header {
-        background: linear-gradient(to right, var(--primary-color), var(--dark-color));
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
         color: white;
-        border-bottom: none;
-        padding: 20px 25px;
-        border-radius: var(--border-radius) var(--border-radius) 0 0;
+        border-radius: 12px 12px 0 0;
     }
 
     .modal-title {
         font-weight: 600;
     }
 
-    .btn-close {
-        filter: invert(1);
-    }
-
-    .modal-footer {
-        border-top: 1px solid var(--border-color);
-        padding: 18px 25px;
-    }
-
-    .empty-state {
-        padding: 40px 20px;
-        text-align: center;
-        color: #6c757d;
-    }
-
-    .empty-state i {
-        font-size: 3rem;
-        margin-bottom: 15px;
-        color: #dee2e6;
-    }
-
     .stats-card {
         text-align: center;
-        padding: 20px;
-        border-radius: var(--border-radius);
-        margin-bottom: 20px;
-        box-shadow: var(--box-shadow);
-        transition: var(--transition);
+        padding: 1.5rem;
     }
 
-    .stats-card:hover {
-        transform: translateY(-3px);
-    }
-
-    .stats-card .number {
-        font-size: 2.2rem;
+    .stats-number {
+        font-size: 2rem;
         font-weight: 700;
-        margin-bottom: 5px;
+        margin-bottom: 0.5rem;
     }
 
-    .stats-card .label {
+    .stats-label {
         font-size: 0.9rem;
-        color: var(--dark-color);
-        font-weight: 500;
+        color: var(--gray);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
 
     .stats-pending {
-        background-color: rgba(243, 156, 18, 0.1);
-        border-left: 4px solid var(--warning-color);
+        color: var(--warning);
     }
 
     .stats-processing {
-        background-color: rgba(52, 152, 219, 0.1);
-        border-left: 4px solid var(--primary-color);
+        color: var(--primary);
     }
 
     .stats-accepted {
-        background-color: rgba(46, 204, 113, 0.1);
-        border-left: 4px solid var(--success-color);
+        color: var(--success);
     }
 
     .stats-rejected {
-        background-color: rgba(231, 76, 60, 0.1);
-        border-left: 4px solid var(--danger-color);
+        color: var(--danger);
     }
 
-    .btn-outline-primary {
-        border-color: var(--primary-color);
-        color: var(--primary-color);
+    .stats-total {
+        color: var(--primary);
     }
 
-    .btn-outline-primary:hover {
-        background-color: var(--primary-color);
-        color: white;
+    .action-buttons {
+        display: flex;
+        gap: 5px;
+        flex-wrap: nowrap;
     }
 
-    .btn-primary {
-        background-color: var(--primary-color);
-        border-color: var(--primary-color);
-    }
-
-    .btn-primary:hover {
-        background-color: #2980b9;
-        border-color: #2980b9;
-    }
-
-    .btn-secondary {
-        background-color: #95a5a6;
-        border-color: #95a5a6;
-    }
-
-    .btn-secondary:hover {
-        background-color: #7f8c8d;
-        border-color: #7f8c8d;
+    .action-buttons .btn {
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px;
     }
 
     @media (max-width: 768px) {
-        .page-header {
-            padding: 20px;
-            text-align: center;
+        .table-responsive {
+            font-size: 0.85rem;
         }
 
-        .page-header h1 {
-            font-size: 1.8rem;
+        .btn {
+            padding: 0.375rem 0.75rem;
+            font-size: 0.85rem;
         }
 
-        .card-header {
-            padding: 15px 20px;
+        .stats-card {
+            padding: 1rem;
+        }
+
+        .stats-number {
+            font-size: 1.5rem;
         }
 
         .action-buttons {
@@ -351,37 +238,43 @@
     }
 </style>
 
-<div class="container">
-    <!-- Page Header -->
-    <div class="page-header">
-        <h1><i class="fas fa-hand-holding-heart me-2"></i>Senior Service Requests</h1>
-        <p>Manage and track service requests for senior citizens</p>
-    </div>
+<div class="dashboard-header">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h1 class="h3 mb-0"><i class="fas fa-hand-holding-heart me-2"></i>Senior Service Requests</h1>
+                <p class="mb-0 opacity-75">Manage and track service requests for senior citizens</p>
+            </div>
 
+        </div>
+    </div>
+</div>
+
+<div class="container">
     <!-- Stats Overview -->
     <div class="row mb-4">
-        <div class="col-md-3 col-sm-6">
-            <div class="stats-card stats-pending">
-                <div class="number">{{ $statusCounts['pending'] }}</div>
-                <div class="label">Pending Requests</div>
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="card stats-card">
+                <div class="stats-number stats-pending">{{ $statusCounts['pending'] }}</div>
+                <div class="stats-label">Pending Requests</div>
             </div>
         </div>
-        <div class="col-md-3 col-sm-6">
-            <div class="stats-card stats-processing">
-                <div class="number">{{ $statusCounts['processing'] }}</div>
-                <div class="label">Processing</div>
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="card stats-card">
+                <div class="stats-number stats-processing">{{ $statusCounts['processing'] }}</div>
+                <div class="stats-label">Processing</div>
             </div>
         </div>
-        <div class="col-md-3 col-sm-6">
-            <div class="stats-card stats-accepted">
-                <div class="number">{{ $statusCounts['accept'] }}</div>
-                <div class="label">Accepted</div>
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="card stats-card">
+                <div class="stats-number stats-accepted">{{ $statusCounts['accept'] }}</div>
+                <div class="stats-label">Accepted</div>
             </div>
         </div>
-        <div class="col-md-3 col-sm-6">
-            <div class="stats-card stats-rejected">
-                <div class="number">{{ $statusCounts['rejected'] }}</div>
-                <div class="label">Rejected</div>
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="card stats-card">
+                <div class="stats-number stats-rejected">{{ $statusCounts['rejected'] }}</div>
+                <div class="stats-label">Rejected</div>
             </div>
         </div>
     </div>
@@ -398,79 +291,142 @@
         </div>
     @endif
 
-    {{-- Table of senior requests --}}
+    <!-- Filters and Search -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row align-items-center">
+                <div class="col-md-6 mb-3 mb-md-0">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" class="form-control" id="searchInput" placeholder="Search by name, ID, or status...">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="d-flex justify-content-md-end">
+                        <div class="dropdown me-2">
+                            <button class="btn btn-outline-secondary filter-btn dropdown-toggle" type="button" id="statusFilter" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-filter me-1"></i> Status
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="statusFilter">
+                                <li><a class="dropdown-item status-filter" href="#" data-status="all">All Statuses</a></li>
+                                <li><a class="dropdown-item status-filter" href="#" data-status="pending">Pending</a></li>
+                                <li><a class="dropdown-item status-filter" href="#" data-status="processing">Processing</a></li>
+                                <li><a class="dropdown-item status-filter" href="#" data-status="accept">Accepted</a></li>
+                                <li><a class="dropdown-item status-filter" href="#" data-status="rejected">Rejected</a></li>
+                            </ul>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary filter-btn dropdown-toggle" type="button" id="sortBy" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-sort me-1"></i> Sort By
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="sortBy">
+                                <li><a class="dropdown-item sort-option" href="#" data-sort="newest">Newest First</a></li>
+                                <li><a class="dropdown-item sort-option" href="#" data-sort="oldest">Oldest First</a></li>
+                                <li><a class="dropdown-item sort-option" href="#" data-sort="name_asc">Name (A-Z)</a></li>
+                                <li><a class="dropdown-item sort-option" href="#" data-sort="name_desc">Name (Z-A)</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Requests Table -->
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0"><i class="fas fa-list-alt me-2"></i>Request Details</h5>
-            <!-- <button class="btn btn-sm btn-outline-primary">
-                <i class="fas fa-download me-1"></i> Export
-            </button> -->
+            <span class="text-muted" id="showingText">Showing {{ $requests->count() }} of {{ $requests->count() }} requests</span>
         </div>
-        <div class="table-container">
-            <table class="table table-hover mb-0">
-                <thead>
-                    <tr><th>Full Name</th>
-                        <th>Age</th>
-                        <th>Birthday</th>
-                        <th>Gender</th>
-                        <th>OSCA ID</th>
-                        <th>FCAP ID</th>
-                        <th>Status</th>
-                        <th>Request Date</th>
-                        <th>Accept Date</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($requests as $req)
-                        <tr id="request-row-{{ $req->id }}">
-                            <td>{{ $req->first_name }} {{ $req->middle_name }} {{ $req->last_name }}</td>
-                            <td>{{ $req->age }}</td>
-                            <td>{{ $req->dob ? \Carbon\Carbon::parse($req->dob)->format('Y-m-d') : 'N/A' }}</td>
-                            <td>{{ $req->gender }}</td>
-                            <td>{{ $req->oscaId }}</td>
-                            <td>{{ $req->fcapId }}</td>
-                            <td>
-                                <span class="status-badge status-{{ $req->status }}">
-                                    {{ ucfirst($req->status) }}
-                                </span>
-                            </td>
-                            <td>{{ $req->request_date->format('Y-m-d') }}</td>
-                            <td class="accept-date-cell">{{ $req->accept_date ? $req->accept_date->format('Y-m-d') : 'N/A' }}</td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="btn btn-sm btn-edit edit-btn"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#statusModal"
-                                            data-id="{{ $req->id }}"
-                                            data-status="{{ $req->status }}"
-                                            data-update-url="{{ route('senior.req.updateStatus', $req->id) }}">
-                                        <i class="fas fa-edit me-1"></i>
-                                    </button>
-                                    <form action="{{ route('senior.req.destroy', $req->id) }}" method="POST" class="d-inline delete-form">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-delete">
-                                            <i class="fas fa-trash me-1"></i>
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                    @empty
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
                         <tr>
-                            <td colspan="9">
-                                <div class="empty-state">
-                                    <i class="fas fa-inbox"></i>
-                                    <h4>No requests found</h4>
-                                    <p>There are no service requests at the moment.</p>
-                                </div>
-                            </td>
+                            <th>Senior Name</th>
+                            <th>Age</th>
+                            <th>Gender</th>
+                            <th>OSCA ID</th>
+                            <th>FCAP ID</th>
+                            <th>Status</th>
+                            <th>Request Date</th>
+                            <th>Accept Date</th>
+                            <th>Actions</th>
                         </tr>
-                    @endforelse
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody id="requestsTableBody">
+                        @forelse($requests as $req)
+                            <tr class="request-row" data-status="{{ $req->status }}">
+                                <td>
+                                    <div class="resident-info">
+                                        <div class="resident-avatar">
+                                            {{ substr($req->first_name, 0, 1) }}{{ substr($req->last_name, 0, 1) }}
+                                        </div>
+                                        <div>
+                                            <div class="fw-bold">{{ $req->first_name }} {{ $req->middle_name }} {{ $req->last_name }}</div>
+                                            <small class="text-muted">Birthday: {{ $req->dob ? \Carbon\Carbon::parse($req->dob)->format('M d, Y') : 'N/A' }}</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{ $req->age }}</td>
+                                <td>
+                                    <span class="badge bg-light text-dark">
+                                        <i class="fas fa-{{ $req->gender == 'Male' ? 'male' : 'female' }} me-1"></i>
+                                        {{ $req->gender }}
+                                    </span>
+                                </td>
+                                <td><code>{{ $req->oscaId }}</code></td>
+                                <td><code>{{ $req->fcapId }}</code></td>
+                                <td>
+                                    <span class="status-badge status-{{ $req->status }}">
+                                        {{ ucfirst($req->status) }}
+                                    </span>
+                                </td>
+                                <td>{{ $req->request_date->format('M d, Y') }}</td>
+                                <td class="accept-date-cell">{{ $req->accept_date ? $req->accept_date->format('M d, Y') : 'N/A' }}</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-sm btn-primary edit-btn"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#statusModal"
+                                                data-id="{{ $req->id }}"
+                                                data-status="{{ $req->status }}"
+                                                data-update-url="{{ route('senior.req.updateStatus', $req->id) }}"
+                                                title="Edit Status">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <form action="{{ route('senior.req.destroy', $req->id) }}" method="POST" class="d-inline delete-form">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger" title="Delete Request">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="9">
+                                    <div class="empty-state text-center py-5">
+                                        <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                                        <h4>No requests found</h4>
+                                        <p class="text-muted">There are no service requests at the moment.</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
         </div>
+        <!-- Remove the pagination section until we fix the controller -->
+        <div class="card-footer">
+                <div class="d-flex justify-content-center">
+                    {{ $requests->links('pagination::bootstrap-5') }}
+                </div>
+            </div>
+
     </div>
 </div>
 
@@ -482,26 +438,29 @@
                 <h5 class="modal-title" id="statusModalLabel">
                     <i class="fas fa-edit me-2"></i>Update Request Status
                 </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form id="statusUpdateForm" method="POST" action="">
                 @csrf
                 <div class="modal-body">
                     <input type="hidden" id="requestId" name="id">
                     <div class="mb-3">
-                        <label for="status" class="form-label">Status</label>
+                        <label for="status" class="form-label fw-bold">Status</label>
                         <select class="form-select" id="status" name="status">
                             <option value="pending">Pending</option>
                             <option value="processing">Processing</option>
-                            <option value="accept">Accept</option>
+                            <option value="accept">Accepted</option>
                             <option value="rejected">Rejected</option>
                         </select>
                     </div>
-
+                    <div class="mb-3">
+                        <label for="notes" class="form-label fw-bold">Notes (Optional)</label>
+                        <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="Add any additional notes..."></textarea>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button> -->
-                    <button type="submit" class="btn btn-primary "data-bs-dismiss="modal">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">
                         <i class="fas fa-save me-1"></i> Update Status
                     </button>
                 </div>
@@ -510,22 +469,46 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Cancel Confirmation Modal -->
+<div class="modal fade" id="cancelConfirmModal" tabindex="-1" aria-labelledby="cancelConfirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cancelConfirmModalLabel">Confirm Deletion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this request? This action cannot be undone.</p>
+                <div class="alert alert-warning" role="alert">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    This will permanently remove the request from the system.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No, Keep It</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Yes, Delete Request</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const statusModal = document.getElementById('statusModal');
         const statusUpdateForm = document.getElementById('statusUpdateForm');
+        let deleteForm = null;
 
+        // Status Modal
         statusModal.addEventListener('show.bs.modal', function (event) {
             const button = event.relatedTarget;
             const requestId = button.getAttribute('data-id');
             const currentStatus = button.getAttribute('data-status');
             const updateUrl = button.getAttribute('data-update-url');
 
-            statusModal.querySelector('#requestId').value = requestId;
-            statusModal.querySelector('#status').value = currentStatus;
+            document.getElementById('requestId').value = requestId;
+            document.getElementById('status').value = currentStatus;
             statusUpdateForm.action = updateUrl;
         });
 
@@ -546,32 +529,6 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    const requestId = formData.get('id');
-                    const row = document.getElementById('request-row-' + requestId);
-
-                    // Update status text and badge
-                    const statusCell = row.querySelector('.status-cell');
-                    const statusBadge = row.querySelector('.status-badge');
-
-                    if (statusCell) statusCell.textContent =
-                        data.request.status.charAt(0).toUpperCase() + data.request.status.slice(1);
-
-                    if (statusBadge) {
-                        statusBadge.textContent =
-                            data.request.status.charAt(0).toUpperCase() + data.request.status.slice(1);
-                        statusBadge.className = 'status-badge status-' + data.request.status;
-                    }
-
-                    // Update accept date only if accepted
-                    if (data.request.accept_date) {
-                        row.querySelector('.accept-date-cell').textContent =
-                            new Date(data.request.accept_date).toISOString().split('T')[0];
-                    } else {
-                        row.querySelector('.accept-date-cell').textContent = "N/A";
-                    }
-
-                    // Close modal
-                    bootstrap.Modal.getInstance(statusModal).hide();
 
                     Swal.fire({
                         icon: 'success',
@@ -594,7 +551,7 @@
                     icon: 'error',
                     title: 'Oops...',
                     text: 'Something went wrong.',
-                footer: 'Please try again later.'
+                    footer: 'Please try again later.'
                 });
             });
         });
@@ -603,23 +560,71 @@
         document.querySelectorAll('.delete-form').forEach(form => {
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "This request will be permanently deleted!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!',
-                    cancelButtonText: 'Cancel'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        form.submit();
+                deleteForm = this;
+
+                const cancelModal = new bootstrap.Modal(document.getElementById('cancelConfirmModal'));
+                cancelModal.show();
+            });
+        });
+
+        // Confirm delete button
+        document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
+            if (deleteForm) {
+                deleteForm.submit();
+            }
+        });
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('keyup', function() {
+            const searchTerm = this.value.toLowerCase();
+            const tableRows = document.querySelectorAll('#requestsTableBody .request-row');
+            let visibleCount = 0;
+
+            tableRows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    row.style.display = '';
+                    visibleCount++;
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            document.getElementById('showingText').textContent = `Showing ${visibleCount} of ${tableRows.length} requests`;
+        });
+
+        // Status filter functionality
+        const statusFilters = document.querySelectorAll('.status-filter');
+        statusFilters.forEach(filter => {
+            filter.addEventListener('click', function(e) {
+                e.preventDefault();
+                const status = this.getAttribute('data-status');
+                const tableRows = document.querySelectorAll('#requestsTableBody .request-row');
+                let visibleCount = 0;
+
+                tableRows.forEach(row => {
+                    if (status === 'all' || row.getAttribute('data-status') === status) {
+                        row.style.display = '';
+                        visibleCount++;
+                    } else {
+                        row.style.display = 'none';
                     }
                 });
+
+                document.getElementById('showingText').textContent = `Showing ${visibleCount} of ${tableRows.length} requests`;
+            });
+        });
+
+        // Sort functionality
+        const sortOptions = document.querySelectorAll('.sort-option');
+        sortOptions.forEach(option => {
+            option.addEventListener('click', function(e) {
+                e.preventDefault();
+                // In a real application, this would trigger a server-side sort or client-side sorting
+                alert('Sorting by: ' + this.getAttribute('data-sort'));
             });
         });
     });
 </script>
-
 @endsection

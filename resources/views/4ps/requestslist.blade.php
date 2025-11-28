@@ -1,7 +1,5 @@
 @extends('4ps.dashboard')
 @section('content')
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +11,7 @@
     <style>
         :root {
             --primary: #4361ee;
-            --secondary: #3f37c9;
+            --secondary: #2c3e50;
             --success: #4cc9f0;
             --danger: #f72585;
             --warning: #f8961e;
@@ -29,10 +27,10 @@
         }
 
         .dashboard-header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: var(--secondary);
             color: white;
             padding: 1.5rem 0;
-            border-radius: 0 0 15px 15px;
+            border-radius:15px 15px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             margin-bottom: 2rem;
         }
@@ -225,10 +223,7 @@
                     <h1 class="h3 mb-0"><i class="fas fa-list-check me-2"></i>Requests List</h1>
                     <p class="mb-0 opacity-75">Manage and review all 4PS program requests</p>
                 </div>
-                <div class="col-md-6 text-md-end">
-                    <button class="btn btn-light me-2"><i class="fas fa-download me-1"></i> Export</button>
-                    <button class="btn btn-light"><i class="fas fa-print me-1"></i> Print</button>
-                </div>
+
             </div>
         </div>
     </div>
@@ -238,25 +233,25 @@
         <div class="row mb-4">
             <div class="col-md-3 col-sm-6 mb-3">
                 <div class="card stats-card">
-                    <div class="stats-number stats-total">142</div>
+                    <div class="stats-number stats-total">{{ $requests->count() }}</div>
                     <div class="stats-label">Total Requests</div>
                 </div>
             </div>
             <div class="col-md-3 col-sm-6 mb-3">
                 <div class="card stats-card">
-                    <div class="stats-number stats-pending">64</div>
+                    <div class="stats-number stats-pending">{{ $requests->where('status', 'pending')->count() }}</div>
                     <div class="stats-label">Pending</div>
                 </div>
             </div>
             <div class="col-md-3 col-sm-6 mb-3">
                 <div class="card stats-card">
-                    <div class="stats-number stats-accepted">52</div>
+                    <div class="stats-number stats-accepted">{{ $requests->where('status', 'accepted')->count() }}</div>
                     <div class="stats-label">Accepted</div>
                 </div>
             </div>
             <div class="col-md-3 col-sm-6 mb-3">
                 <div class="card stats-card">
-                    <div class="stats-number stats-rejected">26</div>
+                    <div class="stats-number stats-rejected">{{ $requests->where('status', 'rejected')->count() }}</div>
                     <div class="stats-label">Rejected</div>
                 </div>
             </div>
@@ -269,7 +264,7 @@
                     <div class="col-md-6 mb-3 mb-md-0">
                         <div class="search-box">
                             <i class="fas fa-search"></i>
-                            <input type="text" class="form-control" placeholder="Search by name, ID, or purok...">
+                            <input type="text" class="form-control" id="searchInput" placeholder="Search by name, ID, or purok...">
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -279,10 +274,10 @@
                                     <i class="fas fa-filter me-1"></i> Status
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="statusFilter">
-                                    <li><a class="dropdown-item" href="#">All Statuses</a></li>
-                                    <li><a class="dropdown-item" href="#">Pending</a></li>
-                                    <li><a class="dropdown-item" href="#">Accepted</a></li>
-                                    <li><a class="dropdown-item" href="#">Rejected</a></li>
+                                    <li><a class="dropdown-item status-filter" href="#" data-status="all">All Statuses</a></li>
+                                    <li><a class="dropdown-item status-filter" href="#" data-status="pending">Pending</a></li>
+                                    <li><a class="dropdown-item status-filter" href="#" data-status="accepted">Accepted</a></li>
+                                    <li><a class="dropdown-item status-filter" href="#" data-status="rejected">Rejected</a></li>
                                 </ul>
                             </div>
                             <div class="dropdown">
@@ -290,10 +285,10 @@
                                     <i class="fas fa-sort me-1"></i> Sort By
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="sortBy">
-                                    <li><a class="dropdown-item" href="#">Newest First</a></li>
-                                    <li><a class="dropdown-item" href="#">Oldest First</a></li>
-                                    <li><a class="dropdown-item" href="#">Name (A-Z)</a></li>
-                                    <li><a class="dropdown-item" href="#">Name (Z-A)</a></li>
+                                    <li><a class="dropdown-item sort-option" href="#" data-sort="newest">Newest First</a></li>
+                                    <li><a class="dropdown-item sort-option" href="#" data-sort="oldest">Oldest First</a></li>
+                                    <li><a class="dropdown-item sort-option" href="#" data-sort="name_asc">Name (A-Z)</a></li>
+                                    <li><a class="dropdown-item sort-option" href="#" data-sort="name_desc">Name (Z-A)</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -306,7 +301,7 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">All Requests</h5>
-                <span class="text-muted">Showing 8 of 142 requests</span>
+                <span class="text-muted" id="showingText">Showing {{ $requests->count() }} of {{ $requests->count() }} requests</span>
             </div>
             <div class="card-body p-0">
                 <div class="table-responsive">
@@ -321,118 +316,97 @@
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            @foreach ($requests as $request )
-                            <tr>
+                        <tbody id="requestsTableBody">
+                            @foreach($requests as $request)
+                            <tr class="request-row" data-status="{{ $request->status }}">
                                 <td>
                                     <div class="resident-info">
-                                        <div class="resident-avatar">{{$request->resident_id }}</div>
+                                        <div class="resident-avatar">
+                                            {{ substr($request->resident->Fname, 0, 1) }}{{ substr($request->resident->lname, 0, 1) }}
+                                        </div>
                                         <div>
                                             <div class="fw-bold">{{ $request->resident->Fname }} {{ $request->resident->mname }} {{ $request->resident->lname }}</div>
-                                            <small class="text-muted">Registered:{{ $request->created_at->format('M d, Y') }}</small>
+                                            <small class="text-muted">Registered: {{ $request->created_at->format('M d, Y') }}</small>
                                         </div>
                                     </div>
                                 </td>
                                 <td>{{ $request->fourps_id }}</td>
                                 <td>{{ $request->purok_no }}</td>
                                 <td>{{ $request->house_no }}</td>
-                                <td>{{ $request->status }}</td>
+                                <td>
+                                    @if($request->status == 'pending')
+                                        <span class="status-badge status-pending">Pending</span>
+                                    @elseif($request->status == 'accepted')
+                                        <span class="status-badge status-accepted">Accepted</span>
+                                    @elseif($request->status == 'rejected')
+                                        <span class="status-badge status-rejected">Rejected</span>
+                                    @else
+                                        <span class="status-badge">{{ $request->status }}</span>
+                                    @endif
+                                </td>
                                 <td>
                                     <button type="button" class="btn btn-sm btn-primary me-1" data-bs-toggle="modal" data-bs-target="#editModal{{ $request->id }}">
                                         <i class="fas fa-edit me-1"></i> Edit
                                     </button>
-                                     <form action="{{ route('4ps.cancel', $request->id) }}" method="POST" style="display:inline;">
+                                    <form action="{{ route('4ps.cancel', $request->id) }}" method="POST" style="display:inline;" class="cancel-form">
                                         @csrf
                                         @method('PUT')
-                                        <button type="submit" class="btn btn-sm btn-danger" onclick="confirmCancel(1)">
-                                        <i class="fas fa-times me-1"></i> Cancel
-                                    </button>
+                                        <button type="button" class="btn btn-sm btn-danger cancel-btn" data-id="{{ $request->id }}">
+                                            <i class="fas fa-times me-1"></i> Cancel
+                                        </button>
                                     </form>
-
                                 </td>
                             </tr>
-                            <div class="modal fade" id="editModal{{ $request->id }}" tabindex="-1" aria-labelledby="editModalLabel{{ $request->id }}" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="editModalLabel{{ $request->id }}">Edit Request Status</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form action="{{ route('4ps.update', $request->id) }}" method="POST">
-                                    @csrf
-                                    @method('PUT')
-                                    <div class="mb-3">
-                                        <label for="status" class="form-label">Status</label>
-                                        <select class="form-select" id="status" name="status">
-                                            <option value="pending" {{ $request->status == 'pending' ? 'selected' : '' }}>Pending</option>
-                                            <option value="accepted" {{ $request->status == 'accepted' ? 'selected' : '' }}>Accepted</option>
-                                            <option value="rejected" {{ $request->status == 'rejected' ? 'selected' : '' }}>Rejected</option>
-                                        </select>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Update Status</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
             </div>
-            <div class="card-footer">
-                <nav aria-label="Page navigation">
-                    <ul class="pagination justify-content-center mb-0">
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                        </li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">Next</a>
-                        </li>
-                    </ul>
-                </nav>
+           <div class="card-footer">
+                <div class="d-flex justify-content-center">
+                    {{ $requests->links('pagination::bootstrap-5') }}
+                </div>
             </div>
+
         </div>
     </div>
 
-    <!-- Edit Modal (Example for Request 1) -->
-    <!-- <div class="modal fade" id="editModal {{ $request->id }}" tabindex="-1" aria-labelledby="editModalLabel {{ $request->id }}" aria-hidden="true">
+    <!-- Edit Modals -->
+    @foreach($requests as $request)
+    <div class="modal fade" id="editModal{{ $request->id }}" tabindex="-1" aria-labelledby="editModalLabel{{ $request->id }}" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel {{ $request->id }}">Edit Request Status</h5>
+                    <h5 class="modal-title" id="editModalLabel{{ $request->id }}">Edit Request Status</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-4">
                         <h6>Resident Information</h6>
                         <div class="d-flex align-items-center">
-                            <div class="resident-avatar me-3">JM</div>
+                            <div class="resident-avatar me-3">
+                                {{ substr($request->resident->Fname, 0, 1) }}{{ substr($request->resident->lname, 0, 1) }}
+                            </div>
                             <div>
-                                <div class="fw-bold">Juan Martinez</div>
-                                <div class="text-muted small">4PS ID: 4PS-2301-001</div>
-                                <div class="text-muted small">Purok 5, House No. H-24</div>
+                                <div class="fw-bold">{{ $request->resident->Fname }} {{ $request->resident->mname }} {{ $request->resident->lname }}</div>
+                                <div class="text-muted small">4PS ID: {{ $request->fourps_id }}</div>
+                                <div class="text-muted small">Purok {{ $request->purok_no }}, House No. {{ $request->house_no }}</div>
                             </div>
                         </div>
                     </div>
 
-                    <form>
+                    <form action="{{ route('4ps.update', $request->id) }}" method="POST">
+                        @csrf
+                        @method('PUT')
                         <div class="mb-3">
-                            <label for="status" class="form-label fw-bold">Status</label>
-                            <select class="form-select" id="status" name="status">
-                                <option value="pending" selected>Pending</option>
-                                <option value="accepted">Accepted</option>
-                                <option value="rejected">Rejected</option>
+                            <label for="status{{ $request->id }}" class="form-label fw-bold">Status</label>
+                            <select class="form-select" id="status{{ $request->id }}" name="status">
+                                <option value="pending" {{ $request->status == 'pending' ? 'selected' : '' }}>Pending</option>
+                                <option value="accepted" {{ $request->status == 'accepted' ? 'selected' : '' }}>Accepted</option>
+                                <option value="rejected" {{ $request->status == 'rejected' ? 'selected' : '' }}>Rejected</option>
                             </select>
                         </div>
-                        <div class="mb-3">
-                            <label for="notes" class="form-label fw-bold">Notes (Optional)</label>
-                            <textarea class="form-control" id="notes" rows="3" placeholder="Add any notes about this request..."></textarea>
-                        </div>
+
                         <div class="d-grid gap-2">
                             <button type="submit" class="btn btn-primary">Update Status</button>
                             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -441,7 +415,8 @@
                 </div>
             </div>
         </div>
-    </div> -->
+    </div>
+    @endforeach
 
     <!-- Cancel Confirmation Modal -->
     <div class="modal fade" id="cancelConfirmModal" tabindex="-1" aria-labelledby="cancelConfirmModalLabel" aria-hidden="true">
@@ -460,7 +435,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No, Keep It</button>
-                    <button type="button" class="btn btn-danger" onclick="proceedCancel()">Yes, Cancel Request</button>
+                    <button type="button" class="btn btn-danger" id="confirmCancelBtn">Yes, Cancel Request</button>
                 </div>
             </div>
         </div>
@@ -469,44 +444,79 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Function to show confirmation for cancel action
-        let cancelRequestId = null;
+        let cancelForm = null;
 
-        function confirmCancel(requestId) {
-            cancelRequestId = requestId;
-            const cancelModal = new bootstrap.Modal(document.getElementById('cancelConfirmModal'));
-            cancelModal.show();
-        }
-
-        function proceedCancel() {
-            if (cancelRequestId) {
-                // In a real application, you would submit the form here
-                alert(`Request #${cancelRequestId} has been cancelled.`);
-                // Close the modal
-                const cancelModal = bootstrap.Modal.getInstance(document.getElementById('cancelConfirmModal'));
-                cancelModal.hide();
-            }
-        }
-
-        // Search functionality
         document.addEventListener('DOMContentLoaded', function() {
-            const searchInput = document.querySelector('.search-box input');
+            // Search functionality
+            const searchInput = document.getElementById('searchInput');
             searchInput.addEventListener('keyup', function() {
                 const searchTerm = this.value.toLowerCase();
-                const tableRows = document.querySelectorAll('tbody tr');
+                const tableRows = document.querySelectorAll('#requestsTableBody .request-row');
+                let visibleCount = 0;
 
                 tableRows.forEach(row => {
                     const text = row.textContent.toLowerCase();
                     if (text.includes(searchTerm)) {
                         row.style.display = '';
+                        visibleCount++;
                     } else {
                         row.style.display = 'none';
                     }
+                });
+
+                document.getElementById('showingText').textContent = `Showing ${visibleCount} of ${tableRows.length} requests`;
+            });
+
+            // Status filter functionality
+            const statusFilters = document.querySelectorAll('.status-filter');
+            statusFilters.forEach(filter => {
+                filter.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const status = this.getAttribute('data-status');
+                    const tableRows = document.querySelectorAll('#requestsTableBody .request-row');
+                    let visibleCount = 0;
+
+                    tableRows.forEach(row => {
+                        if (status === 'all' || row.getAttribute('data-status') === status) {
+                            row.style.display = '';
+                            visibleCount++;
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    });
+
+                    document.getElementById('showingText').textContent = `Showing ${visibleCount} of ${tableRows.length} requests`;
+                });
+            });
+
+            // Cancel button functionality
+            const cancelButtons = document.querySelectorAll('.cancel-btn');
+            cancelButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    cancelForm = this.closest('.cancel-form');
+                    const cancelModal = new bootstrap.Modal(document.getElementById('cancelConfirmModal'));
+                    cancelModal.show();
+                });
+            });
+
+            // Confirm cancel button
+            document.getElementById('confirmCancelBtn').addEventListener('click', function() {
+                if (cancelForm) {
+                    cancelForm.submit();
+                }
+            });
+
+            // Sort functionality
+            const sortOptions = document.querySelectorAll('.sort-option');
+            sortOptions.forEach(option => {
+                option.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // In a real application, this would trigger a server-side sort or client-side sorting
+                    alert('Sorting by: ' + this.getAttribute('data-sort'));
                 });
             });
         });
     </script>
 </body>
 </html>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 @endsection

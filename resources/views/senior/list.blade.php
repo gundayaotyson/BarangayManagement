@@ -1,3 +1,4 @@
+
 @extends('senior.dashboard')
 <!DOCTYPE html>
 <html lang="en">
