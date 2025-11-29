@@ -92,7 +92,10 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/bhw/request/{id}', [BHWController::class, 'destroy'])->name('bhw.request.destroy');
     Route::get('/bhw/pregnant', [BHWController::class, 'pregnant'])->name('bhw.pregnant');
     Route::get('/bhw/newdeliver', [BHWController::class, 'newdeliver'])->name('bhw.newdeliverpregnant');
-
+    Route::post('/bhw/pregnant', [BHWController::class, 'store'])->name('bhw.pregnant.store');
+    Route::put('/bhw/pregnant/{id}', [BHWController::class, 'update'])->name('bhw.pregnant.update');
+    Route::delete('/bhw/pregnant/{id}', [BHWController::class, 'destroy'])->name('bhw.pregnant.destroy');
+     Route::get('/bhw/search-residents', [BHWController::class, 'searchResidents'])->name('bhw.search_residents');
     // Senior Routes
     Route::get('/Senior', [DashboardController::class, 'Senior'])->name('senior');
     Route::get('/senior/homepage', [SeniorController::class, 'homepage'])->name('senior.homepage');
@@ -182,3 +185,4 @@ Route::get('/track-clearance/{trackingCode}', [LegaldocumentsController::class, 
 Route::get('/barangayservices', [BarangayServicesController::class, 'brgyservices'])->name('barangayservices');
 Route::post('/add-barangay-service', [BarangayServicesController::class, 'store'])->name('brgyservices.store');
 Route::get('/add-barangay-service', [BarangayServicesController::class, 'brgyservices'])->name('brgyservices');
+
