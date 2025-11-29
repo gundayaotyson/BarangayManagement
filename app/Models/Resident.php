@@ -51,4 +51,8 @@ public function official()
     {
         return $this->hasMany(FourpsRequest::class);
     }
+    public function pregnants()
+    {
+        return $this->hasMany(Pregnant::class);
+    }
 }
