@@ -304,7 +304,7 @@
          <li><a href="{{ route('bhw.home') }}"class="{{ request()->routeIs('bhw.home') ? 'active' : '' }}"><i class="fas fa-home"></i> <span>Dashboard</span></a></li>
         <!-- <li><a href="#" class="active"><i class="fas fa-home"></i> <span>Home</span></a></li> -->
         <!-- <li><a href="#"><i class="fas fa-user"></i> <span>Request List</span></a></li> -->
-        <li><a href="{{ route('bhw.Requestlist') }}"class="{{ request()->routeIs('bhw.Requestlist') ? 'active' : '' }}"><i class="fas fa-file-alt"></i> <span>Request List</span></a></li>
+        <li><a href="{{ route('bhw.Requestlist') }}"class="{{ request()->routeIs('bhw.Requestlist') ? 'active' : '' }}"><i class="fas fa-file-alt"></i> <span>Services Request List</span></a></li>
         <li><a href="{{ route('bhw.pregnant') }}"class="{{ request()->routeIs('bhw.pregnant') ? 'active' : '' }}"><i class="fas fa-baby"></i> <span>Pregnant List</span></a></li>
         <li><a href="{{ route('bhw.newdeliverpregnant') }}"class="{{ request()->routeIs('bhw.newdeliverpregnant') ? 'active' : '' }}"><i class="fas fa-baby-carriage"></i> <span>New Born List</span></a></li>
     </ul>
