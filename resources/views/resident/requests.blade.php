@@ -223,7 +223,11 @@
         background-color: var(--success-color);
         color: white;
     }
-    .mobile-status-badge.status-scheduled {
+   .mobile-status-badge.status-scheduled {
+        background-color: var(--success-color);
+        color: white;
+    }
+    .mobile-status-badge.status-accepted {
         background-color: var(--success-color);
         color: white;
     }
@@ -534,34 +538,34 @@
 
     <div class="mobile-request-card">
         <div class="mobile-request-row">
-            <span class="mobile-request-label">Full Name:</span>
-            <span class="mobile-request-value">{{ $request->Fname }} {{ $request->mname }} {{ $request->lname }}</span>
+            <span class="mobile-request-label">Full Name:{{ $request->Fname }} {{ $request->mname }} {{ $request->lname }}</span>
+            <span class="mobile-request-value"></span>
         </div>
         <div class="mobile-request-row">
-            <span class="mobile-request-label">Tracking Code:</span>
-            <span class="mobile-request-value">{{ $request->tracking_code }}</span>
+            <span class="mobile-request-label">Tracking Code:{{ $request->tracking_code }}</span>
+            <span class="mobile-request-value"></span>
         </div>
         <div class="mobile-request-row">
-            <span class="mobile-request-label">Purpose:</span>
-            <span class="mobile-request-value">{{ $request->purpose }}</span>
+            <span class="mobile-request-label">Purpose:{{ $request->purpose }}</span>
+            <span class="mobile-request-value"></span>
         </div>
         <div class="mobile-request-row">
-            <span class="mobile-request-label">Service Type:</span>
-            <span class="mobile-request-value">{{ $request->service_type }}</span>
+            <span class="mobile-request-label">Service Type:{{ $request->service_type }}</span>
+            <span class="mobile-request-value"></span>
         </div>
         <div class="mobile-request-row">
-            <span class="mobile-request-label">Requested Date:</span>
-            <span class="mobile-request-value">{{ $request->requested_date }}</span>
+            <span class="mobile-request-label">Requested Date:{{ $request->requested_date }}</span>
+            <span class="mobile-request-value"></span>
         </div>
         <div class="mobile-request-row">
-            <span class="mobile-request-label">Pickup Date:</span>
-            <span class="mobile-request-value">{{ $request->pickup_date }}</span>
+            <span class="mobile-request-label">Pickup Date:{{ $request->pickup_date }}</span>
+            <span class="mobile-request-value"></span>
         </div>
         <div class="mobile-request-row">
-            <span class="mobile-request-label">Release Date:</span>
+            <span class="mobile-request-label">Release Date:{{ $request->released_date ? \Carbon\Carbon::parse($request->released_date)->format('M d, Y') : 'N/A' }}
+            </span></span>
             <span class="mobile-request-value">
-                {{ $request->released_date ? \Carbon\Carbon::parse($request->released_date)->format('M d, Y') : 'N/A' }}
-            </span>
+
         </div>
         <div class="mobile-request-row">
             <span class="mobile-request-label">Status:</span>
@@ -644,13 +648,12 @@
                                 </td>
                                 <td>
                                     @if (strtolower($request->status) === 'pending' || strtolower($request->status) === 'processing')
-
                                         <form action="{{ route('resident.requests.cancel', ['id' => $request->id, 'type' => 'sk']) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
                                             </form>
-                                        @endif
+                                    @endif
                                 </td>
                             </tr>
                         @empty
@@ -670,7 +673,7 @@
         <!-- Mobile Card View -->
     <div class="mobile-cards">
 
-        @forelse ($requests as $request)
+        @forelse ($skServices as $request)
             @php
                 $status = $request->status;
 
@@ -684,34 +687,34 @@
             @endphp
     <div class="mobile-request-card">
         <div class="mobile-request-row">
-            <span class="mobile-request-label">Full Name:</span>
-            <span class="mobile-request-value">{{ $request->Fname }} {{ $request->mname }} {{ $request->lname }}</span>
+            <span class="mobile-request-label">Full Name:{{ $request->firstname }} {{ $request->middlename }} {{ $request->lastname }}</span>
+            <span class="mobile-request-value"></span>
         </div>
         <div class="mobile-request-row">
-            <span class="mobile-request-label">Tracking Code:</span>
-            <span class="mobile-request-value">{{ $request->tracking_code }}</span>
+            <span class="mobile-request-label">School:{{ $request->school }}</span>
+            <span class="mobile-request-value"></span>
         </div>
         <div class="mobile-request-row">
-            <span class="mobile-request-label">Purpose:</span>
-            <span class="mobile-request-value">{{ $request->purpose }}</span>
+            <span class="mobile-request-label">Year:{{ $request->school_year }}</span>
+            <span class="mobile-request-value"></span>
         </div>
         <div class="mobile-request-row">
-            <span class="mobile-request-label">Service Type:</span>
-            <span class="mobile-request-value">{{ $request->service_type }}</span>
+            <span class="mobile-request-label">Service Type:{{ $request->type_of_service }}</span>
+            <span class="mobile-request-value"></span>
         </div>
         <div class="mobile-request-row">
-            <span class="mobile-request-label">Requested Date:</span>
+            <span class="mobile-request-label">Requested Date:{{ $request->created_at->format('M d, Y') }}</span>
             <span class="mobile-request-value">{{ $request->requested_date }}</span>
         </div>
-        <div class="mobile-request-row">
-            <span class="mobile-request-label">Pickup Date:</span>
+        <!-- <div class="mobile-request-row">
+            <span class="mobile-request-label">Pickup Date:{{ $request->pickup_date }}</span>
             <span class="mobile-request-value">{{ $request->pickup_date }}</span>
-        </div>
+        </div> -->
         <div class="mobile-request-row">
-            <span class="mobile-request-label">Release Date:</span>
+            <span class="mobile-request-label">Release Date:{{ $request->released_date ? \Carbon\Carbon::parse($request->released_date)->format('M d, Y') : 'N/A' }}
+            </span></span>
             <span class="mobile-request-value">
-                {{ $request->released_date ? \Carbon\Carbon::parse($request->released_date)->format('M d, Y') : 'N/A' }}
-            </span>
+
         </div>
         <div class="mobile-request-row">
             <span class="mobile-request-label">Status:</span>
@@ -721,18 +724,18 @@
                 </span>
             </span>
         </div>
-                @if ($request->status === 'pending')
-                        <div class="mobile-request-row">
-                            <span class="mobile-request-label"></span>
-                            <span class="mobile-request-value" style="display:flex; justify-content:center; margin-top:0.5rem;">
-                                <form action="{{ route('resident.requests.cancel', ['id' => $request->id, 'type' => 'sk']) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
-                                </form>
-                            </span>
-                        </div>
-                    @endif
+        @if(strtolower($request->status) === 'pending' || strtolower($request->status) === 'processing')
+            <div class="mobile-request-row">
+                <span class="mobile-request-label"></span>
+              <span class="mobile-request-value" style="display:flex; justify-content:center; margin-top:0.5rem;">
+                    <form action="{{ route('resident.requests.cancel', ['id' => $request->id, 'type' => 'sk']) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
+                    </form>
+                </span>
+            </div>
+        @endif
     </div>
         @empty
             <div class="no-requests-mobile">
@@ -806,24 +809,24 @@
             @forelse ($seniorRequests as $request)
                 <div class="mobile-request-card">
                     <div class="mobile-request-row">
-                        <span class="mobile-request-label">Full Name:</span>
-                        <span class="mobile-request-value">{{ $request->first_name }} {{ $request->last_name }}</span>
+                        <span class="mobile-request-label">Full Name:{{ $request->first_name }} {{ $request->last_name }}</span>
+                        <span class="mobile-request-value"></span>
                     </div>
                     <div class="mobile-request-row">
-                        <span class="mobile-request-label">OSCA ID:</span>
-                        <span class="mobile-request-value">{{ $request->oscaId }}</span>
+                        <span class="mobile-request-label">OSCA ID:{{ $request->oscaId }}</span>
+                        <span class="mobile-request-value"></span>
                     </div>
                     <div class="mobile-request-row">
-                        <span class="mobile-request-label">FCAP ID:</span>
-                        <span class="mobile-request-value">{{ $request->fcapId }}</span>
+                        <span class="mobile-request-label">FCAP ID:{{ $request->fcapId }}</span>
+                        <span class="mobile-request-value"></span>
                     </div>
                     <div class="mobile-request-row">
-                        <span class="mobile-request-label">Date Requested:</span>
-                        <span class="mobile-request-value">{{ $request->request_date->format('M d, Y') }}</span>
+                        <span class="mobile-request-label">Date Requested:{{ $request->request_date->format('M d, Y') }}</span>
+                        <span class="mobile-request-value"></span>
                     </div>
                     <div class="mobile-request-row">
-                        <span class="mobile-request-label">Accept Date:</span>
-                        <span class="mobile-request-value">{{ $request->accept_date ? \Carbon\Carbon::parse($request->accept_date)->format('M d, Y') : 'N/A' }}</span>
+                        <span class="mobile-request-label">Accept Date:{{ $request->accept_date ? \Carbon\Carbon::parse($request->accept_date)->format('M d, Y') : 'N/A' }}</span>
+                        <span class="mobile-request-value"></span>
                     </div>
                     <div class="mobile-request-row">
                         <span class="mobile-request-label">Status:</span>
@@ -917,24 +920,24 @@
             @forelse ($bhwRequests as $request)
                 <div class="mobile-request-card">
                     <div class="mobile-request-row">
-                        <span class="mobile-request-label">Full Name:</span>
-                        <span class="mobile-request-value">{{ $request->fname }} {{ $request->mname }} {{ $request->lname }}</span>
+                        <span class="mobile-request-label">Full Name:{{ $request->fname }} {{ $request->mname }} {{ $request->lname }}</span>
+                        <span class="mobile-request-value"></span>
                     </div>
                     <div class="mobile-request-row">
-                        <span class="mobile-request-label">Service Type:</span>
-                        <span class="mobile-request-value">{{ $request->service_type }}</span>
+                        <span class="mobile-request-label">Service Type:{{ $request->service_type }}</span>
+                        <span class="mobile-request-value"></span>
                     </div>
                     <div class="mobile-request-row">
-                        <span class="mobile-request-label">Chief Complaint:</span>
-                        <span class="mobile-request-value">{{ $request->chief_complaint }}</span>
+                        <span class="mobile-request-label">Chief Complaint: {{ $request->chief_complaint }}</span>
+                        <span class="mobile-request-value"></span>
                     </div>
                     <div class="mobile-request-row">
-                        <span class="mobile-request-label">Date Requested:</span>
-                        <span class="mobile-request-value">{{ $request->created_at->format('M d, Y') }}</span>
+                        <span class="mobile-request-label">Date Requested:{{ $request->created_at->format('M d, Y') }}</span>
+                        <span class="mobile-request-value"></span>
                     </div>
                     <div class="mobile-request-row">
-                        <span class="mobile-request-label">Schedule Date:</span>
-                        <span class="mobile-request-value">{{ $request->sched_date ? \Carbon\Carbon::parse($request->sched_date)->format('M d, Y') : 'N/A' }}</span>
+                        <span class="mobile-request-label">Schedule Date:{{ $request->sched_date ? \Carbon\Carbon::parse($request->sched_date)->format('M d, Y') : 'N/A' }}</span>
+                        <span class="mobile-request-value"></span>
                     </div>
                     <div class="mobile-request-row">
                         <span class="mobile-request-label">Status:</span>
@@ -1027,26 +1030,25 @@
             @forelse ($fourpsRequests as $request)
                 <div class="mobile-request-card">
                     <div class="mobile-request-row">
-                        <span class="mobile-request-label">Full Name:</span>
-                        <span class="mobile-request-value">{{ $request->firstname }} {{ $request->middlename }} {{ $request->lastname }}</span>
+                        <span class="mobile-request-label">Full Name: {{ $request->firstname }}{{ $request->middlename }} {{ $request->lastname }} </span>
                     </div>
                     <div class="mobile-request-row">
-                        <span class="mobile-request-label">Address:</span>
-                        <span class="mobile-request-value"># {{ $request->house_no }} {{ $request->purok_no }}</span>
+                        <span class="mobile-request-label">Address: # {{ $request->house_no }} {{ $request->purok_no }}</span>
+                        <span class="mobile-request-value"></span>
                     </div>
                     <div class="mobile-request-row">
-                        <span class="mobile-request-label">4PS ID:</span>
-                        <span class="mobile-request-value">{{ $request->fourps_id }}</span>
+                        <span class="mobile-request-label">4PS ID:{{ $request->fourps_id }}</span>
+                        <span class="mobile-request-value"></span>
+                    </div>
                     <div class="mobile-request-row">
-                        <span class="mobile-request-label">Date Requested:</span>
-                        <span class="mobile-request-value">{{ $request->created_at->format('M d, Y') }}</span>
+                        <span class="mobile-request-label">Date Requested: {{ $request->created_at->format('M d, Y') }}</span>
                     </div>
                     <div class="mobile-request-row">
                         <span class="mobile-request-label">Schedule Date:</span>
-                        <span class="mobile-request-value">{{ $request->sched_date ? \Carbon\Carbon::parse($request->sched_date)->format('M d, Y') : 'N/A' }}</span>
+                        <span class="mobile-request-value"></span>
                     </div>
                     <div class="mobile-request-row">
-                        <span class="mobile-request-label">Status:</span>
+                        <span class="mobile-request-label">Status:{{ $request->sched_date ? \Carbon\Carbon::parse($request->sched_date)->format('M d, Y') : '' }}</span>
                         <span class="mobile-request-value">
                             <span class="mobile-status-badge status-{{ strtolower($request->status) }}">
                                 {{ $request->status }}

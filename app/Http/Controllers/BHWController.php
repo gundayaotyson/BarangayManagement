@@ -26,6 +26,10 @@ class BHWController extends Controller
           $pregnants = Pregnant::all();
      return view('bhw.pregnant', compact('pregnants'));
     }
+    public function newdeliver()
+    {
+        return view('bhw.newdeliverpregnant');
+    }
 
     public function store(Request $request)
     {

@@ -908,15 +908,6 @@
                                 <input type="text" class="form-control" id="fourps_id" name="fourps_id" required>
                             </div>
                         </div>
-                         <!-- <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="fcapId">
-                                    <i class="fas fa-id-card me-1"></i>
-                                    FCAP ID
-                                </label>
-                                <input type="text" class="form-control" id="fcapId" name="fcapId" required>
-                            </div>
-                         </div> -->
 
                     </div>
 

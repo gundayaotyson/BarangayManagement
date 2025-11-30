@@ -15,8 +15,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         :root {
-            --primary-color: #8e44ad;
-            --secondary-color: #9b59b6;
+            --primary-color: #2c3e50;
+            --secondary-color: #343a40;
             --accent-color: #e74c3c;
             --light-bg: #f8f9fa;
             --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -52,7 +52,7 @@
         }
 
         .card-header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            background: var(--primary-color);
             color: white;
             border-radius: 10px 10px 0 0 !important;
             padding: 1rem 1.5rem;
@@ -71,13 +71,14 @@
             transition: all 0.3s;
         }
 
-        .form-control:focus, .form-select:focus {
-            border-color: var(--secondary-color);
-            box-shadow: 0 0 0 0.25rem rgba(142, 68, 173, 0.25);
-        }
+        .form-control:focus,
+.form-select:focus {
+    border-color: #2c3e50;
+    box-shadow: 0 0 0 0.25rem rgba(44, 62, 80, 0.25); /* #2c3e50 in rgba */
+}
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            background: var(--primary-color);
             border: none;
             border-radius: 8px;
             padding: 0.75rem 1.5rem;
@@ -86,6 +87,7 @@
         }
 
         .btn-primary:hover {
+            background: var(--primary-color);
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
@@ -102,7 +104,7 @@
         }
 
         .table thead {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            background:  var(--primary-color);
             color: white;
         }
 
@@ -149,7 +151,7 @@
         }
 
         .resident-badge {
-            background-color: var(--secondary-color);
+            background-color: var(--primary-color);
             color: white;
             padding: 0.25rem 0.5rem;
             border-radius: 4px;
@@ -240,9 +242,7 @@
 </head>
 <body>
     <div class="container py-4">
-        <h1 class="page-title">
-            <i class="fas fa-female me-2"></i>Pregnant Records Management
-        </h1>
+
 
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -282,7 +282,7 @@
 
         <!-- Action Buttons -->
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h3 class="mb-0">Pregnant Records</h3>
+            <h3 class="mb-0" class>Pregnant Records</h3>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPregnantModal">
                 <i class="fas fa-plus-circle me-2"></i>Add New Record
             </button>
@@ -321,7 +321,7 @@
                                     <td>{{ $pregnant->Fname }} {{ $pregnant->mname }} {{ $pregnant->lname }}</td>
                                     <td>{{ $pregnant->birthday }}</td>
                                     <td>{{ \Carbon\Carbon::parse($pregnant->birthday)->age }}</td>
-                                    <td>{{ $pregnant->household_no }}, Purok {{ $pregnant->purok_no }}</td>
+                                    <td>#{{ $pregnant->household_no }}, Purok {{ $pregnant->purok_no }}</td>
                                     <td>{{ $pregnant->LMP_date }}</td>
                                     <td>{{ $pregnant->EMC_date }}</td>
                                     <td>{{ $pregnant->sitio }}</td>
@@ -369,22 +369,22 @@
                             </div>
                             <div class="col-md-15 mb-3">
                                 <label for="resident_name" class="form-label">Search Resident</label>
-                                <input type="text" id="resident_name" class="form-control" placeholder="Type resident name..." required>
+                                <input type="text" id="resident_name" class="form-control" placeholder="Type resident name..." randomly required>
                                 <div class="form-text">Start typing to search for residents</div>
                             </div>
 
                             <div class="row mb-4">
                                 <div class="col-md-4 mb-3">
                                 <label for="Fname" class="form-label">First Name</label>
-                                <input type="text" name="Fname" id="Fname" class="form-control" readonly required>
+                                <input type="text" name="Fname" id="Fname" class="form-control" randomly required>
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label for="mname" class="form-label">Middle Name</label>
-                                <input type="text" name="mname" id="mname" class="form-control" readonly>
+                                <input type="text" name="mname" id="mname" class="form-control" randomly>
                             </div>
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-4 mb-4">
                                 <label for="lname" class="form-label">Last Name</label>
-                                <input type="text" name="lname" id="lname" class="form-control" readonly required>
+                                <input type="text" name="lname" id="lname" class="form-control" randomly required>
                             </div>
                             </div>
 
@@ -392,7 +392,7 @@
                                 <label for="birthday" class="form-label">Birthday</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-birthday-cake"></i></span>
-                                    <input type="date" name="birthday" id="birthday" class="form-control" readonly required onchange="calculateAge()">
+                                    <input type="date" name="birthday" id="birthday" class="form-control" randomly required onchange="calculateAge()">
                                 </div>
                             </div>
                             <div class="col-md-4 mb-3">
@@ -406,13 +406,13 @@
                                 <label for="household_no" class="form-label">House No.</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-home"></i></span>
-                                    <input type="number" name="household_no" id="household_no" class="form-control" readonly required>
+                                    <input type="number" name="household_no" id="household_no" class="form-control" randomly required>
                                 </div>
                             </div>
 
                             <div class="col-md-6 mb-3">
                                 <label for="purok_no" class="form-label">Purok No.</label>
-                                <select name="purok_no" id="purok_no" class="form-select" readonly>
+                                <select name="purok_no" id="purok_no" class="form-select" randomly onchange="updateSitio()" required>
                                     <option value="">Select Purok</option>
                                     <option value="1">Purok 1</option>
                                     <option value="2">Purok 2</option>
@@ -421,10 +421,11 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="sitio" class="form-label">Sitio</label>
-                                <select name="sitio" id="sitio" class="form-select" readonly>
+                                <select name="sitio" id="sitio" class="form-select"randomly >
                                     <option value="N/A">N/A</option>
                                 </select>
                             </div>
+
                         </div>
 
                         <div class="row">
@@ -450,7 +451,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button> -->
                         <button type="submit" class="btn btn-primary">
                             <i class="fas fa-save me-2"></i>Add Record
                         </button>
@@ -524,25 +525,35 @@
                             }
                         });
                     },
-                    select: function(event, ui) {
-                        const r = ui.item.data;
+                   select: function(event, ui) {
+                    const r = ui.item.data;
 
-                        $("#resident_id").val(r.id);
-                        $("#resident_id_display").val(r.id);
-                        $("#Fname").val(r.fname);
-                        $("#mname").val(r.mname);
-                        $("#lname").val(r.lname);
-                        $("#birthday").val(r.birthday);
-                        $("#household_no").val(r.household_no);
+                    $("#resident_id").val(r.id);
+                    $("#resident_id_display").val(r.id);
+                    $("#Fname").val(r.fname);
+                    $("#mname").val(r.mname);
+                    $("#lname").val(r.lname);
+                    $("#birthday").val(r.birthday);
+                    $("#household_no").val(r.household_no);
 
-                        $("#purok_no").val(r.purok_no);
-                        // $("#purok_no_hidden").val(r.purok_no);
+                    // Populate Purok
+                   $("#purok_no").val(r.purok_no);
 
-                        // Display sitio directly from resident record
+                    // Populate Sitio
+                    if (r.sitio && r.sitio !== "") {
                         $("#sitio").html(`<option value="${r.sitio}" selected>${r.sitio}</option>`);
-
-                        calculateAge();
+                    } else {
+                        // fallback based on purok
+                        let sitioOptions = '<option value="N/A">N/A</option>';
+                        if (r.purok_no == 1) sitioOptions += '<option value="Leksab" selected>Leksab</option>';
+                        else if (r.purok_no == 2) sitioOptions += '<option value="Taew" selected>Taew</option>';
+                        else if (r.purok_no == 3) sitioOptions += '<option value="Pidlaoan" selected>Pidlaoan</option>';
+                        $("#sitio").html(sitioOptions);
                     }
+
+                    calculateAge();
+                }
+
                 });
             });
 
