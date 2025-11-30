@@ -40,6 +40,11 @@ class DashboardController extends Controller
         $seniors = Senior::all();
         return view("admin.senior", compact('seniors'));
      }
-
+     public function BHWview(){
+        return view("admin.bhwview");
+     }
+     public function Fourpsview(){
+        return view("admin.4pslist");
+     }
 
 }

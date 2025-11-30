@@ -393,10 +393,11 @@
 
 
         <!-- <li><a href="{{ route('barangayservices') }}" class="{{ request()->routeIs('barangayservices') ? 'active' : '' }}"><i class="fas fa-plus"></i> <span>Barangay Services </span></a></li> -->
-        <li><a href="#"><i class="fas fa-clipboard-list"></i> <span>SK Projects</span></a></li>
-        <li><a href="#"><i class="fas fa-user-nurse"></i> <span>4p's</span></a></li>
+        <!-- <li><a href="#"><i class="fas fa-clipboard-list"></i> <span>SK Projects</span></a></li> -->
+         <li><a href="{{ route('bhwview') }}" class="{{ request()->routeIs('bhwview') ? 'active' : '' }}"><i class="fas fa-user-nurse"></i> <span>BHW</span></a></li>
+        <li><a href="{{ route('4pslist') }}" class="{{ request()->routeIs('4pslist') ? 'active' : '' }}"><i class="fas fa-users"></i> <span>4p's</span></a></li>
 
-        <li><a href="#"><i class="fas fa-user-nurse"></i> <span>BHW</span></a></li>
+        <!-- <li><a href="#"><i class="fas fa-user-nurse"></i> <span>BHW</span></a></li> -->
         <li><a href="{{ route('senior') }}" class="{{ request()->routeIs('senior') ? 'active' : '' }}"><i class="fas fa-person-cane"></i> <span>Senior Citizen</span></a></li>
         <!-- <li><a href="#"><i class="fas fa-user"></i> <span>CVO Reports</span></a></li> -->
         <!-- <li><a href="#"><i class="fas fa-cogs"></i> <span>Settings</span></a></li> -->

@@ -26,4 +26,8 @@ class BhwRequest extends Model
         'sched_date',
         'phil_no',
     ];
+    public function resident()
+    {
+        return $this->belongsTo(Resident::class);
+    }
 }

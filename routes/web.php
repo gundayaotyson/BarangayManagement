@@ -100,7 +100,7 @@ Route::middleware(['auth'])->group(function () {
 // New Delivery Update
     Route::put('/bhw/newdelivery/update/{id}', [BHWController::class, 'updateNewDelivery'])->name('bhw.newdelivery.update');
     Route::put('/pregnant/update/{id}', [BHWController::class, 'updatePregnant'])->name('bhw.pregnant.update');
-
+    Route::get('/bhwview', [DashboardController::class, 'BHWview'])->name('bhwview');
     // Senior Routes
     Route::get('/Senior', [DashboardController::class, 'Senior'])->name('senior');
     Route::get('/senior/homepage', [SeniorController::class, 'homepage'])->name('senior.homepage');
@@ -137,7 +137,7 @@ Route::get('/seniors/{id}/resident', [SeniorController::class, 'residentDetails'
     Route::post('/4ps/requests', [FourpsController::class, 'store'])->name('4ps.store');
     Route::put('/4ps/requests/{fourpsRequest}', [FourpsController::class, 'update'])->name('4ps.update');
     Route::put('/4ps/requests/{fourpsRequest}/cancel', [FourpsController::class, 'cancel'])->name('4ps.cancel');
-
+    Route::get('/4pslist', [DashboardController::class, 'Fourpsview'])->name('4pslist');
     // Resident Routes
     Route::get('/resident/dashboard', [ResidentController::class, 'dashboard'])->name('resident.dashboard');
     Route::get('/resident-profile', [ProfileController::class, 'residentProfile'])->name('resident.profile');

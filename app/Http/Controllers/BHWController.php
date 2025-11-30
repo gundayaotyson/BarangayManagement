@@ -23,7 +23,27 @@ class BHWController extends Controller
 
     public function home()
     {
-        return view('bhw.home');
+        $totalRequests = BhwRequest::count();
+        $pendingRequests = BhwRequest::where('status', 'Pending')->count();
+        $scheduledRequests = BhwRequest::where('status', 'Scheduled')->count();
+        $totalPregnant = Pregnant::count();
+        $totalNewDelivery = newdelivery::count();
+        $maleBabies = newdelivery::where('gender', 'Male')->count();
+        $femaleBabies = newdelivery::where('gender', 'Female')->count();
+        $recentRequests = BhwRequest::with('resident')->orderBy('created_at', 'desc')->get();
+        $recentSchedules = BhwRequest::with('resident')->where('status', 'Scheduled')->orderBy('sched_date', 'desc')->get();
+
+        return view('bhw.home', compact(
+            'totalRequests',
+            'pendingRequests',
+            'scheduledRequests',
+            'totalPregnant',
+            'totalNewDelivery',
+            'maleBabies',
+            'femaleBabies',
+            'recentRequests',
+            'recentSchedules'
+        ));
     }
 
     public function pregnant()
