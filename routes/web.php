@@ -95,7 +95,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/bhw/pregnant', [BHWController::class, 'storePregnant'])->name('bhw.pregnant.store');
     Route::put('/bhw/pregnant/{id}', [BHWController::class, 'update'])->name('bhw.pregnant.update');
     Route::delete('/bhw/pregnant/{id}', [BHWController::class, 'destroy'])->name('bhw.pregnant.destroy');
-Route::get('/bhw/search-residents', [BHWController::class, 'searchResidents'])->name('bhw.search_residents');
+    Route::get('/bhw/search-residents', [BHWController::class, 'searchResidents'])->name('bhw.search_residents');
+    Route::post('/bhw/newdelivery', [BHWController::class, 'storeNewDelivery'])->name('bhw.storeNewDelivery');
+// New Delivery Update
+    Route::put('/bhw/newdelivery/update/{id}', [BHWController::class, 'updateNewDelivery'])->name('bhw.newdelivery.update');
+    Route::put('/pregnant/update/{id}', [BHWController::class, 'updatePregnant'])->name('bhw.pregnant.update');
+
     // Senior Routes
     Route::get('/Senior', [DashboardController::class, 'Senior'])->name('senior');
     Route::get('/senior/homepage', [SeniorController::class, 'homepage'])->name('senior.homepage');

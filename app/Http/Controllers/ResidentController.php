@@ -137,6 +137,8 @@ class ResidentController extends Controller
 
     if ($requestModel) {
         $requestModel->delete();
+        $requestModel->status = 'cancelled';
+        $requestModel->save();
         return redirect()->back()->with('success', 'Request cancelled successfully.');
     }
 

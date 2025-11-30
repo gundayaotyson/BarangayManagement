@@ -136,6 +136,9 @@
 
         color: var(--success-color);
     }
+    .status-cancelled {
+        color: var(--danger-color);
+    }
 
     .action-buttons {
         display: flex;
@@ -427,16 +430,16 @@
                                 <span class="badge bg-light text-dark font-monospace">{{ $request->tracking_code }}</span>
                             </td>
                             <td>
-                                <span class="status-badge status-{{ str_replace(' ', '', $request->status) }}">
-                                    {{ ucfirst($request->status) }}
-                                </span>
+                                <span class="status-badge status-{{ str_replace(' ', '', strtolower($request->status)) }}">
+    {{ ucfirst($request->status) }}
+</span>
                             </td>
                             <td>
                                 <div class="action-buttons">
                                     <!-- <a href="{{ route('clearance.view', $request->id) }}" class="btn btn-sm btn-view" data-bs-toggle="tooltip" title="Generate Document">
                                         <i class="fas fa-file-pdf"></i>
                                     </a> -->
-                                    <button type="button" class="btn btn-sm btn-edit edit-status-btn" data-id="{{ $request->id }}" data-status="{{ $request->status }}" data-bs-toggle="tooltip" title="Edit Status">
+                                    <button type="button" class="btn btn-sm btn-edit edit-status-btn" data-id="{{ $request->id }}" data-status="{{ $request->status }}" data-bs-toggle="tooltip" title="Edit Status" {{ $request->status === 'cancelled' ? 'disabled' : '' }}>
                                         <i class="fas fa-edit"></i>
                                     </button>
                                     <form action="{{ route('clearance.delete', $request->id) }}" method="POST" class="d-inline delete-form">
@@ -489,6 +492,7 @@
                             <option value="processing">Processing</option>
                             <option value="ready to pick up">Ready to Pick Up</option>
                             <option value="released">Released</option>
+                            <option value="cancelled">Cancelled</option>
                         </select>
                     </div>
                     <div class="mb-3">
@@ -568,7 +572,7 @@ $(document).ready(function () {
                     let badge = row.find(".status-badge");
 
                     // Remove all status classes
-                    badge.removeClass("status-pending status-processing status-ready status-released");
+                    badge.removeClass("status-pending status-processing status-ready status-released status-cancelled");
 
                     // Add the appropriate class
                         if (newStatus === "pending") {
@@ -579,6 +583,8 @@ $(document).ready(function () {
                             badge.addClass("status-ready").text("Ready to Pick Up");
                         } else if (newStatus === "released") {
                             badge.addClass("status-released").text("Released");
+                        } else if (newStatus === "cancelled") {
+                            badge.addClass("status-cancelled").text("Cancelled");
                         }
 
                     // Show success message

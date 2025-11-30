@@ -123,6 +123,8 @@
     top: 15px;
     right: 15px;
     font-size: 1.7rem;
+        opacity: 100;
+
 }
 
 .row:nth-child(2) .col-md-3:nth-child(2) .card-body::after {
@@ -132,7 +134,7 @@
     top: 15px;
     right: 15px;
     font-size: 1.7rem;
-    opacity: 10;
+    opacity: 100;
 }
 
 .row:nth-child(2) .col-md-3:nth-child(3) .card-body::after {
@@ -142,7 +144,7 @@
     top: 15px;
     right: 15px;
     font-size: 1.8rem;
-    opacity: 0.2;
+    opacity: 100;
 }
 
 .row:nth-child(2) .col-md-3:nth-child(4) .card-body::after {
@@ -152,7 +154,7 @@
     top: 15px;
     right: 15px;
     font-size: 1.8rem;
-    opacity: 0.2;
+    opacity: 100;
 }
 
 
@@ -194,6 +196,7 @@ h2::after {
 }
 
 .table thead th {
+    background: #2c3e50;
     color: white;
     font-weight: 600;
     border: none;
@@ -327,7 +330,7 @@ h2::after {
     }
 
     .row:first-child h1 {
-        font-size: 2rem;
+        font-size: 22px;
         padding-left: 15px;
     }
 
