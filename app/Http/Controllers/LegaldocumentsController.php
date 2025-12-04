@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Resident;
 use Illuminate\Http\Request;
-use App\Models\ClearanceReq;
+use App\Models\clearancereq;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;

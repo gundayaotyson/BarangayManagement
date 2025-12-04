@@ -26,6 +26,12 @@
             background-color: #f5f7fa;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+        .bg-primary.text-white.p-3.rounded-lg {
+            background: var(--primary-color);
+            border: none;
+            box-shadow: var(--box-shadow);
+            border-radius: var(--border-radius) !important;
+        }
 
         .container {
             max-width: 1200px;
@@ -341,6 +347,13 @@
     </style>
 </head>
 <body>
+        <!-- <div class="d-none d-sm-inline-block" style="margin-left:auto; float:right;">
+                <div style="background-color:#2c3e50;" class="text-white p-3 rounded-lg">
+                    <i class="fas fa-calendar-alt fa-fw"></i>
+                    <span id="current-date">{{ now()->format('l, F j, Y') }}</span>
+                </div>
+        </div> -->
+
     <div class="container py-4">
         @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">

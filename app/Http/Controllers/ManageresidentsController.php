@@ -54,14 +54,31 @@ class ManageresidentsController extends Controller
     // Compute age
     $validatedData['age'] = Carbon::parse($validatedData['birthday'])->age;
 
-    // Handle image upload
-    if ($request->hasFile('image')) {
-        $filename = time() . '_' . $request->file('image')->getClientOriginalName();
-        $path = $request->file('image')->storeAs('resident_images', $filename, 'public');
-        $validatedData['image'] = $path;
-    } else {
-        $validatedData['image'] = null;
-    }
+    // Handle image upload for localhost
+    // if ($request->hasFile('image')) {
+    //     $filename = time() . '_' . $request->file('image')->getClientOriginalName();
+    //     $path = $request->file('image')->storeAs('resident_images', $filename, 'public');
+    //     $validatedData['image'] = $path;
+    // } else {
+    //     $validatedData['image'] = null;
+    // }
+    // Handle image upload (InfinityFree Compatible)
+        if ($request->hasFile('image')) {
+
+            // Generate unique filename
+            $imageName = time() . '_' . $request->file('image')->getClientOriginalName();
+
+                // InfinityFree does NOT allow Laravel storage, so use manual path
+                $destinationPath = base_path('../storage/resident_images');  // Public images folder outside htdocs
+                $request->image->move($destinationPath, $imageName);
+
+            // Save path (only folder + filename)
+            $validatedData['image'] = 'resident_images/' . $imageName;
+
+        } else {
+            $validatedData['image'] = null;
+        }
+
 
     // Create and save resident
     Resident::create($validatedData);
@@ -111,11 +128,26 @@ class ManageresidentsController extends Controller
         ]);
         $resident = Resident::findOrFail($id);
 
-        // Handle image upload if a new one is provided
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('resident_images', 'public');
-            $resident->image = $imagePath; // Update image path
-        }
+        // Handle image upload if a new one is provided for localhost
+        // if ($request->hasFile('image')) {
+        //     $imagePath = $request->file('image')->store('resident_images', 'public');
+        //     $resident->image = $imagePath; // Update image path
+        // }
+
+        // Handle image upload for InfinityFree
+            if ($request->hasFile('image')) {
+
+                // Generate unique filename
+                $imageName = time() . '_' . $request->image->getClientOriginalName();
+
+                // InfinityFree does NOT allow Laravel storage, so use manual path
+                $destinationPath = base_path('../storage/resident_images');  // Public images folder outside htdocs
+                $request->image->move($destinationPath, $imageName);
+
+                // Save only the filename (optional: save full path if needed)
+                $resident->image = 'resident_images/'.$imageName;
+            }
+
 
         // Calculate age using Carbon
         $age = Carbon::parse($request->birthday)->age;

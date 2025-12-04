@@ -1,5 +1,462 @@
 @extends('bhw.dashboard')
 @section('content')
+<style>
+/* Enhanced BHW Dashboard Styles */
+:root {
+    --primary: #4e73df;
+    --primary-light: #9bb8f5;
+    --primary-dark: #3a5ccc;
+    --success: #1cc88a;
+    --success-light: #7ae0b5;
+    --info: #36b9cc;
+    --info-light: #7cdbf2;
+    --warning: #f6c23e;
+    --warning-light: #f9d886;
+    --danger: #e74a3b;
+    --danger-light: #f4a79c;
+    --dark: #5a5c69;
+    --light: #f8f9fc;
+    --white: #ffffff;
+    --border-radius: 12px;
+    --border-radius-sm: 8px;
+    --box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    --box-shadow-lg: 0 8px 25px rgba(0,0,0,0.12);
+    --transition: all 0.3s ease;
+}
+
+/* Base Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fc;
+}
+
+.container-fluid {
+    padding: 1.5rem;
+}
+
+/* Page Header */
+.d-sm-flex.align-items-center.justify-content-between.mb-4 {
+    margin-bottom: 2rem !important;
+}
+
+.h3.mb-0.text-gray-800.font-weight-bold {
+    font-weight: 700 !important;
+    color: #2e384d;
+    margin-bottom: 0.5rem !important;
+}
+
+.mb-0.text-muted {
+    color: #6c757d !important;
+    font-size: 0.95rem;
+}
+
+.bg-primary.text-white.p-3.rounded-lg {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark)) !important;
+    border: none;
+    box-shadow: var(--box-shadow);
+    border-radius: var(--border-radius) !important;
+}
+
+.rounded-lg {
+    border-radius: var(--border-radius) !important;
+}
+
+/* Statistics Cards */
+.card {
+    transition: var(--transition);
+    border-radius: var(--border-radius) !important;
+    border: none;
+    box-shadow: var(--box-shadow);
+    margin-bottom: 1.5rem;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--box-shadow-lg) !important;
+}
+
+.card.border-left-primary { border-left: 4px solid var(--primary) !important; }
+.card.border-left-success { border-left: 4px solid var(--success) !important; }
+.card.border-left-info { border-left: 4px solid var(--info) !important; }
+.card.border-left-warning { border-left: 4px solid var(--warning) !important; }
+.card.border-left-danger { border-left: 4px solid var(--danger) !important; }
+
+.card-body {
+    padding: 1.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.position-absolute.top-0.end-0.mt-3.me-3.opacity-10 {
+    z-index: 1;
+    font-size: 3.5rem !important;
+    opacity: 0.15 !important;
+}
+
+.text-xs.font-weight-bold.text-uppercase.mb-1 {
+    font-size: 0.8rem;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.75rem !important;
+}
+
+.h5.mb-0.font-weight-bold.text-gray-800 {
+    font-size: 1.75rem;
+    font-weight: 700 !important;
+    color: #2e384d !important;
+    margin-bottom: 1rem !important;
+}
+
+.mt-2.mb-0.text-muted.text-xs {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: #6c757d !important;
+    margin-top: 0.75rem !important;
+}
+
+.text-primary-300 { color: var(--primary-light) !important; }
+.text-success-300 { color: var(--success-light) !important; }
+.text-info-300 { color: var(--info-light) !important; }
+.text-warning-300 { color: var(--warning-light) !important; }
+.text-danger-300 { color: var(--danger-light) !important; }
+
+/* Tables */
+.card.shadow.mb-4.border-0 {
+    border-radius: var(--border-radius) !important;
+    overflow: hidden;
+}
+
+.card-header.bg-white.py-3 {
+    background: var(--white) !important;
+    border-bottom: 1px solid #e3e6f0;
+    padding: 1.25rem 1.5rem !important;
+}
+
+.card-header h6 {
+    font-weight: 600 !important;
+    color: #2e384d;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0 !important;
+}
+
+.btn.btn-sm.btn-primary {
+    background: var(--primary);
+    border: none;
+    border-radius: var(--border-radius-sm);
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.btn.btn-sm.btn-primary:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(78, 115, 223, 0.3);
+}
+
+.table-responsive {
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    overflow: hidden;
+}
+
+.table.table-hover.table-borderless {
+    margin-bottom: 0 !important;
+}
+
+.table thead.bg-light {
+    background-color: #f8f9fc !important;
+}
+
+.table th.border-0 {
+    border: none !important;
+    padding: 1rem 1.5rem;
+    font-weight: 600;
+    color: #6c757d;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.table td {
+    padding: 1.25rem 1.5rem;
+    vertical-align: middle;
+    border-top: 1px solid #e3e6f0;
+}
+
+.table tbody tr {
+    transition: var(--transition);
+}
+
+.table tbody tr:hover {
+    background-color: rgba(78, 115, 223, 0.05) !important;
+}
+
+.bg-primary.rounded-circle.p-2.me-3,
+.bg-info.rounded-circle.p-2.me-3 {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50% !important;
+}
+
+.fw-bold.text-dark {
+    font-weight: 600 !important;
+    color: #2e384d !important;
+    margin-bottom: 0.25rem;
+}
+
+.badge {
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.4rem 0.75rem;
+    border-radius: var(--border-radius-sm);
+}
+
+.badge.bg-warning.text-dark {
+    background-color: rgba(246, 194, 62, 0.15) !important;
+    color: #856404 !important;
+    border: 1px solid rgba(246, 194, 62, 0.3);
+}
+
+.badge.bg-success {
+    background-color: rgba(28, 200, 138, 0.15) !important;
+    color: #155724 !important;
+    border: 1px solid rgba(28, 200, 138, 0.3);
+}
+
+.badge.bg-secondary {
+    background-color: rgba(108, 117, 125, 0.15) !important;
+    color: #383d41 !important;
+    border: 1px solid rgba(108, 117, 125, 0.3);
+}
+
+.badge.bg-light.text-dark.border {
+    background-color: #f8f9fc !important;
+    color: #5a5c69 !important;
+    border: 1px solid #e3e6f0 !important;
+}
+
+/* Quick Actions */
+.card.shadow.border-0 {
+    border-radius: var(--border-radius) !important;
+}
+
+.action-card {
+    transition: var(--transition);
+    border-radius: var(--border-radius) !important;
+    border: 1px solid #e3e6f0;
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
+}
+
+.action-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--box-shadow-lg) !important;
+    text-decoration: none;
+    color: inherit;
+}
+
+.action-card .card-body {
+    padding: 2rem 1.5rem !important;
+    text-align: center;
+}
+
+.bg-primary.rounded-circle.p-3.mb-3.mx-auto,
+.bg-success.rounded-circle.p-3.mb-3.mx-auto,
+.bg-info.rounded-circle.p-3.mb-3.mx-auto {
+    width: 70px !important;
+    height: 70px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50% !important;
+    transition: var(--transition);
+}
+
+.action-card:hover .bg-primary.rounded-circle.p-3.mb-3.mx-auto {
+    background: var(--primary-dark) !important;
+    transform: scale(1.1);
+}
+
+.action-card:hover .bg-success.rounded-circle.p-3.mb-3.mx-auto {
+    background: #17a673 !important;
+    transform: scale(1.1);
+}
+
+.action-card:hover .bg-info.rounded-circle.p-3.mb-3.mx-auto {
+    background: #2a9cb8 !important;
+    transform: scale(1.1);
+}
+
+.fw-bold.text-dark.mb-1 {
+    font-weight: 600 !important;
+    color: #2e384d !important;
+    margin-bottom: 0.5rem !important;
+    font-size: 1rem;
+}
+
+/* Empty States */
+.text-center.py-4.text-muted {
+    padding: 3rem 1rem !important;
+}
+
+.text-center.py-4.text-muted i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container-fluid {
+        padding: 1rem;
+    }
+
+    .d-sm-flex.align-items-center.justify-content-between.mb-4 {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 1rem;
+    }
+
+    .d-none.d-sm-inline-block {
+        display: block !important;
+        width: 100%;
+    }
+
+    .bg-primary.text-white.p-3.rounded-lg {
+        padding: 1rem !important;
+        text-align: center;
+    }
+
+    .card-body {
+        padding: 1.25rem;
+    }
+
+    .h5.mb-0.font-weight-bold.text-gray-800 {
+        font-size: 1.5rem;
+    }
+
+    .position-absolute.top-0.end-0.mt-3.me-3.opacity-10 {
+        font-size: 2.5rem !important;
+        margin-top: 1rem !important;
+        margin-right: 1rem !important;
+    }
+
+    .table th,
+    .table td {
+        padding: 0.75rem 1rem;
+    }
+
+    .card-header.bg-white.py-3 {
+        padding: 1rem !important;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start !important;
+    }
+
+    .action-card .card-body {
+        padding: 1.5rem 1rem !important;
+    }
+
+    .bg-primary.rounded-circle.p-3.mb-3.mx-auto,
+    .bg-success.rounded-circle.p-3.mb-3.mx-auto,
+    .bg-info.rounded-circle.p-3.mb-3.mx-auto {
+        width: 60px !important;
+        height: 60px !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .col-md-3.col-6.mb-3 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+
+    .table-responsive {
+        font-size: 0.85rem;
+    }
+
+    .d-flex.align-items-center {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 0.5rem;
+    }
+
+    .bg-primary.rounded-circle.p-2.me-3,
+    .bg-info.rounded-circle.p-2.me-3 {
+        margin-right: 0 !important;
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* Animation for cards */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+/* Stagger animation for statistics cards */
+.row .col-xl-3.col-md-6.mb-4:nth-child(1) .card { animation-delay: 0.1s; }
+.row .col-xl-3.col-md-6.mb-4:nth-child(2) .card { animation-delay: 0.2s; }
+.row .col-xl-3.col-md-6.mb-4:nth-child(3) .card { animation-delay: 0.3s; }
+.row .col-xl-3.col-md-6.mb-4:nth-child(4) .card { animation-delay: 0.4s; }
+</style>
+
+<script>
+// Enhanced JavaScript for current date
+function updateCurrentDate() {
+    const now = new Date();
+    const options = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    };
+    document.getElementById('current-date').textContent = now.toLocaleDateString('en-US', options);
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+    updateCurrentDate();
+
+    // Update every minute
+    setInterval(updateCurrentDate, 60000);
+
+    // Add loading animation to cards
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+    });
+
+    // Animate cards in
+    setTimeout(() => {
+        cards.forEach(card => {
+            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        });
+    }, 100);
+});
+</script>
 <div class="container-fluid px-4">
     <!-- Page Header -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -27,13 +484,13 @@
                                 Total Requests</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalRequests }}</div>
                             <div class="mt-2 mb-0 text-muted text-xs">
-                                <i class="fas fa-history fa-sm"></i>
+                                    <i class="fas fa-history fa-sm"></i>
                                 <span>All time records</span>
                             </div>
                         </div>
-                        <div class="col-auto">
+                        <!-- <div class="col-auto">
                             <i class="fas fa-clipboard-list fa-2x text-primary-300"></i>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <!-- Animated background element -->
@@ -58,7 +515,7 @@
                             </div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-clock fa-2x text-warning-300"></i>
+                            <!-- <i class="fas fa-clock fa-2x text-warning-300"></i> -->
                         </div>
                     </div>
                 </div>
@@ -83,7 +540,7 @@
                             </div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-calendar-check fa-2x text-info-300"></i>
+                            <!-- <i class="fas fa-calendar-check fa-2x text-info-300"></i> -->
                         </div>
                     </div>
                 </div>
@@ -108,7 +565,7 @@
                             </div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-female fa-2x text-success-300"></i>
+                            <!-- <i class="fas fa-female fa-2x text-success-300"></i> -->
                         </div>
                     </div>
                 </div>
@@ -136,7 +593,7 @@
                             </div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-baby fa-2x text-primary-300"></i>
+                            <!-- <i class="fas fa-baby fa-2x text-primary-300"></i> -->
                         </div>
                     </div>
                 </div>
@@ -161,7 +618,7 @@
                             </div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-male fa-2x text-info-300"></i>
+                            <!-- <i class="fas fa-male fa-2x text-info-300"></i> -->
                         </div>
                     </div>
                 </div>
@@ -186,7 +643,7 @@
                             </div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-female fa-2x text-danger-300"></i>
+                            <!-- <i class="fas fa-female fa-2x text-danger-300"></i> -->
                         </div>
                     </div>
                 </div>
@@ -211,7 +668,7 @@
                             </div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-baby-carriage fa-2x text-success-300"></i>
+                            <!-- <i class="fas fa-baby-carriage fa-2x text-success-300"></i> -->
                         </div>
                     </div>
                 </div>
@@ -387,17 +844,6 @@
                                     </div>
                                     <h6 class="fw-bold text-dark mb-1">New Deliveries</h6>
                                     <small class="text-muted">Record baby births</small>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-3 col-6 mb-3">
-                            <a href="#" class="card action-card text-decoration-none">
-                                <div class="card-body text-center p-4">
-                                    <div class="bg-warning rounded-circle p-3 mb-3 mx-auto" style="width: 60px; height: 60px;">
-                                        <i class="fas fa-chart-bar text-white fa-lg"></i>
-                                    </div>
-                                    <h6 class="fw-bold text-dark mb-1">Reports</h6>
-                                    <small class="text-muted">Generate reports</small>
                                 </div>
                             </a>
                         </div>

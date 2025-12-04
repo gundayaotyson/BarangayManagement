@@ -1415,7 +1415,7 @@
         <div class="products-container">
             <div class="products-box">
                 <i class='bx bx-file'></i>
-                <h3>Barangay Clearance</h3>
+                <h3>Barangay Legal Documents</h3>
                 <p>Request your official Barangay Clearance for various transactions</p>
                 <a href="{{ route('login') }}" class="btn">Proceed</a>
             </div>
@@ -1424,14 +1424,14 @@
                 <i class='bx bx-id-card'></i>
                 <h3>Barangay Indigency</h3>
                 <p>Obtain a Certificate of Indigency for social welfare purposes</p>
-                <a href="{{ route('brgyindigencyform') }}" class="btn">Proceed</a>
+                <a href="{{ route('login') }}" class="btn">Proceed</a>
             </div>
 
             <div class="products-box2">
                 <i class='bx bx-building-house'></i>
                 <h3>Barangay Permit</h3>
                 <p>Apply for business permits and other necessary clearances</p>
-                <a href="#" class="btn">Proceed</a>
+                <a href="{{ route('login') }}" class="btn">Proceed</a>
             </div>
             @foreach($services as $service)
                 <div class="products-box">

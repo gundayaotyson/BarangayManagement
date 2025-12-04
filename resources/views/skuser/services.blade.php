@@ -318,7 +318,7 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse ($skServices as $service)
+                @forelse ($SKService as $service)
                     <tr>
                         <td>{{ $service->firstname }} {{ $service->lastname }}</td>
                         <td>{{ $service->school }}</td>
@@ -371,7 +371,7 @@
     </div>
 </div>
 
-@foreach ($skServices as $service)
+@foreach ($SKService as $service)
     <!-- View Modal -->
     <div class="modal fade" id="viewModal{{ $service->id }}" tabindex="-1" aria-labelledby="viewModalLabel{{ $service->id }}" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Resident;
 use App\Models\BarangayCase;
-use App\Models\Clearancereq;
+use App\Models\clearancereq;
 use App\Models\Senior;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -28,7 +28,7 @@ class DashboardController extends Controller
             'totalFamilies' => Resident::select('household_no', 'lname')->distinct()->get()->count(),
             'householdsPerPurok' => Resident::select('purok_no', DB::raw('count(DISTINCT household_no) as household_count'))->groupBy('purok_no')->get(),
             'householdsPerSitio' => Resident::select('sitio', DB::raw('count(DISTINCT household_no) as household_count'))->whereNotNull('sitio')->groupBy('sitio')->get(),
-            'recentRequests' => Clearancereq::with('resident')->latest()->take(10)->get()
+            'recentRequests' => clearancereq::with('resident')->latest()->take(10)->get()
         ];
 
 
@@ -43,8 +43,8 @@ class DashboardController extends Controller
      public function BHWview(){
         return view("admin.bhwview");
      }
-     public function Fourpsview(){
-        return view("admin.4pslist");
-     }
+    //  public function Fourpsview(){
+    //     return view("admin.4pslist");
+    //  }
 
 }

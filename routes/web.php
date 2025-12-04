@@ -138,6 +138,13 @@ Route::get('/seniors/{id}/resident', [SeniorController::class, 'residentDetails'
     Route::put('/4ps/requests/{fourpsRequest}', [FourpsController::class, 'update'])->name('4ps.update');
     Route::put('/4ps/requests/{fourpsRequest}/cancel', [FourpsController::class, 'cancel'])->name('4ps.cancel');
     Route::get('/4pslist', [DashboardController::class, 'Fourpsview'])->name('4pslist');
+    Route::prefix('4ps')->group(function () {
+    // Route::get('/residentlist', [FourpsController::class, 'ResidentList'])->name('4ps.residentlist');
+    Route::post('/residentlist', [FourpsController::class, 'storeReslist'])->name('4ps.residentlist.store');
+    Route::put('/residentlist/{fourp}', [FourpsController::class, 'update'])->name('4ps.residentlist.update');
+    Route::delete('/residentlist/{fourp}', [FourpsController::class, 'DestroyReslist'])->name('4ps.residentlist.destroy');
+    Route::get('/search-residents', [FourpsController::class, 'searchResidents'])->name('4ps.search_residents');
+});
     // Resident Routes
     Route::get('/resident/dashboard', [ResidentController::class, 'dashboard'])->name('resident.dashboard');
     Route::get('/resident-profile', [ProfileController::class, 'residentProfile'])->name('resident.profile');
