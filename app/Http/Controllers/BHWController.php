@@ -246,14 +246,23 @@ class BHWController extends Controller
             ->with('success', 'New delivery record updated successfully!');
     }
 
-    public function searchResidents(Request $request)
-    {
-        $query = $request->get('query');
+  public function searchResidents(Request $request)
+{
+    $query = $request->get('query');
+    $resident_id = $request->get('resident_id');
 
+    if ($resident_id) {
+        // Search by specific ID
+        $residents = Resident::where('id', $resident_id)
+            ->get(['id', 'fname', 'mname', 'lname', 'birthday', 'household_no', 'purok_no', 'sitio']);
+    } else {
+        // Search by name
         $residents = Resident::where('fname', 'LIKE', "%{$query}%")
+            ->orWhere('mname', 'LIKE', "%{$query}%")
             ->orWhere('lname', 'LIKE', "%{$query}%")
             ->get(['id', 'fname', 'mname', 'lname', 'birthday', 'household_no', 'purok_no', 'sitio']);
-
-        return response()->json($residents);
     }
+
+    return response()->json($residents);
+}
 }

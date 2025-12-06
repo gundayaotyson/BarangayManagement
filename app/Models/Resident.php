@@ -55,4 +55,10 @@ public function official()
     {
         return $this->hasMany(Pregnant::class);
     }
+
+    public function fourps()
+{
+    return $this->hasMany(Fourps::class, 'resident_id');
+}
+
 }

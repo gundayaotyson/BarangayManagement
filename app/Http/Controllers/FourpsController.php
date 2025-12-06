@@ -13,6 +13,7 @@ class FourpsController extends Controller
     {
         return view('4ps.dashboard');
     }
+
     public function ResidentList()
     {
         $fourps = Fourps::with('resident')->get();
@@ -22,12 +23,24 @@ class FourpsController extends Controller
 
     public function home()
     {
-        return view('4ps.home');
+        $totalResidents = Fourps::count();
+        $totalRequests = FourpsRequest::count();
+        $pendingRequests = FourpsRequest::where('status', 'pending')->count();
+        $acceptedRequests = FourpsRequest::where('status', 'accepted')->count();
+        $rejectedRequests = FourpsRequest::where('status', 'rejected')->count();
+
+        return view('4ps.home', compact(
+            'totalResidents',
+            'totalRequests',
+            'pendingRequests',
+            'acceptedRequests',
+            'rejectedRequests'
+        ));
     }
+
     public function requestslist()
     {
-        $requests = FourpsRequest::with('resident')->paginate(10);
-
+        $requests = FourpsRequest::with('resident')->where('status', '!=', 'accepted')->paginate(10);
         return view('4ps.requestslist', compact('requests'));
     }
 
@@ -40,7 +53,7 @@ class FourpsController extends Controller
             'middlename' => 'required',
             'fourps_id' => 'required',
             'purok_no' => 'required',
-            'house_no' => 'required',
+            'household_no' => 'required',
         ]);
 
         FourpsRequest::create($request->all());
@@ -56,6 +69,19 @@ class FourpsController extends Controller
         ]);
 
         $fourpsRequest->update($request->all());
+
+        if ($request->status == 'accepted') {
+            Fourps::create([
+                'resident_id' => $fourpsRequest->resident_id,
+                'fname' => $fourpsRequest->firstname,
+                'mname' => $fourpsRequest->middlename,
+                'lname' => $fourpsRequest->lastname,
+                'purok_no' => $fourpsRequest->purok_no,
+                'household_no' => $fourpsRequest->house_no,
+                'fourps_id' => $fourpsRequest->fourps_id,
+                'status' => 'Active',
+            ]);
+        }
 
         return redirect()->route('4ps.requestslist')
             ->with('success', 'Request updated successfully.');
@@ -73,13 +99,13 @@ class FourpsController extends Controller
     {
         $request->validate([
             'resident_id' => 'nullable|exists:residents,id',
-            'fname' => 'required',
-            'mname' => 'required',
-            'lname' => 'required',
-            'purok_no' => 'required',
-            'house_no' => 'required',
-            'fourps_id' => 'required|unique:fourps,fourps_id',
-            'status' => 'required',
+            'fname' => 'required|string|max:255',
+            'mname' => 'nullable|string|max:255',
+            'lname' => 'required|string|max:255',
+            'purok_no' => 'required|string|max:50',
+            'household_no' => 'required|string|max:50',
+            'fourps_id' => 'required|string|max:100|unique:fourps,fourps_id',
+            'status' => 'required|in:active,inactive',
         ]);
 
         Fourps::create($request->all());
@@ -88,56 +114,91 @@ class FourpsController extends Controller
             ->with('success', '4Ps beneficiary added successfully.');
     }
 
+    public function updateReslist(Request $request, $id)
+    {
+        $fourps = Fourps::findOrFail($id);
+
+        $request->validate([
+            'resident_id' => 'nullable|exists:residents,id',
+            'fname' => 'required|string|max:255',
+            'mname' => 'nullable|string|max:255',
+            'lname' => 'required|string|max:255',
+            'purok_no' => 'required|string|max:50',
+            'household_no' => 'required|string|max:50',
+            'fourps_id' => 'required|string|max:100|unique:fourps,fourps_id,' . $id,
+            'status' => 'required|in:active,inactive',
+        ]);
+
+        $fourps->update($request->all());
+
+        return redirect()->route('4ps.residentlist')
+            ->with('success', '4Ps beneficiary updated successfully.');
+    }
 
     public function DestroyReslist(Fourps $fourp)
     {
         $fourp->delete();
-
-        return redirect()->route('4ps.residentlist')
-            ->with('success', '4Ps beneficiary deleted successfully.');
+        return redirect()->route('4ps.residentlist')->with('success', '4Ps beneficiary deleted successfully.');
     }
 
-    public function searchResidents(Request $request)
+  public function searchResident(Request $request)
     {
-        $searchTerm = $request->input('term');
-        $residentId = $request->input('resident_id');
-
-        // If searching by specific resident ID (for edit modal)
-        if ($residentId) {
-            $resident = Resident::find($residentId);
-            if ($resident) {
-                return response()->json([[
-                    'id' => $resident->id,
-                    'fname' => $resident->fname,
-                    'mname' => $resident->mname,
-                    'lname' => $resident->lname,
-                    'purok_no' => $resident->purok_no,
-                    'house_no' => $resident->house_no,
-                ]]);
-            }
-            return response()->json([]);
+        if ($request->has('resident_id')) {
+            $resident = Resident::select('id','fname','mname','lname','purok_no','household_no')
+                ->where('id', $request->resident_id)
+                ->first();
+            return $resident ? response()->json([$resident]) : response()->json([]);
         }
 
-        // If searching by name
-        $residents = Resident::where('fname', 'LIKE', '%' . $searchTerm . '%')
-            ->orWhere('lname', 'LIKE', '%' . $searchTerm . '%')
-            ->orWhere('mname', 'LIKE', '%' . $searchTerm . '%')
-            ->select('id', 'fname', 'mname', 'lname', 'purok_no', 'house_no')
+        $query = $request->input('query', '');
+        if (empty($query)) return response()->json([]);
+
+        $residents = Resident::select('id','fname','mname','lname','purok_no','household_no')
+            ->where('fname', 'LIKE', "%{$query}%")
+            ->orWhere('mname', 'LIKE', "%{$query}%")
+            ->orWhere('lname', 'LIKE', "%{$query}%")
+            ->orWhereRaw("CONCAT(fname,' ',lname) LIKE ?", ["%{$query}%"])
+            ->orWhereRaw("CONCAT(fname,' ',mname,' ',lname) LIKE ?", ["%{$query}%"])
             ->limit(10)
             ->get();
 
-        $formattedResidents = [];
-        foreach ($residents as $resident) {
-            $formattedResidents[] = [
-                'id' => $resident->id,
-                'fname' => $resident->fname,
-                'mname' => $resident->mname,
-                'lname' => $resident->lname,
-                'purok_no' => $resident->purok_no,
-                'house_no' => $resident->house_no,
-            ];
+        return response()->json($residents);
+    }
+
+
+    public function getResident(Request $request)
+    {
+        $request->validate([
+            'resident_id' => 'required|exists:residents,id'
+        ]);
+
+        $resident = Resident::select('id','Fname as fname','mname','lname','purok_no','household_no')
+            ->where('id', $request->resident_id)
+            ->first();
+
+        if ($resident) {
+            return response()->json($resident);
         }
 
-        return response()->json($formattedResidents);
+        return response()->json(['error' => 'Resident not found'], 404);
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show($id)
+    {
+        $fourps = Fourps::with('resident')->findOrFail($id);
+        return view('4ps.show', compact('fourps'));
+    }
+
+    /**
+     * Edit form for the specified resource.
+     */
+    public function edit($id)
+    {
+        $fourps = Fourps::findOrFail($id);
+        $residents = Resident::all();
+        return view('4ps.edit', compact('fourps', 'residents'));
     }
 }

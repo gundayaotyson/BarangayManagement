@@ -43,8 +43,8 @@ class DashboardController extends Controller
      public function BHWview(){
         return view("admin.bhwview");
      }
-    //  public function Fourpsview(){
-    //     return view("admin.4pslist");
-    //  }
+     public function Fourpsview(){
+        return view("admin.4pslist");
+     }
 
 }
