@@ -185,11 +185,11 @@
         }
 
         .stats-accepted {
-            color: var(--success);
+            color: #28a745;
         }
 
         .stats-rejected {
-            color: var(--danger);
+            color: #dc3545;
         }
 
         .stats-total {

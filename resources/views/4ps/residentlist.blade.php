@@ -7,6 +7,7 @@
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <style>
     :root {
         --primary-gradient: #2c3e50;
@@ -765,6 +766,149 @@
         transform: translateY(-50%);
         color: #94a3b8;
     }
+
+    /* NEW: Search and Filter Bar Styles */
+    .search-filter-bar {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: var(--shadow-sm);
+        border: 1px solid #e2e8f0;
+    }
+
+    .search-filter-bar .form-control {
+        border-radius: 8px;
+        padding: 12px 16px;
+        border: 2px solid #e2e8f0;
+        transition: var(--transition);
+    }
+
+    .search-filter-bar .form-control:focus {
+        border-color: #4361ee;
+        box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+    }
+
+    .search-filter-bar .form-select {
+        border-radius: 8px;
+        padding: 12px 16px;
+        border: 2px solid #e2e8f0;
+        transition: var(--transition);
+        height: auto;
+    }
+
+    .search-filter-bar .form-select:focus {
+        border-color: #4361ee;
+        box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+    }
+
+    .filter-badge {
+        cursor: pointer;
+        transition: var(--transition);
+    }
+
+    .filter-badge:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .filter-badge.active {
+        background: var(--primary-gradient) !important;
+        color: white !important;
+    }
+
+    .clear-filters-btn {
+        color: #ef476f;
+        cursor: pointer;
+        transition: color 0.3s ease;
+    }
+
+    .clear-filters-btn:hover {
+        color: #dc3545;
+        text-decoration: underline;
+    }
+
+    .results-count {
+        font-size: 0.9rem;
+        color: #64748b;
+        font-weight: 500;
+    }
+
+    /* Status dropdown indicator */
+    .status-dropdown-indicator {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+        color: #64748b;
+    }
+
+    /* Loading Overlay */
+    .table-loading {
+        position: relative;
+        min-height: 200px;
+    }
+
+    .table-loading::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+        border-radius: var(--border-radius);
+    }
+
+    .table-loading::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 40px;
+        height: 40px;
+        border: 3px solid rgba(67, 97, 238, 0.1);
+        border-radius: 50%;
+        border-top-color: #4361ee;
+        animation: spin 1s linear infinite;
+        z-index: 11;
+    }
+
+    /* Status dropdown option colors */
+    .status-option-all {
+        color: #64748b;
+    }
+
+    .status-option-active {
+        color: #10b981;
+        font-weight: 500;
+    }
+
+    .status-option-inactive {
+        color: #6b7280;
+        font-weight: 500;
+    }
+
+    /* Real-time search indicator */
+    .search-indicator {
+        position: absolute;
+        right: 40px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #4361ee;
+        font-size: 0.875rem;
+        display: none;
+    }
+
+    .searching .search-indicator {
+        display: block;
+    }
 </style>
 
 <div class="container py-4">
@@ -794,7 +938,7 @@
             <div class="stats-card">
                 <div class="stats-number">{{ $fourps->where('status', 'active')->count() }}</div>
                 <div class="stats-label">Active</div>
-                <i class="fas fa-check-circle mt-3" style="font-size: 2rem; opacity: 100; color: #4cc9f0;"></i>
+                <i class="fas fa-check-circle mt-3" style="font-size: 2rem; opacity: 100; color: #28a745;"></i>
             </div>
         </div>
         <div class="col-md-3 col-sm-6 mb-4">
@@ -813,6 +957,52 @@
         </div>
     </div>
 
+    <!-- NEW: Search and Filter Bar with Dropdown -->
+    <div class="search-filter-bar fade-in-up">
+        <div class="row align-items-center">
+            <div class="col-md-6 mb-3 mb-md-0">
+                <div class="search-container">
+                    <input type="text"
+                           id="searchInput"
+                           class="form-control"
+                           placeholder="Search by name, 4Ps ID, house number..."
+                           autocomplete="off">
+                    <i class="fas fa-search search-icon"></i>
+                    <span class="search-indicator">
+                        <i class="fas fa-spinner fa-spin"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3 mb-md-0">
+                <div class="position-relative">
+                    <select class="form-select" id="statusFilter">
+                        <option value="all" class="status-option-all">All Status</option>
+                        <option value="active" class="status-option-active">Active</option>
+                        <option value="inactive" class="status-option-inactive">Inactive</option>
+                    </select>
+                    <i class="fas fa-chevron-down status-dropdown-indicator"></i>
+                </div>
+            </div>
+            <div class="col-md-2 text-md-end">
+                <span class="results-count" id="resultsCount">{{ count($fourps) }} results</span>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex gap-2 flex-wrap" id="activeFilters">
+                        <!-- Active filters will appear here -->
+                    </div>
+                    <div>
+                        <span class="clear-filters-btn" id="clearFilters" style="display: none;">
+                            <i class="fas fa-times me-1"></i>Clear all filters
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Beneficiaries Table -->
     <div class="card fade-in-up">
         <div class="card-header d-flex justify-content-between align-items-center">
@@ -820,16 +1010,15 @@
                 <i class="fas fa-list me-2"></i>4Ps Beneficiaries List
             </div>
             <div class="d-flex align-items-center">
-                <span class="badge bg-primary me-3">{{ count($fourps) }} Records</span>
+                <span class="badge bg-primary me-3" id="tableCount">{{ count($fourps) }} Records</span>
             </div>
         </div>
         <div class="card-body">
             @if(count($fourps) > 0)
             <div class="table-responsive">
-                <table class="table table-hover">
+                <table class="table table-hover" id="beneficiariesTable">
                     <thead>
                         <tr>
-
                             <th>Full Name</th>
                             <th>Purok No.</th>
                             <th>House No.</th>
@@ -839,10 +1028,14 @@
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tableBody">
                         @foreach ($fourps as $fourp)
-                            <tr class="transition-all">
-
+                            <tr class="transition-all"
+                                data-name="{{ strtolower($fourp->fname . ' ' . $fourp->mname . ' ' . $fourp->lname) }}"
+                                data-purok="{{ strtolower($fourp->purok_no) }}"
+                                data-household="{{ strtolower($fourp->household_no) }}"
+                                data-fourps-id="{{ strtolower($fourp->fourps_id) }}"
+                                data-status="{{ $fourp->status }}">
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <div class="status-indicator status-{{ $fourp->status }}"></div>
@@ -870,10 +1063,10 @@
                                         <span class="badge bg-success">
                                             <i class="fas fa-link me-1"></i>Matched
                                         </span>
-                                    @else
-                                        <span class="badge bg-warning">
-                                            <i class="fas fa-user-edit me-1"></i>Manual Entry
-                                        </span>
+                                        @else
+                                            <span class="badge bg-success">
+                                                <i class="fas fa-user-edit me-1"></i>Matched
+                                            </span>
                                     @endif
                                 </td>
                                 <td>
@@ -960,10 +1153,55 @@
                                 </div>
                                 <div class="form-text text-muted">Start typing to search for existing residents. If found, fields will auto-fill.</div>
                             </div>
-
+                            <div class="col-md-12">
+                                <!-- <button type="button" id="toggleManualBtn" class="toggle-manual-btn w-100">
+                                    <i class="fas fa-user-edit me-2"></i>
+                                    Enter Details Manually Instead
+                                </button> -->
+                            </div>
                         </div>
 
-
+                        <!-- Manual Entry Section (Hidden by default) -->
+                        <div class="manual-entry-fields" id="manualEntrySection" style="display: none;">
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <h6 class="mb-3" style="color: #4361ee;">
+                                        <i class="fas fa-edit me-2"></i>Manual Entry Details
+                                    </h6>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="manual_fname" class="form-label">First Name *</label>
+                                    <input type="text" class="form-control" id="manual_fname" placeholder="Enter first name">
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="manual_mname" class="form-label">Middle Name</label>
+                                    <input type="text" class="form-control" id="manual_mname" placeholder="Enter middle name">
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="manual_lname" class="form-label">Last Name *</label>
+                                    <input type="text" class="form-control" id="manual_lname" placeholder="Enter last name">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="manual_purok_no" class="form-label">Purok No. *</label>
+                                    <select class="form-select" id="manual_purok_no">
+                                        <option value="">Select Purok</option>
+                                        <option value="Purok 1">Purok 1</option>
+                                        <option value="Purok 2">Purok 2</option>
+                                        <option value="Purok 3">Purok 3</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="manual_household_no" class="form-label">House No. *</label>
+                                    <input type="text" class="form-control" id="manual_household_no" placeholder="Enter house number">
+                                </div>
+                                <div class="col-md-12">
+                                    <button type="button" id="backToSearchBtn" class="btn btn-outline-secondary w-100">
+                                        <i class="fas fa-search me-2"></i>
+                                        Back to Search
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
 
                         <!-- Auto-filled fields (Readonly) -->
                         <div class="row" id="autoFilledFields">
@@ -973,7 +1211,7 @@
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label for="mname" class="form-label">Middle Name</label>
-                                <input type="text" class="form-control" id="mname" name="mname" readonly>
+                                    <input type="text" class="form-control" id="mname" name="mname" readonly>
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label for="lname" class="form-label">Last Name *</label>
@@ -1005,7 +1243,7 @@
                             <div class="col-md-6 mb-3">
                                 <label for="fourps_id" class="form-label">4Ps ID *</label>
                                 <input type="text" class="form-control" id="fourps_id" name="fourps_id" required
-                                    placeholder="e.g., 4PS-2024-001">
+                                    >
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="status" class="form-label">Status *</label>
@@ -1128,6 +1366,244 @@
 
 <script>
 $(document).ready(function() {
+    // ============================================
+    // UPDATED: Search and Filter Functionality
+    // ============================================
+
+    let currentSearchTerm = '';
+    let currentStatusFilter = 'all';
+    let isSearching = false;
+    let searchTimer = null;
+
+    // Real-time search input handler
+    $('#searchInput').on('input', function() {
+        currentSearchTerm = $(this).val().toLowerCase().trim();
+
+        // Show searching indicator
+        if (currentSearchTerm.length > 0 && !isSearching) {
+            isSearching = true;
+            $('#searchInput').parent().addClass('searching');
+        } else if (currentSearchTerm.length === 0) {
+            isSearching = false;
+            $('#searchInput').parent().removeClass('searching');
+        }
+
+        // Clear any previous timer
+        if (searchTimer) {
+            clearTimeout(searchTimer);
+        }
+
+        // Filter immediately for better UX
+        filterTable();
+        updateActiveFilters();
+
+        // Hide indicator after filtering
+        setTimeout(() => {
+            isSearching = false;
+            $('#searchInput').parent().removeClass('searching');
+        }, 300);
+    });
+
+    // Status dropdown handler
+    $('#statusFilter').on('change', function() {
+        currentStatusFilter = $(this).val();
+        filterTable();
+        updateActiveFilters();
+    });
+
+    // Clear all filters
+    $('#clearFilters').on('click', function() {
+        // Clear search input
+        $('#searchInput').val('');
+        currentSearchTerm = '';
+
+        // Reset status dropdown
+        $('#statusFilter').val('all');
+        currentStatusFilter = 'all';
+
+        // Hide clear filters button
+        $(this).hide();
+
+        // Apply filters (show all)
+        filterTable();
+        updateActiveFilters();
+    });
+
+    // Main filtering function
+    function filterTable() {
+        const rows = $('#tableBody tr');
+        let visibleCount = 0;
+
+        rows.each(function() {
+            const $row = $(this);
+            const name = $row.data('name') || '';
+            const purok = $row.data('purok') || '';
+            const household = $row.data('household') || '';
+            const fourpsId = $row.data('fourps-id') || '';
+            const status = $row.data('status') || '';
+
+            let matchesSearch = true;
+            let matchesStatus = true;
+
+            // Apply search filter in real-time
+            if (currentSearchTerm) {
+                // Search in multiple fields
+                matchesSearch = name.includes(currentSearchTerm) ||
+                               purok.includes(currentSearchTerm) ||
+                               household.includes(currentSearchTerm) ||
+                               fourpsId.includes(currentSearchTerm);
+            }
+
+            // Apply status filter
+            if (currentStatusFilter !== 'all') {
+                matchesStatus = status === currentStatusFilter;
+            }
+
+            // Show/hide row based on filters
+            if (matchesSearch && matchesStatus) {
+                $row.show();
+                visibleCount++;
+
+                // Highlight search term in row
+                if (currentSearchTerm) {
+                    highlightSearchTerm($row, currentSearchTerm);
+                } else {
+                    removeHighlights($row);
+                }
+            } else {
+                $row.hide();
+                removeHighlights($row);
+            }
+        });
+
+        // Update counts
+        $('#resultsCount').text(visibleCount + ' result' + (visibleCount !== 1 ? 's' : ''));
+        $('#tableCount').text(visibleCount + ' Record' + (visibleCount !== 1 ? 's' : ''));
+
+        // Show/hide empty state
+        if (visibleCount === 0) {
+            showNoResultsMessage();
+        } else {
+            hideNoResultsMessage();
+        }
+
+        // Show/hide clear filters button
+        if (currentSearchTerm || currentStatusFilter !== 'all') {
+            $('#clearFilters').show();
+        } else {
+            $('#clearFilters').hide();
+        }
+    }
+
+    // Highlight search term in table rows
+    function highlightSearchTerm($row, term) {
+        // Remove previous highlights
+        $row.find('.highlight').each(function() {
+            $(this).replaceWith($(this).text());
+        });
+
+        // Highlight in name cells
+        const nameCell = $row.find('td:first-child');
+        const nameText = nameCell.text();
+        const highlightedName = nameText.replace(new RegExp(`(${term})`, 'gi'), '<span class="highlight bg-warning text-dark rounded px-1">$1</span>');
+        nameCell.html(highlightedName);
+
+        // Highlight in 4Ps ID badge
+        const idBadge = $row.find('td:nth-child(4) .badge');
+        const idText = idBadge.text();
+        const highlightedId = idText.replace(new RegExp(`(${term})`, 'gi'), '<span class="highlight bg-warning text-dark rounded px-1">$1</span>');
+        idBadge.html(highlightedId);
+
+        // Highlight in house number
+        const houseCell = $row.find('td:nth-child(3)');
+        const houseText = houseCell.text();
+        const highlightedHouse = houseText.replace(new RegExp(`(${term})`, 'gi'), '<span class="highlight bg-warning text-dark rounded px-1">$1</span>');
+        houseCell.html(highlightedHouse);
+    }
+
+    // Remove highlights from row
+    function removeHighlights($row) {
+        $row.find('.highlight').each(function() {
+            $(this).replaceWith($(this).text());
+        });
+    }
+
+    // Update active filters display
+    function updateActiveFilters() {
+        const $activeFilters = $('#activeFilters');
+        $activeFilters.empty();
+
+        if (currentSearchTerm) {
+            $activeFilters.append(`
+                <span class="badge bg-info filter-badge" data-type="search">
+                    <i class="fas fa-search me-1"></i>Search: "${currentSearchTerm}"
+                    <i class="fas fa-times ms-2" onclick="removeFilter('search')" style="cursor: pointer;"></i>
+                </span>
+            `);
+        }
+
+        if (currentStatusFilter !== 'all') {
+            const statusText = currentStatusFilter === 'active' ? 'Active' : 'Inactive';
+            const statusColor = currentStatusFilter === 'active' ? 'success' : 'warning';
+            $activeFilters.append(`
+                <span class="badge bg-${statusColor} filter-badge" data-type="status">
+                    <i class="fas fa-filter me-1"></i>Status: ${statusText}
+                    <i class="fas fa-times ms-2" onclick="removeFilter('status')" style="cursor: pointer;"></i>
+                </span>
+            `);
+        }
+    }
+
+    // Remove specific filter
+    window.removeFilter = function(type) {
+        if (type === 'search') {
+            $('#searchInput').val('');
+            currentSearchTerm = '';
+        } else if (type === 'status') {
+            $('#statusFilter').val('all');
+            currentStatusFilter = 'all';
+        }
+
+        filterTable();
+        updateActiveFilters();
+    }
+
+    // Show no results message
+    function showNoResultsMessage() {
+        // Check if message already exists
+        if ($('#noResultsMessage').length === 0) {
+            $('#tableBody').after(`
+                <tr id="noResultsMessage">
+                    <td colspan="7" class="text-center py-5">
+                        <i class="fas fa-search fa-3x mb-3" style="color: #94a3b8;"></i>
+                        <h5 class="text-muted mb-2">No beneficiaries found</h5>
+                        <p class="text-muted">Try adjusting your search or filter criteria</p>
+                        <button class="btn btn-outline-primary mt-2" onclick="clearAllFilters()">
+                            <i class="fas fa-times me-2"></i>Clear all filters
+                        </button>
+                    </td>
+                </tr>
+            `);
+        }
+    }
+
+    // Hide no results message
+    function hideNoResultsMessage() {
+        $('#noResultsMessage').remove();
+    }
+
+    // Clear all filters function
+    window.clearAllFilters = function() {
+        $('#clearFilters').click();
+    }
+
+    // Initialize with "All" filter selected
+    $('#statusFilter').val('all');
+
+    // ============================================
+    // EXISTING CODE (All your original functionality)
+    // ============================================
+
     // Initialize autocomplete when modal is shown
     $('#addModal').on('shown.bs.modal', function () {
         // Initialize autocomplete for resident search
@@ -1214,6 +1690,9 @@ $(document).ready(function() {
         $('#fname, #mname, #lname, #purok_no, #household_no').val('');
         $('#resident_id').val('');
 
+        // Make fields editable for manual entry
+        $('#fname, #mname, #lname, #purok_no, #household_no').prop('readonly', false);
+
         showNotification('info', 'Manual entry mode enabled. Please fill in the details below.');
     });
 
@@ -1229,6 +1708,10 @@ $(document).ready(function() {
 
         // Clear manual entry fields
         $('#manual_fname, #manual_mname, #manual_lname, #manual_purok_no, #manual_household_no').val('');
+
+        // Clear auto-filled fields
+        $('#fname, #mname, #lname, #purok_no, #household_no').val('');
+        $('#resident_id').val('');
     });
 
     // Handle form submission for ADD modal
@@ -1394,7 +1877,7 @@ $(document).ready(function() {
     }
 
     // Handle Edit Button Click
-    $('.edit-btn').on('click', function() {
+    $(document).on('click', '.edit-btn', function() {
         const id = $(this).data('id');
         const fname = $(this).data('fname');
         const mname = $(this).data('mname');
@@ -1405,6 +1888,9 @@ $(document).ready(function() {
         const status = $(this).data('status');
         const resident_id = $(this).data('resident_id');
 
+        // Debug log to see what status is being passed
+        console.log('Edit clicked - Status:', status, 'ID:', id);
+
         // Populate form fields with 4Ps beneficiary data
         $('#edit_id').val(id);
         $('#edit_fname').val(fname);
@@ -1413,15 +1899,26 @@ $(document).ready(function() {
         $('#edit_purok_no').val(purok_no);
         $('#edit_household_no').val(household_no);
         $('#edit_fourps_id').val(fourps_id);
-        $('#edit_status').val(status);
         $('#edit_resident_id').val(resident_id || '');
 
-        // Set form action
-        $('#editForm').attr('action', `/4ps/residentlist/${id}`);
+        // CRITICAL FIX: Set the status value - ensure it matches exactly
+        $('#edit_status').val(status);
+
+        // Debug: Check what value is being set
+        console.log('Setting status to:', status);
+        console.log('Current select value:', $('#edit_status').val());
+
+        // Set form action with correct route
+        $('#editForm').attr('action', "{{ route('4ps.residentlist.update', '') }}/" + id);
 
         // Reset any validation errors
         $('#editForm .is-invalid').removeClass('is-invalid');
         $('#editForm .invalid-feedback').remove();
+
+        // Force refresh of select2 if you're using it
+        if ($.fn.select2) {
+            $('#edit_status').trigger('change');
+        }
     });
 
     // Handle edit form submission
@@ -1431,15 +1928,47 @@ $(document).ready(function() {
         const form = $(this);
         const submitBtn = form.find('button[type="submit"]');
         const originalBtnText = submitBtn.html();
+        const formData = new FormData(form[0]);
+
+        // Debug form data
+        console.log('Edit form data to be sent:');
+        for (let [key, value] of formData.entries()) {
+            console.log(`${key}: ${value}`);
+        }
+
+        // Validate required fields
+        let isValid = true;
+        form.find('.form-control:required, .form-select:required').each(function() {
+            if (!$(this).val().trim()) {
+                $(this).addClass('is-invalid');
+                if (!$(this).next('.invalid-feedback').length) {
+                    $(this).after('<div class="invalid-feedback">This field is required</div>');
+                }
+                isValid = false;
+            }
+        });
+
+        if (!isValid) {
+            showNotification('error', 'Please fill in all required fields.');
+            return;
+        }
 
         // Show loading state
         submitBtn.prop('disabled', true);
         submitBtn.html('<i class="fas fa-spinner fa-spin me-2"></i>Updating...');
 
+        // Add _method field for Laravel
+        formData.append('_method', 'PUT');
+
         $.ajax({
             url: form.attr('action'),
             type: 'POST',
-            data: form.serialize(),
+            data: formData,
+            processData: false,
+            contentType: false,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             success: function(response) {
                 showNotification('success', response.success || 'Beneficiary updated successfully!');
                 $('#editModal').modal('hide');
@@ -1447,7 +1976,7 @@ $(document).ready(function() {
                 // Reload the page to show updated data
                 setTimeout(() => {
                     window.location.reload();
-                }, 1500);
+                }, 1000);
             },
             error: function(xhr) {
                 submitBtn.prop('disabled', false);
@@ -1473,6 +2002,7 @@ $(document).ready(function() {
                     showNotification('error', errorMessage);
                 } else {
                     showNotification('error', 'An error occurred while updating the beneficiary.');
+                    console.error('Edit error:', xhr.responseText);
                 }
             }
         });
@@ -1540,5 +2070,4 @@ $(document).ready(function() {
     });
 });
 </script>
-
 @endsection

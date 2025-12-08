@@ -415,6 +415,7 @@
                                 <th>Birthday</th>
                                 <th>Gender</th>
                                 <th>Weight</th>
+                                <th>Height</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -426,6 +427,7 @@
                                 <td>{{ $delivery->c_birthday }}</td>
                                 <td>{{ $delivery->gender }}</td>
                                 <td>{{ $delivery->weight }} kg</td>
+                                <td>{{ $delivery->height }}cm</td>
                                 <td>
                                     <div class="action-buttons">
                                         <button class="btn btn-info btn-sm view-btn" data-bs-toggle="modal" data-bs-target="#viewDeliveryModal" data-delivery="{{ json_encode($delivery) }}">

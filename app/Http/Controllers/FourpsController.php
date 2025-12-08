@@ -79,7 +79,7 @@ class FourpsController extends Controller
                 'purok_no' => $fourpsRequest->purok_no,
                 'household_no' => $fourpsRequest->house_no,
                 'fourps_id' => $fourpsRequest->fourps_id,
-                'status' => 'Active',
+                'status' => 'active',
             ]);
         }
 
@@ -140,7 +140,12 @@ class FourpsController extends Controller
         ]);
 
         Fourps::create($request->all());
-
+          // Check if it's an AJAX request
+    if ($request->ajax() || $request->wantsJson()) {
+        return response()->json([
+            'success' => '4Ps beneficiary added successfully.'
+        ]);
+    }
         return redirect()->route('4ps.residentlist')
             ->with('success', '4Ps beneficiary added successfully.');
     }
@@ -158,10 +163,17 @@ class FourpsController extends Controller
             'household_no' => 'required|string|max:50',
             'fourps_id' => 'required|string|max:100|unique:fourps,fourps_id,' . $id,
             'status' => 'required|in:active,inactive',
+
         ]);
 
-        $fourps->update($request->all());
 
+        $fourps->update($request->all());
+        // Check if it's an AJAX request
+    if ($request->ajax() || $request->wantsJson()) {
+        return response()->json([
+            'success' => '4Ps beneficiary updated successfully.'
+        ]);
+    }
         return redirect()->route('4ps.residentlist')
             ->with('success', '4Ps beneficiary updated successfully.');
     }

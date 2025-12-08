@@ -1,502 +1,1298 @@
 @extends('bhw.dashboard')
 @section('content')
+    <!-- Bootstrap & Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <style>
-/* ==========================
-   VARIABLES + GENERAL STYLES
-========================== */
+/* ============================================
+   PROFESSIONAL DESIGN SYSTEM
+============================================ */
 :root {
-    --primary-color: #0d6efd;
-    --secondary-color: #6c757d;
-    --success-color: #198754;
-    --danger-color: #dc3545;
-    --warning-color: #ffc107;
-    --info-color: #0dcaf0;
-    --light-color: #f8f9fa;
-    --dark-color: #212529;
-    --header-bg: #2c3e50;
-    --border-color: #dee2e6;
-    --text-light: #ffffff;
-    --text-muted: #6c757d;
-    --shadow-lg: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    /* Color Palette - Using your provided colors */
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --accent-color: #e74c3c;
+    --success-color: #2ecc71;
+    --warning-color: #f39c12;
+    --light-color: #ecf0f1;
+    --dark-color: #2c3e50;
+    --card-bg: #ffffff;
+    --border-radius: 16px;
+    --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Additional colors */
+    --gray-100: #f8f9fa;
+    --gray-200: #e9ecef;
+    --gray-300: #dee2e6;
+    --gray-600: #6c757d;
+    --gray-800: #343a40;
+
+    /* Theme */
+    --header-bg: linear-gradient(135deg, var(--primary-color) 0%, #34495e 100%);
+    --body-bg: #f5f7fb;
+
+    /* Spacing */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
 }
 
-/* BODY & CONTAINER */
+/* ============================================
+   BASE STYLES & RESET
+============================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    background: #f5f5f5;
-    color: var(--dark-color);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-.container-fluid {
-    padding: 20px;
-    max-width: 100%;
-    overflow-x: hidden;
-}
-h1 {
-    color: var(--header-bg);
-    margin-bottom: 1.5rem;
-    font-weight: 600;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 10px;
-    font-size: 1.8rem;
+    background: var(--body-bg);
+    color: var(--gray-800);
+    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-/* ==========================
-   TABLE STYLES
-========================== */
-.table-responsive {
-    background: white;
-    border-radius: 10px;
-    box-shadow: var(--shadow-lg);
+/* ============================================
+   LAYOUT & CONTAINER
+============================================ */
+.container-fluid {
+    padding: var(--spacing-xl);
+    max-width: 100%;
+    min-height: 100vh;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.page-header h1 {
+    color: var(--primary-color);
+    font-weight: 700;
+    font-size: 1.75rem;
+    margin: 0;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ============================================
+   PROFESSIONAL FILTER SYSTEM
+============================================ */
+.filter-system {
+    display: flex;
+    gap: var(--spacing-md);
+    padding: var(--spacing-lg);
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    margin-bottom: var(--spacing-xl);
+    border: 1px solid rgba(44, 62, 80, 0.1);
+    align-items: flex-end;
+}
+
+.filter-group {
+    flex: 1;
+    min-width: 180px;
+}
+
+.filter-label {
+    display: block;
+    margin-bottom: var(--spacing-sm);
+    font-weight: 600;
+    color: var(--primary-color);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.filter-select {
+    width: 100%;
+    padding: 10px 16px;
+    border: 2px solid rgba(52, 152, 219, 0.2);
+    border-radius: 8px;
+    background: var(--card-bg);
+    color: var(--primary-color);
+    font-size: 14px;
+    font-weight: 500;
+    transition: var(--transition);
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%232c3e50' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+}
+
+.filter-select:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.filter-select option {
+    padding: 8px;
+    background: var(--card-bg);
+    color: var(--primary-color);
+}
+
+/* Search Box */
+.search-box {
+    flex: 2;
+    min-width: 300px;
+    position: relative;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 10px 16px 10px 44px;
+    border: 2px solid rgba(52, 152, 219, 0.2);
+    border-radius: 8px;
+    background: var(--card-bg);
+    color: var(--primary-color);
+    font-size: 14px;
+    transition: var(--transition);
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.search-box i {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--secondary-color);
+    font-size: 14px;
+}
+
+/* Refresh Button */
+.refresh-btn {
+    padding: 10px 24px;
+    background: linear-gradient(135deg, var(--secondary-color) 0%, #2980b9 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.refresh-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(52, 152, 219, 0.3);
+}
+
+.refresh-btn:active {
+    transform: translateY(0);
+}
+
+.refresh-btn i {
+    font-size: 14px;
+}
+
+/* Active Filters Display */
+.active-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--gray-200);
+}
+
+.filter-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    background: rgba(52, 152, 219, 0.1);
+    border: 1px solid rgba(52, 152, 219, 0.2);
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--secondary-color);
+    gap: 6px;
+}
+
+.filter-tag .remove {
+    color: var(--accent-color);
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+}
+
+.filter-tag .remove:hover {
+    color: #c0392b;
+}
+
+/* ============================================
+   STATS SUMMARY
+============================================ */
+.stats-summary {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+}
+
+.stat-card {
+    flex: 1;
+    background: var(--card-bg);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    border-left: 4px solid var(--secondary-color);
+    transition: var(--transition);
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card.total {
+    border-left-color: var(--primary-color);
+}
+
+.stat-card.scheduled {
+    border-left-color: var(--success-color);
+}
+
+.stat-card.pending {
+    border-left-color: var(--warning-color);
+}
+
+.stat-card.weekly {
+    border-left-color: var(--secondary-color);
+}
+
+.stat-card h3 {
+    font-size: 0.875rem;
+    color: var(--gray-600);
+    margin-bottom: var(--spacing-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-card .count {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--dark-color);
+}
+
+/* ============================================
+   ADVANCED TABLE STYLES
+============================================ */
+.table-container {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
     overflow: hidden;
-    margin-top: 1rem;
+    position: relative;
+}
+
+.table-header {
+    padding: var(--spacing-lg);
+    background: linear-gradient(135deg, var(--primary-color) 0%, #34495e 100%);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.table-header h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    max-height: 600px;
 }
 
 .table {
     width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 0;
 }
 
-.table thead th {
-    background-color: var(--header-bg);
-    color: white;
-    padding: 14px 12px;
-    text-transform: uppercase;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    border-bottom: 2px solid var(--border-color);
-    white-space: nowrap;
+.table thead {
     position: sticky;
     top: 0;
     z-index: 10;
 }
 
-.table tbody td {
-    padding: 12px;
-    vertical-align: middle;
-    border-bottom: 1px solid var(--border-color);
-    font-size: 0.875rem;
-    line-height: 1.4;
+.table thead th {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #2c3e50 100%);
+    color: white;
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 16px 13px;
+    border: none;
+    white-space: nowrap;
+    /* position: relative; */
+}
+
+.table thead th::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 60%;
+    width: 1px;
+    background: rgba(255,255,255,0.2);
+}
+
+.table thead th:last-child::after {
+    display: none;
+}
+
+.table tbody tr {
+    border-bottom: 1px solid var(--gray-200);
+    transition: var(--transition);
+    background: var(--card-bg);
 }
 
 .table tbody tr:hover {
-    background: rgba(0,123,255,0.06);
-    transition: 0.2s ease;
+    background: linear-gradient(90deg, rgba(52, 152, 219, 0.04) 0%, rgba(52, 152, 219, 0.08) 100%);
+    transform: scale(1.002);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
 }
 
-/* ==========================
-   STATUS BADGES
-========================== */
-.badge {
-    padding: 6px 12px;
+.table tbody td {
+    padding: 16px 12px;
+    border: none;
+    color: var(--gray-800);
+    font-size: 0.875rem;
+    vertical-align: middle;
+}
+
+/* ============================================
+   ENHANCED STATUS BADGES
+============================================ */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 20px;
     font-size: 0.75rem;
     font-weight: 600;
-    border-radius: 6px;
-    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    gap: 6px;
 }
 
-.bg-success { background-color: var(--success-color) !important; }
-.bg-warning { background-color: var(--warning-color) !important; }
-.bg-danger { background-color: var(--danger-color) !important; }
+.status-badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    display: inline-block;
+}
 
-/* ==========================
+.status-badge.scheduled {
+    background: rgba(46, 204, 113, 0.1);
+    color: var(--success-color);
+    border: 1px solid rgba(46, 204, 113, 0.2);
+}
+
+.status-badge.scheduled::before {
+    background: var(--success-color);
+}
+
+.status-badge.pending {
+    background: rgba(243, 156, 18, 0.1);
+    color: #856404;
+    border: 1px solid rgba(243, 156, 18, 0.2);
+}
+
+.status-badge.pending::before {
+    background: var(--warning-color);
+}
+
+.status-badge.urgent {
+    background: rgba(231, 76, 60, 0.1);
+    color: var(--accent-color);
+    border: 1px solid rgba(231, 76, 60, 0.2);
+}
+
+.status-badge.urgent::before {
+    background: var(--accent-color);
+}
+
+/* Service Tags */
+.service-tag {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(52, 152, 219, 0.1);
+    color: var(--secondary-color);
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border: 1px solid rgba(52, 152, 219, 0.2);
+}
+
+/* ============================================
    ACTION BUTTONS
-========================== */
+============================================ */
+.action-cell {
+    min-width: 140px;
+}
+
 .action-buttons {
     display: flex;
     gap: 8px;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
-    flex-wrap: nowrap;
 }
 
-.action-buttons .btn-edit,
-.action-buttons .btn-delete {
-    padding: 6px 12px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    border-radius: 6px;
+.action-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
     border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    letter-spacing: 0.3px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    transition: all 0.25s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 60px;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
 }
 
-/* EDIT */
-.action-buttons .btn-edit {
-    background: linear-gradient(135deg, #0d6efd, #0b5ed7);
-    color: #fff;
-}
-.action-buttons .btn-edit:hover {
-    background: linear-gradient(135deg, #0b5ed7, #094bb3);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(13,110,253,0.3);
+.action-btn i {
+    font-size: 14px;
+    position: relative;
+    z-index: 1;
 }
 
-/* DELETE */
-.action-buttons .btn-delete {
-    background: linear-gradient(135deg, #dc3545, #bb2d3b);
-    color: #fff;
-}
-.action-buttons .btn-delete:hover {
-    background: linear-gradient(135deg, #bb2d3b, #a62330);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(220,53,69,0.3);
-}
-
-.action-buttons form {
-    margin: 0;
-    padding: 0;
-    display: flex;
-}
-
-/* ==========================
-   MODAL STYLING
-========================== */
-.modal-header {
-    background: var(--header-bg);
+.btn-edit {
+    background: linear-gradient(135deg, var(--secondary-color) 0%, #2980b9 100%);
     color: white;
-    border-bottom: none;
-    padding: 1rem 1.5rem;
-}
-.modal-title {
-    font-weight: 600;
-}
-.modal-content {
-    border-radius: 10px;
-    box-shadow: var(--shadow-lg);
-    border: none;
-}
-.modal-body {
-    padding: 1.5rem;
 }
 
-/* ==========================
-   RESPONSIVE STYLES
-========================== */
+.btn-edit:hover {
+    background: linear-gradient(135deg, #2980b9 0%, #1f6390 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+}
+
+.btn-delete {
+    background: linear-gradient(135deg, var(--accent-color) 0%, #c0392b 100%);
+    color: white;
+}
+
+.btn-delete:hover {
+    background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
+}
+
+/* ============================================
+   EMPTY STATE
+============================================ */
+.empty-state {
+    padding: var(--spacing-xl);
+    text-align: center;
+    color: var(--gray-600);
+}
+
+.empty-state i {
+    font-size: 48px;
+    color: var(--gray-300);
+    margin-bottom: var(--spacing-md);
+}
+
+.empty-state h3 {
+    font-size: 1.25rem;
+    margin-bottom: var(--spacing-sm);
+    color: var(--primary-color);
+}
+
+.empty-state p {
+    font-size: 0.875rem;
+    margin-bottom: var(--spacing-lg);
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+============================================ */
 @media (max-width: 1200px) {
-    .table-responsive {
-        font-size: 0.85rem;
+    .container-fluid {
+        padding: var(--spacing-lg);
     }
 
-    .table thead th {
-        font-size: 0.7rem;
-        padding: 10px 8px;
+    .stats-summary {
+        flex-wrap: wrap;
     }
 
-    .table tbody td {
-        padding: 10px 8px;
-        font-size: 0.8rem;
+    .stat-card {
+        min-width: calc(50% - var(--spacing-md));
     }
 }
 
 @media (max-width: 992px) {
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-md);
+    }
+
+    .filter-system {
+        flex-wrap: wrap;
+    }
+
+    .filter-group, .search-box {
+        min-width: calc(50% - var(--spacing-md));
+    }
+
+    .refresh-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
     .container-fluid {
-        padding: 15px;
+        padding: var(--spacing-md);
     }
 
-    h1 {
-        font-size: 1.5rem;
+    .stat-card {
+        min-width: 100%;
     }
 
-    /* Hide less important columns on medium screens */
-    .table thead th:nth-child(6), /* Service */
-    .table tbody td:nth-child(6),
-    .table thead th:nth-child(8), /* Complaint */
-    .table tbody td:nth-child(8),
+    .filter-system {
+        padding: var(--spacing-md);
+    }
+
+    .filter-group, .search-box {
+        min-width: 100%;
+    }
+
+    /* Hide less important columns on mobile */
+    .table thead th:nth-child(2), /* DOB */
+    .table tbody td:nth-child(2),
+    .table thead th:nth-child(3), /* Age */
+    .table tbody td:nth-child(3),
+    .table thead th:nth-child(7), /* Contact */
+    .table tbody td:nth-child(7),
     .table thead th:nth-child(11), /* Philhealth */
     .table tbody td:nth-child(11) {
         display: none;
     }
 }
 
-@media (max-width: 768px) {
-    .container-fluid {
-        padding: 10px;
-    }
-
-    h1 {
-        font-size: 1.3rem;
-        margin-bottom: 1rem;
-    }
-
-    /* Hide more columns on small screens */
-    .table thead th:nth-child(2), /* DOB */
-    .table tbody td:nth-child(2),
-    .table thead th:nth-child(3), /* Age */
-    .table tbody td:nth-child(3),
-    .table thead th:nth-child(4), /* Gender */
-    .table tbody td:nth-child(4),
-    .table thead th:nth-child(7), /* Contact */
-    .table tbody td:nth-child(7) {
-        display: none;
+@media (max-width: 576px) {
+    body {
+        font-size: 13px;
     }
 
     .action-buttons {
         flex-direction: column;
-        gap: 5px;
+        gap: 4px;
     }
 
-    .action-buttons .btn-edit,
-    .action-buttons .btn-delete {
-        width: 100%;
-        text-align: center;
-        padding: 8px 0;
-        font-size: 0.7rem;
+    .action-btn {
+        width: 32px;
+        height: 32px;
     }
 }
 
-@media (max-width: 576px) {
-    h1 {
-        font-size: 1.2rem;
-    }
-
-    /* Mobile card layout for very small screens */
-    .table thead {
-        display: none;
-    }
-
-    .table tbody tr {
-        display: block;
-        margin-bottom: 1rem;
-        border: 1px solid var(--border-color);
-        border-radius: 8px;
-        padding: 1rem;
-        background: white;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-
-    .table tbody td {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 8px 0;
-        border-bottom: 1px solid #f0f0f0;
-        border: none;
-    }
-
-    .table tbody td:last-child {
-        border-bottom: none;
-        justify-content: center;
-        padding-top: 12px;
-    }
-
-    .table tbody td::before {
-        content: attr(data-label);
-        font-weight: 600;
-        color: var(--header-bg);
-        text-transform: uppercase;
-        font-size: 0.75rem;
-    }
-
-    /* Hide schedule and philhealth on mobile */
-    .table tbody td:nth-child(10),
-    .table tbody td:nth-child(11) {
-        display: none;
-    }
-}
-
-/* ==========================
-   TABLE ROW ANIMATION
-========================== */
+/* ============================================
+   ANIMATIONS
+============================================ */
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
+
 .table tbody tr {
-    animation: fadeIn 0.4s ease-out;
+    animation: fadeIn 0.3s ease-out;
+    animation-fill-mode: both;
 }
 
-/* ==========================
-   EMPTY STATE STYLING
-========================== */
-.text-center.text-muted {
-    padding: 2rem;
-    font-style: italic;
-    color: var(--text-muted) !important;
+.table tbody tr:nth-child(1) { animation-delay: 0.1s; }
+.table tbody tr:nth-child(2) { animation-delay: 0.2s; }
+.table tbody tr:nth-child(3) { animation-delay: 0.3s; }
+.table tbody tr:nth-child(4) { animation-delay: 0.4s; }
+.table tbody tr:nth-child(5) { animation-delay: 0.5s; }
+
+/* ============================================
+   SCROLLBAR STYLING
+============================================ */
+.table-responsive::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
 }
 
-/* ==========================
-   FORM STYLES
-========================== */
-.form-label {
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: var(--header-bg);
+.table-responsive::-webkit-scrollbar-track {
+    background: var(--gray-100);
+    border-radius: 4px;
 }
 
-.form-control {
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    padding: 8px 12px;
-    transition: all 0.2s ease;
+.table-responsive::-webkit-scrollbar-thumb {
+    background: var(--gray-400);
+    border-radius: 4px;
 }
 
-.form-control:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
-}
-
-.btn-primary {
-    background: linear-gradient(135deg, #0d6efd, #0b5ed7);
-    border: none;
-    border-radius: 6px;
-    padding: 8px 20px;
-    font-weight: 600;
-    transition: all 0.2s ease;
-}
-
-.btn-primary:hover {
-    background: linear-gradient(135deg, #0b5ed7, #094bb3);
-    transform: translateY(-1px);
+.table-responsive::-webkit-scrollbar-thumb:hover {
+    background: var(--gray-500);
 }
 </style>
 
 <div class="container-fluid">
-    <h1>BHW Requests</h1>
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1>BHW Requests </h1>
+        <div class="table-actions">
+            <button class="refresh-btn" onclick="refreshData()">
+                <i class="fas fa-sync-alt"></i> Refresh Data
+            </button>
+        </div>
+    </div>
 
-    <div class="table-responsive">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Name</th><th>DOB</th><th>Age</th><th>Gender</th><th>Address</th><th>Service</th>
-                    <th>Contact</th><th>Complaint</th><th>Status</th><th>Schedule</th><th>Philhealth</th><th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if(isset($requests) && !$requests->isEmpty())
-                    @foreach($requests as $request)
-                        <tr>
-                            <!-- <td>{{ $loop->iteration }}</td> -->
-                            <td>{{ $request->fname }} {{ $request->mname }} {{ $request->lname }}</td>
-                            <td>{{ $request->dob }}</td>
-                            <td>{{ $request->age }}</td>
-                            <td>{{ $request->gender }}</td>
-                            <td> {{ $request->purok_no }}, {{ $request->sitio }}</td>
-                            <td>{{ $request->service_type }}</td>
-                            <td>{{ $request->contact_no }}</td>
-                            <td>{{ $request->chief_complaint }}</td>
-                            <td>
-                                @if($request->sched_date)
-                                    <span class="badge bg-success">Scheduled</span>
-                                @else
-                                    <span class="badge bg-warning text-dark">{{ $request->status }}</span>
-                                @endif
-                            </td>
-                            <td>{{ $request->sched_date }}</td>
-                            <td>{{ $request->phil_no }}</td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button type="button" class="btn-edit" data-bs-toggle="modal" data-bs-target="#editModal{{ $request->id }}"> <i class="fas fa-edit me-2"></i></button>
-                                    <form action="{{ route('bhw.request.destroy', $request->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn-delete" onclick="return confirm('Are you sure you want to delete this request?')">   <i class="fas fa-trash me-1"></i></button>
-                                    </form>
+
+
+    <!-- Active Filters Display -->
+    <div id="activeFilters" class="active-filters" style="display: none;">
+        <!-- Active filters will appear here -->
+    </div>
+
+    <!-- Stats Summary -->
+    <div class="stats-summary">
+        <div class="stat-card total">
+            <h3>Total Requests</h3>
+            <div class="count" id="totalCount">{{ isset($requests) ? $requests->count() : 0 }}</div>
+        </div>
+        <div class="stat-card scheduled">
+            <h3>Scheduled</h3>
+            <div class="count" id="scheduledCount">0</div>
+        </div>
+        <div class="stat-card pending">
+            <h3>Pending</h3>
+            <div class="count" id="pendingCount">0</div>
+        </div>
+        <div class="stat-card weekly">
+            <h3>This Week</h3>
+            <div class="count" id="weeklyCount">0</div>
+        </div>
+    </div>
+    <!-- Professional Filter System -->
+    <div class="filter-system">
+        <div class="filter-group">
+            <label class="filter-label">Status</label>
+            <select id="statusFilter" class="filter-select">
+                <option value="">All Status</option>
+                <option value="scheduled">Scheduled</option>
+                <option value="pending">Pending</option>
+                <!-- <option value="urgent">Urgent</option> -->
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label class="filter-label">Service Type</label>
+            <select id="serviceFilter" class="filter-select">
+                <option value="">All Services</option>
+                @if(isset($requests))
+                    @foreach($requests->pluck('service_type')->unique()->filter() as $service)
+                        <option value="{{ $service }}">{{ $service }}</option>
+                    @endforeach
+                @endif
+            </select>
+        </div>
+
+        <div class="search-box">
+            <label class="filter-label">Search Requests</label>
+            <input type="text" id="searchInput" placeholder="Search by name, complaint, or contact...">
+                <!-- <i class="fas fa-search"></i> -->
+        </div>
+    </div>
+    <!-- Table Container -->
+    <div class="table-container">
+        <div class="table-header">
+            <h2>Patient Requests</h2>
+
+            <div class="filter-info">
+                <span id="filteredCount">{{ isset($requests) ? $requests->count() : 0 }}</span> of
+                <span id="totalItems">{{ isset($requests) ? $requests->count() : 0 }}</span> requests
+            </div>
+
+        </div>
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Patient Name</th>
+                        <th>DOB</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Address</th>
+                        <th>Service</th>
+                        <th>Contact</th>
+                        <th>Complaint</th>
+                        <th>Status</th>
+                        <th>Schedule</th>
+                        <th>Philhealth</th>
+                        <th class="action-cell">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="requestsTable">
+                    @if(isset($requests) && !$requests->isEmpty())
+                        @foreach($requests as $request)
+                            <tr data-status="{{ $request->sched_date ? 'scheduled' : ($request->status == 'urgent' ? 'urgent' : 'pending') }}"
+                                data-service="{{ $request->service_type }}"
+                                data-search="{{ strtolower($request->fname . ' ' . $request->lname . ' ' . $request->contact_no . ' ' . $request->chief_complaint) }}">
+                                <td>
+                                    <div class="patient-info">
+                                        <strong>{{ $request->fname }} {{ $request->lname }}</strong>
+                                        <div class="text-muted" style="font-size: 0.75rem;">{{ $request->mname }}</div>
+                                    </div>
+                                </td>
+                                <td>{{ \Carbon\Carbon::parse($request->dob)->format('M d, Y') }}</td>
+                                <td>{{ $request->age }}</td>
+                                <td>
+                                    <span class="gender-badge">{{ $request->gender }}</span>
+                                </td>
+                                <td>
+                                    <div class="address-truncate" title="{{ $request->purok_no }}, {{ $request->sitio }}">
+                                        {{ Str::limit($request->purok_no . ', ' . $request->sitio, 20) }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="service-tag">{{ $request->service_type }}</span>
+                                </td>
+                                <td>{{ $request->contact_no }}</td>
+                                <td>
+                                    <div class="complaint-truncate" title="{{ $request->chief_complaint }}">
+                                        {{ Str::limit($request->chief_complaint, 25) }}
+                                    </div>
+                                </td>
+                                <td>
+                                    @if($request->sched_date)
+                                        <span class="status-badge scheduled">Scheduled</span>
+                                    @elseif($request->status == 'urgent')
+                                        <span class="status-badge urgent">Urgent</span>
+                                    @else
+                                        <span class="status-badge pending">Pending</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($request->sched_date)
+                                        <div class="scheduled-date">
+                                            <i class="far fa-calendar-alt me-1"></i>
+                                            {{ \Carbon\Carbon::parse($request->sched_date)->format('M d, Y') }}
+                                        </div>
+                                    @else
+                                        <span class="text-muted">Not set</span>
+                                    @endif
+                                </td>
+                                <td>{{ $request->phil_no ?: 'N/A' }}</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button type="button"
+                                                class="action-btn btn-edit"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#editModal{{ $request->id }}"
+                                                title="Edit Schedule">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <form action="{{ route('bhw.request.destroy', $request->id) }}"
+                                              method="POST"
+                                              class="d-inline"
+                                              onsubmit="return confirmAction('delete')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                    class="action-btn btn-delete"
+                                                    title="Delete Request">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @else
+                        <tr id="emptyStateRow">
+                            <td colspan="12">
+                                <div class="empty-state">
+                                    <i class="fas fa-clipboard-list"></i>
+                                    <h3>No Requests Found</h3>
+                                    <p>There are currently no patient requests in the system.</p>
+                                    <button class="refresh-btn" onclick="refreshData()">
+                                        <i class="fas fa-sync-alt"></i> Refresh
+                                    </button>
                                 </div>
                             </td>
                         </tr>
-
-                        <!-- Edit Modal -->
-                        <div class="modal fade" id="editModal{{ $request->id }}" tabindex="-1">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Set Schedule</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form action="{{ route('bhw.request.update', $request->id) }}" method="POST">
-                                            @csrf
-                                            @method('PUT')
-
-                                            <label class="form-label">Schedule Date</label>
-                                            <input type="date" name="sched_date" class="form-control" value="{{ $request->sched_date }}">
-
-                                            <div class="text-center mt-3">
-                                                <button type="submit" class="btn btn-primary px-4">Save</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    @endforeach
-                @else
-                    <tr>
-                        <td colspan="13" class="text-center text-muted">No requests found.</td>
-                    </tr>
-                @endif
-            </tbody>
-        </table>
+                    @endif
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
-<!-- ============================
-     SCRIPT SECTION
-============================== -->
+<!-- Modals -->
+@if(isset($requests) && !$requests->isEmpty())
+    @foreach($requests as $request)
+        <!-- Edit Modal -->
+        <div class="modal fade" id="editModal{{ $request->id }}" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Schedule Appointment</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="patient-summary mb-4 p-3 bg-light rounded">
+                            <h6>Patient Information</h6>
+                            <p class="mb-1"><strong>Name:</strong> {{ $request->fname }} {{ $request->lname }}</p>
+                            <p class="mb-1"><strong>Service:</strong> {{ $request->service_type }}</p>
+                            <p class="mb-0"><strong>Complaint:</strong> {{ $request->chief_complaint }}</p>
+                        </div>
+
+                        <form action="{{ route('bhw.request.update', $request->id) }}" method="POST" id="scheduleForm{{ $request->id }}">
+                            @csrf
+                            @method('PUT')
+
+                            <div class="form-group">
+                                <label class="form-label">Schedule Date</label>
+                                <input type="date"
+                                       name="sched_date"
+                                       class="form-control"
+                                       value="{{ $request->sched_date }}"
+                                       min="{{ date('Y-m-d') }}"
+                                       required>
+                                <small class="text-muted">Select a future date for the appointment</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Notes (Optional)</label>
+                                <textarea name="notes"
+                                          class="form-control"
+                                          rows="3"
+                                          placeholder="Add any additional notes or instructions...">{{ $request->notes ?? '' }}</textarea>
+                            </div>
+
+                            <div class="d-flex justify-content-between mt-4">
+                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                    Cancel
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-calendar-check me-2"></i> Set Schedule
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
+@endif
+
+<!-- ============================================
+     ADVANCED JAVASCRIPT FUNCTIONALITY
+============================================ -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize counts and filters
+    updateStatistics();
+    initializeFilters();
 
-    // -------------------------
-    // MOBILE TABLE DATA LABELS
-    // -------------------------
-    function setDataLabels() {
-        const headers = document.querySelectorAll('thead th');
-        const rows = document.querySelectorAll('tbody tr');
-
-        if(window.innerWidth <= 768){
-            rows.forEach(row => {
-                const cells = row.querySelectorAll('td');
-                cells.forEach((cell, idx) => {
-                    if(idx < headers.length-1) {
-                        cell.setAttribute('data-label', headers[idx].textContent);
-                    }
-                });
-            });
-        } else {
-            rows.forEach(row => {
-                row.querySelectorAll('td').forEach(cell => cell.removeAttribute('data-label'));
-            });
-        }
+    // Search functionality
+    const searchInput = document.getElementById('searchInput');
+    if(searchInput) {
+        searchInput.addEventListener('input', debounce(function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            updateActiveFilters('search', searchTerm);
+            applyFilters();
+        }, 300));
     }
-    setDataLabels();
-    window.addEventListener('resize', setDataLabels);
 
-    // -------------------------
-    // MODAL ANIMATION
-    // -------------------------
-    const modals = document.querySelectorAll('.modal');
-    modals.forEach(modal => {
-        modal.addEventListener('show.bs.modal', function(){
-            const content = this.querySelector('.modal-content');
-            content.style.transform = 'scale(0.9)';
-            setTimeout(() => { content.style.transform = 'scale(1)'; content.style.transition = 'transform 0.3s ease'; }, 10);
-        });
-    });
+    // Filter change functionality
+    const statusFilter = document.getElementById('statusFilter');
+    const serviceFilter = document.getElementById('serviceFilter');
 
-    // -------------------------
-    // FORM LOADING SPINNER
-    // -------------------------
-    const forms = document.querySelectorAll('form');
-    forms.forEach(form => {
-        form.addEventListener('submit', function(){
-            const buttons = this.querySelectorAll('button[type="submit"]');
-            buttons.forEach(button => {
-                button.disabled = true;
-                button.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...';
-            });
+    if(statusFilter) {
+        statusFilter.addEventListener('change', function() {
+            updateActiveFilters('status', this.value);
+            applyFilters();
         });
+    }
+
+    if(serviceFilter) {
+        serviceFilter.addEventListener('change', function() {
+            updateActiveFilters('service', this.value);
+            applyFilters();
+        });
+    }
+
+    // Initialize tooltips
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[title]'));
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
     });
 });
-</script>
 
+// Update statistics
+function updateStatistics() {
+    const scheduledCount = document.querySelectorAll('.status-badge.scheduled').length;
+    const pendingCount = document.querySelectorAll('.status-badge.pending').length;
+    const urgentCount = document.querySelectorAll('.status-badge.urgent').length;
+    const totalRows = document.querySelectorAll('#requestsTable tr[data-status]').length;
+
+    // Calculate this week's requests (simulated)
+    const weeklyCount = Math.floor(totalRows * 0.3); // 30% of total for demo
+
+    document.getElementById('scheduledCount').textContent = scheduledCount;
+    document.getElementById('pendingCount').textContent = pendingCount;
+    document.getElementById('weeklyCount').textContent = weeklyCount;
+    document.getElementById('totalCount').textContent = totalRows;
+}
+
+// Initialize filters
+function initializeFilters() {
+    // Store original rows for filtering
+    const rows = document.querySelectorAll('#requestsTable tr[data-status]');
+    window.originalRows = Array.from(rows).map(row => ({
+        element: row,
+        status: row.getAttribute('data-status'),
+        service: row.getAttribute('data-service'),
+        search: row.getAttribute('data-search')
+    }));
+
+    // Update filtered count
+    updateFilteredCount(rows.length);
+}
+
+// Apply combined filters
+function applyFilters() {
+    const statusFilter = document.getElementById('statusFilter')?.value || '';
+    const serviceFilter = document.getElementById('serviceFilter')?.value || '';
+    const searchTerm = document.getElementById('searchInput')?.value.toLowerCase() || '';
+
+    let visibleCount = 0;
+
+    window.originalRows.forEach(rowData => {
+        const row = rowData.element;
+        const matchesStatus = !statusFilter || rowData.status === statusFilter;
+        const matchesService = !serviceFilter || rowData.service?.toLowerCase().includes(serviceFilter.toLowerCase());
+        const matchesSearch = !searchTerm || rowData.search?.includes(searchTerm);
+
+        if(matchesStatus && matchesService && matchesSearch) {
+            row.style.display = '';
+            visibleCount++;
+        } else {
+            row.style.display = 'none';
+        }
+    });
+
+    updateFilteredCount(visibleCount);
+    updateEmptyState(visibleCount);
+}
+
+// Update filtered count display
+function updateFilteredCount(count) {
+    const totalItems = window.originalRows?.length || 0;
+    document.getElementById('filteredCount').textContent = count;
+    document.getElementById('totalItems').textContent = totalItems;
+
+    // Update header color based on filtered results
+    const header = document.querySelector('.table-header');
+    if(count < totalItems) {
+        header.style.background = 'linear-gradient(135deg, var(--warning-color) 0%, #e67e22 100%)';
+    } else {
+        header.style.background = 'linear-gradient(135deg, var(--primary-color) 0%, #34495e 100%)';
+    }
+}
+
+// Update active filters display
+function updateActiveFilters(type, value) {
+    const activeFiltersContainer = document.getElementById('activeFilters');
+
+    if(type === 'search' && value) {
+        let searchFilter = activeFiltersContainer.querySelector('.filter-tag[data-type="search"]');
+        if(!searchFilter) {
+            searchFilter = document.createElement('span');
+            searchFilter.className = 'filter-tag';
+            searchFilter.setAttribute('data-type', 'search');
+            searchFilter.innerHTML = `
+                Search: "${value}"
+                <span class="remove" onclick="clearFilter('search')">&times;</span>
+            `;
+            activeFiltersContainer.appendChild(searchFilter);
+        } else {
+            searchFilter.innerHTML = `
+                Search: "${value}"
+                <span class="remove" onclick="clearFilter('search')">&times;</span>
+            `;
+        }
+    } else if(type === 'status' && value) {
+        let statusFilter = activeFiltersContainer.querySelector('.filter-tag[data-type="status"]');
+        if(!statusFilter) {
+            statusFilter = document.createElement('span');
+            statusFilter.className = 'filter-tag';
+            statusFilter.setAttribute('data-type', 'status');
+            statusFilter.innerHTML = `
+                Status: ${value.charAt(0).toUpperCase() + value.slice(1)}
+                <span class="remove" onclick="clearFilter('status')">&times;</span>
+            `;
+            activeFiltersContainer.appendChild(statusFilter);
+        } else {
+            statusFilter.innerHTML = `
+                Status: ${value.charAt(0).toUpperCase() + value.slice(1)}
+                <span class="remove" onclick="clearFilter('status')">&times;</span>
+            `;
+        }
+    } else if(type === 'service' && value) {
+        let serviceFilter = activeFiltersContainer.querySelector('.filter-tag[data-type="service"]');
+        if(!serviceFilter) {
+            serviceFilter = document.createElement('span');
+            serviceFilter.className = 'filter-tag';
+            serviceFilter.setAttribute('data-type', 'service');
+            serviceFilter.innerHTML = `
+                Service: ${value}
+                <span class="remove" onclick="clearFilter('service')">&times;</span>
+            `;
+            activeFiltersContainer.appendChild(serviceFilter);
+        } else {
+            serviceFilter.innerHTML = `
+                Service: ${value}
+                <span class="remove" onclick="clearFilter('service')">&times;</span>
+            `;
+        }
+    }
+
+    // Show/hide active filters container
+    const hasActiveFilters = activeFiltersContainer.children.length > 0;
+    activeFiltersContainer.style.display = hasActiveFilters ? 'flex' : 'none';
+}
+
+// Clear specific filter
+function clearFilter(type) {
+    switch(type) {
+        case 'status':
+            document.getElementById('statusFilter').value = '';
+            break;
+        case 'service':
+            document.getElementById('serviceFilter').value = '';
+            break;
+        case 'search':
+            document.getElementById('searchInput').value = '';
+            break;
+    }
+
+    // Remove filter tag
+    const filterTag = document.querySelector(`.filter-tag[data-type="${type}"]`);
+    if(filterTag) {
+        filterTag.remove();
+    }
+
+    // Update filters
+    updateActiveFilters(type, '');
+    applyFilters();
+}
+
+// Clear all filters
+function clearAllFilters() {
+    document.getElementById('statusFilter').value = '';
+    document.getElementById('serviceFilter').value = '';
+    document.getElementById('searchInput').value = '';
+
+    document.getElementById('activeFilters').innerHTML = '';
+    document.getElementById('activeFilters').style.display = 'none';
+
+    applyFilters();
+}
+
+// Update empty state message
+function updateEmptyState(visibleCount) {
+    const emptyStateRow = document.getElementById('emptyStateRow');
+    if(!emptyStateRow && visibleCount === 0 && window.originalRows?.length > 0) {
+        // Create empty state row
+        const tbody = document.querySelector('#requestsTable');
+        const row = document.createElement('tr');
+        row.id = 'emptyStateRow';
+        row.innerHTML = `
+            <td colspan="12">
+                <div class="empty-state">
+                    <i class="fas fa-search"></i>
+                    <h3>No Matching Requests</h3>
+                    <p>No requests match your current filter criteria.</p>
+                    <button class="refresh-btn" onclick="clearAllFilters()">
+                        <i class="fas fa-times"></i> Clear Filters
+                    </button>
+                </div>
+            </td>
+        `;
+        tbody.appendChild(row);
+    } else if(emptyStateRow && visibleCount > 0) {
+        emptyStateRow.remove();
+    }
+}
+
+// Refresh data function
+function refreshData() {
+    const refreshBtn = document.querySelector('.refresh-btn');
+    const originalHTML = refreshBtn.innerHTML;
+
+    refreshBtn.disabled = true;
+    refreshBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Refreshing...';
+
+    // Clear filters
+    clearAllFilters();
+
+    // Simulate API call
+    setTimeout(() => {
+        // In real application, this would be an AJAX call
+        // For now, we'll just reset the view
+
+        // Update statistics
+        updateStatistics();
+
+        // Reset button
+        refreshBtn.disabled = false;
+        refreshBtn.innerHTML = originalHTML;
+
+        // Show success message
+        showNotification('Data refreshed successfully!', 'success');
+    }, 1500);
+}
+
+// Show notification
+function showNotification(message, type = 'info') {
+    // Remove existing notifications
+    const existingNotifications = document.querySelectorAll('.notification');
+    existingNotifications.forEach(notification => notification.remove());
+
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.innerHTML = `
+        <div class="notification-content">
+            <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i>
+            <span>${message}</span>
+        </div>
+    `;
+
+    // Add styles
+    const styles = document.createElement('style');
+    styles.textContent = `
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            background: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: var(--box-shadow);
+            z-index: 9999;
+            transform: translateX(120%);
+            transition: transform 0.3s ease;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .notification-success {
+            border-left-color: var(--success-color);
+        }
+
+        .notification-error {
+            border-left-color: var(--accent-color);
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .notification-content i {
+            font-size: 16px;
+        }
+    `;
+
+    if(!document.querySelector('#notification-styles')) {
+        styles.id = 'notification-styles';
+        document.head.appendChild(styles);
+    }
+
+    document.body.appendChild(notification);
+
+    // Show notification
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 10);
+
+    // Hide after delay
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
+    }, 3000);
+}
+
+// Debounce function for search
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// Confirm action
+function confirmAction(action) {
+    const messages = {
+        'delete': 'Are you sure you want to delete this request? This action cannot be undone.',
+        'schedule': 'Are you sure you want to schedule this appointment?',
+        'cancel': 'Are you sure you want to cancel this appointment?'
+    };
+
+    return confirm(messages[action] || 'Are you sure?');
+}
+</script>
 @endsection

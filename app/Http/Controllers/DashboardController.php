@@ -5,6 +5,8 @@ use App\Models\Resident;
 use App\Models\BarangayCase;
 use App\Models\clearancereq;
 use App\Models\Senior;
+use App\Models\newdelivery;
+use App\Models\Fourps;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -41,10 +43,18 @@ class DashboardController extends Controller
         return view("admin.senior", compact('seniors'));
      }
      public function BHWview(){
-        return view("admin.bhwview");
+        $newdeliveries = newdelivery::all();
+        $totalBabies = $newdeliveries->count();
+        $totalBoys = $newdeliveries->where('gender', 'Male')->count();
+        $totalGirls = $newdeliveries->where('gender', 'Female')->count();
+        return view("admin.bhwview", compact('newdeliveries', 'totalBabies', 'totalBoys', 'totalGirls'));
      }
      public function Fourpsview(){
-        return view("admin.4pslist");
+        $fourps = Fourps::with('resident')->get();
+        $totalBeneficiaries = $fourps->count();
+        $activeBeneficiaries = $fourps->where('status', 'active')->count();
+        $inactiveBeneficiaries = $fourps->where('status', 'inactive')->count();
+        return view("admin.4pslist", compact('fourps', 'totalBeneficiaries', 'activeBeneficiaries', 'inactiveBeneficiaries'));
      }
 
 }

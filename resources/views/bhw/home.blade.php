@@ -494,7 +494,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                 </div>
                 <!-- Animated background element -->
-                <div class="position-absolute top-0 end-0 mt-3 me-3 opacity-10">
+                <div class="position-absolute top-0 end-0 mt-3 me-3 opacity-100">
                     <i class="fas fa-clipboard-list fa-3x"></i>
                 </div>
             </div>
@@ -519,7 +519,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                     </div>
                 </div>
-                <div class="position-absolute top-0 end-0 mt-3 me-3 opacity-10">
+                <div class="position-absolute top-0 end-0 mt-3 me-3 opacity-100">
                     <i class="fas fa-clock fa-3x"></i>
                 </div>
             </div>
@@ -544,7 +544,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                     </div>
                 </div>
-                <div class="position-absolute top-0 end-0 mt-3 me-3 opacity-10">
+                <div class="position-absolute top-0 end-0 mt-3 me-3 opacity-100">
                     <i class="fas fa-calendar-check fa-3x"></i>
                 </div>
             </div>
@@ -569,7 +569,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                     </div>
                 </div>
-                <div class="position-absolute top-0 end-0 mt-3 me-3 opacity-10">
+                <div class="position-absolute top-0 end-0 mt-3 me-3 opacity-100">
                     <i class="fas fa-female fa-3x"></i>
                 </div>
             </div>
@@ -597,7 +597,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                     </div>
                 </div>
-                <div class="position-absolute top-0 end-0 mt-3 me-3 opacity-10">
+                <div class="position-absolute top-0 end-0 mt-3 me-3 opacity-100">
                     <i class="fas fa-baby fa-3x"></i>
                 </div>
             </div>
@@ -622,7 +622,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                     </div>
                 </div>
-                <div class="position-absolute top-0 end-0 mt-3 me-3 opacity-10">
+                <div class="position-absolute top-0 end-0 mt-3 me-3 opacity-100">
                     <i class="fas fa-male fa-3x"></i>
                 </div>
             </div>
@@ -647,7 +647,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                     </div>
                 </div>
-                <div class="position-absolute top-0 end-0 mt-3 me-3 opacity-10">
+                <div class="position-absolute top-0 end-0 mt-3 me-3 opacity-100">
                     <i class="fas fa-female fa-3x"></i>
                 </div>
             </div>
@@ -672,7 +672,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                     </div>
                 </div>
-                <div class="position-absolute top-0 end-0 mt-3 me-3 opacity-10">
+                <div class="position-absolute top-0 end-0 mt-3 me-3 opacity-100">
                     <i class="fas fa-baby-carriage fa-3x"></i>
                 </div>
             </div>
