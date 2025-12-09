@@ -2,8 +2,8 @@
 @section('content')
 <style>
     :root {
-        --primary-blue: #007bff;
-        --gray: #6c757d;
+        --primary-blue: #2c3e50ff;
+        --gray: #007bff;
         --warning: #ffc107;
         --success: #28a745;
         --danger: #dc3545;
@@ -338,7 +338,7 @@
                         @if(isset($totalRequests) && $totalRequests > 0)
                         <div class="progress-container">
                             <div class="progress-label">
-                                <span>Acceptance Rate</span>
+                                <span>Acceptance </span>
                                 <span>{{ number_format(($acceptedRequests / $totalRequests) * 100, 1) }}%</span>
                             </div>
                             <div class="progress">
@@ -386,7 +386,7 @@
         <div class="row mt-5">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header" style="background: linear-gradient(90deg, var(--primary-blue), var(--success)); color: white;">
+                    <div class="card-header" style="background: var(--primary-blue); color: white;">
                         <h5 class="mb-0">Request Summary</h5>
                     </div>
                     <div class="card-body">

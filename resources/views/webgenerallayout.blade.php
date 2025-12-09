@@ -1416,23 +1416,38 @@
             <div class="products-box">
                 <i class='bx bx-file'></i>
                 <h3>Barangay Legal Documents</h3>
-                <p>Request your official Barangay Clearance for various transactions</p>
+                <p>Request official barangay documents for your transactions.</p>
                 <a href="{{ route('login') }}" class="btn">Proceed</a>
             </div>
+
 
             <div class="products-box1">
                 <i class='bx bx-id-card'></i>
-                <h3>Barangay Indigency</h3>
-                <p>Obtain a Certificate of Indigency for social welfare purposes</p>
+                <h3>4Ps Services</h3>
+                <p>Update 4Ps records and request needed program documents.</p>
                 <a href="{{ route('login') }}" class="btn">Proceed</a>
             </div>
 
+
             <div class="products-box2">
                 <i class='bx bx-building-house'></i>
-                <h3>Barangay Permit</h3>
-                <p>Apply for business permits and other necessary clearances</p>
+                <h3>BHW Services</h3>
+                <p>Access maternal, child health, and community health services.</p>
                 <a href="{{ route('login') }}" class="btn">Proceed</a>
             </div>
+            <div class="products-box2">
+                <i class='bx bx-building-house'></i>
+                <h3>SK Services</h3>
+                <p>Get assistance for youth programs, records, and activities.</p>
+                <a href="{{ route('login') }}" class="btn">Proceed</a>
+            </div>
+            <div class="products-box2">
+                <i class='bx bx-building-house'></i>
+                <h3>Senior Citizen Services</h3>
+                <p>Request senior records and access support for elder assistance.</p>
+                <a href="{{ route('login') }}" class="btn">Proceed</a>
+            </div>
+
             @foreach($services as $service)
                 <div class="products-box">
                     <!-- Optionally, add an icon if needed -->

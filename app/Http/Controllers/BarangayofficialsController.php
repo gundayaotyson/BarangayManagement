@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 use App\Models\Resident;
 use App\Models\BarangayOfficial;
+use App\Models\BarangayComplaint;
+use App\Models\BarangayProject;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class BarangayofficialsController extends Controller
 {
@@ -180,5 +183,37 @@ public function update(Request $request, string $id)
     {
         return view('barangay_official.dashboard');
     }
+  public function home()
+{
+    // Complaints
+    $totalComplaints = BarangayComplaint::count();
+
+    // Final working code
+    $activeCases = BarangayComplaint::whereRaw("TRIM(LOWER(status)) = 'active'")->count();
+
+    $settledCases = BarangayComplaint::whereNotNull('settled_date')->count();
+
+    $scheduledCases = BarangayComplaint::whereRaw("TRIM(LOWER(status)) = 'scheduled'")->count();
+
+    // Projects
+    $totalProjects = BarangayProject::count();
+    $completedProjects = BarangayProject::whereNotNull('completed_date')->count();
+    $ongoingProjects = BarangayProject::whereNull('completed_date')->count();
+
+    // Fix delayed
+    $delayedProjects = BarangayProject::whereRaw("TRIM(LOWER(status)) = 'delayed'")->count();
+
+    return view('barangay_official.home', compact(
+        'totalComplaints',
+        'activeCases',
+        'settledCases',
+        'scheduledCases',
+        'totalProjects',
+        'completedProjects',
+        'ongoingProjects',
+        'delayedProjects'
+    ));
+}
+
 
 }

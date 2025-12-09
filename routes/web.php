@@ -157,6 +157,8 @@ Route::get('/seniors/{id}/resident', [SeniorController::class, 'residentDetails'
     // Barangay Official Dashboard
     Route::get('/barangay-official/dashboard', [BarangayofficialsController::class, 'dashboard'])->name('barangay_official.dashboard');
     Route::get('/officials-profile', [ProfileController::class, 'editofficialsProfile'])->name('barangayofficials.profile');
+    Route::get('/barangay-official/home', [BarangayofficialsController::class, 'home'])->name('barangay_official.home');
+
 
     // Profile Routes
     Route::get('/profile', [ProfileController::class, 'editProfile'])->name('partials.profile');
@@ -171,6 +173,7 @@ Route::get('/seniors/{id}/resident', [SeniorController::class, 'residentDetails'
     Route::get('/barangayprojects/{id}/edit', [BarangayProjectController::class, 'edit'])->name('barangayprojects.edit');
     Route::put('/barangayprojects/{id}', [BarangayProjectController::class, 'update'])->name('barangayprojects.update');
     Route::delete('/barangayprojects/{id}', [BarangayProjectController::class, 'destroy'])->name('barangayprojects.destroy');
+
 });
 
 // Public Document & Services Routes

@@ -20,7 +20,7 @@
 
     /* Page Header */
     .dashboard-header {
-        background: linear-gradient(135deg, var(--primary-color) 0%, #283593 100%);
+        background:var(--primary-color);
         color: white;
         padding: 2.5rem;
         border-radius: var(--border-radius);
@@ -202,7 +202,7 @@
     }
 
     .card-header {
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        background: var(--primary-color);
         padding: 1.75rem 2rem;
         border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         display: flex;
