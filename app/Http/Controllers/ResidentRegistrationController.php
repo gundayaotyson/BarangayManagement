@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Resident;
+use App\Models\BarangayOfficial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -26,6 +27,14 @@ class ResidentRegistrationController extends Controller
         'password' => 'required|string|min:8|confirmed',
     ]);
 
+    // Check if the registering person is a barangay official
+    $isOfficial = BarangayOfficial::where('fname', $request->Fname)
+                                    ->where('lname', $request->lname)
+                                    ->exists();
+
+    // The role will always be 'resident'
+    $role = 'resident';
+
     // Check if resident already exists
     $resident = Resident::where('Fname', $request->Fname)
                         ->where('lname', $request->lname)
@@ -44,8 +53,8 @@ class ResidentRegistrationController extends Controller
             'name' => $resident->Fname . ' ' . $resident->lname,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'resident',
-            'resident_id' => $resident->id, // OPTIONAL if you have relationship
+            'role' => $role, // Role is set to 'resident'
+            'resident_id' => $resident->id,
         ]);
 
     } else {
@@ -65,12 +74,17 @@ class ResidentRegistrationController extends Controller
             'name' => $request->Fname . ' ' . $request->lname,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'resident',
-            'resident_id' => $resident->id, // OPTIONAL if you have relationship
+            'role' => $role, // Role is set to 'resident'
+            'resident_id' => $resident->id,
         ]);
     }
 
     Auth::login($user);
+
+    // Redirect based on whether they are an official, even if role is 'resident'
+    if ($isOfficial) {
+        return redirect()->route('barangay_official.dashboard');
+    }
 
     return redirect()->route('resident.dashboard');
 }

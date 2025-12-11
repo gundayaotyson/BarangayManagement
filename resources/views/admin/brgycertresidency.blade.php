@@ -238,9 +238,9 @@
 
             <div class="signature-area">
                 <p>Respectfully yours,</p>
-                <div class="signature-box">
+                <!-- <div class="signature-box">
                     <img src="{{ asset('images/signiture-removebg.png') }}" alt="Signature" />
-                </div>
+                </div> -->
                 <div class="signature-name">DIONISIO R. CALDONA</div>
                 <div class="signature-title">Punong Barangay</div>
             </div>

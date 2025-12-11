@@ -987,7 +987,7 @@
                             <th>OSCA ID</th>
                             <th>FCAP ID</th>
                             <th>Resident Status</th>
-                            <!-- <th>Actions</th> -->
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -1050,7 +1050,7 @@
                                     </span>
                                 @endif
                             </td>
-                            <!-- <td>
+                            <td>
                                 <div class="action-buttons">
                                     <button class="action-btn view" onclick="openViewModal({{$senior->id}})" title="View Details">
                                         <i class="fas fa-eye"></i>
@@ -1066,7 +1066,7 @@
                                         </button>
                                     </form>
                                 </div>
-                            </td> -->
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

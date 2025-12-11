@@ -276,9 +276,9 @@
         </div>
 
         <div class="column">
-            <div class="signature-box">
+            <!-- <div class="signature-box">
                 <img src="{{ asset('images/signiture-removebg.png') }}" alt="Signature" />
-            </div>
+            </div> -->
             <div class="signature-line"></div>
             <p>Signature</p>
         </div>

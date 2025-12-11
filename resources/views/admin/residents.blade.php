@@ -1011,12 +1011,12 @@
                                     </select>
                                 </div>
                                 <div class="col-md-12">
-                                    <div class="form-check mt-2">
+                                    <!-- <div class="form-check mt-2">
                                         <input class="form-check-input" type="checkbox" id="edit-is-household-head" name="is_household_head">
                                         <label class="form-check-label" for="edit-is-household-head">
                                             This resident is the head of the household
                                         </label>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -1187,14 +1187,14 @@
                                 </select>
                             </div>
 
-                            <div class="col-md-12">
+                            <!-- <div class="col-md-12">
                                 <div class="form-check mt-2">
                                     <input class="form-check-input" type="checkbox" id="is_household_head" name="is_household_head">
                                     <label class="form-check-label" for="is_household_head">
                                         This resident is the head of the household
                                     </label>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
 
                         <!-- Photo Upload -->

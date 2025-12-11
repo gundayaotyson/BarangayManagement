@@ -6,6 +6,8 @@ use App\Models\BarangayOfficial;
 use App\Models\BarangayComplaint;
 use App\Models\BarangayProject;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash; // <-- Import Auth facade
 use Carbon\Carbon;
 
 class BarangayofficialsController extends Controller
@@ -181,39 +183,39 @@ public function update(Request $request, string $id)
 
     public function dashboard()
     {
-        return view('barangay_official.dashboard');
+        $user = Auth::user();
+
+        // Find the official record associated with the logged-in user
+        $official = BarangayOfficial::where('fname', 'like', explode(' ', $user->name)[0])
+                                    ->where('lname', 'like', explode(' ', $user->name)[1])
+                                    ->first();
+
+        return view('barangay_official.dashboard', compact('official'));
     }
-  public function home()
-{
-    // Complaints
-    $totalComplaints = BarangayComplaint::count();
+    public function home()
+    {
+        // Complaints
+        $totalComplaints = BarangayComplaint::count();
+        $activeCases = BarangayComplaint::where('status', 'Active')->count();
+        $settledCases = BarangayComplaint::whereNotNull('settled_date')->count();
+        $scheduledCases = BarangayComplaint::where('status', 'Scheduled')->count();
 
-    // Final working code
-    $activeCases = BarangayComplaint::whereRaw("TRIM(LOWER(status)) = 'active'")->count();
-
-    $settledCases = BarangayComplaint::whereNotNull('settled_date')->count();
-
-    $scheduledCases = BarangayComplaint::whereRaw("TRIM(LOWER(status)) = 'scheduled'")->count();
-
-    // Projects
-    $totalProjects = BarangayProject::count();
-    $completedProjects = BarangayProject::whereNotNull('completed_date')->count();
-    $ongoingProjects = BarangayProject::whereNull('completed_date')->count();
-
-    // Fix delayed
-    $delayedProjects = BarangayProject::whereRaw("TRIM(LOWER(status)) = 'delayed'")->count();
-
-    return view('barangay_official.home', compact(
-        'totalComplaints',
-        'activeCases',
-        'settledCases',
-        'scheduledCases',
-        'totalProjects',
-        'completedProjects',
-        'ongoingProjects',
-        'delayedProjects'
-    ));
-}
+        // Projects
+        $totalProjects = BarangayProject::count();
+        $completedProjects = BarangayProject::whereNotNull('completed_date')->count();
+        $ongoingProjects = BarangayProject::whereNull('completed_date')->count();
+        $delayedProjects = BarangayProject::where('status', 'delayed ')->count();
 
 
+        return view('barangay_official.home', compact(
+            'totalComplaints',
+            'activeCases',
+            'settledCases',
+            'scheduledCases',
+            'totalProjects',
+            'completedProjects',
+            'ongoingProjects',
+            'delayedProjects'
+        ));
+    }
 }
