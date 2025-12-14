@@ -886,7 +886,7 @@
             <div class="header-content">
                 <h1 class="page-title">
                     <i class="fas fa-user-circle"></i>
-                    <span>Senior Citizen Management</span>
+                    <span>Senior Citizen List</span>
                 </h1>
                 <p class="page-subtitle">
                     Manage senior citizen records, OSCA/FCAP IDs, and resident matching for comprehensive senior care program.
@@ -966,10 +966,38 @@
                         </div>
                     </div>
                     <div class="d-flex gap-2">
-
+                         <button class="btn btn-primary add-senior-btn" data-bs-toggle="modal" data-bs-target="#addSeniorModal">
+                            <i class="fas fa-plus"></i> Add Senior
+                        </button>
                         <!-- <button class="btn btn-outline">
                             <i class="fas fa-download"></i> Export
                         </button> -->
+                        <div class="d-flex gap-2 align-items-center mb-2">
+                            <!-- PUROK FILTER -->
+                            <select id="purokFilter" class="form-select" style="max-width: 180px;">
+                                <option value="">All Purok</option>
+                                @php
+                                    $puroks = $seniors->filter(fn($s) => $s->resident)
+                                                    ->pluck('resident.purok_no')
+                                                    ->unique()
+                                                    ->sort();
+                                @endphp
+                                @foreach($puroks as $purok)
+                                    <option value="{{ strtolower($purok) }}">{{ $purok }}</option>
+                                @endforeach
+                            </select>
+
+                            <!-- MONTH FILTER -->
+                            <select id="monthFilter" class="form-select" style="max-width: 180px;">
+                                <option value="">All Months</option>
+                                @foreach(range(1,12) as $month)
+                                    <option value="{{ $month }}">
+                                        {{ \Carbon\Carbon::create()->month($month)->format('F') }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
                         <button class="btn btn-outline" id="refreshBtn">
                             <i class="fas fa-sync-alt"></i> Refresh
                         </button>
@@ -993,7 +1021,10 @@
                     <tbody>
                         @foreach ($seniors as $senior)
                         <tr class="fade-in" style="animation-delay: {{ $loop->index * 0.05 }}s;"
-                            data-search="{{ strtolower($senior->firstname . ' ' . $senior->middlename . ' ' . $senior->lastname . ' ' . $senior->osca_id . ' ' . $senior->fcap_id) }}">
+                            data-search="{{ strtolower($senior->firstname . ' ' . $senior->middlename . ' ' . $senior->lastname . ' ' . $senior->osca_id . ' ' . $senior->fcap_id) }}"
+                               data-purok=""
+                                data-month="{{ \Carbon\Carbon::parse($senior->birthday)->month }}"
+                            >
                             <td>
                                 <div class="senior-info">
                                     <div class="senior-avatar">
@@ -1242,6 +1273,37 @@
         </div>
     </div>
 </div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const purokFilter  = document.getElementById('purokFilter');
+    const monthFilter  = document.getElementById('monthFilter');
+    const searchInput  = document.getElementById('searchInput');
+    const rows         = document.querySelectorAll('#seniorTable tbody tr');
+
+    function filterTable() {
+        const purokValue  = purokFilter.value;
+        const monthValue  = monthFilter.value;
+        const searchValue = searchInput.value.toLowerCase();
+
+        rows.forEach(row => {
+            const rowPurok  = row.getAttribute('data-purok');
+            const rowMonth  = row.getAttribute('data-month');
+            const rowSearch = row.getAttribute('data-search');
+
+            const matchPurok  = !purokValue || rowPurok === purokValue;
+            const matchMonth  = !monthValue || rowMonth === monthValue;
+            const matchSearch = !searchValue || rowSearch.includes(searchValue);
+
+            row.style.display = (matchPurok && matchMonth && matchSearch) ? '' : 'none';
+        });
+    }
+
+    purokFilter.addEventListener('change', filterTable);
+    monthFilter.addEventListener('change', filterTable);
+    searchInput.addEventListener('keyup', filterTable);
+});
+</script>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -1454,16 +1516,21 @@ async function openEditModal(id) {
     }
 }
 
-async function openResidentModal(seniorId) {
-    const viewBtn = document.querySelector(`[onclick="openResidentModal(${seniorId})"]`);
-    const originalContent = viewBtn.innerHTML;
 
+async function openResidentModal(seniorId) {
+
+    const viewBtn = document.querySelector(
+        `[onclick="openResidentModal(${seniorId})"]`
+    );
+
+    const originalContent = viewBtn.innerHTML;
     viewBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i> Loading...';
     viewBtn.disabled = true;
 
     try {
         const response = await fetch(`/seniors/${seniorId}/resident`);
         if (!response.ok) throw new Error('Failed to fetch resident data');
+
         const resident = await response.json();
 
         if (resident.error) {
@@ -1471,16 +1538,42 @@ async function openResidentModal(seniorId) {
             return;
         }
 
-        const fullName = `${resident.lname}, ${resident.Fname} ${resident.mname || ''}`.trim();
-        const age = resident.age || Math.floor((new Date() - new Date(resident.birthday)) / (365.25 * 24 * 60 * 60 * 1000));
-        const fullAddress = `${resident.purok_no}${resident.sitio ? ', ' + resident.sitio : ''}`;
+        /* ================================
+           ✅ GET PUROK FROM RESIDENT
+        ================================= */
+        const purok = resident.purok_no || '';
+        const sitio = resident.sitio || '';
+        const fullAddress = `${purok}${sitio ? ', ' + sitio : ''}`;
 
+        /* ================================
+           ✅ SAVE PUROK INTO TABLE ROW
+        ================================= */
+        const row = viewBtn.closest('tr');
+        if (row) {
+            row.dataset.purok = purok.toLowerCase();
+        }
+
+        /* ================================
+           OTHER RESIDENT DATA
+        ================================= */
+        const fullName = `${resident.lname}, ${resident.Fname} ${resident.mname || ''}`.trim();
+
+        const age = resident.age ||
+            Math.floor(
+                (new Date() - new Date(resident.birthday)) /
+                (365.25 * 24 * 60 * 60 * 1000)
+            );
+
+        /* ================================
+           MODAL CONTENT
+        ================================= */
         const content = `
             <div class="resident-profile">
                 <div class="resident-photo">
-                    <img id="view-resident-photo" src="${resident.image ? `/storage/${resident.image}` : '{{ asset('images/default.png') }}'}"
-                         alt="Resident Photo" onerror="this.src='{{ asset('images/default.png') }}'">
+                    <img src="${resident.image ? `/storage/${resident.image}` : '{{ asset('images/default.png') }}'}"
+                         onerror="this.src='{{ asset('images/default.png') }}'">
                 </div>
+
                 <div class="resident-basic-info">
                     <h3>${fullName}</h3>
                     <div class="resident-meta">
@@ -1497,6 +1590,7 @@ async function openResidentModal(seniorId) {
                             <span>${resident.civil_status || 'N/A'}</span>
                         </div>
                     </div>
+
                     <div class="resident-meta">
                         <div class="resident-meta-item">
                             <i class="fas fa-map-marker-alt"></i>
@@ -1518,16 +1612,16 @@ async function openResidentModal(seniorId) {
                         <div class="info-value">${fullName}</div>
                     </div>
                     <div class="info-item">
-                        <div class="info-label">Gender</div>
-                        <div class="info-value">${resident.gender || 'N/A'}</div>
-                    </div>
-                    <div class="info-item">
                         <div class="info-label">Birthdate</div>
-                        <div class="info-value">${resident.birthday ? new Date(resident.birthday).toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric'
-                        }) : 'N/A'}</div>
+                        <div class="info-value">
+                            ${resident.birthday
+                                ? new Date(resident.birthday).toLocaleDateString('en-US', {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric'
+                                })
+                                : 'N/A'}
+                        </div>
                     </div>
                     <div class="info-item">
                         <div class="info-label">Age</div>
@@ -1536,41 +1630,13 @@ async function openResidentModal(seniorId) {
                 </div>
 
                 <div class="info-section">
-                    <h5><i class="fas fa-info-circle"></i> Additional Details</h5>
-                    <div class="info-item">
-                        <div class="info-label">Birthplace</div>
-                        <div class="info-value">${resident.birthplace || 'Not provided'}</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Civil Status</div>
-                        <div class="info-value">${resident.civil_status || 'Not specified'}</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Citizenship</div>
-                        <div class="info-value">${resident.Citizenship || 'N/A'}</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Religion</div>
-                        <div class="info-value">${resident.religion || 'Not provided'}</div>
-                    </div>
-                </div>
-
-                <div class="info-section">
                     <h5><i class="fas fa-address-card"></i> Contact & Address</h5>
                     <div class="info-item">
-                        <div class="info-label">Contact Number</div>
+                        <div class="info-label">Contact</div>
                         <div class="info-value">${resident.contact_number || 'N/A'}</div>
                     </div>
                     <div class="info-item">
-                        <div class="info-label">Occupation</div>
-                        <div class="info-value">${resident.occupation || 'N/A'}</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Household No</div>
-                        <div class="info-value">${resident.household_no || 'N/A'}</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Purok/Sitio</div>
+                        <div class="info-label">Purok / Sitio</div>
                         <div class="info-value">${fullAddress}</div>
                     </div>
                 </div>
@@ -1578,16 +1644,21 @@ async function openResidentModal(seniorId) {
         `;
 
         document.getElementById('residentContent').innerHTML = content;
-        const modal = new bootstrap.Modal(document.getElementById('viewResidentDetailsModal'));
+
+        const modal = new bootstrap.Modal(
+            document.getElementById('viewResidentDetailsModal')
+        );
         modal.show();
+
     } catch (error) {
-        console.error('Error:', error);
-        alert('Failed to load resident details. Please try again.');
+        console.error(error);
+        alert('Failed to load resident details.');
     } finally {
         viewBtn.innerHTML = originalContent;
         viewBtn.disabled = false;
     }
 }
+
 
 // Add smooth animations
 document.addEventListener('DOMContentLoaded', function() {

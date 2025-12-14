@@ -11,7 +11,7 @@
 <style>
     :root {
         --primary-gradient: #2c3e50;
-        --secondary-gradient: linear-gradient(135deg, #7209b7, #f72585);
+        --secondary-gradient: #4361ee;
         --success-gradient: #28a745;
         --warning-gradient:  #f8961e;
         --danger-gradient: #dc3545;

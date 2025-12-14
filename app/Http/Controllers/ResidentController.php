@@ -10,6 +10,8 @@ use App\Models\SKService;
 use App\Models\Seniorservices;
 use App\Models\BhwRequest;
 use App\Models\FourpsRequest;
+use Carbon\Carbon;
+
 
 class ResidentController extends Controller
 {
@@ -78,8 +80,13 @@ class ResidentController extends Controller
     {
         $user = Auth::user();
         $resident = Resident::where('email', $user->email)->first();
-        return view('resident.services', compact('resident'));
+    
+        // Compute age (or 0 if no resident record)
+        $age = $resident ? Carbon::parse($resident->birthday)->age : 0;
+    
+        return view('resident.services', compact('resident', 'age'));
     }
+    
 
     public function complaints()
     {

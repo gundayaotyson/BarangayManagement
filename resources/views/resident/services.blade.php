@@ -7,6 +7,11 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 @section('content')
 <style>
     :root {
@@ -26,10 +31,10 @@
     }
 
     .hero-section {
-        background:var(--dark-color);
+        background: var(--dark-color);
         color: var(--light-color);
         margin-bottom: 3rem;
-        border-radius:1rem;
+        border-radius: 1rem;
         padding: 2rem 0;
         position: relative;
         overflow: hidden;
@@ -181,14 +186,17 @@
         background-color: var(--primary-color);
         color: var(--light-color);
     }
-     .status-released {
+
+    .status-released {
         background-color: var(--success-color);
         color: var(--light-color);
     }
+
     .status-declined {
         background-color: var(--danger-color);
         color: var(--light-color);
     }
+
     .status-rejected {
         background-color: var(--danger-color);
         color: var(--light-color);
@@ -201,7 +209,7 @@
     }
 
     .modal-header {
-        background:var(--primary-dark);
+        background: var(--primary-dark);
         color: var(--light-color);
         border: none;
         border-radius: 1rem 1rem 0 0;
@@ -461,38 +469,38 @@
         </div>
 
         <div class="col-lg-6 col-md-6 mb-4">
-    <div class="card service-card">
-        <div class="card-body">
-            <div class="service-icon">
-                <i class="fas fa-heartbeat"></i>
+            <div class="card service-card">
+                <div class="card-body">
+                    <div class="service-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h5 class="card-title font-weight-bold mb-3">BHW Service</h5>
+                    <p class="card-text text-muted mb-4"> Access health programs, check-ups, and support provided by our Barangay Health Workers.</p>
+                    <button type="button" class="btn btn-primary btn-apply" data-toggle="modal" data-target="#bhwServiceModal">
+                        Apply Now
+                    </button>
+                </div>
             </div>
-            <h5 class="card-title font-weight-bold mb-3">BHW Service</h5>
-            <p class="card-text text-muted mb-4"> Access health programs, check-ups, and support provided by our Barangay Health Workers.</p>
-            <button type="button" class="btn btn-primary btn-apply" data-toggle="modal" data-target="#bhwServiceModal">
-                Apply Now
-            </button>
         </div>
-    </div>
-</div>
 
     </div>
 
     <div class="row mb-5">
-            <div class="col-lg-6 col-md-6 mb-4">
-                <div class="card service-card">
-                    <div class="card-body">
-                        <div class="service-icon">
-                            <i class="fas fa-graduation-cap"></i>
-                        </div>
-                        <h5 class="card-title font-weight-bold mb-3">SK Service</h5>
+        <div class="col-lg-6 col-md-6 mb-4">
+            <div class="card service-card">
+                <div class="card-body">
+                    <div class="service-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h5 class="card-title font-weight-bold mb-3">SK Service</h5>
                     <p class="card-text text-muted mb-4">Apply for Sangguniang Kabataan services and youth programs in your barangay.</p>
 
-                        <button type="button" class="btn btn-primary btn-apply" data-toggle="modal" data-target="#skServiceModal">
-                            Apply Now
-                        </button>
-                    </div>
+                    <button type="button" class="btn btn-primary btn-apply" data-toggle="modal" data-target="#skServiceModal">
+                        Apply Now
+                    </button>
                 </div>
             </div>
+        </div>
 
         <div class="col-lg-6 col-md-6 mb-4">
             <div class="card service-card">
@@ -517,9 +525,9 @@
                         <i class="fas fa-file-alt"></i>
                     </div>
                     <h5 class="card-title font-weight-bold mb-3">4P's Services</h5>
-                        <p class="card-text text-muted mb-4">
-                            Submit and manage your 4Ps service requests online for faster processing and easier assistance.
-                        </p>
+                    <p class="card-text text-muted mb-4">
+                        Submit and manage your 4Ps service requests online for faster processing and easier assistance.
+                    </p>
 
                     <button type="button" class="btn btn-primary btn-apply" data-toggle="modal" data-target="#4psservicesModal">
                         Apply Now
@@ -529,294 +537,304 @@
         </div>
     </div>
 
-        <!-- BHW Service Modal -->
-                    <div class="modal fade" id="bhwServiceModal" tabindex="-1" role="dialog" aria-labelledby="bhwServiceModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="bhwServiceModalLabel">
-                                            <i class="fas fa-heartbeat me-2"></i>BHW Service Application</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
+    <!-- BHW Service Modal -->
+    <div class="modal fade" id="bhwServiceModal" tabindex="-1" role="dialog" aria-labelledby="bhwServiceModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="bhwServiceModalLabel">
+                        <i class="fas fa-heartbeat me-2"></i>BHW Service Application
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
 
-                                        <form action="{{ route('bhw.request.store') }}" method="POST">
-                                            @csrf
-                                            <input type="hidden" name="resident_id" value="{{ $resident->id ?? '' }}">
+                    <form action="{{ route('bhw.request.store') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="resident_id" value="{{ $resident->id ?? '' }}">
 
-                                            <!-- Personal Information -->
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label for="bhw_fname">First Name</label>
-                                                        <input type="text" class="form-control" id="bhw_fname" name="fname" value="{{ $resident->Fname ?? '' }}" readonly>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label for="bhw_mname">Middle Name</label>
-                                                        <input type="text" class="form-control" id="bhw_mname" name="mname" value="{{ $resident->mname ?? '' }}" readonly>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label for="bhw_lname">Last Name</label>
-                                                        <input type="text" class="form-control" id="bhw_lname" name="lname" value="{{ $resident->lname ?? '' }}" readonly>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label for="bhw_dob">Date of Birth</label>
-                                                        <input type="date" class="form-control" id="bhw_dob" name="dob" value="{{ $resident->birthday ?? '' }}" readonly>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label for="bhw_age">Age</label>
-                                                        <input type="number" class="form-control" id="bhw_age" name="age" value="{{ $resident->age ?? '' }}" readonly>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label for="bhw_gender">Gender</label>
-                                                        <input type="text" class="form-control" id="bhw_gender" name="gender" value="{{ $resident->gender ?? '' }}" readonly>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <!-- Address Information -->
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="bhw_purok_no">Purok</label>
-                                                        <input type="text" class="form-control" id="bhw_purok_no" name="purok_no" value="{{ $resident->purok_no ?? '' }}" readonly>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="bhw_sitio">Sitio</label>
-                                                        <input type="text" class="form-control" id="bhw_sitio" name="sitio" value="{{ $resident->sitio ?? '' }}" readonly>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <!-- Service Details -->
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="bhw_service_type">Service Type</label>
-                                                        <select class="form-control" id="bhw_service_type" name="service_type" required>
-                                                            <option value="">Select a service</option>
-                                                            <option value="Check-up">Check-up</option>
-                                                            <option value="Immunization">Immunization</option>
-                                                            <option value="Prenatal Care">Prenatal Care</option>
-                                                            <option value="Family Planning">Family Planning</option>
-                                                            <option value="Other">Other</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="bhw_contact_no">Contact Number</label>
-                                                        <input type="text" class="form-control" id="bhw_contact_no" name="contact_no" value="{{ $resident->contact_number ?? '' }}" required>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="bhw_chief_complaint">Chief Complaint</label>
-                                                <textarea class="form-control" id="bhw_chief_complaint" name="chief_complaint" rows="3" placeholder="Describe the main health concern..." required></textarea>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="bhw_phil_no">PhilHealth Number (Optional)</label>
-                                                <input type="text" class="form-control" id="bhw_phil_no" name="phil_no" placeholder="Enter PhilHealth number if available">
-                                            </div>
-
-                                            <button type="submit" class="btn btn-primary btn-submit w-100">
-                                                <i class="fas fa-paper-plane me-2"></i>
-                                                Submit Request
-                                            </button>
-                                        </form>
-                                    </div>
+                        <!-- Personal Information -->
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="bhw_fname">First Name</label>
+                                    <input type="text" class="form-control" id="bhw_fname" name="fname" value="{{ $resident->Fname ?? '' }}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="bhw_mname">Middle Name</label>
+                                    <input type="text" class="form-control" id="bhw_mname" name="mname" value="{{ $resident->mname ?? '' }}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="bhw_lname">Last Name</label>
+                                    <input type="text" class="form-control" id="bhw_lname" name="lname" value="{{ $resident->lname ?? '' }}" readonly>
+                                </div>
                             </div>
                         </div>
-                    </div>
-            <!-- Modal senior services-->
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="bhw_dob">Date of Birth</label>
+                                    <input type="date" class="form-control" id="bhw_dob" name="dob" value="{{ $resident->birthday ?? '' }}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="bhw_age">Age</label>
+                                    <input type="number" class="form-control" id="bhw_age" name="age" value="{{ $resident->age ?? '' }}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="bhw_gender">Gender</label>
+                                    <input type="text" class="form-control" id="bhw_gender" name="gender" value="{{ $resident->gender ?? '' }}" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Address Information -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="bhw_purok_no">Purok</label>
+                                    <input type="text" class="form-control" id="bhw_purok_no" name="purok_no" value="{{ $resident->purok_no ?? '' }}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="bhw_sitio">Sitio</label>
+                                    <input type="text" class="form-control" id="bhw_sitio" name="sitio" value="{{ $resident->sitio ?? '' }}" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Service Details -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="bhw_service_type">Service Type</label>
+                                    <select class="form-control" id="bhw_service_type" name="service_type" required>
+                                        <option value="">Select a service</option>
+                                        <option value="Check-up">Check-up</option>
+                                        <option value="Immunization">Immunization</option>
+                                        <option value="Prenatal Care">Prenatal Care</option>
+                                        <option value="Family Planning">Family Planning</option>
+                                        <option value="Vaccination">Vaccination</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="bhw_contact_no">Contact Number</label>
+                                    <input type="text" class="form-control" id="bhw_contact_no" name="contact_no" value="{{ $resident->contact_number ?? '' }}" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="bhw_chief_complaint">Chief Complaint</label>
+                            <textarea class="form-control" id="bhw_chief_complaint" name="chief_complaint" rows="3" placeholder="Describe the main health concern..." required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="bhw_phil_no">PhilHealth Number (Optional)</label>
+                            <input type="text" class="form-control" id="bhw_phil_no" name="phil_no" placeholder="Enter PhilHealth number if available">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-submit w-100">
+                            <i class="fas fa-paper-plane me-2"></i>
+                            Submit Request
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal senior services-->
     <div class="modal fade" id="seniorServiceModal" tabindex="-1" aria-labelledby="seniorServiceModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <form action="{{ route('senior.req.store') }}" method="POST">
                     @csrf
                     <div class="modal-header">
-                    <h5 class="modal-title" id="seniorServiceModalLabel">Senior Citizen Service Request</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h5 class="modal-title" id="seniorServiceModalLabel">Senior Citizen Service Request</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
                     <div class="modal-body">
-                    <!-- First Name -->
-                     <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="firstname">
-                                    <i class="fas fa-user me-1"></i>
-                                    First Name
-                                </label>
-                                <input type="text" class="form-control" id="firstname" name="firstname"
-                                       value="{{ $resident->Fname ?? '' }}" readonly>
+                        <!-- First Name -->
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="firstname">
+                                        <i class="fas fa-user me-1"></i>
+                                        First Name
+                                    </label>
+                                    <input type="text" class="form-control" id="firstname" name="firstname"
+                                        value="{{ $resident->Fname ?? '' }}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="middlename">
+                                        <i class="fas fa-user me-1"></i>
+                                        Middle Name
+                                    </label>
+                                    <input type="text" class="form-control" id="middlename" name="middlename"
+                                        value="{{ $resident->mname ?? '' }}" readonly>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="lastname">
+                                        <i class="fas fa-user me-1"></i>
+                                        Last Name
+                                    </label>
+                                    <input type="text" class="form-control" id="lastname" name="lastname"
+                                        value="{{ $resident->lname ?? '' }}" readonly>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="middlename">
-                                    <i class="fas fa-user me-1"></i>
-                                    Middle Name
-                                </label>
-                                <input type="text" class="form-control" id="middlename" name="middlename"
-                                       value="{{ $resident->mname ?? '' }}" readonly>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <i class="fas fa-birthday-cake me-1"></i>
+                                    <label for="dob">
+                                        Date of Birth
+                                    </label>
+                                    <input type="text" class="form-control" id="dob" name="dob" value="{{ $resident->birthday ?? '' }}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="age">
+                                        <i class="fas fa-user me-1"></i>
+                                        Age
+                                    </label>
+                                    <input type="text" class="form-control" id="age" name="age"
+                                        value="{{ $resident->age ?? '' }}" readonly>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="gender">
+                                        <i class="fas fa-venus-mars me-1"></i>
+                                        Gender
+                                    </label>
+                                    <input type="text" class="form-control" id="gender" name="gender"
+                                        value="{{ $resident->gender ?? '' }}" readonly>
+                                </div>
                             </div>
                         </div>
 
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="lastname">
-                                    <i class="fas fa-user me-1"></i>
-                                    Last Name
-                                </label>
-                                <input type="text" class="form-control" id="lastname" name="lastname"
-                                       value="{{ $resident->lname ?? '' }}" readonly>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <i class="fas fa-birthday-cake me-1"></i>
+                                    <label for="house_no">
+                                        House No.
+                                    </label>
+                                    <input type="text" class="form-control" id="house_no" name="house_no" value="{{ $resident->household_no ?? '' }}" readonly>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                   <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <i class="fas fa-birthday-cake me-1"></i>
-                                <label for="dob">
-                                    Date of Birth
-                                </label>
-                               <input type="text" class="form-control" id="dob" name="dob"value="{{ $resident->birthday ?? '' }}" readonly>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="house_no">
+                                        <i class="fas fa-user me-1"></i>
+                                        Purok
+                                    </label>
+                                    <select class="form-control" id="purok" name="purok" readonly>
+                                        <option value="{{ $resident->purok_no ?? '' }}">{{ $resident->purok_no ?? '' }} </option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="age">
-                                    <i class="fas fa-user me-1"></i>
-                                    Age
-                                </label>
-                                <input type="text" class="form-control" id="age" name="age"
-                                       value="{{ $resident->age ?? '' }}" readonly>
-                            </div>
-                        </div>
 
 
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="gender">
-                                     <i class="fas fa-venus-mars me-1"></i>
-                                   Gender
-                                </label>
-                                <input type="text" class="form-control" id="gender" name="gender"
-                                       value="{{ $resident->gender ?? '' }}" readonly>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="sitio">
+                                        <i class="fas fa-venus-mars me-1"></i>
+                                        Sitio
+                                    </label>
+                                    <select class="form-control" id="sitio" name="sitio" readonly>
+                                        <option value="{{ $resident->sitio  ?? '' }}">{{ $resident->sitio ?? '' }} </option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="oscaId">
+                                        <i class="fas fa-id-card me-1"></i>
+                                        OSCA ID
+                                    </label>
+                                    <input type="text" class="form-control" id="oscaId" name="oscaId" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="fcapId">
+                                        <i class="fas fa-id-card me-1"></i>
+                                        FCAP ID
+                                    </label>
+                                    <input type="text" class="form-control" id="fcapId" name="fcapId" required>
+                                </div>
+                            </div>
 
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <i class="fas fa-birthday-cake me-1"></i>
-                                <label for="house_no">
-                                   House No.
-                                </label>
-                               <input type="text" class="form-control" id="house_no" name="house_no"value="{{ $resident->household_no ?? '' }}" readonly>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="house_no">
-                                    <i class="fas fa-user me-1"></i>
-                                    Purok
-                                </label>
-                                <select class="form-control" id="purok" name="purok" readonly>
-                                    <option value="{{ $resident->purok_no ?? '' }}">{{ $resident->purok_no ?? '' }} </option>
-                            </select>
-                            </div>
                         </div>
 
 
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="sitio">
-                                     <i class="fas fa-venus-mars me-1"></i>
-                                   Sitio
-                                </label>
-                                   <select class="form-control" id="sitio" name="sitio" readonly>
-                                    <option value="{{ $resident->sitio  ?? '' }}">{{ $resident->sitio ?? '' }} </option>
-                            </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="oscaId">
-                                    <i class="fas fa-id-card me-1"></i>
-                                    OSCA ID
-                                </label>
-                                <input type="text" class="form-control" id="oscaId" name="oscaId" required>
-                            </div>
-                        </div>
-                         <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="fcapId">
-                                    <i class="fas fa-id-card me-1"></i>
-                                    FCAP ID
-                                </label>
-                                <input type="text" class="form-control" id="fcapId" name="fcapId" required>
-                            </div>
-                        </div>
-
-                    </div>
-
-
-                    <button type="submit" class="btn btn-primary btn-submit">
+                        <!-- <button type="submit" class="btn btn-primary btn-submit">
+                            <i class="fas fa-paper-plane me-2"></i>
+                            Submit Application
+                        </button> -->
+                        <button type="submit" class="btn btn-primary btn-submit"
+                            onclick="validateSeniorSubmit(event)">
                         <i class="fas fa-paper-plane me-2"></i>
-                         Submit Application
+                        Submit Application
                     </button>
+
+
                 </form>
             </div>
         </div>
+
     </div>
 </div>
 <!-- </div> -->
- <!-- 4psservicesModal -->
-  <div class="modal fade" id="4psservicesModal" tabindex="-1" aria-labelledby="4psservicesModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <form action="{{ route('4ps.store') }}" method="POST">
-                    <input type="hidden" name="resident_id" value="{{ $resident->id ?? '' }}">
+<!-- 4psservicesModal -->
+<div class="modal fade" id="4psservicesModal" tabindex="-1" aria-labelledby="4psservicesModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form action="{{ route('4ps.store') }}" method="POST">
+                <input type="hidden" name="resident_id" value="{{ $resident->id ?? '' }}">
 
-                    @csrf
-                    <div class="modal-header">
+                @csrf
+                <div class="modal-header">
                     <h5 class="modal-title" id="4psservicesModalLabel">4P's Service Request</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
+                </div>
 
-                    <div class="modal-body">
+                <div class="modal-body">
                     <!-- First Name -->
-                     <div class="row">
+                    <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="firstname">
                                     <i class="fas fa-user me-1"></i>
                                     First Name
                                 </label>
-                                <input type="text" class="form-control" id="firstname" name="firstname"value="{{ $resident->Fname ?? '' }}" readonly>
+                                <input type="text" class="form-control" id="firstname" name="firstname" value="{{ $resident->Fname ?? '' }}" readonly>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -826,7 +844,7 @@
                                     Middle Name
                                 </label>
                                 <input type="text" class="form-control" id="middlename" name="middlename"
-                                       value="{{ $resident->mname ?? '' }}" readonly>
+                                    value="{{ $resident->mname ?? '' }}" readonly>
                             </div>
                         </div>
 
@@ -838,11 +856,11 @@
                                     Last Name
                                 </label>
                                 <input type="text" class="form-control" id="lastname" name="lastname"
-                                       value="{{ $resident->lname ?? '' }}" readonly>
+                                    value="{{ $resident->lname ?? '' }}" readonly>
                             </div>
                         </div>
                     </div>
-                   <!-- <div class="row">
+                    <!-- <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
                                 <i class="fas fa-birthday-cake me-1"></i>
@@ -880,21 +898,21 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <i class="fas fa-birthday-cake me-1"></i>
-                                <label for="house_no">
-                                   House No.
+                                <label for="household_no">
+                                    House No.
                                 </label>
-                               <input type="text" class="form-control" id="house_no" name="house_no"value="{{ $resident->household_no ?? '' }}" readonly>
+                                <input type="text" class="form-control" id="household_no" name="household_no" value="{{ $resident->household_no ?? '' }}" readonly>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="house_no">
+                                <label for="household_no">
                                     <i class="fas fa-user me-1"></i>
                                     Purok
                                 </label>
                                 <select class="form-control" id="purok_no" name="purok_no" readonly>
                                     <option value="{{ $resident->purok_no ?? '' }}">{{ $resident->purok_no ?? '' }} </option>
-                            </select>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -914,12 +932,12 @@
 
                     <button type="submit" class="btn btn-primary btn-submit">
                         <i class="fas fa-paper-plane me-2"></i>
-                         Submit Application
+                        Submit Application
                     </button>
-                </form>
-            </div>
+            </form>
         </div>
     </div>
+</div>
 </div>
 
 <!-- SK Service Modal -->
@@ -948,7 +966,7 @@
                                     First Name
                                 </label>
                                 <input type="text" class="form-control" id="firstname" name="firstname"
-                                       value="{{ $resident->Fname ?? '' }}" readonly>
+                                    value="{{ $resident->Fname ?? '' }}" readonly>
                             </div>
                         </div>
 
@@ -959,7 +977,7 @@
                                     Last Name
                                 </label>
                                 <input type="text" class="form-control" id="lastname" name="lastname"
-                                       value="{{ $resident->lname ?? '' }}" readonly>
+                                    value="{{ $resident->lname ?? '' }}" readonly>
                             </div>
                         </div>
                     </div>
@@ -1003,13 +1021,52 @@
                         </small>
                     </div>
 
-                    <button type="submit" class="btn btn-primary btn-submit">
+                    <!-- <button type="submit" class="btn btn-primary btn-submit">
+                        <i class="fas fa-paper-plane me-2"></i>
+                        Submit Application
+                    </button> -->
+                    <button type="submit"class="btn btn-primary btn-submit"onclick="validateSKSubmit(event)">
                         <i class="fas fa-paper-plane me-2"></i>
                         Submit Application
                     </button>
+
                 </form>
             </div>
         </div>
+    <!-- for the skNotAllowedModal message -->
+<div class="modal fade" id="skNotAllowedModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title">Access Denied</h5>
+                <button type="button"
+                        class="btn-close btn-close-white"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body text-center">
+                <i class="fas fa-exclamation-circle text-danger" style="font-size:40px;"></i>
+                <p class="mt-3 mb-0">
+                    You are <strong>not eligible</strong> to apply for SK Services.
+                </p>
+                <p class="text-muted">
+                    Only residents aged <strong>15 to 30</strong> years old can request SK services.
+                </p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal">
+                    Okay
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
     </div>
 </div>
 
@@ -1026,197 +1083,297 @@
                 </button>
             </div>
             <div class="modal-body">
-    <form action="{{ route('legal-documents.store-clearance') }}" method="POST">
-        @csrf
-        <input type="hidden" name="resident_id" value="{{ $resident->id ?? '' }}">
+                <form action="{{ route('legal-documents.store-clearance') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="resident_id" value="{{ $resident->id ?? '' }}">
 
-        <div class="form-group">
-            <label for="service_type">
-                <i class="fas fa-list me-1"></i>
-                Type of Service
-            </label>
-            <select class="form-control" id="service_type" name="service_type" required>
-                <option value="">Select a service type</option>
-                <option value="Barangay Clearance">Barangay Clearance</option>
-                <option value="Certificate of Indigency">Certificate of Indigency</option>
-                <option value="Barangay Business Permit">Barangay Business Permit</option>
-                <option value="Barangay Residency">Barangay Residency</option>
-            </select>
-        </div>
+                    <div class="form-group">
+                        <label for="service_type">
+                            <i class="fas fa-list me-1"></i>
+                            Type of Service
+                        </label>
+                        <select class="form-control" id="service_type" name="service_type" required>
+                            <option value="">Select a service type</option>
+                            <option value="Barangay Clearance">Barangay Clearance</option>
+                            <option value="Certificate of Indigency">Certificate of Indigency</option>
+                            <option value="Barangay Business Permit">Barangay Business Permit</option>
+                            <option value="Barangay Residency">Barangay Residency</option>
+                        </select>
+                    </div>
 
-        <div class="row">
-            <!-- First Name -->
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="Fname">
-                        <i class="fas fa-user me-1"></i>
-                        First Name
-                    </label>
-                    <input type="text" class="form-control" id="Fname" name="Fname"
-                           value="{{ $resident->Fname ?? '' }}" readonly>
-                </div>
+                    <div class="row">
+                        <!-- First Name -->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="Fname">
+                                    <i class="fas fa-user me-1"></i>
+                                    First Name
+                                </label>
+                                <input type="text" class="form-control" id="Fname" name="Fname"
+                                    value="{{ $resident->Fname ?? '' }}" readonly>
+                            </div>
+                        </div>
+
+                        <!-- Middle Name -->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="mname">
+                                    <i class="fas fa-user me-1"></i>
+                                    Middle Name
+                                </label>
+                                <input type="text" class="form-control" id="mname" name="mname"
+                                    value="{{ $resident->mname ?? '' }}" readonly>
+                            </div>
+                        </div>
+
+                        <!-- Last Name -->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="lname">
+                                    <i class="fas fa-user me-1"></i>
+                                    Last Name
+                                </label>
+                                <input type="text" class="form-control" id="lname" name="lname"
+                                    value="{{ $resident->lname ?? '' }}" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Address -->
+                    <div class="form-group">
+                        <label for="address">
+                            <i class="fas fa-map-marker-alt me-1"></i>
+                            Address
+                        </label>
+                        <input type="text" class="form-control" id="address" name="address" value="{{ $resident->purok_no ?? '' }} Cobol San Carlos City Pangasinan"
+                            readonly>
+                    </div>
+
+                    <!-- Date of Birth & Place of Birth -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="dateofbirth">
+                                    <i class="fas fa-birthday-cake me-1"></i>
+                                    Date of Birth
+                                </label>
+                                <input type="date" class="form-control" id="dateofbirth" name="dateofbirth" value="{{ $resident->birthday ?? '' }}" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="placeofbirth">Place of Birth</label>
+                                <input type="text" class="form-control" id="placeofbirth" name="placeofbirth" value="{{ $resident->birthplace ?? '' }}" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Civil Status & Gender -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="civil_status">
+                                    <i class="fas fa-heart me-1"></i>
+                                    Civil Status
+                                </label>
+                                <select class="form-control" id="civil_status" name="civil_status" readonly>
+                                    <option value="{{ $resident->civil_status ?? '' }}">{{ $resident->civil_status ?? '' }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="gender">
+                                    <i class="fas fa-venus-mars me-1"></i>
+                                    Gender
+                                </label>
+                                <select class="form-control" id="gender" name="gender" readonly>
+                                    <option value="{{ $resident->gender ?? '' }}">{{ $resident->gender ?? '' }}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div id="business_fields" style="display: none; margin-top: 15px;">
+                        <div class="form-group">
+                            <label for="business_name">
+                                <i class="fas fa-building me-1"></i>
+                                Name of Business
+                            </label>
+                            <input type="text" class="form-control" name="business_name" id="business_name">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="business_type">
+                                <i class="fas fa-briefcase me-1"></i>
+                                Type of Business
+                            </label>
+                            <input type="text" class="form-control" name="business_type" id="business_type">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="business_address">
+                                <i class="fas fa-map-marker-alt me-1"></i>
+                                Business Address
+                            </label>
+                            <input type="text" class="form-control" name="business_address" id="business_address">
+                        </div>
+                    </div>
+
+                    <!-- Business / Residency additional fields (hidden by default) -->
+                    <div class="form-group" id="residency_start_field" style="display: none;">
+                        <label for="res_started_living"><i class="fas fa-calendar me-1"></i>Started Living in the Barangay (Year)</label>
+                        <input type="text" class="form-control" id="res_started_living" name="res_started_living" placeholder="Enter the year">
+                    </div>
+
+                    <div class="form-group" id="cert_use_field" style="display: none;">
+                        <label for="cert_use_date"><i class="fas fa-calendar me-1"></i>When will the Certificate be Used</label>
+                        <input type="date" class="form-control" id="cert_use_date" name="cert_use_date">
+                    </div>
+                    <!-- Purpose -->
+                    <div class="form-group">
+                        <label for="purpose">
+                            <i class="fas fa-clipboard me-1"></i>
+                            Purpose
+                        </label>
+                        <textarea class="form-control" id="purpose" name="purpose" rows="3" placeholder="Please specify the purpose of your request..." required></textarea>
+                    </div>
+                    <!-- Pickup Date -->
+                    <div class="form-group">
+                        <label for="pickup_date">
+                            <i class="fas fa-calendar-check me-1"></i>
+                            Preferred Pickup Date
+                        </label>
+                        <input type="date" class="form-control" id="pickup_date" name="pickup_date" required>
+                    </div>
+
+
+
+                    <button type="submit" class="btn btn-primary btn-submit">
+                        <i class="fas fa-paper-plane me-2"></i>
+                        Submit Application
+                    </button>
+                </form>
             </div>
-
-            <!-- Middle Name -->
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="mname">
-                        <i class="fas fa-user me-1"></i>
-                        Middle Name
-                    </label>
-                    <input type="text" class="form-control" id="mname" name="mname"
-                           value="{{ $resident->mname ?? '' }}" readonly>
-                </div>
-            </div>
-
-            <!-- Last Name -->
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="lname">
-                        <i class="fas fa-user me-1"></i>
-                        Last Name
-                    </label>
-                    <input type="text" class="form-control" id="lname" name="lname"
-                           value="{{ $resident->lname ?? '' }}" readonly>
-                </div>
-            </div>
-        </div>
-
-        <!-- Address -->
-        <div class="form-group">
-            <label for="address">
-                <i class="fas fa-map-marker-alt me-1"></i>
-                Address
-            </label>
-            <input type="text" class="form-control" id="address" name="address" value="{{ $resident->purok_no ?? '' }} Cobol San Carlos City Pangasinan"
-                   readonly>
-        </div>
-
-        <!-- Date of Birth & Place of Birth -->
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="dateofbirth">
-                        <i class="fas fa-birthday-cake me-1"></i>
-                        Date of Birth
-                    </label>
-                    <input type="date" class="form-control" id="dateofbirth" name="dateofbirth" value="{{ $resident->birthday ?? '' }}" readonly>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="placeofbirth">Place of Birth</label>
-                    <input type="text" class="form-control" id="placeofbirth" name="placeofbirth" value="{{ $resident->birthplace ?? '' }}" readonly>
-                </div>
-            </div>
-        </div>
-
-        <!-- Civil Status & Gender -->
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="civil_status">
-                        <i class="fas fa-heart me-1"></i>
-                        Civil Status
-                    </label>
-                    <select class="form-control" id="civil_status" name="civil_status" readonly>
-                        <option value="{{ $resident->civil_status ?? '' }}">{{ $resident->civil_status ?? '' }}</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="gender">
-                        <i class="fas fa-venus-mars me-1"></i>
-                        Gender
-                    </label>
-                    <select class="form-control" id="gender" name="gender" readonly>
-                        <option value="{{ $resident->gender ?? '' }}">{{ $resident->gender ?? '' }}</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-
-
-        <div id="business_fields" style="display: none; margin-top: 15px;">
-            <div class="form-group">
-                <label for="business_name">
-                    <i class="fas fa-building me-1"></i>
-                    Name of Business
-                </label>
-                <input type="text" class="form-control" name="business_name" id="business_name">
-            </div>
-
-            <div class="form-group">
-                <label for="business_type">
-                    <i class="fas fa-briefcase me-1"></i>
-                    Type of Business
-                </label>
-                <input type="text" class="form-control" name="business_type" id="business_type">
-            </div>
-
-            <div class="form-group">
-                <label for="business_address">
-                    <i class="fas fa-map-marker-alt me-1"></i>
-                    Business Address
-                </label>
-                <input type="text" class="form-control" name="business_address" id="business_address">
-            </div>
-        </div>
-
-        <!-- Business / Residency additional fields (hidden by default) -->
-        <div class="form-group" id="residency_start_field" style="display: none;">
-            <label for="res_started_living"><i class="fas fa-calendar me-1"></i>Started Living in the Barangay (Year)</label>
-            <input type="text" class="form-control" id="res_started_living" name="res_started_living" placeholder="Enter the year">
-        </div>
-
-        <div class="form-group" id="cert_use_field" style="display: none;">
-            <label for="cert_use_date"><i class="fas fa-calendar me-1"></i>When will the Certificate be Used</label>
-            <input type="date" class="form-control" id="cert_use_date" name="cert_use_date">
-        </div>
-         <!-- Purpose -->
-        <div class="form-group">
-            <label for="purpose">
-                <i class="fas fa-clipboard me-1"></i>
-                Purpose
-            </label>
-            <textarea class="form-control" id="purpose" name="purpose" rows="3" placeholder="Please specify the purpose of your request..." required></textarea>
-        </div>
-        <!-- Pickup Date -->
-        <div class="form-group">
-            <label for="pickup_date">
-                <i class="fas fa-calendar-check me-1"></i>
-                Preferred Pickup Date
-            </label>
-            <input type="date" class="form-control" id="pickup_date" name="pickup_date" required>
-        </div>
-
-
-
-        <button type="submit" class="btn btn-primary btn-submit">
-            <i class="fas fa-paper-plane me-2"></i>
-            Submit Application
-        </button>
-    </form>
-</div>
         </div>
     </div>
 </div>
+ <!-- for senior messege -->
+    <div class="modal fade" id="seniorNotAllowedModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">Access Denied</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body text-center">
+                    <i class="fas fa-exclamation-circle text-danger" style="font-size:40px;"></i>
+                    <p class="mt-3 mb-0">
+                        You are <strong>not eligible</strong> to apply for Senior Citizen Services.
+                    </p>
+                    <p class="text-muted">
+                        Only residents aged <strong>60 years old and above</strong> are allowed.
+                    </p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Okay
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
 
 @if ($errors->any())
-    <div class="alert alert-danger">
-        <strong>There were some problems with your input:</strong>
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
+<div class="alert alert-danger">
+    <strong>There were some problems with your input:</strong>
+    <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
 @endif
+<script>
+        function validateSeniorSubmit(event) {
+            event.preventDefault();
+
+            let age = {{ $resident->age ?? 0 }};
+
+            if (age < 60) {
+                let seniorModal = bootstrap.Modal.getInstance(
+                    document.getElementById('seniorServiceModal')
+                );
+                seniorModal.hide();
+
+                setTimeout(() => {
+                    let deniedModal = new bootstrap.Modal(
+                        document.getElementById('seniorNotAllowedModal')
+                    );
+                    deniedModal.show();
+                }, 300);
+
+                return false;
+            }
+
+            event.target.closest('form').submit();
+        }
+</script>
+
+
+
+
+
+<script>
+function validateSKSubmit(event) {
+    event.preventDefault(); // stop auto submit
+
+    let age = {{ $age ?? 0 }}; // or $resident->age
+
+    // SK valid age: 15–30
+    if (age < 15 || age > 30) {
+
+        // CLOSE SK SERVICE MODAL
+        let skServiceModalEl = document.getElementById('skServiceModal');
+        let skServiceModal = bootstrap.Modal.getInstance(skServiceModalEl);
+
+        if (skServiceModal) {
+            skServiceModal.hide();
+        }
+
+        // SHOW NOT ALLOWED MODAL AFTER CLOSE
+        setTimeout(() => {
+            let skDeniedModal = new bootstrap.Modal(
+                document.getElementById('skNotAllowedModal')
+            );
+            skDeniedModal.show();
+        }, 300);
+
+        return false;
+    }
+
+    // age valid → submit form
+    event.target.closest('form').submit();
+}
+</script>
+
+
+
+
 {{-- Script to trigger BHW modal --}}
 <script>
-    $('.modal').on('hidden.bs.modal', function () {
+    $('.modal').on('hidden.bs.modal', function() {
         $('.modal-backdrop').remove();
         $('body').removeClass('modal-open');
     });
@@ -1250,7 +1407,7 @@
     });
 </script>
 <script>
-    document.getElementById('service_type').addEventListener('change', function () {
+    document.getElementById('service_type').addEventListener('change', function() {
         const businessFields = document.getElementById('business_fields');
 
         if (this.value === "Barangay Business Permit") {
@@ -1262,7 +1419,7 @@
 </script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         const serviceType = document.getElementById('service_type');
 
         const addressField = document.getElementById('address').closest('.form-group');

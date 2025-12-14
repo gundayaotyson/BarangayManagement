@@ -364,35 +364,69 @@
         }
     }
 </style>
-<div class="card-header">
-        <h2 class="card-title">List of Request Document</h2>
-        <div class="d-flex align-items-center gap-3">
-            <div class="dropdown">
-                <button class="btn btn-primary dropdown-toggle" type="button" id="columnDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fas fa-columns me-2"></i>Columns
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="columnDropdown" id="columnSelection">
-                    @php
-                        $columns = ['Full Name','Address','Service Type','Date of Birth','Birth Place','Civil Status','Gender','Purpose','Request Date','Pickup Date','Released Date','Tracking Code','Status','Actions'];
+   <div class="card-header">
+    <h2 class="card-title">List of Request Document</h2>
+    <div class="d-flex align-items-center gap-3">
 
-                    @endphp
-                    @foreach ($columns as $index => $column)
-                        <li>
-                            <div class="dropdown-item">
-                                <label>
-                                    <input type="checkbox" class="form-check-input column-toggle me-2" data-column="{{ $index + 1 }}" checked>
-                                    {{ $column }}
-                                </label>
-                            </div>
-                        </li>
-                    @endforeach
-                </ul>
-            </div>
-            <div class="search-container">
-                <input type="text" id="searchInput" placeholder="Search requests...">
-            </div>
+        <!-- PUROK FILTER -->
+        <select class="form-select" id="purokFilter" style="width:180px">
+            <option value="all">All Purok</option>
+            <option value="Purok 1">Purok 1</option>
+            <option value="Purok 2">Purok 2</option>
+            <option value="Purok 3">Purok 3</option>
+        </select>
+
+        <!-- MONTH FILTER -->
+        <select class="form-select" id="monthFilter" style="width:180px">
+            <option value="all">All Months</option>
+            <option value="1">January</option>
+            <option value="2">February</option>
+            <option value="3">March</option>
+            <option value="4">April</option>
+            <option value="5">May</option>
+            <option value="6">June</option>
+            <option value="7">July</option>
+            <option value="8">August</option>
+            <option value="9">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+        </select>
+
+        <!-- EXPORT CSV BUTTON -->
+        <button class="btn btn-success" id="exportCsvBtn">
+            <i class="fas fa-file-csv me-2"></i>Export CSV
+        </button>
+
+        <!-- COLUMN TOGGLE DROPDOWN -->
+        <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="columnDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-columns me-2"></i>Columns
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="columnDropdown" id="columnSelection">
+                @php
+                    $columns = ['Full Name','Address','Service Type','Date of Birth','Birth Place','Civil Status','Gender','Purpose','Request Date','Pickup Date','Released Date','Tracking Code','Status','Actions'];
+                @endphp
+                @foreach ($columns as $index => $column)
+                    <li>
+                        <div class="dropdown-item">
+                            <label>
+                                <input type="checkbox" class="form-check-input column-toggle me-2" data-column="{{ $index + 1 }}" checked>
+                                {{ $column }}
+                            </label>
+                        </div>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+
+        <!-- SEARCH INPUT -->
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search requests...">
         </div>
     </div>
+</div>
+
 
 
     <div class="card">
@@ -529,6 +563,140 @@
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // Month Filter: Show rows based on requested date month
+document.getElementById("monthFilter").addEventListener("change", function() {
+    const selectedMonth = this.value; // "all" or "1" to "12"
+
+    const tableRows = document.querySelectorAll("#clearanceTable tbody tr");
+    tableRows.forEach(row => {
+        const requestedDateCell = row.querySelector("td:nth-child(9)"); // adjust column if needed
+        if (!requestedDateCell) return;
+
+        const rowDate = new Date(requestedDateCell.textContent.trim());
+        const rowMonth = rowDate.getMonth() + 1; // JS months are 0-based
+
+        if (selectedMonth === "all" || rowMonth.toString() === selectedMonth) {
+            row.style.display = ""; // show row
+        } else {
+            row.style.display = "none"; // hide row
+        }
+    });
+});
+
+</script>
+<script>
+// GET PUROK FROM ADDRESS TD
+function getPurok(address) {
+    let match = address.match(/purok\s*\d+/i);
+    return match ? match[0].toUpperCase() : "";
+}
+
+// POPULATE PUROK DROPDOWN
+function loadPurokFilter() {
+    let purokSet = new Set();
+
+    $("#clearanceTable tbody tr").each(function () {
+        let address = $(this).find("td:nth-child(2)").text().trim();
+        let purok = getPurok(address);
+        if (purok) purokSet.add(purok);
+    });
+
+    purokSet.forEach(purok => {
+        $("#purokFilter").append(
+            `<option value="${purok}">${purok}</option>`
+        );
+    });
+}
+
+// FILTER TABLE BY PUROK
+$("#purokFilter").on("change", function () {
+    let selectedPurok = $(this).val();
+
+    $("#clearanceTable tbody tr").each(function () {
+        let address = $(this).find("td:nth-child(2)").text().trim();
+        let rowPurok = getPurok(address);
+
+        if (selectedPurok === "" || rowPurok === selectedPurok) {
+            $(this).show();
+        } else {
+            $(this).hide();
+        }
+    });
+});
+
+// INIT
+loadPurokFilter();
+</script>
+
+
+<script>
+$("#exportCsvBtn").on("click", function () {
+    const table = document.getElementById("clearanceTable");
+    const monthSelected = $("#monthFilter").val();
+    const purokSelected = $("#purokFilter").val();
+    const hiddenColumns = JSON.parse(localStorage.getItem("hiddenColumns")) || [];
+
+    let csv = [];
+    const rows = table.querySelectorAll("tr");
+
+    rows.forEach((row, rowIndex) => {
+        const cols = row.querySelectorAll("th, td");
+        if (!cols.length) return;
+
+        // Skip header row for filtering
+        if (rowIndex > 0) {
+            // PUROK FILTER (from address)
+            const addressCell = row.querySelector("td:nth-child(2)");
+            const rowPurok = addressCell ? getPurok(addressCell.innerText) : null;
+            if (purokSelected !== "all" && rowPurok !== purokSelected) return;
+
+            // MONTH FILTER (from requested_date)
+            const requestedDateCell = row.querySelector("td:nth-child(9)"); // adjust column if needed
+            if (requestedDateCell && monthSelected !== "all") {
+                const rowMonth = new Date(requestedDateCell.innerText).getMonth() + 1;
+                if (rowMonth.toString() !== monthSelected) return;
+            }
+        }
+
+        let rowData = [];
+        cols.forEach((col, colIndex) => {
+            if (colIndex === cols.length - 1) return; // skip Actions column
+            if (hiddenColumns.includes((colIndex + 1).toString())) return;
+
+            let text = col.innerText.replace(/\s+/g, " ").replace(/"/g, '""').trim();
+            rowData.push(`"${text}"`);
+        });
+
+        if (rowData.length) csv.push(rowData.join(","));
+    });
+
+    // Download CSV
+    const blob = new Blob([csv.join("\n")], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    const today = new Date().toISOString().slice(0, 10);
+
+    let filename = "document_requests_";
+    if (purokSelected !== "all") filename += purokSelected + "_";
+    if (monthSelected !== "all") filename += "Month_" + monthSelected + "_";
+    filename += today + ".csv";
+
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+});
+
+// Helper function to extract Purok from address
+function getPurok(address) {
+    const match = address.match(/Purok\s\d+/i);
+    return match ? match[0] : null;
+}
+</script>
+
+
+
 <script>
 $(document).ready(function () {
     // Initialize tooltips

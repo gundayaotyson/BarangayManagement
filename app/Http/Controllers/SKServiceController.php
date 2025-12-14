@@ -6,7 +6,7 @@ use App\Models\SKService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-
+use Carbon\Carbon;
 
 class SKServiceController extends Controller
 {
@@ -26,6 +26,12 @@ public function store(Request $request)
 
     if (! $resident) {
         return redirect()->back()->with('error', 'Resident record not found. Please update your profile before applying.');
+    }
+
+    $age = Carbon::parse($resident->birthday)->age;
+
+    if ($age < 15 || $age > 30) {
+        return redirect()->back()->with('error', 'You must be between 15 and 30 years old to apply for SK services.');
     }
 
     $data = $request->only(['school', 'school_year', 'type_of_service']);

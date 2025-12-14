@@ -11,6 +11,7 @@ class SKdashboardController extends Controller
 {
     public function index(){
         return view('skuser.dashboard');
+        
     }
 
     public function home(Request $request){

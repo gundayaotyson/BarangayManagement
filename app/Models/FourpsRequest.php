@@ -17,7 +17,7 @@ class FourpsRequest extends Model
         'middlename',
         'fourps_id',
         'purok_no',
-        'house_no',
+        'household_no',
         'status',
     ];
 

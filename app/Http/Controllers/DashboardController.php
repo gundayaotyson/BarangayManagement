@@ -50,6 +50,7 @@ class DashboardController extends Controller
         return view("admin.bhwview", compact('newdeliveries', 'totalBabies', 'totalBoys', 'totalGirls'));
      }
      public function Fourpsview(){
+        // $fourps = fourp::all();
         $fourps = Fourps::with('resident')->get();
         $totalBeneficiaries = $fourps->count();
         $activeBeneficiaries = $fourps->where('status', 'active')->count();

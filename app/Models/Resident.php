@@ -55,6 +55,10 @@ public function official()
     {
         return $this->hasMany(Pregnant::class);
     }
+    public function newdelivery()
+    {
+        return $this->hashMany(newdelivery::class);
+    }
 
     public function fourps()
 {

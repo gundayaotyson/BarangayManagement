@@ -97,6 +97,8 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/bhw/pregnant/{id}', [BHWController::class, 'destroy'])->name('bhw.pregnant.destroy');
     Route::get('/bhw/search-residents', [BHWController::class, 'searchResidents'])->name('bhw.search_residents');
     Route::post('/bhw/newdelivery', [BHWController::class, 'storeNewDelivery'])->name('bhw.storeNewDelivery');
+    Route::delete('/bhw/newdelivery/{id}', [BHWController::class, 'destroyNewDelivery'])->name('bhw.newdelivery.destroy');
+    Route::delete('/bhw/pregnant/{id}', [BHWController::class, 'destroyPregnant'])->name('bhw.pregnant.destroy');
 // New Delivery Update
     Route::put('/bhw/newdelivery/update/{id}', [BHWController::class, 'updateNewDelivery'])->name('bhw.newdelivery.update');
     Route::put('/pregnant/update/{id}', [BHWController::class, 'updatePregnant'])->name('bhw.pregnant.update');

@@ -150,7 +150,7 @@
         }
 
         .info-icon {
-            color: var(--primary-color);
+            color: var(--light-bg);
             margin-right: 0.5rem;
         }
 
@@ -324,6 +324,44 @@
             </div>
         @endif
 
+        <!-- Delete Confirmation Modal -->
+        <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-danger text-white">
+                        <h5 class="modal-title" id="deleteConfirmationModalLabel">
+                            <i class="fas fa-exclamation-triangle me-2"></i>Confirm Deletion
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="text-center mb-4">
+                            <i class="fas fa-trash-alt fa-3x text-danger mb-3"></i>
+                            <h5 class="fw-bold">Are you sure you want to delete this record?</h5>
+                            <p class="text-muted">This action cannot be undone. All data for this pregnant record will be permanently removed.</p>
+                            <div class="alert alert-warning mt-3">
+                                <i class="fas fa-exclamation-circle me-2"></i>
+                                <strong>Warning:</strong> This will delete the pregnant record but not the resident information.
+                            </div>
+                        </div>
+                        <div id="deleteRecordInfo" class="text-center"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            <i class="fas fa-times me-2"></i>Cancel
+                        </button>
+                        <form id="deleteForm" method="POST" style="display: inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fas fa-trash-alt me-2"></i>Delete Record
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Stats Cards -->
         <div class="row mb-4">
             <div class="col-md-3 mb-3">
@@ -358,6 +396,37 @@
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPregnantModal">
                 <i class="fas fa-plus-circle me-2"></i>Add New Record
             </button>
+        </div>
+
+        <!-- Search and Filter Section -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="searchName" class="form-label">
+                            <i class="fas fa-search me-2"></i>Search by Name
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            <input type="text" class="form-control" id="searchName" placeholder="Enter first name, middle name, or last name...">
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="filterPurok" class="form-label">
+                            <i class="fas fa-filter me-2"></i>Filter by Purok
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                            <select class="form-select" id="filterPurok">
+                                <option value="">All Puroks</option>
+                                <option value="1">Purok 1</option>
+                                <option value="2">Purok 2</option>
+                                <option value="3">Purok 3</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Pregnant Records Table -->
@@ -400,6 +469,14 @@
                                             </button>
                                             <button class="btn btn-warning btn-sm edit-btn" data-bs-toggle="modal" data-bs-target="#editPregnantModal" data-pregnant="{{ json_encode($pregnant) }}">
                                                 <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-danger btn-sm delete-btn"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#deleteConfirmationModal"
+                                                    data-id="{{ $pregnant->id }}"
+                                                    data-name="{{ $pregnant->Fname }} {{ $pregnant->lname }}"
+                                                    data-address="#{{ $pregnant->household_no }}, Purok {{ $pregnant->purok_no }}">
+                                                <i class="fas fa-trash-alt"></i>
                                             </button>
                                         </div>
                                     </td>
@@ -478,22 +555,26 @@
 
                             <div class="col-md-6 mb-3">
                                 <label for="purok_no" class="form-label">Purok No. *</label>
-                                <select name="purok_no" id="purok_no" class="form-select" onchange="updateSitio()" required>
+                                <input type="text" class="form-control" id="purok_no" name="purok_no" readonly>
+
+                                <!-- <select name="purok_no" id="purok_no" class="form-select" onchange="updateSitio()" required>
                                     <option value="">Select Purok</option>
                                     <option value="1">Purok 1</option>
                                     <option value="2">Purok 2</option>
                                     <option value="3">Purok 3</option>
-                                </select>
+                                </select> -->
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="sitio" class="form-label">Sitio *</label>
-                                <select name="sitio" id="sitio" class="form-select" required>
+                                <input type="text" class="form-control" id="sitio" name="sitio" >
+
+                                <!-- <select name="sitio" id="sitio" class="form-select" required>
                                     <option value="">Select Sitio</option>
                                     <option value="N/A">N/A</option>
                                     <option value="Leksab">Leksab</option>
                                     <option value="Taew">Taew</option>
                                     <option value="Pidlaoan">Pidlaoan</option>
-                                </select>
+                                </select> -->
                             </div>
                         </div>
 
@@ -823,21 +904,15 @@
 
         function updateSitio() {
             var purok = document.getElementById('purok_no').value;
-            var sitioDropdown = document.getElementById('sitio');
-
-            // Clear current selection
-            sitioDropdown.selectedIndex = 0;
-
-            // Set sitio based on purok selection
-            if (purok == 1) {
-                $("#sitio").val("Leksab");
-            } else if (purok == 2) {
-                $("#sitio").val("Taew");
-            } else if (purok == 3) {
-                $("#sitio").val("Pidlaoan");
-            } else {
-                $("#sitio").val("N/A");
-            }
+                if (purok == 1) {
+                    $("#sitio").val("Leksab");
+                } else if (purok == 2) {
+                    $("#sitio").val("Taew");
+                } else if (purok == 3) {
+                    $("#sitio").val("Pidlaoan");
+                } else {
+                    $("#sitio").val("N/A");
+                }
         }
 
         function calculatePregnancyDuration(LMP_date) {
@@ -904,7 +979,7 @@
 
             $('#view_household_no').text(pregnantData.household_no || 'N/A');
             $('#view_purok_no').text(pregnantData.purok_no ? 'Purok ' + pregnantData.purok_no : 'N/A');
-            $('#view_sitio').text(pregnantData.sitio || 'N/A');
+            $('#view_sitio').text(pregnantData.sitio || '');
 
             // Populate Pregnancy Information
             $('#view_LMP_date').text(pregnantData.LMP_date || 'N/A');
@@ -978,8 +1053,38 @@
             }
         });
 
+        // Delete Button Click Handler
+        $('.delete-btn').on('click', function() {
+            var id = $(this).data('id');
+            var name = $(this).data('name');
+            var address = $(this).data('address');
+
+            // Set the delete form action
+            var deleteRoute = "{{ route('bhw.pregnant.destroy', '') }}/" + id;
+            $('#deleteForm').attr('action', deleteRoute);
+
+            // Display the record information
+            $('#deleteRecordInfo').html(`
+                <div class="alert alert-light border">
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-user-circle me-3 text-primary fa-2x"></i>
+                        <div>
+                            <h6 class="mb-1 fw-bold">${name}</h6>
+                            <p class="mb-0 text-muted">${address}</p>
+                        </div>
+                    </div>
+                </div>
+            `);
+        });
+
         // Initialize autocomplete when modal is shown
         $('#addPregnantModal').on('shown.bs.modal', function () {
+                // $('#sitio').select2({
+                //     dropdownParent: $('#addPregnantModal'),
+                //     placeholder: "Select Sitio",
+                //     allowClear: true
+                // });
+
             $("#resident_name").autocomplete({
                 source: function(request, response) {
                     $.ajax({
@@ -1013,6 +1118,9 @@
                     // Set purok_no value and update sitio
                     $("#purok_no").val(r.purok_no);
                     updateSitio();
+                    $("#sitio").val(r.sitio);
+
+
 
                     // Calculate age
                     calculateAge();
@@ -1082,6 +1190,65 @@
 
         $('#edit_LMP_date').on('input', function() {
             updateEditPregnancyDuration();
+        });
+
+        // Search and Filter Functionality
+        $(document).ready(function() {
+            $('#searchName, #filterPurok').on('input change', function() {
+                filterTable();
+            });
+
+            function filterTable() {
+                var searchName = $('#searchName').val().toLowerCase();
+                var filterPurok = $('#filterPurok').val();
+
+                $('table tbody tr').each(function() {
+                    var row = $(this);
+                    var name = row.find('td:eq(0)').text().toLowerCase();
+                    var purok = row.find('td:eq(3)').text().toLowerCase();
+
+                    var nameMatch = name.includes(searchName);
+                    var purokMatch = !filterPurok || purok.includes('purok ' + filterPurok);
+
+                    if (nameMatch && purokMatch) {
+                        row.show();
+
+                        // Highlight search term in name
+                        if (searchName) {
+                            var nameCell = row.find('td:eq(0)');
+                            var originalText = nameCell.text();
+                            var highlightedText = originalText.replace(
+                                new RegExp(searchName, 'gi'),
+                                match => `<span class="search-highlight">${match}</span>`
+                            );
+                            nameCell.html(highlightedText);
+                        }
+                    } else {
+                        row.hide();
+                    }
+                });
+
+                // Update record count
+                var visibleRows = $('table tbody tr:visible').length;
+                $('.resident-badge').text(visibleRows + ' Records');
+            }
+
+            // Clear search and filter when modal closes
+            $('#addPregnantModal, #editPregnantModal, #viewPregnantModal, #deleteConfirmationModal').on('hidden.bs.modal', function () {
+                setTimeout(function() {
+                    $('#searchName').val('').trigger('input');
+                    $('#filterPurok').val('').trigger('change');
+                }, 500);
+            });
+
+            // Reset filters button (optional)
+            $('<button type="button" class="btn btn-outline-secondary btn-sm ms-2" id="resetFilters">Clear Filters</button>')
+                .insertAfter('#filterPurok')
+                .on('click', function() {
+                    $('#searchName').val('');
+                    $('#filterPurok').val('');
+                    filterTable();
+                });
         });
     });
 </script>

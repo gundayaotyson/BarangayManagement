@@ -7,29 +7,39 @@
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 <style>
     :root {
-        --primary-color: #2c3e50;
-        --secondary-color: #3498db;
-        --success-color: #2ecc71;
-        --warning-color: #f39c12;
-        --danger-color: #e74c3c;
-        --light-color: #ecf0f1;
-        --dark-color: #2c3e50;
+        --primary-gradient: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+        --secondary-gradient: linear-gradient(135deg, #4361ee 0%, #3a56d4 100%);
+        --success-gradient: linear-gradient(135deg, #28a745 0%, #23923d 100%);
+        --warning-gradient: linear-gradient(135deg, #f8961e 0%, #e68a1a 100%);
+        --danger-gradient: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+        --dark-color: #1a1a2e;
+        --light-color: #f8f9fa;
         --card-bg: #ffffff;
+        --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+        --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
         --border-radius: 12px;
-        --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        --transition: all 0.3s ease;
+        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
+    body {
+        background: linear-gradient(135deg, #f6f9ff 0%, #edf2ff 100%);
+        min-height: 100vh;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        color: #333;
+    }
+
+    /* Page Header */
     .page-header {
-        background: linear-gradient(135deg, var(--primary-color) 0%, #34495e 100%);
+        background: var(--primary-gradient);
         color: white;
         padding: 2rem;
         border-radius: var(--border-radius);
         margin-bottom: 2rem;
-        box-shadow: var(--box-shadow);
+        box-shadow: var(--shadow-lg);
         position: relative;
         overflow: hidden;
     }
@@ -38,38 +48,27 @@
         content: '';
         position: absolute;
         top: 0;
-        left: 0;
         right: 0;
-        bottom: 0;
-        background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
-        opacity: 0.1;
+        width: 200px;
+        height: 200px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        transform: translate(100px, -100px);
     }
 
     .page-header h1 {
         font-size: 2.5rem;
         font-weight: 700;
         margin-bottom: 0.5rem;
-        position: relative;
-        display: inline-block;
-    }
-
-    .page-header h1::after {
-        content: '';
-        position: absolute;
-        bottom: -10px;
-        left: 0;
-        width: 60px;
-        height: 4px;
-        background: var(--secondary-color);
-        border-radius: 2px;
     }
 
     .page-header p {
         font-size: 1.1rem;
         opacity: 0.9;
-        margin-top: 1rem;
+        max-width: 600px;
     }
 
+    /* Stats Grid */
     .stats-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -81,28 +80,28 @@
         background: var(--card-bg);
         border-radius: var(--border-radius);
         padding: 1.5rem;
-        box-shadow: var(--box-shadow);
+        box-shadow: var(--shadow-md);
         transition: var(--transition);
-        border-left: 4px solid var(--secondary-color);
+        border-left: 4px solid;
         position: relative;
         overflow: hidden;
     }
 
-    .stat-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-    }
-
     .stat-card.total {
-        border-left-color: var(--primary-color);
+        border-left-color: #2c3e50;
     }
 
     .stat-card.active {
-        border-left-color: var(--success-color);
+        border-left-color: #28a745;
     }
 
     .stat-card.inactive {
-        border-left-color: var(--warning-color);
+        border-left-color: #f8961e;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
     }
 
     .stat-icon {
@@ -131,20 +130,26 @@
 
     .stat-change {
         font-size: 0.85rem;
-        color: var(--success-color);
+        color: #28a745;
         margin-top: 0.5rem;
     }
 
     .stat-change.negative {
-        color: var(--danger-color);
+        color: #dc3545;
     }
 
+    /* Content Card */
     .content-card {
         background: var(--card-bg);
         border-radius: var(--border-radius);
-        box-shadow: var(--box-shadow);
+        box-shadow: var(--shadow-md);
         padding: 1.5rem;
         margin-bottom: 2rem;
+        transition: var(--transition);
+    }
+
+    .content-card:hover {
+        box-shadow: var(--shadow-lg);
     }
 
     .card-header {
@@ -165,18 +170,15 @@
         gap: 0.75rem;
     }
 
-    .card-title i {
-        color: var(--secondary-color);
-    }
-
     .card-actions {
         display: flex;
         gap: 0.5rem;
     }
 
+    /* Buttons */
     .btn {
         padding: 0.5rem 1.25rem;
-        border-radius: 6px;
+        border-radius: 8px;
         font-weight: 600;
         transition: var(--transition);
         border: none;
@@ -187,227 +189,42 @@
     }
 
     .btn-primary {
-        background: var(--secondary-color);
+        background: var(--secondary-gradient);
         color: white;
     }
 
     .btn-primary:hover {
-        background: #2980b9;
         transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+        box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
     }
 
-    .btn-success {
-        background: var(--success-color);
+    .btn-warning {
+        background: var(--warning-gradient);
         color: white;
     }
 
-    .btn-success:hover {
-        background: #27ae60;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(46, 204, 113, 0.3);
+    .btn-danger {
+        background: var(--danger-gradient);
+        color: white;
     }
 
     .btn-outline {
         background: transparent;
-        border: 2px solid var(--secondary-color);
-        color: var(--secondary-color);
+        border: 2px solid #4361ee;
+        color: #4361ee;
     }
 
     .btn-outline:hover {
-        background: var(--secondary-color);
+        background: #4361ee;
         color: white;
-        transform: translateY(-2px);
     }
 
-    .table-container {
-        overflow-x: auto;
-        border-radius: 8px;
+    .btn-sm {
+        padding: 0.375rem 0.75rem;
+        font-size: 0.875rem;
     }
 
-    .table {
-        width: 100%;
-        border-collapse: separate;
-        border-spacing: 0;
-        background: white;
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    }
-
-    .table thead {
-        background: linear-gradient(135deg, var(--primary-color) 0%, #34495e 100%);
-    }
-
-    .table th {
-        background-color: var(--dark-color);
-        padding: 1rem;
-        text-align: left;
-        color: white;
-        font-weight: 600;
-        text-transform: uppercase;
-        font-size: 0.85rem;
-        letter-spacing: 0.5px;
-        border: none;
-    }
-
-    .table th:first-child {
-        border-top-left-radius: 8px;
-    }
-
-    .table th:last-child {
-        border-top-right-radius: 8px;
-    }
-
-    .table tbody tr {
-        transition: var(--transition);
-        border-bottom: 1px solid var(--light-color);
-    }
-
-    .table tbody tr:hover {
-        background-color: #f8f9fa;
-        transform: translateX(4px);
-    }
-
-    .table tbody tr:last-child {
-        border-bottom: none;
-    }
-
-    .table td {
-        padding: 1rem;
-        vertical-align: middle;
-        border: none;
-    }
-
-    .resident-info {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-    }
-
-    .resident-avatar {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, var(--secondary-color) 0%, #2980b9 100%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-weight: 600;
-        font-size: 1rem;
-    }
-
-    .resident-details h4 {
-        margin: 0;
-        font-weight: 600;
-        color: var(--dark-color);
-    }
-
-    .resident-details p {
-        margin: 0.25rem 0 0 0;
-        font-size: 0.85rem;
-        color: #666;
-    }
-
-    .status-badge {
-        padding: 0.35rem 1rem;
-        border-radius: 20px;
-        font-size: 0.85rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-
-    .status-badge.active {
-        background: rgba(46, 204, 113, 0.1);
-        color: var(--success-color);
-        border: 1px solid rgba(46, 204, 113, 0.2);
-    }
-
-    .status-badge.inactive {
-        background: rgba(243, 156, 18, 0.1);
-        color: var(--warning-color);
-        border: 1px solid rgba(243, 156, 18, 0.2);
-    }
-
-    .status-badge.pending {
-        background: rgba(52, 152, 219, 0.1);
-        color: var(--secondary-color);
-        border: 1px solid rgba(52, 152, 219, 0.2);
-    }
-
-    .action-buttons {
-        display: flex;
-        gap: 0.5rem;
-    }
-
-    .action-btn {
-        width: 36px;
-        height: 36px;
-        border-radius: 6px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: transparent;
-        border: 1px solid #ddd;
-        color: #666;
-        cursor: pointer;
-        transition: var(--transition);
-    }
-
-    .action-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .action-btn.view:hover {
-        background: var(--secondary-color);
-        color: white;
-        border-color: var(--secondary-color);
-    }
-
-    .action-btn.edit:hover {
-        background: var(--success-color);
-        color: white;
-        border-color: var(--success-color);
-    }
-
-    .action-btn.delete:hover {
-        background: var(--danger-color);
-        color: white;
-        border-color: var(--danger-color);
-    }
-
-    .empty-state {
-        text-align: center;
-        padding: 3rem;
-        color: #666;
-    }
-
-    .empty-state i {
-        font-size: 4rem;
-        margin-bottom: 1rem;
-        opacity: 0.3;
-        color: var(--dark-color);
-    }
-
-    .empty-state h3 {
-        font-size: 1.5rem;
-        margin-bottom: 0.5rem;
-        color: var(--dark-color);
-    }
-
-    .empty-state p {
-        margin-bottom: 1.5rem;
-        max-width: 400px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
+    /* Filters */
     .filters {
         display: flex;
         gap: 1rem;
@@ -439,11 +256,11 @@
 
     .filter-select:focus {
         outline: none;
-        border-color: var(--secondary-color);
-        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        border-color: #4361ee;
+        box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
     }
 
-    /* Search Container */
+    /* Search */
     .search-container {
         position: relative;
         flex: 1;
@@ -465,8 +282,8 @@
 
     .search-input:focus {
         outline: none;
-        border-color: var(--secondary-color);
-        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        border-color: #4361ee;
+        box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
     }
 
     .search-icon {
@@ -488,12 +305,136 @@
         color: #94a3b8;
         cursor: pointer;
         display: none;
-        font-size: 0.9rem;
-        padding: 0;
     }
 
-    .clear-search:hover {
-        color: var(--danger-color);
+    /* Table */
+    .table-container {
+        overflow-x: auto;
+        border-radius: 8px;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        background: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: var(--shadow-sm);
+    }
+
+    .table thead {
+        background: var(--primary-gradient);
+    }
+
+    .table th {
+        background-color: var( --dark-color);
+        padding: 1rem;
+        text-align: left;
+        color: white;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        letter-spacing: 0.5px;
+        border: none;
+    }
+
+    .table tbody tr {
+        transition: var(--transition);
+        border-bottom: 1px solid #f1f5f9;
+    }
+
+    .table tbody tr:hover {
+        background-color: rgba(67, 97, 238, 0.05);
+    }
+
+    .table td {
+        padding: 1rem;
+        vertical-align: middle;
+        border: none;
+    }
+
+    /* Resident Info */
+    .resident-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .resident-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--secondary-gradient);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 600;
+        font-size: 1rem;
+    }
+
+    .resident-details h4 {
+        margin: 0;
+        font-weight: 600;
+        color: var(--dark-color);
+    }
+
+    .resident-details p {
+        margin: 0.25rem 0 0 0;
+        font-size: 0.85rem;
+        color: #666;
+    }
+
+    /* Status Badge */
+    .status-badge {
+        padding: 0.35rem 1rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .status-badge.active {
+        background: rgba(46, 204, 113, 0.1);
+        color: #28a745;
+        border: 1px solid rgba(46, 204, 113, 0.2);
+    }
+
+    .status-badge.inactive {
+        background: rgba(243, 156, 18, 0.1);
+        color: #f39c12;
+        border: 1px solid rgba(243, 156, 18, 0.2);
+    }
+
+    /* Action Buttons */
+    .action-buttons {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    /* Empty State */
+    .empty-state {
+        text-align: center;
+        padding: 3rem;
+        color: #666;
+    }
+
+    .empty-state i {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        opacity: 0.3;
+        color: var(--dark-color);
+    }
+
+    .empty-state h3 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        color: var(--dark-color);
     }
 
     /* Search Results Info */
@@ -502,54 +443,7 @@
         margin-bottom: 1rem;
         color: #666;
         font-size: 0.9rem;
-        border-bottom: 1px solid var(--light-color);
-    }
-
-    .search-results-info strong {
-        color: var(--primary-color);
-    }
-
-    .pagination {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 0.5rem;
-        margin-top: 2rem;
-        padding-top: 1.5rem;
-        border-top: 1px solid var(--light-color);
-    }
-
-    .page-link {
-        padding: 0.5rem 1rem;
-        border: 1px solid #ddd;
-        border-radius: 6px;
-        color: var(--dark-color);
-        text-decoration: none;
-        transition: var(--transition);
-        font-weight: 600;
-    }
-
-    .page-link:hover {
-        background: var(--secondary-color);
-        color: white;
-        border-color: var(--secondary-color);
-    }
-
-    .page-link.active {
-        background: var(--secondary-color);
-        color: white;
-        border-color: var(--secondary-color);
-    }
-
-    .page-link.disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-    }
-
-    .page-link.disabled:hover {
-        background: transparent;
-        color: var(--dark-color);
-        border-color: #ddd;
+        border-bottom: 1px solid #f1f5f9;
     }
 
     /* No Results State */
@@ -560,37 +454,144 @@
         display: none;
     }
 
-    .no-results-state i {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-        opacity: 0.3;
-        color: var(--dark-color);
+    /* Modal Styles */
+    .modal-content {
+        border-radius: var(--border-radius);
+        border: none;
+        overflow: hidden;
+        box-shadow: 0 20px 25px rgba(0, 0, 0, 0.15);
     }
 
-    .no-results-state h4 {
+    .modal-header {
+        background: var(--primary-gradient);
+        color: white;
+        padding: 1.5rem;
+        border-bottom: none;
+    }
+
+    .modal-title {
+        font-weight: 700;
         font-size: 1.25rem;
-        margin-bottom: 0.5rem;
-        color: var(--dark-color);
     }
 
-    /* Loading State */
+    .modal-body {
+        padding: 2rem;
+    }
+
+    /* Form Controls */
+    .form-label {
+        font-weight: 600;
+        color: var(--dark-color);
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    .form-control,
+    .form-select {
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        border: 2px solid #e2e8f0;
+        transition: var(--transition);
+        font-size: 0.95rem;
+        background: #fff;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: #4361ee;
+        box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+    }
+
+    /* Section Title */
+    .section-title {
+        color: var(--dark-color);
+        font-weight: 700;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        position: relative;
+        display: inline-block;
+        font-size: 1.25rem;
+    }
+
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 60px;
+        height: 4px;
+        background: #4361ee;
+        border-radius: 2px;
+    }
+
+    /* Form Section */
+    .form-section {
+        background: #f8fafc;
+        border-radius: 10px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        border: 1px solid #e2e8f0;
+    }
+
+    /* Autocomplete */
+    .ui-autocomplete {
+        z-index: 99999 !important;
+        max-height: 300px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        background: white;
+        border-radius: 8px;
+        box-shadow: var(--shadow-lg);
+        border: 1px solid #e2e8f0;
+    }
+
+    .ui-autocomplete .ui-menu-item {
+        padding: 12px 16px;
+        border-bottom: 1px solid #f1f5f9;
+        cursor: pointer;
+        transition: var(--transition);
+        font-size: 14px;
+    }
+
+    .ui-autocomplete .ui-menu-item:hover {
+        background: rgba(67, 97, 238, 0.1);
+    }
+
+    /* Animations */
+    .fade-in {
+        animation: fadeIn 0.5s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Loading */
     .loading {
         opacity: 0.7;
         pointer-events: none;
     }
 
-    /* Responsive Design */
+    /* Responsive */
     @media (max-width: 768px) {
-        .stats-grid {
-            grid-template-columns: 1fr;
-        }
-
         .page-header {
             padding: 1.5rem;
         }
 
         .page-header h1 {
             font-size: 2rem;
+        }
+
+        .stats-grid {
+            grid-template-columns: 1fr;
         }
 
         .card-header {
@@ -629,15 +630,6 @@
         .table td {
             padding: 0.75rem;
         }
-
-        .action-buttons {
-            flex-direction: column;
-        }
-
-        .action-btn {
-            width: 32px;
-            height: 32px;
-        }
     }
 
     @media (max-width: 480px) {
@@ -665,48 +657,12 @@
             padding: 1rem;
         }
     }
-
-    /* Animation for loading */
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    .fade-in {
-        animation: fadeIn 0.5s ease-out;
-    }
-
-    /* Custom scrollbar */
-    ::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
-    }
-
-    ::-webkit-scrollbar-track {
-        background: #f1f1f1;
-        border-radius: 4px;
-    }
-
-    ::-webkit-scrollbar-thumb {
-        background: var(--secondary-color);
-        border-radius: 4px;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-        background: #2980b9;
-    }
 </style>
 
 <div class="container-fluid">
     <!-- Page Header -->
     <div class="page-header fade-in">
-        <h1><i class="fas fa-users-medical"></i> 4Ps Beneficiaries Management</h1>
+        <h1><i class="fas fa-users-medical"></i> 4Ps Beneficiaries List</h1>
         <p>Manage and monitor Pantawid Pamilyang Pilipino Program beneficiaries with real-time statistics and insights.</p>
     </div>
 
@@ -739,14 +695,15 @@
             </div>
         </div>
     </div>
-     <!-- Quick Stats Footer -->
+
+    <!-- Quick Stats Footer -->
     <div class="row fade-in" style="animation-delay: 0.3s;">
         <div class="col-md-4">
             <div class="content-card" style="text-align: center; padding: 1rem;">
                 <div style="font-size: 0.9rem; color: #666; margin-bottom: 0.5rem;">
                     <i class="fas fa-chart-pie"></i> Active Rate
                 </div>
-                <div style="font-size: 2rem; font-weight: 700; color: var(--success-color);">
+                <div style="font-size: 2rem; font-weight: 700; color: #28a745;">
                     {{ number_format(($activeBeneficiaries/$totalBeneficiaries)*100, 1) }}%
                 </div>
             </div>
@@ -754,38 +711,45 @@
         <div class="col-md-4">
             <div class="content-card" style="text-align: center; padding: 1rem;">
                 <div style="font-size: 0.9rem; color: #666; margin-bottom: 0.5rem;">
-                    </div>
                     <i class="fas fa-user-check"></i> Resident Match
-                <div style="font-size: 2rem; font-weight: 700; color: var(--secondary-color);">
+                </div>
+                <div style="font-size: 2rem; font-weight: 700; color: #4361ee;">
                     {{ number_format(($fourps->where('resident_id', '!=', null)->count()/$totalBeneficiaries)*100, 1) }}%
                 </div>
             </div>
         </div>
-        <!-- <div class="col-md-4">
+        <div class="col-md-4">
             <div class="content-card" style="text-align: center; padding: 1rem;">
                 <div style="font-size: 0.9rem; color: #666; margin-bottom: 0.5rem;">
-                    <i class="fas fa-calendar-alt"></i> Updated
+                    <i class="fas fa-calendar-alt"></i> This Month
                 </div>
-                <div style="font-size: 1.25rem; font-weight: 600; color: var(--dark-color);">
-                    {{ now()->format('F d, Y') }}
+                <div style="font-size: 2rem; font-weight: 700; color: #f8961e;">
+                    {{ $fourps->where('created_at', '>=', now()->startOfMonth())->count() }}
                 </div>
             </div>
-        </div> -->
+        </div>
     </div>
+
     <!-- Main Content Card -->
     <div class="content-card fade-in" style="animation-delay: 0.2s;">
         <div class="card-header">
             <div class="card-title">
                 <i class="fas fa-list"></i>
                 <span>Beneficiaries List</span>
-                <span class="badge bg-primary" style="background: var(--secondary-color); color: white; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.85rem;">
+                <span class="badge bg-primary" style="background: #4361ee; color: white; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.85rem;">
                     {{ $totalBeneficiaries }} Records
                 </span>
             </div>
+
             <div class="card-actions">
-                <!-- <button class="btn btn-outline" id="exportBtn">
-                    <i class="fas fa-download"></i> Export
-                </button> -->
+                   <button type="button" class="btn btn-primary d-none d-md-block" data-bs-toggle="modal" data-bs-target="#addModal">
+                    <i class="fas fa-plus-circle me-2"></i>Add New Beneficiary
+                </button>
+                <button class="btn btn-success" onclick="exportCSV()">
+                    <i class="fas fa-file-csv"></i> Export CSV
+                </button>
+
+
                 <button class="btn btn-primary" id="refreshBtn">
                     <i class="fas fa-sync-alt"></i> Refresh
                 </button>
@@ -800,6 +764,34 @@
                     <option value="all">All Status</option>
                     <option value="active">Active</option>
                     <option value="inactive">Inactive</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">Month:</span>
+                <select class="filter-select" id="monthFilter">
+                    <option value="all">All Months</option>
+                    <option value="1">January</option>
+                    <option value="2">February</option>
+                    <option value="3">March</option>
+                    <option value="4">April</option>
+                    <option value="5">May</option>
+                    <option value="6">June</option>
+                    <option value="7">July</option>
+                    <option value="8">August</option>
+                    <option value="9">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                </select>
+
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">Purok:</span>
+                <select class="filter-select" id="purokFilter">
+                    <option value="all">All Puroks</option>
+                    <option value="Purok 1">Purok 1</option>
+                    <option value="Purok 2">Purok 2</option>
+                    <option value="Purok 3">Purok 3</option>
                 </select>
             </div>
             <div class="filter-group">
@@ -848,8 +840,9 @@
                         <th>Beneficiary Information</th>
                         <th>4Ps ID</th>
                         <th>Status</th>
+                        <th>Purok</th>
                         <th>Date Registered</th>
-                        <!-- <th>Actions</th> -->
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody id="beneficiariesTableBody">
@@ -861,32 +854,33 @@
                         data-lastname="{{ strtolower($beneficiary->resident ? $beneficiary->resident->lname : '') }}"
                         data-fourps-id="{{ strtolower($beneficiary->fourps_id ?? '') }}"
                         data-status="{{ strtolower($beneficiary->status ?? '') }}"
+                        data-purok="{{ strtolower($beneficiary->resident ? $beneficiary->resident->purok_no : '') }}"
                         data-created-at="{{ $beneficiary->created_at ? $beneficiary->created_at->format('Y-m-d') : '' }}"
                         data-registered-date="{{ $beneficiary->created_at ? $beneficiary->created_at->timestamp : 0 }}">
                         <td>
                             <div class="resident-info">
                                 <div class="resident-avatar">
                                     @if ($beneficiary->resident)
-                                        {{ substr($beneficiary->resident->Fname, 0, 1) }}{{ substr($beneficiary->resident->lname, 0, 1) }}
+                                    {{ substr($beneficiary->resident->Fname, 0, 1) }}{{ substr($beneficiary->resident->lname, 0, 1) }}
                                     @else
-                                        NA
+                                    NA
                                     @endif
                                 </div>
                                 <div class="resident-details">
                                     <h4>
                                         @if ($beneficiary->resident)
-                                            {{ $beneficiary->resident->Fname }} {{ $beneficiary->resident->mname }} {{ $beneficiary->resident->lname }}
+                                        {{ $beneficiary->resident->Fname }} {{ $beneficiary->resident->mname }} {{ $beneficiary->resident->lname }}
                                         @else
-                                            <span style="color: #999;">(No associated resident)</span>
+                                        <span style="color: #999;">(No associated resident)</span>
                                         @endif
                                     </h4>
                                     @if ($beneficiary->resident)
-                                        <p>
-                                            <i class="fas fa-home"></i>
-                                            {{ $beneficiary->resident->purok_no ?? 'N/A' }} •
-                                            <i class="fas fa-hashtag"></i>
-                                            {{ $beneficiary->resident->household_no ?? 'N/A' }}
-                                        </p>
+                                    <p>
+                                        <i class="fas fa-home"></i>
+                                        {{ $beneficiary->resident->purok_no ?? 'N/A' }} •
+                                        <i class="fas fa-hashtag"></i>
+                                        {{ $beneficiary->resident->household_no ?? 'N/A' }}
+                                    </p>
                                     @endif
                                 </div>
                             </div>
@@ -896,29 +890,57 @@
                         </td>
                         <td>
                             @if ($beneficiary->status == 'active')
-                                <span class="status-badge active">
-                                    <i class="fas fa-check-circle"></i> Active
-                                </span>
+                            <span class="status-badge active">
+                                <i class="fas fa-check-circle"></i> Active
+                            </span>
                             @elseif ($beneficiary->status == 'inactive')
-                                <span class="status-badge inactive">
-                                    <i class="fas fa-times-circle"></i> Inactive
-                                </span>
+                            <span class="status-badge inactive">
+                                <i class="fas fa-times-circle"></i> Inactive
+                            </span>
                             @else
-                                <span class="status-badge pending">
-                                    <i class="fas fa-clock"></i> Pending
-                                </span>
+                            <span class="status-badge inactive">
+                                <i class="fas fa-clock"></i> Pending
+                            </span>
+                            @endif
+                        </td>
+                        <td>
+                            @if ($beneficiary->resident && $beneficiary->resident->purok_no)
+                            <span style="font-weight: 600; color: #4361ee;">
+                                {{ $beneficiary->resident->purok_no }}
+                            </span>
+                            @else
+                            <span style="color: #999;">N/A</span>
                             @endif
                         </td>
                         <td>
                             {{ $beneficiary->created_at ? $beneficiary->created_at->format('M d, Y') : 'N/A' }}
                         </td>
-                            <!-- <td>
-                                <div class="action-buttons">
-                                    <button class="action-btn view" title="View Details">
-                                        <i class="fas fa-eye"></i>
+                        <td>
+                            <div class="action-buttons">
+                                <button type="button" class="btn btn-warning btn-sm edit-btn" data-bs-toggle="modal" data-bs-target="#editModal"
+                                    data-id="{{ $beneficiary->id }}"
+                                    data-fname="{{ $beneficiary->fname }}"
+                                    data-mname="{{ $beneficiary->mname }}"
+                                    data-lname="{{ $beneficiary->lname }}"
+                                    data-purok_no="{{ $beneficiary->purok_no }}"
+                                    data-household_no="{{ $beneficiary->household_no }}"
+                                    data-fourps_id="{{ $beneficiary->fourps_id }}"
+                                    data-status="{{ $beneficiary->status }}"
+                                    data-resident_id="{{ $beneficiary->resident_id }}"
+                                    title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <form action="{{ route('4ps.residentlist.destroy', $beneficiary->id) }}" method="POST" style="display: inline-block;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm"
+                                        onclick="return confirm('Are you sure you want to delete this beneficiary? This action cannot be undone.')"
+                                        title="Delete">
+                                        <i class="fas fa-trash"></i>
                                     </button>
-                                </div>
-                            </td> -->
+                                </form>
+                            </div>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -928,7 +950,7 @@
                 <i class="fas fa-users"></i>
                 <h3>No Beneficiaries Found</h3>
                 <p>There are no 4Ps beneficiaries in the system yet.</p>
-                <button class="btn btn-success">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
                     <i class="fas fa-plus"></i> Add First Beneficiary
                 </button>
             </div>
@@ -936,353 +958,730 @@
         </div>
     </div>
 
-
 </div>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Elements
-    const statusFilter = document.getElementById('statusFilter');
-    const sortFilter = document.getElementById('sortFilter');
-    const searchInput = document.getElementById('searchInput');
-    const clearSearchBtn = document.getElementById('clearSearchBtn');
-    const searchResultsInfo = document.getElementById('searchResultsInfo');
-    const resultsCount = document.getElementById('resultsCount');
-    const searchTermText = document.getElementById('searchTermText');
-    const noResultsState = document.getElementById('noResultsState');
-    const clearFiltersBtn = document.getElementById('clearFiltersBtn');
-    const refreshBtn = document.getElementById('refreshBtn');
-    const exportBtn = document.getElementById('exportBtn');
-    const beneficiaryRows = document.querySelectorAll('.beneficiary-row');
-    const beneficiariesTableBody = document.getElementById('beneficiariesTableBody');
+<!-- Add Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form action="{{ route('4ps.residentlist.store') }}" method="POST" id="addForm">
+                @csrf
+                <input type="hidden" name="is_manual_entry" id="is_manual_entry" value="0">
+                <input type="hidden" name="resident_id" id="resident_id">
 
-    // View buttons
-    const viewButtons = document.querySelectorAll('.action-btn.view');
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-plus-circle me-2"></i>Add New 4Ps Beneficiary
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Resident Search Section -->
+                    <div class="form-section">
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <h5 class="section-title">
+                                    <i class="fas fa-user me-2"></i>Resident Information
+                                </h5>
+                                <p class="text-muted mb-3">Search for an existing resident or enter details manually</p>
+                            </div>
+                        </div>
 
-    // Current filter state
-    let currentFilters = {
-        status: 'all',
-        sort: 'name_asc',
-        search: ''
-    };
+                        <!-- Search Section -->
+                        <div class="row mb-4" id="searchSection">
+                            <div class="col-md-12 mb-3">
+                                <label for="resident_name" class="form-label">Search Existing Resident</label>
+                                <div class="search-wrapper">
+                                    <input type="text" id="resident_name" class="form-control" placeholder="Type resident name to search...">
+                                    <i class="fas fa-search search-icon"></i>
+                                </div>
+                                <div class="form-text text-muted">Start typing to search for existing residents. If found, fields will auto-fill.</div>
+                            </div>
+                        </div>
 
-    // Initialize
-    function initialize() {
-        // Add event listeners
-        statusFilter.addEventListener('change', handleStatusFilter);
-        sortFilter.addEventListener('change', handleSortFilter);
-        searchInput.addEventListener('input', handleSearchInput);
-        clearSearchBtn.addEventListener('click', clearSearch);
-        clearFiltersBtn.addEventListener('click', clearAllFilters);
-        refreshBtn.addEventListener('click', handleRefresh);
-        exportBtn.addEventListener('click', handleExport);
+                        <!-- Auto-filled fields -->
+                        <div class="row" id="autoFilledFields">
+                            <div class="col-md-4 mb-3">
+                                <label for="fname" class="form-label">First Name *</label>
+                                <input type="text" class="form-control" id="fname" name="fname" required readonly>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="mname" class="form-label">Middle Name</label>
+                                <input type="text" class="form-control" id="mname" name="mname" readonly>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="lname" class="form-label">Last Name *</label>
+                                <input type="text" class="form-control" id="lname" name="lname" required readonly>
+                            </div>
+                        </div>
 
-        // Add view button functionality
-        viewButtons.forEach(btn => {
-            btn.addEventListener('click', handleViewBeneficiary);
-        });
+                        <!-- Auto-filled address fields -->
+                        <div class="row" id="autoFilledAddress">
+                            <div class="col-md-6 mb-3">
+                                <label for="purok_no" class="form-label">Purok No. *</label>
+                                <input type="text" class="form-control" id="purok_no" name="purok_no" required readonly>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="household_no" class="form-label">House No. *</label>
+                                <input type="text" class="form-control" id="household_no" name="household_no" required readonly>
+                            </div>
+                        </div>
+                    </div>
 
-        // Add hover effects to table rows
-        beneficiaryRows.forEach(row => {
-            row.addEventListener('mouseenter', function() {
-                this.style.backgroundColor = '#f8f9fa';
-            });
-            row.addEventListener('mouseleave', function() {
-                this.style.backgroundColor = '';
-            });
-        });
+                    <!-- 4Ps Information -->
+                    <div class="form-section">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h5 class="section-title">
+                                    <i class="fas fa-id-card me-2"></i>4Ps Information
+                                </h5>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="fourps_id" class="form-label">4Ps ID *</label>
+                                <input type="text" class="form-control" id="fourps_id" name="fourps_id" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="status" class="form-label">Status *</label>
+                                <select class="form-select" id="status" name="status" required>
+                                    <option value="">Select Status</option>
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="saveButton">
+                        <i class="fas fa-save me-2"></i>Save Beneficiary
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
-        // Apply initial filters
-        applyFilters();
-    }
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form action="" method="POST" id="editForm">
+                @csrf
+                @method('PUT')
+                <input type="hidden" name="id" id="edit_id">
+                <input type="hidden" name="resident_id" id="edit_resident_id">
 
-    // Handle status filter change
-    function handleStatusFilter() {
-        currentFilters.status = this.value;
-        applyFilters();
-    }
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-edit me-2"></i>Edit 4Ps Beneficiary
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Resident Information -->
+                    <div class="form-section">
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <h5 class="section-title">
+                                    <i class="fas fa-user me-2"></i>Resident Information
+                                </h5>
+                            </div>
+                        </div>
 
-    // Handle sort filter change
-    function handleSortFilter() {
-        currentFilters.sort = this.value;
-        applyFilters();
-    }
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label for="edit_fname" class="form-label">First Name *</label>
+                                <input type="text" class="form-control" id="edit_fname" name="fname" required>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="edit_mname" class="form-label">Middle Name</label>
+                                <input type="text" class="form-control" id="edit_mname" name="mname">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="edit_lname" class="form-label">Last Name *</label>
+                                <input type="text" class="form-control" id="edit_lname" name="lname" required>
+                            </div>
+                        </div>
 
-    // Handle search input
-    function handleSearchInput() {
-        currentFilters.search = this.value.toLowerCase().trim();
-        clearSearchBtn.style.display = currentFilters.search ? 'block' : 'none';
-        applyFilters();
-    }
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="edit_purok_no" class="form-label">Purok No. *</label>
+                                <input type="text" class="form-control" id="edit_purok_no" name="purok_no" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="edit_household_no" class="form-label">House No. *</label>
+                                <input type="text" class="form-control" id="edit_household_no" name="household_no" required>
+                            </div>
+                        </div>
+                    </div>
 
-    // Clear search
-    function clearSearch() {
-        searchInput.value = '';
-        currentFilters.search = '';
-        clearSearchBtn.style.display = 'none';
-        applyFilters();
-        searchInput.focus();
-    }
+                    <!-- 4Ps Information -->
+                    <div class="form-section">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h5 class="section-title">
+                                    <i class="fas fa-id-card me-2"></i>4Ps Information
+                                </h5>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="edit_fourps_id" class="form-label">4Ps ID *</label>
+                                <input type="text" class="form-control" id="edit_fourps_id" name="fourps_id" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="edit_status" class="form-label">Status *</label>
+                                <select class="form-select" id="edit_status" name="status" required>
+                                    <option value="">Select Status</option>
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="updateButton">
+                        <i class="fas fa-save me-2"></i>Update Beneficiary
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
-    // Clear all filters
-    function clearAllFilters() {
-        statusFilter.value = 'all';
-        sortFilter.value = 'name_asc';
-        searchInput.value = '';
-        currentFilters.status = 'all';
-        currentFilters.sort = 'name_asc';
-        currentFilters.search = '';
-        clearSearchBtn.style.display = 'none';
-        applyFilters();
-    }
-
-    // Handle refresh
-    function handleRefresh() {
-        const icon = this.querySelector('i');
-        icon.classList.add('fa-spin');
-        this.classList.add('loading');
-
-        // Simulate API call
-        setTimeout(() => {
-            icon.classList.remove('fa-spin');
-            this.classList.remove('loading');
-            // In real implementation, this would fetch fresh data
-            // For now, just re-apply filters
-            applyFilters();
-
-            // Show success message
-            showNotification('Data refreshed successfully!', 'success');
-        }, 1000);
-    }
-
-    // Handle export
-    function handleExport() {
-        this.classList.add('loading');
-
-        // Simulate export process
-        setTimeout(() => {
-            this.classList.remove('loading');
-
-            // Get filtered data
-            const filteredRows = Array.from(beneficiaryRows).filter(row => row.style.display !== 'none');
-
-            if (filteredRows.length === 0) {
-                showNotification('No data to export!', 'warning');
-                return;
-            }
-
-            // In real implementation, this would trigger a download
-            // For now, show a success message
-            showNotification(`Exporting ${filteredRows.length} records...`, 'success');
-
-            // Simulate download
-            setTimeout(() => {
-                showNotification('Export completed successfully!', 'success');
-            }, 500);
-        }, 500);
-    }
-
-    // Handle view beneficiary
-    function handleViewBeneficiary() {
-        const row = this.closest('.beneficiary-row');
-        const name = row.querySelector('.resident-details h4').textContent;
-        const fourpsId = row.querySelector('td:nth-child(2) strong').textContent;
-        const status = row.querySelector('.status-badge').textContent.trim();
-
-        // Show beneficiary details (in real app, this would open a modal)
-        const details = `
-            <strong>Name:</strong> ${name}<br>
-            <strong>4Ps ID:</strong> ${fourpsId}<br>
-            <strong>Status:</strong> ${status}
-        `;
-
-        showNotification(details, 'info', 5000);
-    }
-
-    // Apply all filters
-    function applyFilters() {
-        let visibleCount = 0;
-
-        // First, show all rows
-        beneficiaryRows.forEach(row => {
-            row.style.display = 'table-row';
-        });
-
-        // Apply status filter
-        if (currentFilters.status !== 'all') {
-            beneficiaryRows.forEach(row => {
-                if (row.style.display !== 'none') {
-                    const rowStatus = row.dataset.status;
-                    if (rowStatus !== currentFilters.status) {
-                        row.style.display = 'none';
-                    }
-                }
-            });
-        }
-
-        // Apply search filter
-        if (currentFilters.search) {
-            beneficiaryRows.forEach(row => {
-                if (row.style.display !== 'none') {
-                    const fullName = row.dataset.fullname;
-                    const fourpsId = row.dataset.fourpsId;
-                    const firstName = row.dataset.firstname;
-                    const lastName = row.dataset.lastname;
-
-                    const matchesSearch = fullName.includes(currentFilters.search) ||
-                                        fourpsId.includes(currentFilters.search) ||
-                                        firstName.includes(currentFilters.search) ||
-                                        lastName.includes(currentFilters.search);
-
-                    if (!matchesSearch) {
-                        row.style.display = 'none';
-                    }
-                }
-            });
-        }
-
-        // Count visible rows
-        beneficiaryRows.forEach(row => {
-            if (row.style.display !== 'none') {
-                visibleCount++;
-            }
-        });
-
-        // Sort rows
-        sortRows();
-
-        // Update UI
-        updateResultsInfo(visibleCount);
-
-        // Show/hide no results state
-        if (visibleCount === 0 && beneficiaryRows.length > 0) {
-            noResultsState.style.display = 'block';
-            document.querySelector('.table-container').style.display = 'none';
-        } else {
-            noResultsState.style.display = 'none';
-            document.querySelector('.table-container').style.display = 'block';
-        }
-    }
-
-    // Sort rows
-    function sortRows() {
-        const rowsArray = Array.from(beneficiaryRows);
-
-        rowsArray.sort((a, b) => {
-            switch(currentFilters.sort) {
-                case 'name_asc':
-                    const nameA = (a.dataset.lastname || '') + (a.dataset.firstname || '');
-                    const nameB = (b.dataset.lastname || '') + (b.dataset.firstname || '');
-                    return nameA.localeCompare(nameB);
-
-                case 'name_desc':
-                    const nameC = (a.dataset.lastname || '') + (a.dataset.firstname || '');
-                    const nameD = (b.dataset.lastname || '') + (b.dataset.firstname || '');
-                    return nameD.localeCompare(nameC);
-
-                case 'date_asc':
-                    return new Date(a.dataset.createdAt) - new Date(b.dataset.createdAt);
-
-                case 'date_desc':
-                    return new Date(b.dataset.createdAt) - new Date(a.dataset.createdAt);
-
-                case 'status':
-                    const statusA = a.dataset.status || '';
-                    const statusB = b.dataset.status || '';
-                    return statusA.localeCompare(statusB);
-
-                default:
-                    return 0;
-            }
-        });
-
-        // Reorder rows in the table
-        rowsArray.forEach(row => {
-            if (row.style.display !== 'none') {
-                beneficiariesTableBody.appendChild(row);
-            }
-        });
-    }
-
-    // Update results info
-    function updateResultsInfo(visibleCount) {
-        if (currentFilters.status !== 'all' || currentFilters.search) {
-            searchResultsInfo.style.display = 'block';
-            resultsCount.textContent = visibleCount;
-
-            let filterText = '';
-            if (currentFilters.search) {
-                filterText += ` for "<strong>${currentFilters.search}</strong>"`;
-            }
-            if (currentFilters.status !== 'all') {
-                filterText += (currentFilters.search ? ' and ' : ' for ') +
-                            `<strong>${currentFilters.status.charAt(0).toUpperCase() + currentFilters.status.slice(1)}</strong> status`;
-            }
-
-            searchTermText.innerHTML = filterText;
-        } else {
-            searchResultsInfo.style.display = 'none';
-        }
-    }
-
-    // Show notification
-    function showNotification(message, type = 'info', duration = 3000) {
-        // Remove existing notifications
-        const existingNotifications = document.querySelectorAll('.custom-notification');
-        existingNotifications.forEach(notification => notification.remove());
-
-        // Create notification element
-        const notification = document.createElement('div');
-        notification.className = `custom-notification alert alert-${type === 'success' ? 'success' : type === 'warning' ? 'warning' : type === 'error' ? 'danger' : 'info'} alert-dismissible fade show position-fixed`;
-        notification.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 9999;
-            min-width: 300px;
-            max-width: 400px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        `;
-
-        const icon = type === 'success' ? 'fa-check-circle' :
-                    type === 'warning' ? 'fa-exclamation-triangle' :
-                    type === 'error' ? 'fa-times-circle' : 'fa-info-circle';
-
-        notification.innerHTML = `
-            <div class="d-flex align-items-center">
-                <i class="fas ${icon} me-2" style="font-size: 1.2rem;"></i>
-                <div>${message}</div>
+<!-- View Modal -->
+<div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-eye me-2"></i>View 4Ps Beneficiary Details
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        `;
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="resident-info mb-4">
+                            <div class="resident-avatar" style="width: 60px; height: 60px; font-size: 1.5rem;" id="view_avatar">
+                                NA
+                            </div>
+                            <div class="resident-details">
+                                <h3 id="view_fullname" style="font-size: 1.75rem; margin-bottom: 0.25rem;"></h3>
+                                <p id="view_address" style="font-size: 1rem;"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        document.body.appendChild(notification);
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-section">
+                            <h6 class="section-title" style="font-size: 1rem;">Personal Information</h6>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td style="width: 40%; color: #666;">First Name:</td>
+                                    <td style="font-weight: 600;" id="view_fname"></td>
+                                </tr>
+                                <tr>
+                                    <td style="color: #666;">Middle Name:</td>
+                                    <td style="font-weight: 600;" id="view_mname"></td>
+                                </tr>
+                                <tr>
+                                    <td style="color: #666;">Last Name:</td>
+                                    <td style="font-weight: 600;" id="view_lname"></td>
+                                </tr>
+                                <tr>
+                                    <td style="color: #666;">Purok:</td>
+                                    <td style="font-weight: 600;" id="view_purok"></td>
+                                </tr>
+                                <tr>
+                                    <td style="color: #666;">House No:</td>
+                                    <td style="font-weight: 600;" id="view_household"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-section">
+                            <h6 class="section-title" style="font-size: 1rem;">4Ps Information</h6>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td style="width: 40%; color: #666;">4Ps ID:</td>
+                                    <td style="font-weight: 600;" id="view_fourps_id"></td>
+                                </tr>
+                                <tr>
+                                    <td style="color: #666;">Status:</td>
+                                    <td id="view_status"></td>
+                                </tr>
+                                <tr>
+                                    <td style="color: #666;">Date Registered:</td>
+                                    <td style="font-weight: 600;" id="view_created_at"></td>
+                                </tr>
+                                <tr>
+                                    <td style="color: #666;">Last Updated:</td>
+                                    <td style="font-weight: 600;" id="view_updated_at"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // Month filter for beneficiariesTable
+document.getElementById("monthFilter").addEventListener("change", function() {
+    const selectedMonth = this.value; // "all" or "1"-"12"
 
-        // Auto remove after duration
-        setTimeout(() => {
-            if (notification.parentNode) {
-                notification.remove();
-            }
-        }, duration);
-    }
+    // Loop through all table rows
+    document.querySelectorAll("#beneficiariesTable tbody tr").forEach(row => {
+        const createdAtStr = row.getAttribute("data-created-at"); // get the created_at date
+        if (!createdAtStr) return;
 
-    // Keyboard shortcuts
-    document.addEventListener('keydown', function(e) {
-        // Focus search on Ctrl/Cmd + F
-        if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
-            e.preventDefault();
-            searchInput.focus();
-            searchInput.select();
-        }
+        const createdAt = new Date(createdAtStr);
+        const month = createdAt.getMonth() + 1; // JS months are 0-based
 
-        // Clear filters on Escape
-        if (e.key === 'Escape' && document.activeElement === searchInput) {
-            clearAllFilters();
+        // Show row if "all" is selected or month matches
+        if (selectedMonth === "all" || month.toString() === selectedMonth) {
+            row.style.display = "";
+        } else {
+            row.style.display = "none";
         }
     });
-
-    // Initialize the application
-    initialize();
 });
+
+</script>
+<script>
+function exportCSV() {
+    const table = document.getElementById("beneficiariesTable");
+    const purokSelected = document.getElementById("purokFilter").value;
+    const monthSelected = document.getElementById("monthFilter").value; // 1-12 or "all"
+    let csv = [];
+
+    // ===== GET HEADERS (EXCLUDE ACTION) =====
+    let headers = [];
+    table.querySelectorAll("thead th").forEach((th, index) => {
+        if (th.innerText.trim().toLowerCase() !== "actions") {
+            headers.push('"' + th.innerText.trim() + '"');
+        }
+    });
+    csv.push(headers.join(","));
+
+    // ===== GET ROWS =====
+    table.querySelectorAll("tbody tr").forEach(row => {
+        const rowPurok = row.querySelector("td:nth-child(4)").innerText.trim(); // Purok column
+        const createdAt = row.querySelector("td:nth-child(5)").innerText.trim(); // Date Registered column
+        let rowMonth = 0;
+
+        if (createdAt) {
+            // Get month number from date (format: "M d, Y" e.g., "Dec 14, 2025")
+            const dateObj = new Date(createdAt);
+            rowMonth = dateObj.getMonth() + 1; // getMonth() is 0-indexed
+        }
+
+        // ===== FILTER BY PUROK AND MONTH =====
+        if ((purokSelected !== "all" && rowPurok !== purokSelected) ||
+            (monthSelected !== "all" && rowMonth.toString() !== monthSelected)) {
+            return;
+        }
+
+        let rowData = [];
+
+        row.querySelectorAll("td").forEach((td, index) => {
+            // Skip last column (Actions)
+            if (index === row.cells.length - 1) return;
+
+            // Remove .resident-avatar content
+            let tdClone = td.cloneNode(true);
+            tdClone.querySelectorAll('.resident-avatar').forEach(el => el.remove());
+
+            let text = tdClone.innerText
+                .replace(/\n/g, " ")
+                .replace(/\s+/g, " ")
+                .trim();
+
+            rowData.push('"' + text + '"');
+        });
+
+        csv.push(rowData.join(","));
+    });
+
+    // ===== DOWNLOAD CSV =====
+    let csvContent = csv.join("\n");
+    let blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    let url = URL.createObjectURL(blob);
+
+    let link = document.createElement("a");
+    link.setAttribute("href", url);
+
+    let filename = "Beneficiaries_";
+    if (purokSelected === "all" && monthSelected === "all") {
+        filename += "All.csv";
+    } else if (purokSelected === "all") {
+        filename += "Month_" + monthSelected + ".csv";
+    } else if (monthSelected === "all") {
+        filename += purokSelected.replace(" ", "_") + ".csv";
+    } else {
+        filename += purokSelected.replace(" ", "_") + "_Month_" + monthSelected + ".csv";
+    }
+
+    link.setAttribute("download", filename);
+    link.style.visibility = "hidden";
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+</script>
+
+
+
+
+<script>
+    $(document).ready(function() {
+        // Initialize autocomplete for resident search
+        $("#resident_name").autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: "{{ route('4ps.search_residents') }}",
+                    type: "GET",
+                    data: {
+                        term: request.term
+                    },
+                    success: function(data) {
+                        response($.map(data, function(item) {
+                            return {
+                                label: item.Fname + ' ' + item.mname + ' ' + item.lname + ' - ' + item.purok_no,
+                                value: item.Fname + ' ' + item.mname + ' ' + item.lname,
+                                id: item.id,
+                                fname: item.Fname,
+                                mname: item.mname,
+                                lname: item.lname,
+                                purok_no: item.purok_no,
+                                household_no: item.household_no
+                            };
+                        }));
+                    }
+                });
+            },
+            minLength: 2,
+            select: function(event, ui) {
+                // Fill the form fields with selected resident data
+                $('#resident_id').val(ui.item.id);
+                $('#fname').val(ui.item.fname);
+                $('#mname').val(ui.item.mname);
+                $('#lname').val(ui.item.lname);
+                $('#purok_no').val(ui.item.purok_no);
+                $('#household_no').val(ui.item.household_no);
+                $('#is_manual_entry').val('0');
+
+                // Make fields readonly
+                $('#fname, #mname, #lname, #purok_no, #household_no').prop('readonly', true);
+
+                // Show success message
+                showToast('Resident found! Fields have been auto-filled.', 'success');
+            },
+            open: function() {
+                $(this).autocomplete('widget').css('z-index', 99999);
+            }
+        }).autocomplete("instance")._renderItem = function(ul, item) {
+            return $("<li>")
+                .append("<div><strong>" + item.fname + " " + item.lname + "</strong><br>" +
+                    "<small>Purok: " + item.purok_no + " | House No: " + item.household_no + "</small></div>")
+                .appendTo(ul);
+        };
+
+        // Handle clear search button
+        $('#clearSearchBtn').click(function() {
+            $('#searchInput').val('');
+            $(this).hide();
+            filterTable();
+        });
+
+        // Show/hide clear search button based on input
+        $('#searchInput').on('input', function() {
+            if ($(this).val().length > 0) {
+                $('#clearSearchBtn').show();
+            } else {
+                $('#clearSearchBtn').hide();
+            }
+            filterTable();
+        });
+
+        // Filter table function
+        function filterTable() {
+            var searchTerm = $('#searchInput').val().toLowerCase();
+            var statusFilter = $('#statusFilter').val();
+            var purokFilter = $('#purokFilter').val();
+            var sortFilter = $('#sortFilter').val();
+
+            var visibleRows = 0;
+            var rows = $('.beneficiary-row');
+
+            rows.each(function() {
+                var row = $(this);
+                var fullname = row.data('fullname') || '';
+                var firstname = row.data('firstname') || '';
+                var lastname = row.data('lastname') || '';
+                var fourpsId = row.data('fourps-id') || '';
+                var status = row.data('status') || '';
+                var purok = row.data('purok') || '';
+                var createdAt = row.data('created-at') || '';
+
+                var matchesSearch = searchTerm === '' ||
+                    fullname.includes(searchTerm) ||
+                    firstname.includes(searchTerm) ||
+                    lastname.includes(searchTerm) ||
+                    fourpsId.includes(searchTerm);
+
+                var matchesStatus = statusFilter === 'all' || status === statusFilter;
+                var matchesPurok = purokFilter === 'all' || purok === purokFilter.toLowerCase();
+
+                if (matchesSearch && matchesStatus && matchesPurok) {
+                    row.show();
+                    visibleRows++;
+                } else {
+                    row.hide();
+                }
+            });
+
+            // Sort rows
+            sortTable(sortFilter);
+
+            // Update search results info
+            if (searchTerm !== '') {
+                $('#searchResultsInfo').show();
+                $('#resultsCount').text(visibleRows);
+                $('#searchTermText').text(' for "' + searchTerm + '"');
+            } else {
+                $('#searchResultsInfo').hide();
+            }
+
+            // Show/hide no results state
+            if (visibleRows === 0) {
+                $('#noResultsState').show();
+                $('#beneficiariesTable').hide();
+            } else {
+                $('#noResultsState').hide();
+                $('#beneficiariesTable').show();
+            }
+        }
+
+        // Sort table function
+        function sortTable(sortBy) {
+            var rows = $('.beneficiary-row:visible').get();
+
+            rows.sort(function(a, b) {
+                var aData = $(a).data();
+                var bData = $(b).data();
+
+                switch (sortBy) {
+                    case 'name_asc':
+                        return aData.fullname.localeCompare(bData.fullname);
+                    case 'name_desc':
+                        return bData.fullname.localeCompare(aData.fullname);
+                    case 'date_asc':
+                        return aData.registeredDate - bData.registeredDate;
+                    case 'date_desc':
+                        return bData.registeredDate - aData.registeredDate;
+                    case 'status':
+                        return aData.status.localeCompare(bData.status);
+                    default:
+                        return 0;
+                }
+            });
+
+            $.each(rows, function(index, row) {
+                $('#beneficiariesTableBody').append(row);
+            });
+        }
+
+        // Initialize filters
+        $('#statusFilter, #purokFilter, #sortFilter').change(function() {
+            filterTable();
+        });
+
+        // Clear all filters
+        $('#clearFiltersBtn').click(function() {
+            $('#searchInput').val('');
+            $('#statusFilter').val('all');
+            $('#purokFilter').val('all');
+            $('#sortFilter').val('name_asc');
+            $('#clearSearchBtn').hide();
+            filterTable();
+        });
+
+        // Refresh button
+        $('#refreshBtn').click(function() {
+            $(this).addClass('loading');
+            $(this).html('<i class="fas fa-spinner fa-spin"></i> Refreshing...');
+
+            setTimeout(function() {
+                location.reload();
+            }, 1000);
+        });
+
+        // Edit modal handler
+        $('.edit-btn').click(function() {
+            var id = $(this).data('id');
+            var fname = $(this).data('fname');
+            var mname = $(this).data('mname');
+            var lname = $(this).data('lname');
+            var purok_no = $(this).data('purok_no');
+            var household_no = $(this).data('household_no');
+            var fourps_id = $(this).data('fourps_id');
+            var status = $(this).data('status');
+            var resident_id = $(this).data('resident_id');
+
+            $('#edit_id').val(id);
+            $('#edit_fname').val(fname);
+            $('#edit_mname').val(mname);
+            $('#edit_lname').val(lname);
+            $('#edit_purok_no').val(purok_no);
+            $('#edit_household_no').val(household_no);
+            $('#edit_fourps_id').val(fourps_id);
+            $('#edit_status').val(status);
+            $('#edit_resident_id').val(resident_id);
+
+            // Set form action
+            $('#editForm').attr('action', "{{ url('4ps/residentlist') }}/" + id);
+        });
+
+        // View modal handler
+        $('.view-btn').click(function() {
+            var id = $(this).data('id');
+            var fname = $(this).data('fname');
+            var mname = $(this).data('mname');
+            var lname = $(this).data('lname');
+            var purok_no = $(this).data('purok_no');
+            var household_no = $(this).data('household_no');
+            var fourps_id = $(this).data('fourps_id');
+            var status = $(this).data('status');
+            var created_at = $(this).data('created_at');
+            var updated_at = $(this).data('updated_at');
+
+            // Set avatar
+            var avatarText = (fname.charAt(0) + lname.charAt(0)).toUpperCase();
+            $('#view_avatar').text(avatarText);
+
+            // Set other details
+            $('#view_fullname').text(fname + ' ' + mname + ' ' + lname);
+            $('#view_address').html('<i class="fas fa-home"></i> ' + purok_no + ' • <i class="fas fa-hashtag"></i> ' + household_no);
+            $('#view_fname').text(fname);
+            $('#view_mname').text(mname);
+            $('#view_lname').text(lname);
+            $('#view_purok').text(purok_no);
+            $('#view_household').text(household_no);
+            $('#view_fourps_id').text(fourps_id);
+
+            // Set status badge
+            var statusHtml = '';
+            if (status == 'active') {
+                statusHtml = '<span class="status-badge active"><i class="fas fa-check-circle"></i> Active</span>';
+            } else if (status == 'inactive') {
+                statusHtml = '<span class="status-badge inactive"><i class="fas fa-times-circle"></i> Inactive</span>';
+            } else {
+                statusHtml = '<span class="status-badge inactive"><i class="fas fa-clock"></i> Pending</span>';
+            }
+            $('#view_status').html(statusHtml);
+
+            $('#view_created_at').text(created_at);
+            $('#view_updated_at').text(updated_at);
+        });
+
+        // Form validation
+        $('#addForm, #editForm').submit(function(e) {
+            var form = $(this);
+            var isValid = true;
+
+            form.find('input[required], select[required]').each(function() {
+                if ($(this).val() === '') {
+                    $(this).addClass('is-invalid');
+                    isValid = false;
+                } else {
+                    $(this).removeClass('is-invalid');
+                }
+            });
+
+            if (!isValid) {
+                e.preventDefault();
+                showToast('Please fill all required fields marked with *', 'error');
+                return false;
+            }
+
+            // Show loading state
+            var submitBtn = form.find('button[type="submit"]');
+            submitBtn.prop('disabled', true);
+            submitBtn.html('<i class="fas fa-spinner fa-spin"></i> Saving...');
+        });
+
+        // Reset add modal when closed
+        $('#addModal').on('hidden.bs.modal', function() {
+            $('#addForm')[0].reset();
+            $('#resident_id').val('');
+            $('#is_manual_entry').val('0');
+            $('#fname, #mname, #lname, #purok_no, #household_no').prop('readonly', false);
+
+            var submitBtn = $('#saveButton');
+            submitBtn.prop('disabled', false);
+            submitBtn.html('<i class="fas fa-save me-2"></i>Save Beneficiary');
+        });
+
+        // Toast notification function
+        function showToast(message, type = 'success') {
+            var toast = $('<div class="toast-notification toast-' + type + '">' + message + '</div>');
+            $('body').append(toast);
+
+            toast.css({
+                'position': 'fixed',
+                'top': '20px',
+                'right': '20px',
+                'padding': '15px 20px',
+                'background': type === 'success' ? '#28a745' : '#dc3545',
+                'color': 'white',
+                'border-radius': '8px',
+                'box-shadow': '0 4px 12px rgba(0,0,0,0.15)',
+                'z-index': 99999,
+                'font-weight': '500',
+                'max-width': '300px'
+            });
+
+            setTimeout(function() {
+                toast.fadeOut(300, function() {
+                    $(this).remove();
+                });
+            }, 3000);
+        }
+
+        // Keyboard shortcuts
+        $(document).keydown(function(e) {
+            // Ctrl/Cmd + F to focus search
+            if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
+                e.preventDefault();
+                $('#searchInput').focus();
+            }
+
+            // Ctrl/Cmd + N to open add modal
+            if ((e.ctrlKey || e.metaKey) && e.key === 'n') {
+                e.preventDefault();
+                $('#addModal').modal('show');
+            }
+
+            // Escape to clear search
+            if (e.key === 'Escape' && $('#searchInput').is(':focus')) {
+                $('#searchInput').val('');
+                filterTable();
+            }
+        });
+
+        // Initialize table filtering
+        filterTable();
+    });
 </script>
 @endsection

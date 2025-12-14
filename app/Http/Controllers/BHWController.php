@@ -176,7 +176,7 @@ class BHWController extends Controller
             'sitio' => 'required|string',
             'household_no' => 'required|string',
 
-            'placeofbirth' => 'required|string',
+            'birthplace' => 'required|string',
             'typeof_birth' => 'required|string',
 
             'c_fname' => 'required|string',
@@ -198,8 +198,9 @@ class BHWController extends Controller
 
         newdelivery::create($validatedData);
 
-        return redirect()->route('bhw.newdeliverpregnant')
-            ->with('success', 'New delivery record saved successfully!');
+        // return redirect()->route('bhw.newdeliverpregnant')
+        //     ->with('success', 'New delivery record saved successfully!');
+        return back()->with('New delivery record saved successfully!');
     }
 
     public function updateNewDelivery(Request $request, $id)
@@ -219,7 +220,7 @@ class BHWController extends Controller
             'sitio' => 'required|string',
             'household_no' => 'required|string',
 
-            'placeofbirth' => 'required|string',
+            'birthplace' => 'required|string',
             'typeof_birth' => 'required|string',
 
             'c_fname' => 'required|string',
@@ -242,27 +243,33 @@ class BHWController extends Controller
         $delivery = newdelivery::findOrFail($id);
         $delivery->update($validatedData);
 
-        return redirect()->route('bhw.newdeliverpregnant')
-            ->with('success', 'New delivery record updated successfully!');
+        return back()->with('New delivery record updated successfully!');
+    }
+    public function destroyNewDelivery($id)
+    {
+        $newdelivery = newdelivery::findOrFail($id);
+        $newdelivery->delete();
+
+        return back()->with('success', 'Delivery record deleted successfully!');
     }
 
-  public function searchResidents(Request $request)
-{
-    $query = $request->get('query');
-    $resident_id = $request->get('resident_id');
+    public function searchResidents(Request $request)
+    {
+        $query = $request->get('query');
+        $resident_id = $request->get('resident_id');
 
-    if ($resident_id) {
-        // Search by specific ID
-        $residents = Resident::where('id', $resident_id)
-            ->get(['id', 'fname', 'mname', 'lname', 'birthday', 'household_no', 'purok_no', 'sitio']);
-    } else {
-        // Search by name
-        $residents = Resident::where('fname', 'LIKE', "%{$query}%")
-            ->orWhere('mname', 'LIKE', "%{$query}%")
-            ->orWhere('lname', 'LIKE', "%{$query}%")
-            ->get(['id', 'fname', 'mname', 'lname', 'birthday', 'household_no', 'purok_no', 'sitio']);
+        if ($resident_id) {
+            // Search by specific ID
+            $residents = Resident::where('id', $resident_id)
+                ->get(['id', 'fname', 'mname', 'lname', 'birthday', 'household_no', 'purok_no', 'sitio', 'birthplace']);
+        } else {
+            // Search by name
+            $residents = Resident::where('fname', 'LIKE', "%{$query}%")
+                ->orWhere('mname', 'LIKE', "%{$query}%")
+                ->orWhere('lname', 'LIKE', "%{$query}%")
+                ->get(['id', 'fname', 'mname', 'lname', 'birthday', 'household_no', 'purok_no', 'sitio', 'birthplace']);
+        }
+
+        return response()->json($residents);
     }
-
-    return response()->json($residents);
-}
 }

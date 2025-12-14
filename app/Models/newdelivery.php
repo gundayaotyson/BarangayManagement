@@ -22,7 +22,7 @@ class newdelivery extends Model
         'purok_no',
         'sitio',
         'household_no',
-        'placeofbirth',
+        'birthplace', // dapat palitan sa data base
         'typeof_birth',
         'c_fname',
         'c_mname',

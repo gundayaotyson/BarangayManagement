@@ -157,7 +157,7 @@
         }
 
         .info-icon {
-            color: var(--primary-color);
+            color: var(--light-bg);
             margin-right: 0.5rem;
         }
 
@@ -387,8 +387,10 @@
                 </div>
             </div>
             <div class="col-md-3 mb-3">
-                <!-- Optional: Add another stat card if needed -->
-
+                <div class="card stats-card">
+                    <div class="stats-number">{{ $newdeliveries->where('purok_no', 1)->count() }}</div>
+                    <div class="stats-label">Purok 1</div>
+                </div>
             </div>
         </div>
 
@@ -398,6 +400,45 @@
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDeliveryModal">
                 <i class="fas fa-plus-circle me-2"></i>Add New Delivery
             </button>
+        </div>
+
+        <!-- Search and Filter Section -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="searchName" class="form-label">
+                            <i class="fas fa-search me-2"></i>Search by Name
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            <input type="text" class="form-control" id="searchName" placeholder="Search parent or child name...">
+                        </div>
+                        <small class="form-text">Search by parent's name or child's name</small>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="filterPurok" class="form-label">
+                            <i class="fas fa-filter me-2"></i>Filter by Purok
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                            <select class="form-select" id="filterPurok">
+                                <option value="">All Puroks</option>
+                                <option value="1">Purok 1</option>
+                                <option value="2">Purok 2</option>
+                                <option value="3">Purok 3</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="row">
+                    <div class="col-md-12 text-end">
+                        <button type="button" class="btn btn-outline-secondary btn-sm" id="resetFilters">
+                            <i class="fas fa-times me-1"></i>Clear Filters
+                        </button>
+                    </div>
+                </div> -->
+            </div>
         </div>
 
         <!-- Delivery Records Table -->
@@ -419,6 +460,7 @@
                                 <th>Gender</th>
                                 <th>Weight</th>
                                 <th>Height</th>
+                                <th>Purok</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -431,6 +473,7 @@
                                 <td>{{ $delivery->gender }}</td>
                                 <td>{{ $delivery->weight }} kg</td>
                                 <td>{{ $delivery->height }}cm</td>
+                                <td>Purok {{ $delivery->purok_no }}</td>
                                 <td>
                                     <div class="action-buttons">
                                         <button class="btn btn-info btn-sm view-btn" data-bs-toggle="modal" data-bs-target="#viewDeliveryModal" data-delivery="{{ json_encode($delivery) }}">
@@ -439,6 +482,14 @@
                                         <button class="btn btn-warning btn-sm edit-btn" data-bs-toggle="modal" data-bs-target="#editDeliveryModal" data-delivery="{{ json_encode($delivery) }}">
                                             <i class="fas fa-edit"></i>
                                         </button>
+                                         <!-- Add Delete Button -->
+                                            <form action="{{ route('bhw.newdelivery.destroy', $delivery->id) }}" method="POST" style="display: inline-block;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirmDelete()">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
                                     </div>
                                 </td>
                             </tr>
@@ -515,28 +566,32 @@
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <label for="purok_no" class="form-label">Purok No. *</label>
-                                                <select name="purok_no" id="purok_no" class="form-select" required>
+                                                <input type="text" class="form-control" id="purok_no" name="purok_no" readonly>
+
+                                                <!-- <select name="purok_no" id="purok_no" class="form-select" required>
                                                     <option value="">Select Purok</option>
                                                     <option value="1">Purok 1</option>
                                                     <option value="2">Purok 2</option>
                                                     <option value="3">Purok 3</option>
-                                                </select>
+                                                </select> -->
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <label for="sitio" class="form-label">Sitio *</label>
-                                                <select name="sitio" id="sitio" class="form-select" required>
+                                                <input type="text" class="form-control" id="sitio" name="sitio" >
+
+                                                <!-- <select name="sitio" id="sitio" class="form-select" required>
                                                     <option value="">Select Sitio</option>
                                                     <option value="N/A">N/A</option>
                                                     <option value="Leksab">Leksab</option>
                                                     <option value="Taew">Taew</option>
                                                     <option value="Pidlaoan">Pidlaoan</option>
-                                                </select>
+                                                </select> -->
                                             </div>
                                             <div class="col-md-6 mb-3">
-                                                <label for="placeofbirth" class="form-label">Place of Birth *</label>
+                                                <label for="birthplace" class="form-label">Place of Birth *</label>
                                                 <div class="input-group">
                                                     <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
-                                                    <input type="text" name="placeofbirth" id="placeofbirth" class="form-control" required>
+                                                <input type="text" class="form-control" id="birthplace" name="birthplace" required>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 mb-3">
@@ -676,7 +731,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="info-item">
-                                                <span class="info-label">Purok No.{{ $delivery->purok_no }}</span>
+                                                <span class="info-label">Purok No.<span class="info-value" id="view_purok_no"></span></span>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -687,7 +742,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="info-item">
-                                                <span class="info-label">Place of Birth:<span class="info-value" id="view_placeofbirth"></span></span>
+                                                <span class="info-label">Place of Birth:<span class="info-value" id="view_birthplace"></span></span>
 
                                             </div>
                                         </div>
@@ -911,10 +966,10 @@
                                                 </select>
                                             </div>
                                             <div class="col-md-6 mb-3">
-                                                <label for="edit_placeofbirth" class="form-label">Place of Birth *</label>
+                                                <label for="edit_birthplace" class="form-label">Place of Birth *</label>
                                                 <div class="input-group">
                                                     <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
-                                                    <input type="text" name="placeofbirth" id="edit_placeofbirth" class="form-control" required>
+                                                    <input type="text" name="birthplace" id="edit_birthplace" class="form-control" required>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 mb-3">
@@ -1051,7 +1106,7 @@
                 $('#view_household_no').text(deliveryData.household_no || 'N/A');
                 $('#view_purok_no').text(deliveryData.purok_no ? 'Purok ' + deliveryData.purok_no : 'N/A');
                 $('#view_sitio').text(deliveryData.sitio || 'N/A');
-                $('#view_placeofbirth').text(deliveryData.placeofbirth || 'N/A');
+                $('#view_birthplace').text(deliveryData.birthplace || 'N/A');
                 $('#view_typeof_birth').text(deliveryData.typeof_birth || 'N/A');
 
                 // Populate Child Information
@@ -1099,7 +1154,7 @@
                 $('#edit_household_no').val(deliveryData.household_no || '');
                 $('#edit_purok_no').val(deliveryData.purok_no || '');
                 $('#edit_sitio').val(deliveryData.sitio || '');
-                $('#edit_placeofbirth').val(deliveryData.placeofbirth || '');
+                $('#edit_birthplace').val(deliveryData.birthplace || '');
                 $('#edit_typeof_birth').val(deliveryData.typeof_birth || '');
 
                 // Populate Child Information
@@ -1144,6 +1199,7 @@
                         $("#purok_no").val(r.purok_no);
                         updateSitio();
                         $("#sitio").val(r.sitio);
+                        $('#birthplace').val(r.birthplace);
                     }
                 });
             });
@@ -1177,6 +1233,83 @@
                 } else {
                     $(this).removeClass('is-valid');
                 }
+            });
+
+            // Delete confirmation function
+            function confirmDelete() {
+                return confirm('Are you sure you want to delete this delivery record? This action cannot be undone.');
+            }
+
+            // Search and Filter Functionality
+            $(document).ready(function() {
+                $('#searchName, #filterPurok').on('input change', function() {
+                    filterTable();
+                });
+
+                function filterTable() {
+                    var searchName = $('#searchName').val().toLowerCase();
+                    var filterPurok = $('#filterPurok').val();
+
+                    $('table tbody tr').each(function() {
+                        var row = $(this);
+                        var parentName = row.find('td:eq(0)').text().toLowerCase();
+                        var childName = row.find('td:eq(1)').text().toLowerCase();
+                        var purok = row.find('td:eq(6)').text().toLowerCase();
+
+                        // Check if search term matches either parent name OR child name
+                        var nameMatch = !searchName ||
+                                       parentName.includes(searchName) ||
+                                       childName.includes(searchName);
+
+                        var purokMatch = !filterPurok || purok.includes('purok ' + filterPurok);
+
+                        if (nameMatch && purokMatch) {
+                            row.show();
+
+                            // Highlight search term in names
+                            if (searchName) {
+                                // Highlight in parent name
+                                var parentCell = row.find('td:eq(0)');
+                                var parentText = parentCell.text();
+                                var highlightedParentText = parentText.replace(
+                                    new RegExp(searchName, 'gi'),
+                                    match => `<span class="search-highlight">${match}</span>`
+                                );
+                                parentCell.html(highlightedParentText);
+
+                                // Highlight in child name
+                                var childCell = row.find('td:eq(1)');
+                                var childText = childCell.text();
+                                var highlightedChildText = childText.replace(
+                                    new RegExp(searchName, 'gi'),
+                                    match => `<span class="search-highlight">${match}</span>`
+                                );
+                                childCell.html(highlightedChildText);
+                            }
+                        } else {
+                            row.hide();
+                        }
+                    });
+
+                    // Update record count
+                    var visibleRows = $('table tbody tr:visible').length;
+                    $('.resident-badge').text(visibleRows + ' Records');
+                }
+
+                // Clear filters button
+                $('#resetFilters').on('click', function() {
+                    $('#searchName').val('');
+                    $('#filterPurok').val('');
+                    filterTable();
+                });
+
+                // Clear search and filter when modal closes
+                $('#addDeliveryModal, #editDeliveryModal, #viewDeliveryModal').on('hidden.bs.modal', function () {
+                    setTimeout(function() {
+                        $('#searchName').val('').trigger('input');
+                        $('#filterPurok').val('').trigger('change');
+                    }, 500);
+                });
             });
         });
     </script>

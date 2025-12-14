@@ -58,6 +58,10 @@ class SeniorReqController extends Controller
         if (!$resident) {
             return redirect()->back()->withErrors(['resident' => 'Resident not found.']);
         }
+        $age = Carbon::parse($request->dob)->age;
+        if ($age < 60) {
+            return redirect()->back()->with('error', 'You must be 60 years old or above to apply for Senior Citizen services.');
+        }
 
         // Auto-set sitio based on Purok
         $sitio = match($request->purok) {

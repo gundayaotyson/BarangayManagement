@@ -617,6 +617,22 @@
 <div class="residents-header">
     <h2 class="mb-0" style="font-size: 30px;">Residents List</h2>
     <div class="search-print-container">
+        <!-- Purok Filter Dropdown -->
+        <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="purokFilterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-filter me-1"></i> Filter by Purok
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="purokFilterDropdown" id="purokFilterSelection">
+                <li><a class="dropdown-item" href="#" data-purok="all">All Puroks</a></li>
+                @php
+                    $uniquePuroks = $residents->pluck('purok_no')->unique()->sort();
+                @endphp
+                @foreach($uniquePuroks as $purok)
+                    <li><a class="dropdown-item" href="#" data-purok="{{ $purok }}">{{ $purok }}</a></li>
+                @endforeach
+            </ul>
+        </div>
+
         <!-- Column Selection Dropdown -->
         <div class="dropdown">
             <button class="btn btn-primary dropdown-toggle" type="button" id="columnDropdown" data-bs-toggle="dropdown" aria-expanded="false">
@@ -674,8 +690,8 @@
             </thead>
             <tbody id="residentsTableBody">
             @foreach ($residents as $resident)
-                <tr>
-                                        <td>
+                <tr data-purok="{{ $resident->purok_no }}">
+                    <td>
                         @if($resident->image)
                             <img src="{{ asset('storage/' . $resident->image) }}" alt="Resident" width="50" height="50" style="border-radius: 50%; object-fit: cover;">
                         @else
@@ -1233,6 +1249,9 @@
 </div>
 
 <script>
+// Global variable to track current purok filter
+let currentPurokFilter = 'all';
+
 // Image preview for new resident form
 document.getElementById('image').addEventListener('change', function (event) {
     const file = event.target.files[0];
@@ -1278,24 +1297,40 @@ function searchResidents() {
     });
 }
 
-// Export to CSV
+// Export to CSV based on purok filter
 function exportResidentsToCSV() {
     const table = document.querySelector('.residents-table');
     let csv = [];
 
     // Get headers
     let headers = [];
-    document.querySelectorAll('.residents-table thead th').forEach(header => {
-        headers.push('"' + header.innerText.replace(/"/g, '""') + '"');
+    document.querySelectorAll('.residents-table thead th').forEach((header, index) => {
+        // Skip Actions column (last column)
+        if (index !== document.querySelectorAll('.residents-table thead th').length - 1) {
+            headers.push('"' + header.innerText.replace(/"/g, '""') + '"');
+        }
     });
     csv.push(headers.join(','));
 
-    // Get rows
+    // Get rows based on current purok filter
     document.querySelectorAll('.residents-table tbody tr').forEach(row => {
-        if (row.style.display !== 'none') {
+        // Check if row should be included based on current filter
+        let shouldInclude = false;
+        
+        if (currentPurokFilter === 'all') {
+            shouldInclude = row.style.display !== 'none';
+        } else {
+            const rowPurok = row.getAttribute('data-purok');
+            shouldInclude = rowPurok === currentPurokFilter && row.style.display !== 'none';
+        }
+        
+        if (shouldInclude) {
             let rowData = [];
-            row.querySelectorAll('td').forEach(cell => {
-                rowData.push('"' + cell.innerText.replace(/"/g, '""') + '"');
+            row.querySelectorAll('td').forEach((cell, index) => {
+                // Skip Actions column (last column)
+                if (index !== row.querySelectorAll('td').length - 1) {
+                    rowData.push('"' + cell.innerText.replace(/"/g, '""') + '"');
+                }
             });
             csv.push(rowData.join(','));
         }
@@ -1306,16 +1341,63 @@ function exportResidentsToCSV() {
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
+    
+    // Generate filename based on filter
+    let filename = 'residents_';
+    if (currentPurokFilter === 'all') {
+        filename += 'all_puroks';
+    } else {
+        filename += currentPurokFilter.toLowerCase().replace(/ /g, '_');
+    }
+    filename += '_' + new Date().toISOString().slice(0, 10) + '.csv';
+    
     link.setAttribute('href', url);
-    link.setAttribute('download', 'residents_' + new Date().toISOString().slice(0, 10) + '.csv');
+    link.setAttribute('download', filename);
     link.style.visibility = 'hidden';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
 }
 
-// Column visibility toggle
-document.addEventListener("DOMContentLoaded", function () {
+// Purok Filter Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Set up purok filter dropdown
+    const purokFilterItems = document.querySelectorAll('#purokFilterSelection .dropdown-item');
+    
+    purokFilterItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+            e.preventDefault();
+            const selectedPurok = this.getAttribute('data-purok');
+            
+            // Update current purok filter
+            currentPurokFilter = selectedPurok;
+            
+            // Update dropdown button text
+            const dropdownButton = document.getElementById('purokFilterDropdown');
+            if (selectedPurok === 'all') {
+                dropdownButton.innerHTML = '<i class="fas fa-filter me-1"></i> Filter by Purok';
+            } else {
+                dropdownButton.innerHTML = `<i class="fas fa-filter me-1"></i> ${selectedPurok}`;
+            }
+            
+            // Filter rows
+            const tableRows = document.querySelectorAll("#residentsTableBody tr");
+            
+            tableRows.forEach(row => {
+                const rowPurok = row.getAttribute('data-purok');
+                
+                if (selectedPurok === 'all') {
+                    row.style.display = '';
+                } else if (rowPurok === selectedPurok) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    });
+    
+    // Column visibility toggle
     const checkboxes = document.querySelectorAll(".column-toggle");
     const savedColumns = JSON.parse(localStorage.getItem("hiddenColumns")) || [];
 

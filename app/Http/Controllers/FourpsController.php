@@ -77,7 +77,7 @@ class FourpsController extends Controller
                 'mname' => $fourpsRequest->middlename,
                 'lname' => $fourpsRequest->lastname,
                 'purok_no' => $fourpsRequest->purok_no,
-                'household_no' => $fourpsRequest->house_no,
+                'household_no' => $fourpsRequest->household_no,
                 'fourps_id' => $fourpsRequest->fourps_id,
                 'status' => 'active',
             ]);
@@ -94,38 +94,38 @@ class FourpsController extends Controller
         return redirect()->route('4ps.requestslist')
             ->with('success', 'Request cancelled successfully.');
     }
-// public function storeReslist(Request $request)
-// {
-//     $validated = $request->validate([
-//         'fname' => 'required|string|max:255',
-//         'mname' => 'nullable|string|max:255',
-//         'lname' => 'required|string|max:255',
-//         'purok_no' => 'required|string|max:255',
-//         'household_no' => 'required|string|max:255',
-//         'fourps_id' => 'required|string|unique:fourps,fourps_id',
-//         'status' => 'required|in:active,inactive',
-//         'entry_mode' => 'required|in:search,manual'
-//     ]);
+    // public function storeReslist(Request $request)
+    // {
+    //     $validated = $request->validate([
+    //         'fname' => 'required|string|max:255',
+    //         'mname' => 'nullable|string|max:255',
+    //         'lname' => 'required|string|max:255',
+    //         'purok_no' => 'required|string|max:255',
+    //         'household_no' => 'required|string|max:255',
+    //         'fourps_id' => 'required|string|unique:fourps,fourps_id',
+    //         'status' => 'required|in:active,inactive',
+    //         'entry_mode' => 'required|in:search,manual'
+    //     ]);
 
-//     // Check if resident already exists
-//     $resident = Resident::where('fname', $validated['fname'])
-//         ->where('lname', $validated['lname'])
-//         ->where('purok_no', $validated['purok_no'])
-//         ->where('household_no', $validated['household_no'])
-//         ->first();
+    //     // Check if resident already exists
+    //     $resident = Resident::where('fname', $validated['fname'])
+    //         ->where('lname', $validated['lname'])
+    //         ->where('purok_no', $validated['purok_no'])
+    //         ->where('household_no', $validated['household_no'])
+    //         ->first();
 
-//     if ($resident) {
-//         $validated['resident_id'] = $resident->id;
-//     }
+    //     if ($resident) {
+    //         $validated['resident_id'] = $resident->id;
+    //     }
 
-//     // Create 4Ps beneficiary
-//     $fourps = Fourps::create($validated);
+    //     // Create 4Ps beneficiary
+    //     $fourps = Fourps::create($validated);
 
-//     return response()->json([
-//         'message' => '4Ps beneficiary added successfully!',
-//         'data' => $fourps
-//     ]);
-// }
+    //     return response()->json([
+    //         'message' => '4Ps beneficiary added successfully!',
+    //         'data' => $fourps
+    //     ]);
+    // }
     public function storeReslist(Request $request)
     {
         $request->validate([
@@ -140,14 +140,15 @@ class FourpsController extends Controller
         ]);
 
         Fourps::create($request->all());
-          // Check if it's an AJAX request
-    if ($request->ajax() || $request->wantsJson()) {
-        return response()->json([
-            'success' => '4Ps beneficiary added successfully.'
-        ]);
-    }
-        return redirect()->route('4ps.residentlist')
-            ->with('success', '4Ps beneficiary added successfully.');
+        // Check if it's an AJAX request
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => '4Ps beneficiary added successfully.'
+            ]);
+        }
+        // return redirect()->route('4ps.residentlist')
+        //     ->with('success', '4Ps beneficiary added successfully.');
+        return back()->with('success', '4Ps beneficiary added successfully.');
     }
 
     public function updateReslist(Request $request, $id)
@@ -169,40 +170,43 @@ class FourpsController extends Controller
 
         $fourps->update($request->all());
         // Check if it's an AJAX request
-    if ($request->ajax() || $request->wantsJson()) {
-        return response()->json([
-            'success' => '4Ps beneficiary updated successfully.'
-        ]);
-    }
-        return redirect()->route('4ps.residentlist')
-            ->with('success', '4Ps beneficiary updated successfully.');
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => '4Ps beneficiary updated successfully.'
+            ]);
+        }
+        //     return redirect()->route('4ps.residentlist')
+        //         ->with('success', '4Ps beneficiary updated successfully.');
+
+        return back()->with('success', '4Ps beneficiary updated successfully.');
     }
 
     public function DestroyReslist(Fourps $fourp)
     {
         $fourp->delete();
-        return redirect()->route('4ps.residentlist')->with('success', '4Ps beneficiary deleted successfully.');
+        // return redirect()->route('4ps.residentlist')->with('success', '4Ps beneficiary deleted successfully.');
+        return back()->with('success', '4Ps beneficiary deleted successfully.');
     }
 
- public function searchResident(Request $request)
-{
-     $query = $request->get('query');
-    $resident_id = $request->get('resident_id');
+    public function searchResident(Request $request)
+    {
+        $query = $request->get('query');
+        $resident_id = $request->get('resident_id');
 
-    if ($resident_id) {
-        // Search by specific ID
-        $residents = Resident::where('id', $resident_id)
-            ->get(['id', 'fname', 'mname', 'lname', 'household_no', 'purok_no',]);
-    } else {
-        // Search by name
-        $residents = Resident::where('fname', 'LIKE', "%{$query}%")
-            ->orWhere('mname', 'LIKE', "%{$query}%")
-            ->orWhere('lname', 'LIKE', "%{$query}%")
-            ->get(['id', 'fname', 'mname', 'lname', 'household_no', 'purok_no',]);
+        if ($resident_id) {
+            // Search by specific ID
+            $residents = Resident::where('id', $resident_id)
+                ->get(['id', 'fname', 'mname', 'lname', 'household_no', 'purok_no',]);
+        } else {
+            // Search by name
+            $residents = Resident::where('fname', 'LIKE', "%{$query}%")
+                ->orWhere('mname', 'LIKE', "%{$query}%")
+                ->orWhere('lname', 'LIKE', "%{$query}%")
+                ->get(['id', 'fname', 'mname', 'lname', 'household_no', 'purok_no',]);
+        }
+
+        return response()->json($residents);
     }
-
-    return response()->json($residents);
-}
 
     public function getResident(Request $request)
     {
@@ -210,7 +214,7 @@ class FourpsController extends Controller
             'resident_id' => 'required|exists:residents,id'
         ]);
 
-        $resident = Resident::select('id','Fname as fname','mname','lname','purok_no','household_no')
+        $resident = Resident::select('id', 'Fname as fname', 'mname', 'lname', 'purok_no', 'household_no')
             ->where('id', $request->resident_id)
             ->first();
 

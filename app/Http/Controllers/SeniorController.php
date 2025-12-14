@@ -99,8 +99,8 @@ class SeniorController extends Controller
             'osca_id' => $request->osca_id,
             'fcap_id' => $request->fcap_id,
         ]);
-
-        return redirect()->route('senior.list')->with('success', 'Senior added successfully.');
+        
+        return back()->with('success', 'Senior added successfully.');
     }
 
     public function list()
@@ -168,12 +168,12 @@ public function residentDetails($id)
             'fcap_id' => $request->fcap_id,
         ]);
 
-        return redirect()->route('senior.list')->with('success', 'Senior updated successfully.');
+        return back()->with('success', 'Senior updated successfully.');
     }
 
     public function destroy(Senior $senior)
     {
         $senior->delete();
-        return redirect()->route('senior.list')->with('success', 'Senior deleted successfully.');
+        return back()->with('success', 'Senior deleted successfully.');
     }
 }
