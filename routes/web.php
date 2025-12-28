@@ -156,8 +156,8 @@ Route::get('/seniors/{id}/resident', [SeniorController::class, 'residentDetails'
     Route::get('/resident/services', [ResidentController::class, 'services'])->name('resident.services');
     Route::get('/resident/complaints', [ResidentController::class, 'complaints'])->name('resident.complaints');
     Route::get('/resident/requests', [ResidentController::class, 'requests'])->name('resident.requests');
-   Route::delete('/resident/requests/cancel/{id}', [ResidentController::class, 'cancelRequest'])->name('resident.requests.cancel');
-
+    Route::delete('/resident/requests/cancel/{id}', [ResidentController::class, 'cancelRequest'])->name('resident.requests.cancel');
+    Route::get('/resident/announcements', [ResidentController::class, 'announcements'])->name('resident.announcements');
     // Barangay Official Dashboard
     Route::get('/barangay-official/dashboard', [BarangayofficialsController::class, 'dashboard'])->name('barangay_official.dashboard');
     Route::get('/officials-profile', [ProfileController::class, 'editofficialsProfile'])->name('barangayofficials.profile');
@@ -180,7 +180,9 @@ Route::get('/seniors/{id}/resident', [SeniorController::class, 'residentDetails'
 
     // Announcement Route
     Route::get('/announcement', [AnnouncementController::class, 'Annoucementview'])->name('admin.annoucement');
-
+    Route::post('/announcement', [AnnouncementController::class, 'store'])->name('admin.announcement.store');
+    Route::put('/announcement/{announcement}', [AnnouncementController::class, 'update'])->name('admin.announcement.update');
+    Route::delete('/announcement/{announcement}', [AnnouncementController::class, 'destroy'])->name('admin.announcement.destroy');
 
 
 });

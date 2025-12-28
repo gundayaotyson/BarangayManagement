@@ -10,6 +10,7 @@ use App\Models\SKService;
 use App\Models\Seniorservices;
 use App\Models\BhwRequest;
 use App\Models\FourpsRequest;
+use App\Models\Announcement;
 use Carbon\Carbon;
 
 
@@ -80,13 +81,13 @@ class ResidentController extends Controller
     {
         $user = Auth::user();
         $resident = Resident::where('email', $user->email)->first();
-    
+
         // Compute age (or 0 if no resident record)
         $age = $resident ? Carbon::parse($resident->birthday)->age : 0;
-    
+
         return view('resident.services', compact('resident', 'age'));
     }
-    
+
 
     public function complaints()
     {
@@ -152,6 +153,16 @@ class ResidentController extends Controller
     return redirect()->back()->with('error', 'Failed to cancel request.');
 }
 
+public function announcements()
+{
+    $user = Auth::user();
+    $resident = Resident::where('email', $user->email)->first();
+
+    // Get the resident's announcements
+    $announcements = $resident->announcements;
+
+    return view('resident.announcements', compact('resident'));
+}
 
 
 
