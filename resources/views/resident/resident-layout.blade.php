@@ -405,8 +405,7 @@
             <li><a href="{{ route('resident.requests') }}"
                     class="{{ request()->routeIs('resident.requests') ? 'active' : '' }}"><i
                         class="fas fa-file-alt"></i> <span>My request</span></a></li>
-            <li><a href="{{ route('resident.announcements') }}"
-                    class="{{ request()->routeIs('resident.announcements') ? 'active' : '' }}"><i class="fas fa-bell"></i> <span>Announcements</span></a></
+            <li><a href="{{ route('resident.announcements') }}"class="{{ request()->routeIs('resident.announcements') ? 'active' : '' }}"><i class="fas fa-bell"></i> <span>Announcements</span></a></
         </ul>
     </nav>
 

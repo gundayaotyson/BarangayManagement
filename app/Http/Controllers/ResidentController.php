@@ -155,11 +155,11 @@ class ResidentController extends Controller
 
 public function announcements()
 {
-    $user = Auth::user();
+     $user = Auth::user();
     $resident = Resident::where('email', $user->email)->first();
 
-    // Get the resident's announcements
-    $announcements = $resident->announcements;
+    // Make sure the Resident model has a relationship to Announcement
+    $announcements = $resident->announcements; // fetch announcements for this resident
 
     return view('resident.announcements', compact('resident'));
 }
