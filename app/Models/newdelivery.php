@@ -32,6 +32,7 @@ class newdelivery extends Model
         'weight',
         'height',
         'gender',
+
     ];
     public function resident()
     {

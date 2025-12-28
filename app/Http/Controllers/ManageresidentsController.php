@@ -30,61 +30,70 @@ class ManageresidentsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-   public function store(Request $request)
-{
-    // Validate form inputs
-    $validatedData = $request->validate([
-        'Fname' => 'required|string|max:255',
-        'mname' => 'nullable|string|max:255',
-        'lname' => 'required|string|max:255',
-        'gender' => 'required|in:Male,Female',
-        'birthday' => 'required|date',
-        'birthplace' => 'required|string|max:255',
-        'civil_status' => 'required|in:Single,Married,Widowed,Separated,Divorced',
-        'contact_number' => 'nullable|string|max:15',
-        'occupation' => 'nullable|string|max:255',
-        'Citizenship' => 'required|string|max:255',
-        'household_no' => 'required|string|max:255',
-        'purok_no' => 'required|in:Purok 1,Purok 2,Purok 3',
-        'sitio' => 'nullable|string|max:255',
-        'religion' => 'nullable|string|max:255',
-        'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
-    ]);
+    public function store(Request $request)
+    {
+        // Validate form inputs
+        $validatedData = $request->validate([
+            'Fname' => 'required|string|max:255',
+            'mname' => 'nullable|string|max:255',
+            'lname' => 'required|string|max:255',
+            'gender' => 'required|in:Male,Female',
+            'birthday' => 'required|date',
+            'birthplace' => 'required|string|max:255',
+            'civil_status' => 'required|in:Single,Married,Widowed,Separated,Divorced',
+            'contact_number' => 'nullable|string|max:15',
+            'occupation' => 'nullable|string|max:255',
+            'Citizenship' => 'required|string|max:255',
+            'household_no' => 'required|string|max:255',
+            'purok_no' => 'required|in:Purok 1,Purok 2,Purok 3',
+            'sitio' => 'nullable|string|max:255',
+            'religion' => 'nullable|string|max:255',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
 
-    // Compute age
-    $validatedData['age'] = Carbon::parse($validatedData['birthday'])->age;
 
-    // Handle image upload for localhost
-    // if ($request->hasFile('image')) {
-    //     $filename = time() . '_' . $request->file('image')->getClientOriginalName();
-    //     $path = $request->file('image')->storeAs('resident_images', $filename, 'public');
-    //     $validatedData['image'] = $path;
-    // } else {
-    //     $validatedData['image'] = null;
+        ]);
+
+        // Compute age
+        $validatedData['age'] = Carbon::parse($validatedData['birthday'])->age;
+
+        // Handle image upload for localhost
+        // if ($request->hasFile('image')) {
+        //     $filename = time() . '_' . $request->file('image')->getClientOriginalName();
+        //     $path = $request->file('image')->storeAs('resident_images', $filename, 'public');
+        //     $validatedData['image'] = $path;
+        // } else {
+        //     $validatedData['image'] = null;
+        // }
+        // Handle image upload (InfinityFree Compatible)
+            if ($request->hasFile('image')) {
+
+                // Generate unique filename
+                $imageName = time() . '_' . $request->file('image')->getClientOriginalName();
+
+                    // InfinityFree does NOT allow Laravel storage, so use manual path
+                    $destinationPath = base_path('../storage/resident_images');  // Public images folder outside htdocs
+                    $request->image->move($destinationPath, $imageName);
+
+                // Save path (only folder + filename)
+                $validatedData['image'] = 'resident_images/' . $imageName;
+
+            } else {
+                $validatedData['image'] = null;
+            }
+
+
+
+
+        // Create and save resident
+        Resident::create($validatedData);
+         // Link spouse back to this resident (2-way link)
+    // if (!empty($validatedData['spouse_id'])) {
+    //     Resident::where('id', $validatedData['spouse_id'])
+    //         ->update(['spouse_id' => $resident->id]);
     // }
-    // Handle image upload (InfinityFree Compatible)
-        if ($request->hasFile('image')) {
 
-            // Generate unique filename
-            $imageName = time() . '_' . $request->file('image')->getClientOriginalName();
-
-                // InfinityFree does NOT allow Laravel storage, so use manual path
-                $destinationPath = base_path('../storage/resident_images');  // Public images folder outside htdocs
-                $request->image->move($destinationPath, $imageName);
-
-            // Save path (only folder + filename)
-            $validatedData['image'] = 'resident_images/' . $imageName;
-
-        } else {
-            $validatedData['image'] = null;
-        }
-
-
-    // Create and save resident
-    Resident::create($validatedData);
-
-    return redirect()->route('residents')->with('success', 'Resident added successfully!');
-}
+        return redirect()->route('residents')->with('success', 'Resident added successfully!');
+    }
     /**
      * Display the specified resource.
      */
@@ -125,6 +134,8 @@ class ManageresidentsController extends Controller
             'sitio' => 'nullable|string|max:255',
             'religion' => 'nullable|string|max:255',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+
+
         ]);
         $resident = Resident::findOrFail($id);
 
@@ -174,6 +185,7 @@ class ManageresidentsController extends Controller
 
 
 
+
         // Save updates
         $resident->save();
 
@@ -196,5 +208,17 @@ class ManageresidentsController extends Controller
     $clearanceRequests = ClearanceReq::with('resident')->get();
     return view('admin.requestedclearance', compact('clearanceRequests'));
 }
+public function search(Request $request)
+{
+    $term = $request->get('term');
+    $residents = Resident::where('Fname', 'like', '%' . $term . '%')
+        ->orWhere('mname', 'like', '%' . $term . '%')
+        ->orWhere('lname', 'like', '%' . $term . '%')
+        ->limit(10)
+        ->get();
+
+    return response()->json($residents);
+}
+
 
 }

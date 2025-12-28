@@ -11,7 +11,7 @@ class Resident extends Model
     protected $fillable = [
         'Fname', 'mname', 'lname', 'gender', 'birthday', 'birthplace',
         'age', 'civil_status', 'Citizenship', 'contact_number', 'occupation',
-        'household_no', 'purok_no', 'sitio','religion', 'image', 'email'
+        'household_no', 'purok_no', 'sitio','religion', 'image', 'email',
     ];
 
 
@@ -64,5 +64,7 @@ public function official()
 {
     return $this->hasMany(Fourps::class, 'resident_id');
 }
+
+
 
 }

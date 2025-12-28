@@ -47,6 +47,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/manageresidents', [ManageresidentsController::class, 'store'])->name('manageresidents.store');
     Route::put('/manageresidents/{manageresidents}', [ManageresidentsController::class, 'update'])->name('manageresidents.update');
     Route::delete('/residents/{id}', [ManageresidentsController::class, 'destroy'])->name('residents.destroy');
+    Route::get('/residents/search', [ManageresidentsController::class, 'search'])->name('residents.search');
 
     // SK Routes
     Route::get('/user/dashboard', [SKdashboardController::class, 'index'])->name('skuser.dashboard');

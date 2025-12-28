@@ -1316,14 +1316,14 @@ function exportResidentsToCSV() {
     document.querySelectorAll('.residents-table tbody tr').forEach(row => {
         // Check if row should be included based on current filter
         let shouldInclude = false;
-        
+
         if (currentPurokFilter === 'all') {
             shouldInclude = row.style.display !== 'none';
         } else {
             const rowPurok = row.getAttribute('data-purok');
             shouldInclude = rowPurok === currentPurokFilter && row.style.display !== 'none';
         }
-        
+
         if (shouldInclude) {
             let rowData = [];
             row.querySelectorAll('td').forEach((cell, index) => {
@@ -1341,7 +1341,7 @@ function exportResidentsToCSV() {
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
-    
+
     // Generate filename based on filter
     let filename = 'residents_';
     if (currentPurokFilter === 'all') {
@@ -1350,7 +1350,7 @@ function exportResidentsToCSV() {
         filename += currentPurokFilter.toLowerCase().replace(/ /g, '_');
     }
     filename += '_' + new Date().toISOString().slice(0, 10) + '.csv';
-    
+
     link.setAttribute('href', url);
     link.setAttribute('download', filename);
     link.style.visibility = 'hidden';
@@ -1363,15 +1363,15 @@ function exportResidentsToCSV() {
 document.addEventListener('DOMContentLoaded', function() {
     // Set up purok filter dropdown
     const purokFilterItems = document.querySelectorAll('#purokFilterSelection .dropdown-item');
-    
+
     purokFilterItems.forEach(item => {
         item.addEventListener('click', function(e) {
             e.preventDefault();
             const selectedPurok = this.getAttribute('data-purok');
-            
+
             // Update current purok filter
             currentPurokFilter = selectedPurok;
-            
+
             // Update dropdown button text
             const dropdownButton = document.getElementById('purokFilterDropdown');
             if (selectedPurok === 'all') {
@@ -1379,13 +1379,13 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 dropdownButton.innerHTML = `<i class="fas fa-filter me-1"></i> ${selectedPurok}`;
             }
-            
+
             // Filter rows
             const tableRows = document.querySelectorAll("#residentsTableBody tr");
-            
+
             tableRows.forEach(row => {
                 const rowPurok = row.getAttribute('data-purok');
-                
+
                 if (selectedPurok === 'all') {
                     row.style.display = '';
                 } else if (rowPurok === selectedPurok) {
@@ -1396,7 +1396,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     });
-    
+
     // Column visibility toggle
     const checkboxes = document.querySelectorAll(".column-toggle");
     const savedColumns = JSON.parse(localStorage.getItem("hiddenColumns")) || [];
