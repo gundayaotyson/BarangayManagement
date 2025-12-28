@@ -177,6 +177,11 @@ Route::get('/seniors/{id}/resident', [SeniorController::class, 'residentDetails'
     Route::put('/barangayprojects/{id}', [BarangayProjectController::class, 'update'])->name('barangayprojects.update');
     Route::delete('/barangayprojects/{id}', [BarangayProjectController::class, 'destroy'])->name('barangayprojects.destroy');
 
+
+    Route::get('/announcement', [DashboardController::class, 'Annoucementview'])->name('announcement');
+
+
+
 });
 
 // Public Document & Services Routes
