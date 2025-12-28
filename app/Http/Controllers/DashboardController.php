@@ -57,8 +57,5 @@ class DashboardController extends Controller
         $inactiveBeneficiaries = $fourps->where('status', 'inactive')->count();
         return view("admin.4pslist", compact('fourps', 'totalBeneficiaries', 'activeBeneficiaries', 'inactiveBeneficiaries'));
      }
-     public function Annoucementview(){
-        return view("admin.annoucement");
-     }
 
 }

@@ -399,7 +399,7 @@
 
         <!-- <li><a href="#"><i class="fas fa-user-nurse"></i> <span>BHW</span></a></li> -->
         <li><a href="{{ route('senior') }}" class="{{ request()->routeIs('senior') ? 'active' : '' }}"><i class="fas fa-person-cane"></i> <span>Senior Citizen</span></a></li>
-        <li><a href="{{ route('announcement') }}" class="{{ request()->routeIs('announcement') ? 'active' : '' }}"><i class="fas fa-bell"></i> <span>Annoucement</span></a></li>
+        <li><a href="{{ route('admin.annoucement') }}" class="{{ request()->routeIs('admin.annoucement') ? 'active' : '' }}"><i class="fas fa-bell"></i> <span>Annoucement</span></a></li>
 
         <!-- <li><a href="{{ 'announcement' }}"><i class="fas fa-bell"></i> <span>Annoucement</span></a></li> -->
         <!-- <li><a href="#"><i class="fas fa-cogs"></i> <span>Settings</span></a></li> -->

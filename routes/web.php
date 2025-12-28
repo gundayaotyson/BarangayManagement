@@ -23,6 +23,7 @@ use App\Http\Controllers\ResidentController;
 use App\Http\Controllers\ResidentRegistrationController;
 use App\Http\Controllers\SeniorReqController;
 use App\Http\Controllers\SKServiceController;
+use App\Http\Controllers\AnnouncementController;
 use Symfony\Component\Routing\Attribute\Route as AttributeRoute;
 
 // Public Routes
@@ -177,8 +178,8 @@ Route::get('/seniors/{id}/resident', [SeniorController::class, 'residentDetails'
     Route::put('/barangayprojects/{id}', [BarangayProjectController::class, 'update'])->name('barangayprojects.update');
     Route::delete('/barangayprojects/{id}', [BarangayProjectController::class, 'destroy'])->name('barangayprojects.destroy');
 
-
-    Route::get('/announcement', [DashboardController::class, 'Annoucementview'])->name('announcement');
+    // Announcement Route
+    Route::get('/announcement', [AnnouncementController::class, 'Annoucementview'])->name('admin.annoucement');
 
 
 
