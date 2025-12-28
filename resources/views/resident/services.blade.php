@@ -449,7 +449,7 @@
 
 <div class="container">
     <div class="row mb-2">
-        <div class="col-lg-6 col-md-6 mb-4">
+        <!-- <div class="col-lg-6 col-md-6 mb-4">
             <div class="card service-card">
                 <div class="card-body">
                     <div class="service-icon">
@@ -460,13 +460,33 @@
                         Apply for your Senior Citizen services and benefits easily through this service.
                     </p>
 
-                    <!-- Button triggers modal -->
+
                     <button type="button" class="btn btn-primary btn-apply" data-bs-toggle="modal" data-bs-target="#seniorServiceModal">
                         Apply Now
                     </button>
                 </div>
             </div>
-        </div>
+        </div> -->
+         @foreach($services as $service)
+                {{-- Check if resident is eligible for this service based on age --}}
+                @if($age >= $service['age_min'] && $age <= $service['age_max'])
+                    <div class="col-lg-6 col-md-6 mb-4">
+                        <div class="card service-card">
+                            <div class="card-body">
+                                <div class="service-icon">
+                                    <i class="{{ $service['icon'] }}"></i>
+                                </div>
+                                <h5 class="card-title font-weight-bold mb-3">{{ $service['title'] }}</h5>
+                                <p class="card-text text-muted mb-4">{{ $service['description'] }}</p>
+
+                                <button type="button" class="btn btn-primary btn-apply" data-toggle="modal" data-target="{{ $service['modal_target'] }}">
+                                    Apply Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+            @endforeach
 
         <div class="col-lg-6 col-md-6 mb-4">
             <div class="card service-card">
@@ -486,21 +506,6 @@
     </div>
 
     <div class="row mb-5">
-        <div class="col-lg-6 col-md-6 mb-4">
-            <div class="card service-card">
-                <div class="card-body">
-                    <div class="service-icon">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <h5 class="card-title font-weight-bold mb-3">SK Service</h5>
-                    <p class="card-text text-muted mb-4">Apply for Sangguniang Kabataan services and youth programs in your barangay.</p>
-
-                    <button type="button" class="btn btn-primary btn-apply" data-toggle="modal" data-target="#skServiceModal">
-                        Apply Now
-                    </button>
-                </div>
-            </div>
-        </div>
 
         <div class="col-lg-6 col-md-6 mb-4">
             <div class="card service-card">
@@ -1034,7 +1039,7 @@
             </div>
         </div>
     <!-- for the skNotAllowedModal message -->
-<div class="modal fade" id="skNotAllowedModal" tabindex="-1" aria-hidden="true">
+<!-- <div class="modal fade" id="skNotAllowedModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
 
@@ -1066,7 +1071,7 @@
 
         </div>
     </div>
-</div>
+</div> -->
     </div>
 </div>
 
@@ -1261,7 +1266,7 @@
     </div>
 </div>
  <!-- for senior messege -->
-    <div class="modal fade" id="seniorNotAllowedModal" tabindex="-1" aria-hidden="true">
+    <!-- <div class="modal fade" id="seniorNotAllowedModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
 
@@ -1289,7 +1294,7 @@
 
             </div>
         </div>
-    </div>
+    </div> -->
 
 
 
@@ -1306,6 +1311,18 @@
 </div>
 @endif
 <script>
+    // Pass PHP age to JavaScript
+    const residentAge = {{ $age }};
+
+    // Hide SK Service if age is between 31 and 60
+    if(residentAge >= 31 && residentAge <= 60){
+        const skCard = document.getElementById('sk-service-card');
+        if(skCard){
+            skCard.style.display = 'none';
+        }
+    }
+</script>
+<!-- <script>
         function validateSeniorSubmit(event) {
             event.preventDefault();
 
@@ -1329,13 +1346,13 @@
 
             event.target.closest('form').submit();
         }
-</script>
+</script> -->
 
 
 
 
 
-<script>
+<!-- <script>
 function validateSKSubmit(event) {
     event.preventDefault(); // stop auto submit
 
@@ -1366,7 +1383,7 @@ function validateSKSubmit(event) {
     // age valid → submit form
     event.target.closest('form').submit();
 }
-</script>
+</script> -->
 
 
 

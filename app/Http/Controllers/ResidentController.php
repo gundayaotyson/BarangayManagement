@@ -77,16 +77,41 @@ class ResidentController extends Controller
         return view('resident.profile', compact('resident'));
     }
 
-    public function services()
-    {
-        $user = Auth::user();
-        $resident = Resident::where('email', $user->email)->first();
 
-        // Compute age (or 0 if no resident record)
-        $age = $resident ? Carbon::parse($resident->birthday)->age : 0;
 
-        return view('resident.services', compact('resident', 'age'));
-    }
+public function services()
+{
+    $user = Auth::user();
+    $resident = Resident::where('email', $user->email)->first();
+
+    // Compute age
+    $age = $resident ? Carbon::parse($resident->birthday)->age : 0;
+
+    // Define available services
+    $services = [
+        [
+            'title' => 'SK Service',
+            'description' => 'Apply for Sangguniang Kabataan services and youth programs in your barangay.',
+            'icon' => 'fas fa-graduation-cap',
+            'modal_target' => '#skServiceModal',
+            'age_min' => 0,    // minimum age to apply
+            'age_max' => 31    // maximum age to apply
+        ],
+       [
+            'title' => 'Senior Citizen Service',
+            'description' => 'Apply for your Senior Citizen services and benefits easily through this service.',
+            'icon' => 'fas fa-user-clock',
+            'modal_target' => '#seniorServiceModal',
+            'age_min' => 31,   // not available for 15–30
+            'age_max' => 150
+        ],
+
+        // Add more services here...
+    ];
+
+    return view('resident.services', compact('resident', 'age', 'services'));
+}
+
 
 
     public function complaints()
@@ -153,16 +178,11 @@ class ResidentController extends Controller
     return redirect()->back()->with('error', 'Failed to cancel request.');
 }
 
-public function announcements()
-{
-     $user = Auth::user();
-    $resident = Resident::where('email', $user->email)->first();
-
-    // Make sure the Resident model has a relationship to Announcement
-    $announcements = $resident->announcements; // fetch announcements for this resident
-
-    return view('resident.announcements', compact('resident'));
-}
+  public function announcements()
+     {
+        $announcements = Announcement::all();
+        return view('resident.announcements', compact('announcements'));
+     }
 
 
 

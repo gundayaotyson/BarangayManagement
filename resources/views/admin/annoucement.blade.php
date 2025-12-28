@@ -73,7 +73,8 @@
                                                 'All' => 'border border-primary text-primary',
                                                 'Kabataan' => 'border border-success text-success',
                                                 'Senior Citizen' => 'border border-warning text-warning',
-                                                'PWD' => 'border border-info text-info'
+                                                'PWD' => 'border border-info text-info',
+                                                   '4ps' => 'border border-info text-info'
                                             ];
                                             $audienceClass = $audienceColors[$announcement->audience] ?? '';
                                         @endphp
@@ -178,6 +179,7 @@
                                 <option value="All" selected>All</option>
                                 <option value="Kabataan">Kabataan</option>
                                 <option value="Senior Citizen">Senior Citizen</option>
+                                <option value="4ps">4ps</option>
                                 <option value="PWD">PWD</option>
                             </select>
                         </div>
@@ -264,6 +266,7 @@
                                 <option value="Kabataan" {{ $announcement->audience == 'Kabataan' ? 'selected' : '' }}>Kabataan</option>
                                 <option value="Senior Citizen" {{ $announcement->audience == 'Senior Citizen' ? 'selected' : '' }}>Senior Citizen</option>
                                 <option value="PWD" {{ $announcement->audience == 'PWD' ? 'selected' : '' }}>PWD</option>
+                                <option value="4ps" {{ $announcement->audience == '4ps' ? 'selected' : '' }}>4ps</option>
                             </select>
                         </div>
 
