@@ -45,6 +45,7 @@
                                     <th>Start Date</th>
                                     <th>End Date</th>
                                     <th>Status</th>
+                                    <th>Photo</th>
                                     <th class="text-center pe-4">Actions</th>
                                 </tr>
                             </thead>
@@ -98,6 +99,16 @@
                                         @endphp
                                         <span class="badge {{ $statusClass }}">{{ $announcement->status }}</span>
                                     </td>
+                                    <td>
+                                        @if($announcement->photo)
+                                            <img src="{{ asset('storage/'.$announcement->photo) }}"
+                                                class="rounded shadow-sm"
+                                                style="width:60px;height:60px;object-fit:cover;">
+                                        @else
+                                            <span class="text-muted small">No photo</span>
+                                        @endif
+                                    </td>
+
                                     <td class="text-center pe-4">
                                         <div class="btn-group" role="group" aria-label="Announcement Actions">
                                             <a href="#" class="btn btn-sm btn-outline-info me-1" data-bs-toggle="modal" data-bs-target="#editAnnouncementModal-{{ $announcement->id }}" title="Edit">
@@ -148,7 +159,8 @@
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('admin.announcement.store') }}" method="POST">
+                <form action="{{ route('admin.announcement.store') }}" method="POST" enctype="multipart/form-data">
+
                     @csrf
                     <div class="row">
                         <div class="col-md-12 mb-3">
@@ -207,6 +219,11 @@
                                 <option value="Archived">Archived</option>
                             </select>
                         </div>
+                        <div class="col-md-12 mb-4">
+                            <label class="form-label fw-semibold">Photo (optional)</label>
+                            <input type="file" class="form-control" name="photo" accept="image/*">
+                        </div>
+
                     </div>
 
                     <div class="modal-footer">
@@ -233,7 +250,8 @@
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('admin.announcement.update', $announcement->id) }}" method="POST">
+                <form action="{{ route('admin.announcement.update', $announcement->id) }}" method="POST" enctype="multipart/form-data">
+
                     @csrf
                     @method('PUT')
                     <div class="row">
@@ -292,6 +310,18 @@
                                 <option value="Inactive" {{ $announcement->status == 'Inactive' ? 'selected' : '' }}>Inactive</option>
                                 <option value="Archived" {{ $announcement->status == 'Archived' ? 'selected' : '' }}>Archived</option>
                             </select>
+                        </div>
+                        <div class="col-md-12 mb-4">
+                            <label class="form-label fw-semibold">Photo</label>
+                            <input type="file" class="form-control" name="photo" accept="image/*">
+
+                            @if($announcement->photo)
+                                <div class="mt-2">
+                                    <img src="{{ asset('storage/'.$announcement->photo) }}"
+                                        class="rounded shadow-sm"
+                                        style="width:120px;height:120px;object-fit:cover;">
+                                </div>
+                            @endif
                         </div>
                     </div>
 
@@ -358,6 +388,13 @@
     .modal-header {
         border-radius: 10px 10px 0 0;
     }
+    img {
+    transition: transform 0.2s ease;
+}
+img:hover {
+    transform: scale(1.05);
+}
+
 </style>
 
 <script>
