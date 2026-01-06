@@ -101,9 +101,51 @@
                     <h5 class="card-title mt-3 mb-1 fw-bold text-dark">{{ $announcement->title }}</h5>
                 </div>
 
+                <!-- Photo Placeholder - Clickable -->
+                <div class="announcement-photo-container position-relative"
+                     onclick="showAnnouncementModal('{{ addslashes($announcement->title) }}',
+                                                     '{{ addslashes($announcement->content) }}',
+                                                     '{{ $announcement->venue }}',
+                                                     '{{ $announcement->type }}',
+                                                     '{{ $announcement->audience }}',
+                                                     '{{ \Carbon\Carbon::parse($announcement->start_date)->format('M d, Y') }}',
+                                                     '{{ \Carbon\Carbon::parse($announcement->end_date)->format('M d, Y') }}',
+                                                     '{{ \Carbon\Carbon::parse($announcement->created_at)->diffForHumans() }}')"
+                     style="cursor: pointer;">
+                    @if($announcement->photo)
+                        <!-- If there's an actual image -->
+                        <img src="{{ asset('storage/' . $announcement->photo) }}"
+                             class="card-img-top announcement-image"
+                             alt="{{ $announcement->title }}"
+                             style="height: 200px; object-fit: cover; width: 100%;">
+                        <div class="image-overlay">
+                            <div class="overlay-content">
+                                <i class="fas fa-expand-arrows-alt fa-2x"></i>
+                                <span class="d-block mt-2">Click to view details</span>
+                            </div>
+                        </div>
+                    @else
+                        <!-- Placeholder image -->
+                        <div class="placeholder-image bg-light d-flex align-items-center justify-content-center"
+                             style="height: 200px; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);">
+                            <div class="text-center">
+                                <i class="fas fa-bullhorn fa-3x text-muted mb-3"></i>
+                                <p class="text-muted mb-0">No Image Available</p>
+                                <small class="text-muted">Click to view announcement details</small>
+                            </div>
+                        </div>
+                        <div class="image-overlay">
+                            <div class="overlay-content">
+                                <i class="fas fa-expand-arrows-alt fa-2x"></i>
+                                <span class="d-block mt-2">Click to view details</span>
+                            </div>
+                        </div>
+                    @endif
+                </div>
+
                 <!-- Card Body -->
                 <div class="card-body py-3">
-                    <p class="card-text text-muted mb-4">{{ $announcement->content }}</p>
+                    <p class="card-text text-muted mb-4">{{ \Illuminate\Support\Str::limit($announcement->content, 150) }}</p>
 
                     <!-- Details Section -->
                     <div class="announcement-details">
@@ -205,6 +247,65 @@
     </div>
 </div>
 
+<!-- Announcement Modal -->
+<div class="modal fade" id="announcementModal" tabindex="-1" aria-labelledby="announcementModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="announcementModalTitle"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <div class="d-flex gap-2 mb-3">
+                            <span class="badge" id="modalTypeBadge"></span>
+                            <span class="badge" id="modalAudienceBadge"></span>
+                            <span class="badge" id="modalStatusBadge"></span>
+                        </div>
+                        <div class="content-container">
+                            <p id="modalContent" class="mb-4"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="info-card mb-3">
+                            <h6 class="text-muted mb-2"><i class="fas fa-map-marker-alt text-primary me-2"></i>Venue</h6>
+                            <p id="modalVenue" class="fw-semibold"></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-card mb-3">
+                            <h6 class="text-muted mb-2"><i class="fas fa-calendar-start text-success me-2"></i>Start Date</h6>
+                            <p id="modalStartDate" class="fw-semibold"></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-card mb-3">
+                            <h6 class="text-muted mb-2"><i class="fas fa-calendar-end text-danger me-2"></i>End Date</h6>
+                            <p id="modalEndDate" class="fw-semibold"></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-card mb-3">
+                            <h6 class="text-muted mb-2"><i class="far fa-clock text-info me-2"></i>Posted</h6>
+                            <p id="modalPosted" class="fw-semibold"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="window.print()">
+                    <i class="fas fa-print me-2"></i>Print
+                </button>
+            </div> -->
+        </div>
+    </div>
+</div>
+
 <style>
     .announcement-card-inner {
         transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -223,7 +324,7 @@
     }
 
     .card-body {
-        min-height: 200px;
+        min-height: 150px;
     }
 
     .announcement-details {
@@ -231,6 +332,56 @@
         border-radius: 8px;
         padding: 15px;
         margin-top: 15px;
+    }
+
+    .announcement-photo-container {
+        position: relative;
+        overflow: hidden;
+        background-color: #f8f9fa;
+    }
+
+    .placeholder-image {
+        transition: all 0.3s ease;
+    }
+
+    .announcement-photo-container:hover .placeholder-image {
+        transform: scale(1.05);
+    }
+
+    .announcement-photo-container:hover .image-overlay {
+        opacity: 1;
+    }
+
+    .image-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .overlay-content {
+        text-align: center;
+        color: white;
+        padding: 20px;
+    }
+
+    .overlay-content i {
+        color: white;
+        margin-bottom: 10px;
+    }
+
+    .info-card {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 15px;
+        border-left: 4px solid #0d6efd;
     }
 
     .badge {
@@ -246,11 +397,6 @@
 
     .card-text {
         line-height: 1.6;
-        display: -webkit-box;
-        -webkit-line-clamp: 4;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        text-overflow: ellipsis;
     }
 
     .form-control:focus {
@@ -402,6 +548,51 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+// Function to show announcement modal
+function showAnnouncementModal(title, content, venue, type, audience, startDate, endDate, postedTime) {
+    const modal = new bootstrap.Modal(document.getElementById('announcementModal'));
+
+    // Set modal content
+    document.getElementById('announcementModalTitle').textContent = title;
+    document.getElementById('modalContent').textContent = content;
+    document.getElementById('modalVenue').textContent = venue;
+    document.getElementById('modalStartDate').textContent = startDate;
+    document.getElementById('modalEndDate').textContent = endDate;
+    document.getElementById('modalPosted').textContent = postedTime;
+
+    // Set badges with appropriate colors
+    const typeBadge = document.getElementById('modalTypeBadge');
+    const audienceBadge = document.getElementById('modalAudienceBadge');
+
+    // Type badge colors
+    const typeColors = {
+        'General': 'bg-info text-white',
+        'Event': 'bg-success text-white',
+        'Emergency': 'bg-danger text-white',
+        'Meeting': 'bg-warning text-dark',
+        'Program': 'bg-primary text-white',
+        'Reminder': 'bg-secondary text-white'
+    };
+
+    // Audience badge colors
+    const audienceColors = {
+        'All': 'border border-primary text-primary',
+        'Kabataan': 'border border-success text-success',
+        'Senior Citizen': 'border border-warning text-warning',
+        'PWD': 'border border-info text-info',
+        '4ps': 'border border-info text-info'
+    };
+
+    typeBadge.className = `badge ${typeColors[type] || 'bg-secondary text-white'}`;
+    typeBadge.textContent = type;
+
+    audienceBadge.className = `badge ${audienceColors[audience] || ''}`;
+    audienceBadge.textContent = audience;
+
+    // Show modal
+    modal.show();
+}
 </script>
 
 @endsection
