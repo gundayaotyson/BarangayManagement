@@ -105,6 +105,8 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/bhw/newdelivery/update/{id}', [BHWController::class, 'updateNewDelivery'])->name('bhw.newdelivery.update');
     Route::put('/pregnant/update/{id}', [BHWController::class, 'updatePregnant'])->name('bhw.pregnant.update');
     Route::get('/bhwview', [DashboardController::class, 'BHWview'])->name('bhwview');
+        Route::get('/get-children', [BHWController::class, 'getChildrenByResident'])->name('get.children');
+
     // Senior Routes
     Route::get('/Senior', [DashboardController::class, 'Senior'])->name('senior');
     Route::get('/senior/homepage', [SeniorController::class, 'homepage'])->name('senior.homepage');

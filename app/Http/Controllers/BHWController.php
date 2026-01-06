@@ -272,4 +272,5 @@ class BHWController extends Controller
 
         return response()->json($residents);
     }
+
 }
